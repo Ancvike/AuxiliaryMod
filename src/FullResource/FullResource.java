@@ -2,6 +2,7 @@ package FullResource;
 
 import FullResource.core.Core;
 import FullResource.core.coreSetting.SharSettingUI;
+import FullResource.core.uiFragments.FragmentManager;
 import FullResource.core.uiFragments.sidebarWindows.WindowManager;
 import arc.Events;
 import mindustry.game.EventType;
@@ -13,6 +14,7 @@ public class FullResource extends Mod {
             new Core();
             SharSettingUI.init();
             WindowManager.init();
+            FragmentManager.init();
         });
     }
 }
