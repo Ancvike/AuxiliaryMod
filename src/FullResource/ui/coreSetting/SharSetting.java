@@ -15,6 +15,6 @@ abstract class SharSetting extends SettingsMenuDialog.SettingsTable.Setting {
         Core.settings.defaults(name, def);
     }
 
-    public void add(Table table) { }
-    public void add(SettingsMenuDialog.SettingsTable table) { }
+    public void add(SettingsMenuDialog.SettingsTable table) {
+    }
 }
