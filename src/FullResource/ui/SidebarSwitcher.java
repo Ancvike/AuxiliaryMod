@@ -1,7 +1,6 @@
 package FullResource.ui;
 
 import arc.*;
-import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.*;
 import arc.util.Log;
 import mindustry.*;
@@ -11,15 +10,15 @@ public class SidebarSwitcher {
     private int showIndex = 0;
     private final Table sidebarTable = new Table();
     private final Table[] sidebars;
-    public final ImageButton imageButton = new ImageButton(Core.atlas.find("full-resource-frog"));
 
     public SidebarSwitcher(Table... sidebars) {
         this.sidebars = sidebars;
 
         Vars.ui.hudGroup.fill(t -> {
-            t.add(imageButton).size(70, 70);
+            t.add(sidebarTable);
             t.top();
             t.x = 300;
+
         });
         rebuildSidebarTable();
     }
