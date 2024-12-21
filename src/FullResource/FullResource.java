@@ -14,6 +14,7 @@ public class FullResource extends Mod {
 //            new Core();
             SharSettingUI.init();
             WindowManager.init();
+            FragmentManager.init();
         });
     }
 }
