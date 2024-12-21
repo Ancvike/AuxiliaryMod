@@ -1,7 +1,6 @@
 package FullResource.ui.coreSetting;
 
 import arc.Core;
-import arc.scene.ui.layout.Table;
 import mindustry.ui.dialogs.SettingsMenuDialog;
 
 abstract class SharSetting extends SettingsMenuDialog.SettingsTable.Setting {
