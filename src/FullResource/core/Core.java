@@ -1,6 +1,5 @@
 package FullResource.core;
 
-import FullResource.ui.UI;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.ui.dialogs.BaseDialog;
@@ -15,8 +14,6 @@ public class Core {
     public Core() {
         baseDialog_no_show();
         baseDialog_yes_show();
-        UI ui = new UI();
-        ui.imageButton.clicked(this::onClick);
     }
 
     public void onClick() {
