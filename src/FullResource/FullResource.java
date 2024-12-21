@@ -11,7 +11,7 @@ import mindustry.mod.Mod;
 public class FullResource extends Mod {
     public void init() {
         Events.on(EventType.ClientLoadEvent.class, e -> {
-            new Core();
+//            new Core();
             SharSettingUI.init();
             WindowManager.init();
             FragmentManager.init();

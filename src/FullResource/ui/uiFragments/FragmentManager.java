@@ -1,5 +1,6 @@
 package FullResource.ui.uiFragments;
 
+import FullResource.ui.SidebarSwitcher;
 import FullResource.ui.sidebarWindows.WindowManager;
 
 public class FragmentManager {
