@@ -1,6 +1,5 @@
-package FullResource.core.uiFragments.sidebarWindows;
+package FullResource.ui.sidebarWindows;
 
-import arc.*;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import mindustry.*;
@@ -37,7 +36,7 @@ public class WindowManager {
                     }
                 }).size(40f).tooltip(tt -> {
                     tt.setBackground(Styles.black6);
-                    tt.label(() -> Core.bundle.get("window."+window.name+".name")).pad(2f);
+                    tt.label(() -> "check").pad(2f);
                 });
                 t.row();
             }

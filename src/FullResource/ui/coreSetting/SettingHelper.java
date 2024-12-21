@@ -1,4 +1,4 @@
-package FullResource.core.coreSetting;
+package FullResource.ui.coreSetting;
 
 import arc.struct.Seq;
 

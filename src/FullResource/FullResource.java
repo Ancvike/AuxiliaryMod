@@ -1,9 +1,9 @@
 package FullResource;
 
 import FullResource.core.Core;
-import FullResource.core.coreSetting.SharSettingUI;
-import FullResource.core.uiFragments.FragmentManager;
-import FullResource.core.uiFragments.sidebarWindows.WindowManager;
+import FullResource.ui.coreSetting.SharSettingUI;
+import FullResource.ui.uiFragments.FragmentManager;
+import FullResource.ui.sidebarWindows.WindowManager;
 import arc.Events;
 import mindustry.game.EventType;
 import mindustry.mod.Mod;

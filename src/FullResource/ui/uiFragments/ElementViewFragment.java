@@ -1,4 +1,4 @@
-package FullResource.core.uiFragments;
+package FullResource.ui.uiFragments;
 
 import arc.Core;
 import arc.graphics.Color;

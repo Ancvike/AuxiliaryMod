@@ -1,7 +1,7 @@
-package FullResource.core.uiFragments;
+package FullResource.ui.uiFragments;
 
 
-import FullResource.core.uiFragments.sidebarWindows.WindowManager;
+import FullResource.ui.sidebarWindows.WindowManager;
 
 import static arc.Core.scene;
 import static mindustry.Vars.ui;

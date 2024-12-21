@@ -1,4 +1,4 @@
-package FullResource.core.uiFragments.sidebarWindows;
+package FullResource.ui.sidebarWindows;
 
 import arc.*;
 import mindustry.game.*;
