@@ -8,7 +8,7 @@ public class FragmentManager {
 
     public static void init() {
         sidebarSwitcherFragment = new SidebarSwitcher(
-//                WindowManager.body
+                WindowManager.body
         );
     }
 }
