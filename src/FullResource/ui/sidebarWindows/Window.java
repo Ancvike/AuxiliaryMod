@@ -25,10 +25,6 @@ public class Window extends Table {
     public final float minWindowHeight = 60;
     public static final float maxWindowWidth = Float.MAX_VALUE;
     public static final float maxWindowHeight = Float.MAX_VALUE;
-
-    public Window(String name){
-        this(new TextureRegionDrawable(Core.atlas.find("clear")), name, null);
-    }
     public Window(TextureRegionDrawable icon, String name){
         this(icon, name, null);
     }
@@ -64,9 +60,7 @@ public class Window extends Table {
         this.minWindowWidth = Math.max(this.minWindowWidth, width);
 
         row();
-        table(Styles.black5, pt -> {
-             pt.pane(Styles.noBarPane, new Table(this::buildBody)).scrollX(!disableRootScroll).scrollY(!disableRootScroll).grow();
-        }).grow();
+        table(Styles.black5, pt -> pt.pane(Styles.noBarPane, new Table(this::buildBody)).scrollX(!disableRootScroll).scrollY(!disableRootScroll).grow()).grow();
         row();
         table(Styles.black5, t -> {
             t.right();
@@ -74,12 +68,10 @@ public class Window extends Table {
         }).height(8 * 2f).growX();
 
         visible(() -> shown);
-        update(() -> {
-            setPosition(
-                    Mathf.clamp(x, 0, Core.graphics.getWidth() - getWidth()),
-                    Mathf.clamp(y, 0, Core.graphics.getHeight() - getHeight())
-            );
-        });
+        update(() -> setPosition(
+                Mathf.clamp(x, 0, Core.graphics.getWidth() - getWidth()),
+                Mathf.clamp(y, 0, Core.graphics.getHeight() - getHeight())
+        ));
     }
 
     protected void buildBody(Table t){
