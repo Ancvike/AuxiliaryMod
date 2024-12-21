@@ -24,22 +24,22 @@ public class WindowManager {
         });
 
         body = new Table(t -> {
-//            t.name = "Window Buttons";
-//            t.left();
-//
-//            for(Window window : windows){
-//                t.button(window.icon, Styles.emptyi, () -> {
-//                    window.parent.setLayoutEnabled(false);
-//                    window.toggle();
-//                    for (Window w : windows) {
-//                        w.setLayoutEnabled(true);
-//                    }
-//                }).size(40f).tooltip(tt -> {
-//                    tt.setBackground(Styles.black6);
-//                    tt.label(() -> "check").pad(2f);
-//                });
-//                t.row();
-//            }
+            t.name = "Window Buttons";
+            t.left();
+
+            for(Window window : windows){
+                t.button(window.icon, Styles.emptyi, () -> {
+                    window.parent.setLayoutEnabled(false);
+                    window.toggle();
+                    for (Window w : windows) {
+                        w.setLayoutEnabled(true);
+                    }
+                }).size(40f).tooltip(tt -> {
+                    tt.setBackground(Styles.black6);
+                    tt.label(() -> "check").pad(2f);
+                });
+                t.row();
+            }
         }).left();
     }
 }
