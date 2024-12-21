@@ -1,7 +1,6 @@
 package FullResource.core;
 
 import FullResource.ui.CoreWindow;
-import arc.scene.ui.Button;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.ui.Styles;
