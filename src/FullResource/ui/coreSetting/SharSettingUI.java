@@ -1,10 +1,10 @@
-package FullResource.core.coreSetting;
+package FullResource.ui.coreSetting;
 
 import arc.struct.*;
 
 
-import static FullResource.core.uiFragments.FragmentManager.sidebarSwitcherFragment;
-import static FullResource.core.coreSetting.SettingHelper.*;
+import static FullResource.ui.uiFragments.FragmentManager.sidebarSwitcherFragment;
+import static FullResource.ui.coreSetting.SettingHelper.*;
 import static mindustry.Vars.*;
 
 public class SharSettingUI {

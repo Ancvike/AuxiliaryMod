@@ -1,4 +1,4 @@
-package FullResource.core.coreSetting;
+package FullResource.ui.coreSetting;
 
 import arc.Core;
 import arc.scene.ui.layout.Table;
