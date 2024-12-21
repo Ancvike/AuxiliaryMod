@@ -4,7 +4,6 @@ import arc.struct.*;
 
 
 import static FullResource.ui.uiFragments.FragmentManager.sidebarSwitcherFragment;
-import static FullResource.ui.coreSetting.SettingHelper.*;
 import static mindustry.Vars.*;
 
 public class SharSettingUI {
@@ -13,5 +12,8 @@ public class SharSettingUI {
         Seq<SharSetting> tapSeq = new Seq<>();
         addGraphicCheckSetting("sidebar", !mobile, tapSeq, () -> sidebarSwitcherFragment.rebuildSidebarTable());
 
+    }
+    public static void addGraphicCheckSetting(String key, boolean def, Seq<SharSetting> list, Runnable onSetted) {
+        list.add(new SharSetting(key, def) {});
     }
 }
