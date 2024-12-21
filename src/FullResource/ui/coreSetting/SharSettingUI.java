@@ -4,7 +4,7 @@ import FullResource.ui.SidebarSwitcher;
 import FullResource.ui.sidebarWindows.WindowManager;
 import arc.struct.Seq;
 
-import static FullResource.ui.uiFragments.FragmentManager.sidebarSwitcherFragment;
+import static FullResource.ui.FragmentManager.sidebarSwitcherFragment;
 import static mindustry.Vars.mobile;
 
 public class SharSettingUI {
