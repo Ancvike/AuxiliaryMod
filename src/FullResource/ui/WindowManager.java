@@ -13,13 +13,13 @@ public class WindowManager {
         windows.addAll(new CoreWindow());
 
         // windows place for dragging
-        Vars.ui.hudGroup.fill(t -> {
-            t.name = "Windows";
-            for (Window window : windows) {
-                window.build();
-                t.add(window).height(window.getHeight()).width(window.getWidth());
-            }
-        });
+//        Vars.ui.hudGroup.fill(t -> {
+//            t.name = "Windows";
+//            for (Window window : windows) {
+//                window.build();
+//                t.add(window).height(window.getHeight()).width(window.getWidth());
+//            }
+//        });
 
         body = new Table(t -> {
             t.name = "Window Buttons";
