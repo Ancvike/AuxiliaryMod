@@ -6,13 +6,13 @@ import mindustry.Vars;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static FullResource.ui.WindowManager.coreWindow;
 import static mindustry.Vars.state;
 
 public class Core {
     public static BaseDialog baseDialog_no = new BaseDialog("失败");
     public static BaseDialog baseDialog_yes = new BaseDialog("成功");
     public static Table body;
+    public static CoreWindow coreWindow = new CoreWindow();
 
     public static void init() {
         baseDialog_no_show();
