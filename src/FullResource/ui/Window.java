@@ -1,4 +1,4 @@
-package FullResource.ui.sidebarWindows;
+package FullResource.ui;
 
 import arc.*;
 import arc.func.*;
