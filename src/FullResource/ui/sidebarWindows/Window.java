@@ -78,11 +78,6 @@ public class Window extends Table {
         if(content != null) content.get(t);
     }
 
-    public void toggle(){
-        shown = !shown;
-        if(shown) toFront();
-    }
-
     private static class TouchPosInputListener extends InputListener {
         protected float lastX, lastY;
 
