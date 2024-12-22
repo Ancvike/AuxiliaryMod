@@ -14,6 +14,7 @@ import mindustry.core.*;
 import mindustry.gen.*;
 import mindustry.type.*;
 import mindustry.ui.*;
+import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.blocks.storage.*;
 
 import static mindustry.Vars.*;
@@ -22,6 +23,7 @@ public class CoreWindow extends Window {
     Table window;
     float heat;
     final ObjectMap<Team, ItemData> itemData = new ObjectMap<>();
+    BaseDialog baseDialog = new BaseDialog("按钮测试页");
 
     public CoreWindow()  {
         super(Icon.list, "core");
@@ -35,6 +37,11 @@ public class CoreWindow extends Window {
             if(heat >= 60f) {
                 heat = 0f;
                 ScrollPane pane = find("core-pane");
+                if(pane == null){
+                    baseDialog.addCloseButton();
+                    baseDialog.show();
+                    return;
+                }
                 pane.setWidget(rebuild());
                 for(Team team : getTeams()) {
                     if(!itemData.containsKey(team)) itemData.put(team, new ItemData());
