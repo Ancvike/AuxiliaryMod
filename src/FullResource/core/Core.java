@@ -9,7 +9,7 @@ public class Core {
     public static Table table = new Table();
 
     public Core() {
-        dialog.button("关闭", () -> dialog.hide());
+        dialog.button("关闭", () -> dialog.hide()).row();
         dialog.add(table).left().top();
         Vars.ui.hudGroup.fill(t -> {
             t.button("测试", () -> dialog.show());
