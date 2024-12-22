@@ -19,7 +19,7 @@ public class Core {
         baseDialog_yes_show();
 
         Vars.ui.hudGroup.fill(t -> {
-            t.button(new CoreWindow().icon, Styles.emptyi, Core::onClick);
+            t.button(coreWindow.icon, Styles.emptyi, Core::onClick);
             t.top();
             t.x = 300;
         });
