@@ -1,7 +1,7 @@
 package FullResource;
 
-import FullResource.ui.WindowManager;
 import FullResource.core.Core;
+import FullResource.ui.WindowManager;
 import arc.Events;
 import mindustry.game.EventType;
 import mindustry.mod.Mod;
