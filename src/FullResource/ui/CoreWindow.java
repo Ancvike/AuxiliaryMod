@@ -36,6 +36,7 @@ public class CoreWindow extends Window {
                 Dialog dialog = new Dialog("6666666");
                 dialog.button("确定", dialog::hide);
                 dialog.show();
+                i++;
             }
             heat += Time.delta;
             if (heat >= 60f) {
