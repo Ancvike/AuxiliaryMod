@@ -60,8 +60,8 @@ public class Window extends Table {
         this.minWindowWidth = Math.max(this.minWindowWidth, width);
 
         row();
-        table(Styles.black5, pt -> pt.pane(Styles.noBarPane, new Table(this::buildBody)).scrollX(!disableRootScroll).scrollY(!disableRootScroll).grow()).grow();
-        row();
+//        table(Styles.black5, pt -> pt.pane(Styles.noBarPane, new Table(this::buildBody)).scrollX(!disableRootScroll).scrollY(!disableRootScroll).grow()).grow();
+//        row();
         table(Styles.black5, t -> {
             t.right();
             t.image(Icon.resizeSmall).size(20f).get().addListener(new ScaleInputListener(this));
