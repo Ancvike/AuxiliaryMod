@@ -14,11 +14,6 @@ public class Core {
     public static void init() {
         baseDialog_no_show();
         baseDialog_yes_show();
-
-        Vars.ui.hudGroup.fill(t -> {
-            t.top();
-            t.x = 300;
-        });
     }
 
     public static void onClick() {
