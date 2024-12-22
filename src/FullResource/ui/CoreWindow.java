@@ -15,6 +15,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.blocks.storage.*;
 
+import static FullResource.core.Core.dialog;
 import static mindustry.Vars.*;
 
 public class CoreWindow extends Window {
@@ -40,6 +41,7 @@ public class CoreWindow extends Window {
                     itemData.get(team).updateItems(team);
                 }
             }
+            dialog.add("CoreWindow触发").row();
         });
     }
 

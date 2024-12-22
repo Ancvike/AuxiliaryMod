@@ -10,7 +10,6 @@ public class FullResource extends Mod {
     public void init() {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             WindowManager.init();
-            Core.init();
         });
     }
 }
