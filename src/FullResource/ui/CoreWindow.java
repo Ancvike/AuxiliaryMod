@@ -32,7 +32,7 @@ public class CoreWindow extends Window {
         resetUsed();
 
         Events.run(EventType.Trigger.update, () -> {
-            if (i >= 1){
+            if (i <= 1){
                 table.add("CoreWindow的Trigger.update触发");
                 i++;
             }
