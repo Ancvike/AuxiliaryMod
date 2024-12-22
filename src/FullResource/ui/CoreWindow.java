@@ -2,11 +2,13 @@ package FullResource.ui;
 
 import arc.*;
 import mindustry.game.*;
+import arc.graphics.*;
+import arc.math.*;
+import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import mindustry.*;
-import mindustry.content.*;
 import mindustry.core.*;
 import mindustry.gen.*;
 import mindustry.type.*;
@@ -31,8 +33,8 @@ public class CoreWindow extends Window {
             heat += Time.delta;
             if(heat >= 60f) {
                 heat = 0f;
-//                ScrollPane pane = find("core-pane");
-//                pane.setWidget(rebuild());
+                ScrollPane pane = find("core-pane");
+                pane.setWidget(rebuild());
                 for(Team team : getTeams()) {
                     if(!itemData.containsKey(team)) itemData.put(team, new ItemData());
                     itemData.get(team).updateItems(team);
@@ -88,32 +90,25 @@ public class CoreWindow extends Window {
                     Item item = Vars.content.item(i);
                     if(!team.items().has(item)) continue;
                     itemTable.stack(
-                        new Table(ttt -> {
-                            ttt.image(item.uiIcon).size(iconSmall).tooltip(tttt -> tttt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
-                            ttt.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
-                        }));
+                            new Table(ttt -> {
+                                ttt.image(item.uiIcon).size(iconSmall).tooltip(tttt -> tttt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
+                                ttt.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
+                            }),
+                            new Table(ttt -> {
+                                ttt.bottom().right();
+                                if(itemData == null || itemData.get(team) == null) return;
+                                int amount = itemData.get(team).updateItems.isEmpty()?0:Mathf.floor(itemData.get(team).updateItems.get(item.id).amount);
+                                Label label = new Label(amount + "/s");
+                                label.setFontScale(0.65f);
+                                label.setColor(amount > 0 ? Color.green : amount == 0 ? Color.orange : Color.red);
+                                ttt.add(label).bottom().right().padTop(16f);
+                                ttt.pack();
+                            })).padRight(3).left();
                     if(row++ % max == max-1){
                         itemTable.row();
                     }
                 }
             }).row();
-
-            table.table(unitTable -> {
-                int row = 0;
-
-                for(UnitType unit : Vars.content.units()){
-                    if(unit != UnitTypes.block && Groups.unit.contains(u -> u.type == unit && u.team == team)){
-                        unitTable.table(tt -> {
-                            tt.center();
-                            tt.image(unit.uiIcon).size(iconSmall).padRight(3).tooltip(ttt -> ttt.background(Styles.black6).add(unit.localizedName).style(Styles.outlineLabel).margin(2f));
-                            tt.add(UI.formatAmount(Groups.unit.count(u -> u.team == team && u.type == unit))).padRight(3).minWidth(5 * 8f).left();
-                        });
-                        if(row++ % max == max-1){
-                            unitTable.row();
-                        }
-                    }
-                }
-            });
         });
     }
 
