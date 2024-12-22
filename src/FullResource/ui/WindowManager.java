@@ -1,6 +1,5 @@
 package FullResource.ui;
 
-import arc.*;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import mindustry.*;
@@ -10,13 +9,13 @@ public class WindowManager {
     public static final Seq<Window> windows = new Seq<>();
     public static Table body;
 
-    public static void init(){
+    public static void init() {
         windows.addAll(new CoreWindow());
 
         // windows place for dragging
         Vars.ui.hudGroup.fill(t -> {
             t.name = "Windows";
-            for(Window window : windows) {
+            for (Window window : windows) {
                 window.build();
                 t.add(window).height(window.getHeight()).width(window.getWidth());
             }
@@ -26,7 +25,7 @@ public class WindowManager {
             t.name = "Window Buttons";
             t.left();
 
-            for(Window window : windows){
+            for (Window window : windows) {
                 t.button(window.icon, Styles.emptyi, () -> {
                     window.parent.setLayoutEnabled(false);
                     window.toggle();
@@ -39,6 +38,12 @@ public class WindowManager {
                 });
                 t.row();
             }
-        }).left();
+        });
+
+        Vars.ui.hudGroup.fill(t -> {
+            t.add(body);
+            t.top();
+            t.x = 300;
+        });
     }
 }
