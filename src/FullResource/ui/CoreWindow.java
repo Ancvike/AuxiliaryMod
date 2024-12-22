@@ -32,14 +32,14 @@ public class CoreWindow extends Window {
         resetUsed();
 
         Events.run(EventType.Trigger.update, () -> {
-            if (i <= 1){
-                Dialog dialog = new Dialog("6666666");
-                dialog.button("确定", dialog::hide);
-                dialog.show();
-                i++;
-            }
             heat += Time.delta;
             if (heat >= 60f) {
+                if (i <= 1){
+                    Dialog dialog = new Dialog("6666666");
+                    dialog.button("确定", dialog::hide);
+                    dialog.show();
+                    i++;
+                }
                 heat = 0f;
                 ScrollPane pane = find("core-pane");
                 pane.setWidget(rebuild());
