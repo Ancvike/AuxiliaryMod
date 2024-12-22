@@ -5,7 +5,7 @@ import arc.struct.*;
 import mindustry.*;
 import mindustry.ui.*;
 
-import static FullResource.core.Core.dialog;
+import static FullResource.core.Core.table;
 
 public class WindowManager {
     public static final Seq<Window> windows = new Seq<>();
@@ -19,7 +19,7 @@ public class WindowManager {
             t.name = "Windows";
             for (Window window : windows) {
                 window.build();
-                dialog.add("CoreWindow.build()触发");
+                table.add("CoreWindow.build()触发");
                 t.add(window).height(window.getHeight()).width(window.getWidth());
             }
         });
