@@ -1,11 +1,11 @@
 package FullResource.core;
 
+import arc.scene.ui.Dialog;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
-import mindustry.ui.dialogs.BaseDialog;
 
 public class Core {
-    public static BaseDialog dialog = new BaseDialog("测试");
+    public static Dialog dialog = new Dialog("测试");
     public static Table table = new Table();
 
     public Core() {
