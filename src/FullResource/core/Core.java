@@ -13,8 +13,4 @@ public class Core {
             t.y = 200;
         });
     }
-
-    public static void setDialog() {
-
-    }
 }
