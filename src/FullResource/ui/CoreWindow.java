@@ -15,7 +15,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.blocks.storage.*;
 
-import static FullResource.core.Core.dialog;
+import static FullResource.core.Core.table;
 import static mindustry.Vars.*;
 
 public class CoreWindow extends Window {
@@ -42,7 +42,7 @@ public class CoreWindow extends Window {
                 }
             }
         });
-        dialog.add("CoreWindow触发");
+        table.add("CoreWindow触发");
     }
 
     @Override
