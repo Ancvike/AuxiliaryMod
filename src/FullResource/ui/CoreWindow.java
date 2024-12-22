@@ -42,7 +42,7 @@ public class CoreWindow extends Window {
                 }
             }
         });
-        dialog.add("CoreWindow触发").row();
+        dialog.add("CoreWindow触发");
     }
 
     @Override

@@ -19,7 +19,7 @@ public class WindowManager {
             t.name = "Windows";
             for (Window window : windows) {
                 window.build();
-                dialog.add("CoreWindow.build()触发").row();
+                dialog.add("CoreWindow.build()触发");
                 t.add(window).height(window.getHeight()).width(window.getWidth());
             }
         });
