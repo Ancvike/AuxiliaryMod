@@ -33,8 +33,9 @@ public class CoreWindow extends Window {
 
         Events.run(EventType.Trigger.update, () -> {
             if (i <= 1){
-                table.add("CoreWindow的Trigger.update触发");
-                i++;
+                Dialog dialog = new Dialog("6666666");
+                dialog.button("确定", dialog::hide);
+                dialog.show();
             }
             heat += Time.delta;
             if (heat >= 60f) {
