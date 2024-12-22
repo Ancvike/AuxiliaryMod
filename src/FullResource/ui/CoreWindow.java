@@ -41,8 +41,8 @@ public class CoreWindow extends Window {
                     itemData.get(team).updateItems(team);
                 }
             }
-            dialog.add("CoreWindow触发").row();
         });
+        dialog.add("CoreWindow触发").row();
     }
 
     @Override
