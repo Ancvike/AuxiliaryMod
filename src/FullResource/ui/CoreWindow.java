@@ -15,14 +15,12 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.blocks.storage.*;
 
-import static FullResource.core.Core.table;
 import static mindustry.Vars.*;
 
 public class CoreWindow extends Window {
     Table window;
     float heat;
     final ObjectMap<Team, ItemData> itemData = new ObjectMap<>();
-    int i = 1;
 
     public CoreWindow() {
         super(Icon.list, "core");
@@ -34,12 +32,6 @@ public class CoreWindow extends Window {
         Events.run(EventType.Trigger.update, () -> {
             heat += Time.delta;
             if (heat >= 60f) {
-                if (i <= 1){
-                    Dialog dialog = new Dialog("6666666");
-                    dialog.button("确定", dialog::hide);
-                    dialog.show();
-                    i++;
-                }
                 heat = 0f;
                 ScrollPane pane = find("core-pane");
                 pane.setWidget(rebuild());
@@ -49,7 +41,6 @@ public class CoreWindow extends Window {
                 }
             }
         });
-        table.add("CoreWindow触发");
     }
 
     @Override
