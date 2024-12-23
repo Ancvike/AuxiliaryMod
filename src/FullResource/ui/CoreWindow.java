@@ -66,7 +66,7 @@ public class CoreWindow extends Window {
     }
 
     public Seq<Team> getTeams() {
-        return Seq.with(Team.all).filter(Team::active);
+        return Seq.with(Team.all).select(Team::active);
     }
 
     public void resetUsed() {
