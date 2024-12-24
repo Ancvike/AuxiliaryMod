@@ -7,38 +7,34 @@ import mindustry.ui.*;
 
 
 public class WindowManager {
-    public static final Seq<Window> windows = new Seq<>();
+    public static CoreWindow coreWindow = new CoreWindow();
     public static Table body;
 
     public static void init() {
-        windows.addAll(new CoreWindow());
 
         // windows place for dragging
         Vars.ui.hudGroup.fill(t -> {
             t.name = "Windows";
-            for (Window window : windows) {
-                window.build();
-                t.add(window).height(window.getHeight()).width(window.getWidth());
-            }
+
+            coreWindow.build();
+            t.add(coreWindow).height(coreWindow.getHeight()).width(coreWindow.getWidth());
         });
 
         body = new Table(t -> {
             t.name = "Window Buttons";
             t.left();
 
-            for (Window window : windows) {
-                t.button(window.icon, Styles.emptyi, () -> {
-                    window.parent.setLayoutEnabled(false);
-                    window.toggle();
-                    for (Window w : windows) {
-                        w.setLayoutEnabled(true);
-                    }
-                }).size(40f).tooltip(tt -> {
-                    tt.setBackground(Styles.black6);
-                    tt.label(() -> "66666").pad(2f);
-                });
-                t.row();
-            }
+            t.button(coreWindow.icon, Styles.emptyi, () -> {
+                coreWindow.parent.setLayoutEnabled(false);
+                coreWindow.toggle();
+
+                coreWindow.setLayoutEnabled(true);
+
+            }).size(40f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "66666").pad(2f);
+            });
+            t.row();
         });
 
         Vars.ui.hudGroup.fill(t -> {
