@@ -2,9 +2,11 @@ package FullResource.core;
 
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
+import mindustry.gen.Icon;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
+import static mindustry.Vars.state;
 import static FullResource.ui.WindowManager.coreWindow;
 
 public class Core {
@@ -17,7 +19,7 @@ public class Core {
             t.name = "Window Buttons";
             t.left();
 
-            t.button(coreWindow.icon, Styles.emptyi, () -> {
+            t.button(Icon.uploadSmall, Styles.emptyi, () -> {
                 coreWindow.parent.setLayoutEnabled(false);
                 coreWindow.toggle();
 
@@ -35,7 +37,14 @@ public class Core {
             t.top();
             t.x = 300;
         });
-        dialog_no.show();
+    }
+
+    public void onClick() {
+        if (!state.rules.waves && state.isCampaign()) {//区块是否占领
+        //先检测核心是哪个,并get资源量及上限
+        } else {
+            dialog_no.show();
+        }
     }
 
     public static void setDialog_no() {
