@@ -66,10 +66,7 @@
 //    public Table setTable(Team team) {
 //        return new Table(table -> {
 //            table.add(team.name).color(team.color).row();
-//            int max = Math.max(1, Math.round(window.getWidth() / 2 / 60));
 //            table.table(itemTable -> {
-//                int row = 0;
-//
 //                CoreBlock.CoreBuild core = team.core();
 //                if (core == null || core.items == null) {
 //                    return;
@@ -83,9 +80,6 @@
 //                                ttt.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
 //                            })
 //                    ).padRight(3).left();
-//                    if (row++ % max == max - 1) {
-//                        itemTable.row();
-//                    }
 //                }
 //            }).row();
 //        });
