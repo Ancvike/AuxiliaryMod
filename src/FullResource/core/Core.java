@@ -19,7 +19,7 @@ public class Core {
             t.name = "Window Buttons";
             t.left();
 
-            t.button(Icon.uploadSmall, Styles.emptyi, () -> {
+            t.button(Icon.upload, Styles.emptyi, () -> {
                 coreWindow.parent.setLayoutEnabled(false);
                 coreWindow.toggle();
 
