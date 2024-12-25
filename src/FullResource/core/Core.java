@@ -25,10 +25,12 @@ public class Core {
 
                 coreWindow.setLayoutEnabled(true);
 
-            }).size(40f).tooltip(tt -> {
-                tt.setBackground(Styles.black6);
-                tt.label(() -> "66666").pad(2f);
-            });
+            })
+//                    .size(40f).tooltip(tt -> {
+//                tt.setBackground(Styles.black6);
+//                tt.label(() -> "66666").pad(2f);
+//            })
+            ;
             t.row();
         });
 
