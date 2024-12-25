@@ -1,9 +1,6 @@
 package FullResource.ui;
 
-import arc.scene.ui.layout.Table;
-import mindustry.*;
-import mindustry.ui.*;
-
+import mindustry.Vars;
 
 public class WindowManager {
     public static CoreWindow coreWindow = new CoreWindow();
