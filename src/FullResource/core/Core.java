@@ -9,8 +9,6 @@ import static mindustry.Vars.state;
 import static FullResource.ui.WindowManager.coreWindow;
 
 public class Core {
-
-
     public Core() {
         Vars.ui.hudGroup.fill(t -> {
             t.button(Icon.upload, Styles.emptyi, this::onClick).size(40f).tooltip(tt -> {
@@ -36,6 +34,4 @@ public class Core {
         coreWindow.toggle();
         coreWindow.setLayoutEnabled(true);
     }
-
-
 }
