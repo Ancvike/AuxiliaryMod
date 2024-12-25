@@ -12,7 +12,7 @@ public class Core {
     public static final BaseDialog dialog_no = new BaseDialog("失败");
 
     public Core() {
-        setDialog();
+        setDialog_no();
         body = new Table(t -> {
             t.name = "Window Buttons";
             t.left();
@@ -38,7 +38,7 @@ public class Core {
         dialog_no.show();
     }
 
-    public static void setDialog() {
+    public static void setDialog_no() {
         dialog_no.cont.add("区块未占领,无法使用该功能").row();
         dialog_no.cont.button("确认", dialog_no::hide).size(100f, 50f);
     }
