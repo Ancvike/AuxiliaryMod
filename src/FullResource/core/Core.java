@@ -3,7 +3,6 @@ package FullResource.core;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static FullResource.ui.WindowManager.dialog_no;
 import static mindustry.Vars.state;
