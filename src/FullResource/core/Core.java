@@ -40,7 +40,7 @@ public class Core {
     }
 
     public static void setDialog() {
-        dialog_no.add("区块未占领,无法使用该功能").row();
-        dialog_no.addCloseButton();
+        dialog_no.cont.add("区块未占领,无法使用该功能").row();
+        dialog_no.cont.button("", dialog_no::hide).size(100f, 50f);
     }
 }
