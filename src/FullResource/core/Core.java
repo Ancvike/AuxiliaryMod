@@ -4,12 +4,13 @@ import arc.scene.ui.Dialog;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static FullResource.ui.WindowManager.coreWindow;
 
 public class Core {
     Table body;
-    public static final Dialog dialog = new Dialog("失败");
+    public static final BaseDialog dialog_no = new BaseDialog("失败");
 
     public Core() {
         setDialog();
@@ -35,11 +36,11 @@ public class Core {
             t.top();
             t.x = 300;
         });
-        dialog.show();
+        dialog_no.show();
     }
 
     public static void setDialog() {
-        dialog.add("区块未占领,无法使用该功能").row();
-        dialog.button("确定", dialog::hide).center().bottom().size(120, 40);
+        dialog_no.add("区块未占领,无法使用该功能").row();
+        dialog_no.addCloseButton();
     }
 }
