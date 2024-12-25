@@ -1,6 +1,5 @@
 package FullResource.core;
 
-import arc.scene.ui.Dialog;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.ui.Styles;
