@@ -40,6 +40,6 @@ public class Core {
 
     public static void setDialog() {
         dialog.add("区块未占领,无法使用该功能").row();
-        dialog.addCloseButton();
+        dialog.button("确定", dialog::hide).center().bottom().size(120, 40);
     }
 }
