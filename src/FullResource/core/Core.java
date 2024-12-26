@@ -1,12 +1,12 @@
 package FullResource.core;
 
-import FullResource.ui.WindowManager;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.core.UI;
 import mindustry.gen.Icon;
 import mindustry.type.Item;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.blocks.storage.CoreBlock;
 
 import static FullResource.ui.WindowManager.*;
@@ -15,6 +15,10 @@ import static mindustry.Vars.state;
 import static mindustry.game.Team.sharded;
 
 public class Core {
+
+    public static final BaseDialog dialog_no = new BaseDialog("失败");
+    public static final BaseDialog dialog_yes = new BaseDialog("");
+
     public Core() {
         Vars.ui.hudGroup.fill(t -> {
             t.button(Icon.upload, Styles.emptyi, this::onClick).size(40f).tooltip(tt -> {
@@ -24,7 +28,9 @@ public class Core {
             t.top();
             t.x = 300;
         });
-        Vars.ui.hudGroup.fill(t -> t.button("aaaaaaaaaaaa", WindowManager::setDialog_yes));
+        Vars.ui.hudGroup.fill(t -> t.button("aaaaaaaaaaaa", Core::setDialog_yes));
+        setDialog_no();
+        setDialog_yes();
     }
 
 
@@ -65,5 +71,20 @@ public class Core {
                 }
             }).row();
         });
+    }
+
+    public static void setDialog_no() {
+        dialog_no.cont.add("区块未占领,无法使用该功能").row();
+        dialog_no.addCloseButton();
+    }
+
+    public static void setDialog_yes() {
+        dialog_no.cont.add("确定要这样做吗?").row();
+
+        dialog_no.button("确定", Core::clearDialog_yes);
+    }
+
+    public static void clearDialog_yes() {
+        dialog_yes.clear();
     }
 }
