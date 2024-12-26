@@ -26,7 +26,7 @@ public class Dialogs {
     }
 
     public static void setDialog_yes() {
-        dialog_no.cont.add("确定要这样做吗?").row();
+        dialog_yes.cont.add("确定要这样做吗?").row();
         dialog_yes.cont.add(itemTable).row();
         dialog_yes.addCloseButton();
     }
