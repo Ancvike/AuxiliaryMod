@@ -24,25 +24,24 @@ public class Core {
             t.top();
             t.x = 300;
         });
-        Vars.ui.hudGroup.fill(t -> {
-            t.button("aaaaaaaaaaaa", WindowManager::setDialog_yes);
-        });
+        Vars.ui.hudGroup.fill(t -> t.button("aaaaaaaaaaaa", WindowManager::setDialog_yes));
     }
 
 
     public void onClick() {
         if (!state.rules.waves && state.isCampaign()) {//区块是否占领
             //先检测核心是哪个,并get资源量及上限
-            success();
+//            success();
+            dialog_yes.show();
         } else {
             dialog_no.show();
         }
     }
 
     public void success() {
-//        coreWindow.parent.setLayoutEnabled(false);
-//        coreWindow.toggle();
-//        coreWindow.setLayoutEnabled(true);
+        coreWindow.parent.setLayoutEnabled(false);
+        coreWindow.toggle();
+        coreWindow.setLayoutEnabled(true);
 
     }
 
