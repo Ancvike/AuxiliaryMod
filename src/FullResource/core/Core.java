@@ -28,7 +28,6 @@ public class Core {
             t.top();
             t.x = 300;
         });
-        Vars.ui.hudGroup.fill(t -> t.button("aaaaaaaaaaaa", Core::setDialog_yes));
         setDialog_no();
         setDialog_yes();
     }
@@ -37,8 +36,7 @@ public class Core {
     public void onClick() {
         if (!state.rules.waves && state.isCampaign()) {//区块是否占领
             //先检测核心是哪个,并get资源量及上限
-//            success();
-            dialog_yes.show();
+            success();
         } else {
             dialog_no.show();
         }
@@ -80,11 +78,5 @@ public class Core {
 
     public static void setDialog_yes() {
         dialog_no.cont.add("确定要这样做吗?").row();
-
-        dialog_no.button("确定", Core::clearDialog_yes);
-    }
-
-    public static void clearDialog_yes() {
-        dialog_yes.clearChildren();
     }
 }
