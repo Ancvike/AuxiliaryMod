@@ -85,6 +85,6 @@ public class Core {
     }
 
     public static void clearDialog_yes() {
-        dialog_yes.clear();
+        dialog_yes.clearChildren();
     }
 }
