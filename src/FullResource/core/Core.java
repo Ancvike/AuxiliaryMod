@@ -2,8 +2,7 @@ package FullResource.core;
 
 import FullResource.ui.Dialogs;
 
-import static FullResource.ui.Dialogs.dialog_no;
-import static FullResource.ui.Dialogs.dialog_yes;
+import static FullResource.ui.Dialogs.*;
 import static mindustry.Vars.state;
 
 public class Core {
@@ -23,10 +22,11 @@ public class Core {
     }
 
     public static void click_yes() {
-
+        resetDialog();
         dialog_yes.hide();
     }
     public static void click_no() {
+        resetDialog();
         dialog_no.hide();
     }
 }
