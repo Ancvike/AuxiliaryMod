@@ -1,5 +1,6 @@
 package FullResource.ui;
 
+import FullResource.core.Core;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.core.UI;
@@ -28,28 +29,30 @@ public class Dialogs {
     public static void setDialog_yes() {
         dialog_yes.cont.add("确定要这样做吗?").row();
         dialog_yes.cont.add(itemTable).row();
-        dialog_yes.addCloseButton();
+        dialog_yes.cont.button("确定", Core::click_yes).size(120f, 50f);
+        dialog_yes.cont.button("取消", Core::click_no).size(120f, 50f);
     }
 
     public static void getCoreItems() {
         itemTable = new Table(table -> {
-            table.add(sharded.name).color(sharded.color).row();
-            table.table(itemTable -> {
-                CoreBlock.CoreBuild core = sharded.core();
-                if (core == null || core.items == null) {
-                    return;
-                }
-                for (int i = 0; i < Vars.content.items().size; i++) {
-                    Item item = Vars.content.item(i);
-                    if (!sharded.items().has(item)) continue;
-                    itemTable.stack(
-                            new Table(ttt -> {
-                                ttt.image(item.uiIcon).size(iconSmall).tooltip(tttt -> tttt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
-                                ttt.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
-                            })
-                    ).padRight(3).left();
-                }
-            }).row();
+            CoreBlock.CoreBuild core = sharded.core();
+            if (core == null || core.items == null) {
+                return;
+            }
+            for (int i = 0; i < Vars.content.items().size; i++) {
+                Item item = Vars.content.item(i);
+                if (!sharded.items().has(item)) continue;
+                itemTable.stack(
+                        new Table(ttt -> {
+                            ttt.image(item.uiIcon).size(iconSmall).tooltip(tttt -> tttt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
+                            ttt.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
+                        })
+                ).padRight(3).left();
+            }
         });
+    }
+
+    public static void resetDialog() {
+        itemTable = null;
     }
 }

@@ -1,12 +1,6 @@
 package FullResource.core;
 
 import FullResource.ui.Dialogs;
-import arc.scene.ui.layout.Table;
-import mindustry.Vars;
-import mindustry.core.UI;
-import mindustry.type.Item;
-import mindustry.ui.Styles;
-import mindustry.world.blocks.storage.CoreBlock;
 
 import static FullResource.ui.Dialogs.dialog_no;
 import static FullResource.ui.Dialogs.dialog_yes;
@@ -26,5 +20,13 @@ public class Core {
         } else {
             dialog_no.show();
         }
+    }
+
+    public static void click_yes() {
+
+        dialog_yes.hide();
+    }
+    public static void click_no() {
+        dialog_no.hide();
     }
 }
