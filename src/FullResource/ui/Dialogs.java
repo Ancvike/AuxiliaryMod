@@ -53,6 +53,6 @@ public class Dialogs {
     }
 
     public static void resetDialog() {
-        itemTable = null;
+        dialog_yes.removeChild(itemTable);
     }
 }
