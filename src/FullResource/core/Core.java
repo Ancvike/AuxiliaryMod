@@ -27,6 +27,6 @@ public class Core {
     }
     public static void click_no() {
         resetDialog();
-        dialog_no.hide();
+        dialog_yes.hide();
     }
 }
