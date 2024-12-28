@@ -9,13 +9,13 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.blocks.storage.CoreBlock;
 
+import static FullResource.core.Core.itemTable;
 import static mindustry.Vars.iconSmall;
 import static mindustry.game.Team.sharded;
 
 public class Dialogs {
     public static final BaseDialog dialog_no = new BaseDialog("失败");
     public static final BaseDialog dialog_yes = new BaseDialog("");
-    private static Table itemTable = new Table();
 
     public static void init() {
         setDialog_no();
@@ -26,15 +26,15 @@ public class Dialogs {
         dialog_no.addCloseButton();
     }
 
-    public static void setDialog_yes() {
+    public static void setDialog_yes(Table itemTable) {
         dialog_yes.cont.add("确定要这样做吗?").row();
         dialog_yes.cont.add(itemTable).row();
         dialog_yes.cont.button("确定", Core::click_yes).size(120f, 50f);
         dialog_yes.cont.button("取消", Core::click_no).size(120f, 50f);
     }
 
-    public static void getCoreItems() {
-        itemTable = new Table(table -> {
+    public static Table getCoreItems() {
+        return new Table(table -> {
             CoreBlock.CoreBuild core = sharded.core();
             if (core == null || core.items == null) {
                 return;
@@ -52,7 +52,7 @@ public class Dialogs {
         });
     }
 
-    public static void resetDialog() {
+    public static void resetDialog(Table itemTable) {
         dialog_yes.removeChild(itemTable);
     }
 }
