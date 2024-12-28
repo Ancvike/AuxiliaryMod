@@ -17,7 +17,7 @@ public class Dialogs {
     }
 
     public static void setDialog_yes(Table itemTable) {
-        dialog_yes.add(itemTable);
+        dialog_yes.cont.add(itemTable);
     }
 
     public static void resetDialog(Table itemTable) {
