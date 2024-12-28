@@ -49,7 +49,7 @@ public class Core {
     }
 
     public static void click_no() {
-        resetDialog(itemTable);
+        resetDialog();
         dialog_yes.hide();
     }
     public static void click_yes() {
