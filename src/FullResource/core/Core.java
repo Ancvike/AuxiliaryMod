@@ -66,5 +66,14 @@ public class Core {
     }
 
     public static void changeItems() {
+        CoreBlock.CoreBuild core = sharded.core();
+        if (core == null || core.items == null) {
+            return;
+        }
+        for (int i = 0; i < Vars.content.items().size; i++) {
+            Item item = Vars.content.item(i);
+            if (!sharded.items().has(item)) continue;
+            core.items.set(item, core.storageCapacity);
+        }
     }
 }
