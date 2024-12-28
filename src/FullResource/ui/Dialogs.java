@@ -15,7 +15,7 @@ import static mindustry.game.Team.sharded;
 
 public class Dialogs {
     public static final BaseDialog dialog_no = new BaseDialog("失败");
-    public static final BaseDialog dialog_yes = new BaseDialog("");
+    public static final BaseDialog dialog_yes = new BaseDialog("确认页面");
 
     public static void init() {
         setDialog_no();
