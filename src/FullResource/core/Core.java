@@ -2,6 +2,7 @@ package FullResource.core;
 
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.core.UI;
 import mindustry.type.Item;
 import mindustry.ui.Styles;
@@ -40,19 +41,22 @@ public class Core {
                 if (!sharded.items().has(item)) continue;
                 t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
                 t.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
+                t.add("->");
+                t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
+                t.add(UI.formatAmount(core.storageCapacity)).minWidth(5 * 8f).left().row();
             }
             t.row();
-            t.button("确认", Core::click_yes);
-            t.button("取消", Core::click_no);
+            t.button("确认", Core::click_yes).size(120f, 50f);
+            t.button("取消", Core::click_no).size(120f, 50f);
         });
     }
 
-    public static void resetItems() {
+    public static void resetItemTable() {
         itemTable.clearChildren();
     }
 
     public static void click_no() {
-        resetItems();
+        resetItemTable();
         dialog_yes.hide();
     }
 
