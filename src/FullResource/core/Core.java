@@ -26,11 +26,9 @@ public class Core {
     public static void click_yes() {
         resetDialog(itemTable);
         dialog_yes.hide();
-        dialog_no.show();
     }
     public static void click_no() {
         resetDialog(itemTable);
         dialog_yes.hide();
-        dialog_no.show();
     }
 }
