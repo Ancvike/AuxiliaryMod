@@ -38,11 +38,12 @@ public class Core {
             for (int i = 0; i < Vars.content.items().size; i++) {
                 Item item = Vars.content.item(i);
                 if (!sharded.items().has(item)) continue;
-                t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
-                t.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
+                t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel));
+                t.add(UI.formatAmount(core.items.get(item))).left();
                 t.add("->");
-                t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
-                t.add(UI.formatAmount(core.storageCapacity)).minWidth(5 * 8f).left().row();
+                t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel));
+                t.add(UI.formatAmount(core.storageCapacity)).left();
+                t.row();
             }
             t.row();
             t.button("确认", Core::click_yes).size(120f, 50f);
