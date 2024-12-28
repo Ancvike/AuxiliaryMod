@@ -20,7 +20,7 @@ public class Dialogs {
         dialog_yes.cont.add(itemTable);
     }
 
-    public static void resetDialog(Table itemTable) {
+    public static void resetDialog() {
         dialog_yes.clearChildren();
     }
 }
