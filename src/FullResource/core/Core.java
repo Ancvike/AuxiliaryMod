@@ -2,7 +2,6 @@ package FullResource.core;
 
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.core.UI;
 import mindustry.type.Item;
 import mindustry.ui.Styles;
