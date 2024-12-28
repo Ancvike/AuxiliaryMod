@@ -42,6 +42,7 @@ public class Core {
                 t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel).margin(2f));
                 t.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
             }
+            t.row();
             t.button("确认", Core::click_yes);
             t.button("取消", Core::click_no);
         });
