@@ -13,7 +13,6 @@ import static mindustry.Vars.state;
 import static mindustry.game.Team.sharded;
 
 public class Core {
-    private static Table itemTable;
 
     public static void init() {
     }
@@ -21,7 +20,7 @@ public class Core {
     public static void onClick() {
         if (!state.rules.waves && state.isCampaign()) {//区块是否占领
             //先检测核心是哪个,并get资源量及上限
-            itemTable = setTable();
+            Table itemTable = setTable();
             setDialog_yes(itemTable);
             dialog_yes.show();
         } else {
@@ -52,6 +51,7 @@ public class Core {
         resetDialog();
         dialog_yes.hide();
     }
+
     public static void click_yes() {
         changeItems();
         click_no();
