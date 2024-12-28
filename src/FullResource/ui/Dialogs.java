@@ -21,6 +21,6 @@ public class Dialogs {
     }
 
     public static void resetDialog(Table itemTable) {
-        dialog_yes.removeChild(itemTable);
+        dialog_yes.clearChildren();
     }
 }
