@@ -29,8 +29,8 @@ public class Dialogs {
     public static void setDialog_yes(Table itemTable) {
         dialog_yes.cont.add("确定要这样做吗?").row();
         dialog_yes.cont.add(itemTable).row();
-        dialog_yes.cont.button("确定", Core::click_yes).size(120f, 50f);
-        dialog_yes.cont.button("取消", Core::click_no).size(120f, 50f);
+        dialog_yes.cont.button("确定", Core::click_yes);
+        dialog_yes.cont.button("取消", Core::click_no);
     }
 
     public static Table getCoreItems() {
