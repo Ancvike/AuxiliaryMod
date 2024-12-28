@@ -1,5 +1,5 @@
 #the mod name as displayed in-game
-displayName: "FullResource"
+displayName: "满资源"
 
 #the internal name of your mod
 name: "full-resource"
@@ -11,7 +11,7 @@ author: "Ancvike"
 main: "FullResource.FullResource"
 
 #the mod description as seen in the mod dialog
-description: "666666666666666666666666666666"
+description: "在区块占领后点击按钮,将核心内资源达到上限,缩短积攒资源时间"
 
 #the mod version
 version: 1.0
