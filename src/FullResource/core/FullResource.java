@@ -11,16 +11,17 @@ import static FullResource.ui.Dialogs.*;
 import static mindustry.Vars.state;
 import static mindustry.game.Team.sharded;
 
-public class Core {
+public class FullResource {
     private static Table itemTable;
+
     public static void init() {
     }
 
     public static void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
             itemTable = setTable();
-            setDialog_yes(itemTable);
-            dialog_yes.show();
+            setDialog_yes(dialog_full, itemTable);
+            dialog_full.show();
         } else {
             dialog_no.show();
         }
@@ -45,8 +46,8 @@ public class Core {
                 t.row();
             }
             t.row();
-            t.button("确认", Core::click_yes).size(120f, 50f);
-            t.button("取消", Core::click_no).size(120f, 50f);
+            t.button("确认", FullResource::click_yes).size(120f, 50f);
+            t.button("取消", FullResource::click_no).size(120f, 50f);
         });
     }
 
@@ -56,7 +57,7 @@ public class Core {
 
     public static void click_no() {
         resetItemTable();
-        dialog_yes.hide();
+        dialog_full.hide();
     }
 
     public static void click_yes() {

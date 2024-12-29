@@ -1,11 +1,13 @@
 package FullResource.ui;
 
+import arc.scene.ui.Dialog;
 import arc.scene.ui.layout.Table;
 import mindustry.ui.dialogs.BaseDialog;
 
 public class Dialogs {
     public static final BaseDialog dialog_no = new BaseDialog("失败");
-    public static final BaseDialog dialog_yes = new BaseDialog("确认页面");
+    public static final BaseDialog dialog_full = new BaseDialog("确认页面");
+    public static final BaseDialog dialog_restoration = new BaseDialog("确认页面");
 
     public static void init() {
         setDialog_no();
@@ -16,7 +18,7 @@ public class Dialogs {
         dialog_no.addCloseButton();
     }
 
-    public static void setDialog_yes(Table itemTable) {
-        dialog_yes.cont.add(itemTable);
+    public static void setDialog_yes(Dialog dialog, Table table) {
+        dialog.cont.add(table);
     }
 }

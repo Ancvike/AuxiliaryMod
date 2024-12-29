@@ -1,6 +1,5 @@
 package FullResource;
 
-import FullResource.core.Core;
 import FullResource.ui.HugUI;
 import FullResource.ui.Dialogs;
 import arc.Events;
@@ -12,7 +11,7 @@ public class FullResource extends Mod {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             HugUI.init();
             Dialogs.init();
-            Core.init();
+            FullResource.core.FullResource.init();
         });
     }
 }
