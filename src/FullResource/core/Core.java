@@ -33,12 +33,15 @@ public class Core {
             t.add("资源列表").row();
             CoreBlock.CoreBuild core = sharded.core();
             if (core == null || core.items == null) {
+                t.add("核心内无资源");
                 return;
             }
             for (int i = 0; i < Vars.content.items().size; i++) {
                 Item item = Vars.content.item(i);
                 if (!sharded.items().has(item)) continue;
-                t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel));
+                t.image(item.uiIcon).size(iconSmall)
+//                      .tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel))
+                ;
                 t.add(UI.formatAmount(core.items.get(item)));
                 t.add("->");
                 t.image(item.uiIcon).size(iconSmall).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel));
