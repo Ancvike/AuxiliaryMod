@@ -1,5 +1,6 @@
 package FullResource;
 
+import FullResource.core.BuildingRestoration;
 import FullResource.ui.HugUI;
 import FullResource.ui.Dialogs;
 import arc.Events;
@@ -12,6 +13,7 @@ public class FullResource extends Mod {
             HugUI.init();
             Dialogs.init();
             FullResource.core.FullResource.init();
+            BuildingRestoration.init();
         });
     }
 }
