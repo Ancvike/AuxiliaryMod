@@ -8,7 +8,9 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
 public class HugUI {
+    static BaseDialog dialog = new BaseDialog("full");
     public static void init() {
+
         Vars.ui.hudGroup.fill(t -> {
             t.button(Icon.export, Core::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
@@ -18,17 +20,17 @@ public class HugUI {
             t.x = 300;
         });
         Vars.ui.hudGroup.fill(t -> {
-            t.button(Icon.export, HugUI::onClick).size(40f).tooltip(tt -> {
+            t.button(Icon.export, dialog::show).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "full").pad(2f);
             });
             t.top();
             t.x = 400;
         });
+        onClick();
     }
 
     public static void onClick() {
-        BaseDialog dialog = new BaseDialog("full");
         Table table = new Table();
         table.image(Icon.fileTextFillSmall);
         table.image(Icon.fileTextFill);
