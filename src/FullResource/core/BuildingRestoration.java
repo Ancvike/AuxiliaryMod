@@ -9,6 +9,7 @@ public class BuildingRestoration {
     private static final Table table = new Table();
 
     public static void init() {
+        table.add("你确定要修复所有建筑吗?").size(200f, 50f);
         table.button("确认", BuildingRestoration::click_yes).size(120f, 50f);
         table.button("取消", BuildingRestoration::click_no).size(120f, 50f);
     }
