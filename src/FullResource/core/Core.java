@@ -17,8 +17,7 @@ public class Core {
     }
 
     public static void onClick() {
-        if (!state.rules.waves && state.isCampaign()) {//区块是否占领
-            //先检测核心是哪个,并get资源量及上限
+        if (!state.rules.waves && state.isCampaign()) {
             itemTable = setTable();
             setDialog_yes(itemTable);
             dialog_yes.show();
