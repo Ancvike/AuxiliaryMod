@@ -38,9 +38,9 @@ public class Core {
                 Item item = Vars.content.item(i);
                 if (!sharded.items().has(item)) continue;
                 t.image(item.uiIcon).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel)).margin(2f);
-                t.add(UI.formatAmount(core.items.get(item)));
+                t.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
                 t.image(item.uiIcon).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel)).margin(2f);
-                t.add(UI.formatAmount(core.storageCapacity));
+                t.add(UI.formatAmount(core.storageCapacity)).minWidth(5 * 8f).left();
                 t.row();
             }
             t.row();
