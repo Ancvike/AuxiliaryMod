@@ -8,7 +8,7 @@ name: "auxiliary-mod"
 author: "Ancvike"
 
 #the fully qualified main class of the mod
-main: "collection.Collection"
+main: "auxiliary.AuxiliaryMod"
 
 #the mod description as seen in the mod dialog
 description: "满资源,建筑修复"

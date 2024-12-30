@@ -1,11 +1,11 @@
-package collection.core;
+package auxiliary.core;
 
 import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import mindustry.gen.Groups;
 
-import static collection.ui.Dialogs.*;
+import static auxiliary.ui.Dialogs.*;
 import static mindustry.Vars.state;
 
 public class BuildingRestoration {

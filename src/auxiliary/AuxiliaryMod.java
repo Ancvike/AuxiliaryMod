@@ -1,13 +1,13 @@
-package collection;
+package auxiliary;
 
-import collection.core.BuildingRestoration;
-import collection.ui.HugUI;
-import collection.ui.Dialogs;
+import auxiliary.core.BuildingRestoration;
+import auxiliary.ui.HugUI;
+import auxiliary.ui.Dialogs;
 import arc.Events;
 import mindustry.game.EventType;
 import mindustry.mod.Mod;
 
-public class Collection extends Mod {
+public class AuxiliaryMod extends Mod {
     public void init() {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             HugUI.init();

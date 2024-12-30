@@ -1,7 +1,7 @@
-package collection.ui;
+package auxiliary.ui;
 
-import collection.core.BuildingRestoration;
-import collection.core.FullResource;
+import auxiliary.core.BuildingRestoration;
+import auxiliary.core.FullResource;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
