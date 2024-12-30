@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   buildJar:
-    runs-on: ubuntu-latest-24.04
+    runs-on: ubuntu-latest-22.04
 
     steps:
     - uses: actions/checkout@v2
