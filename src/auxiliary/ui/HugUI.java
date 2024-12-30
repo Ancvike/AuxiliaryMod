@@ -22,7 +22,7 @@ public class HugUI {
                 tt.label(() -> "建筑修复").pad(2f);
             });
             t.top();
-            t.x = 320;
+            t.x = 350;
         });
     }
 }
