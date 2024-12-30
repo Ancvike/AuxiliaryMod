@@ -1,4 +1,4 @@
-package FullResource.ui;
+package collection.ui;
 
 import arc.scene.ui.Dialog;
 import arc.scene.ui.layout.Table;
