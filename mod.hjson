@@ -1,8 +1,8 @@
 #the mod name as displayed in-game
-displayName: "mod合集"
+displayName: "辅助mod"
 
 #the internal name of your mod
-name: "mod-collection"
+name: "auxiliary-mod"
 
 #your name
 author: "Ancvike"
