@@ -1,4 +1,4 @@
-package collection.ui;
+package auxiliary.ui;
 
 import arc.scene.ui.Dialog;
 import arc.scene.ui.layout.Table;

@@ -1,4 +1,4 @@
-package collection.core;
+package auxiliary.core;
 
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
@@ -7,7 +7,7 @@ import mindustry.type.Item;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.storage.CoreBlock;
 
-import static collection.ui.Dialogs.*;
+import static auxiliary.ui.Dialogs.*;
 import static mindustry.Vars.state;
 import static mindustry.game.Team.sharded;
 
