@@ -1,6 +1,9 @@
 package FullResource.core;
 
+import arc.scene.ui.Label;
+import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
+import mindustry.gen.Groups;
 
 import static FullResource.ui.Dialogs.*;
 import static mindustry.Vars.state;
@@ -33,6 +36,19 @@ public class BuildingRestoration {
     }
 
     public static void restoration() {
+        Groups.build.each(b -> b.health(b.block.health));
+    }
 
+    Table rebuildRule() {
+        return new Table(table -> {
+            table.top().left();
+
+            Label label = table.add("Block Health: ").get();
+            Slider slider = new Slider(0, 100, 1, false);
+            slider.changed(() -> label.setText("Block Health: " + (int) slider.getValue() + "%"));
+            slider.change();
+            slider.moved(hp -> Groups.build.each(b -> b.health(b.block.health * hp / 100)));
+            table.add(slider);
+        });
     }
 }
