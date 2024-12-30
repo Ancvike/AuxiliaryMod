@@ -14,6 +14,7 @@ public class FullResource extends Mod {
             Dialogs.init();
             FullResource.core.FullResource.init();
             BuildingRestoration.init();
+
         });
     }
 }
