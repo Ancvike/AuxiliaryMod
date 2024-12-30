@@ -19,7 +19,7 @@ public class BuildingRestoration {
 
     public static void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
-
+            dialog_restoration.add(table);
             dialog_restoration.show();
         } else {
             dialog_no.show();
