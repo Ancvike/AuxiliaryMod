@@ -35,6 +35,6 @@ public class BuildingRestoration {
     }
 
     public static void restoration() {
-        Groups.build.each(b -> b.health(b.block.health));
+        Groups.build.each(b -> b.health = b.maxHealth);
     }
 }
