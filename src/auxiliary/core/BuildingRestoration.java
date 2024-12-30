@@ -3,6 +3,7 @@ package auxiliary.core;
 import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
+import auxiliary.ui.Dialogs;
 import mindustry.gen.Groups;
 
 import static auxiliary.ui.Dialogs.*;
@@ -19,7 +20,7 @@ public class BuildingRestoration {
 
     public static void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
-            dialog_restoration.add(table);
+            Dialogs.setDialog_yes(dialog_restoration, table);
             dialog_restoration.show();
         } else {
             dialog_no.show();
