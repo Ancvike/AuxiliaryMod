@@ -14,11 +14,11 @@ public class BuildingRestoration {
         table.add("你确定要修复所有建筑吗?").size(200f, 50f);
         table.button("确认", BuildingRestoration::click_yes).size(120f, 50f);
         table.button("取消", BuildingRestoration::click_no).size(120f, 50f);
+        Dialogs.setDialog_yes(dialog_restoration, table);
     }
 
     public static void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
-            Dialogs.setDialog_yes(dialog_restoration, table);
             dialog_restoration.show();
         } else {
             dialog_no.show();
