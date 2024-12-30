@@ -1,17 +1,17 @@
 #the mod name as displayed in-game
-displayName: "满资源"
+displayName: "mod合集"
 
 #the internal name of your mod
-name: "full-resource"
+name: "mod-collection"
 
 #your name
 author: "Ancvike"
 
 #the fully qualified main class of the mod
-main: "FullResource.FullResource"
+main: "collection.Collection"
 
 #the mod description as seen in the mod dialog
-description: "在区块占领后点击按钮,将核心内资源达到上限,缩短积攒资源时间"
+description: "满资源,建筑修复"
 
 #the mod version
 version: 1.0

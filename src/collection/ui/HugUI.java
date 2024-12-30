@@ -1,7 +1,7 @@
-package FullResource.ui;
+package collection.ui;
 
-import FullResource.core.BuildingRestoration;
-import FullResource.core.FullResource;
+import collection.core.BuildingRestoration;
+import collection.core.FullResource;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
