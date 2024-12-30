@@ -46,7 +46,7 @@ public class FullResource {
                 t.row();
             }
             t.row();
-            t.button("确认", FullResource::click_yes).size(120f, 50f);
+            t.button("确定", FullResource::click_yes).size(120f, 50f);
             t.button("取消", FullResource::click_no).size(120f, 50f);
         });
     }
