@@ -71,6 +71,7 @@ public class HugUI {
         table.image(Icon.fileImageSmall).size(50);
         table.image(Icon.fileImage).size(50);
         table.image(Icon.imageSmall).size(50);
+        table.row();
         table.image(Icon.image).size(50);
         table.image(Icon.editSmall).size(50);
         table.image(Icon.edit).size(50);
@@ -102,6 +103,7 @@ public class HugUI {
         table.image(Icon.listSmall).size(50);
         table.image(Icon.list).size(50);
         table.image(Icon.cancelSmall).size(50);
+        table.row();
         table.image(Icon.cancel).size(50);
         table.image(Icon.moveSmall).size(50);
         table.image(Icon.move).size(50);
@@ -133,6 +135,7 @@ public class HugUI {
         table.image(Icon.grid).size(50);
         table.image(Icon.flipXSmall).size(50);
         table.image(Icon.flipX).size(50);
+        table.row();
         table.image(Icon.flipYSmall).size(50);
         table.image(Icon.flipY).size(50);
         table.image(Icon.diagonalSmall).size(50);
@@ -149,7 +152,6 @@ public class HugUI {
         table.image(Icon.googleplay).size(50);
         table.image(Icon.androidSmall).size(50);
         table.image(Icon.android).size(50);
-        table.row();
         table.image(Icon.trelloSmall).size(50);
         table.image(Icon.trello).size(50);
         table.image(Icon.logicSmall).size(50);
@@ -165,6 +167,7 @@ public class HugUI {
         table.image(Icon.itchioSmall).size(50);
         table.image(Icon.itchio).size(50);
         table.image(Icon.lineSmall).size(50);
+        table.row();
         table.image(Icon.line).size(50);
         table.image(Icon.adminSmall).size(50);
         table.image(Icon.admin).size(50);
@@ -196,6 +199,7 @@ public class HugUI {
         table.image(Icon.refresh1).size(50);
         table.image(Icon.noneSmall).size(50);
         table.image(Icon.none).size(50);
+        table.row();
         table.image(Icon.pencilSmall).size(50);
         table.image(Icon.pencil).size(50);
         table.image(Icon.refreshSmall).size(50);
@@ -227,6 +231,7 @@ public class HugUI {
         table.image(Icon.pickSmall).size(50);
         table.image(Icon.pick).size(50);
         table.image(Icon.exportSmall).size(50);
+        table.row();
         table.image(Icon.export).size(50);
         table.image(Icon.downloadSmall).size(50);
         table.image(Icon.download).size(50);
