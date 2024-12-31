@@ -6,8 +6,10 @@ import auxiliary.core.FullResource;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 
 public class HugUI {
+    static BaseDialog dialog = new BaseDialog("");
     static Table table = new Table();
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {
@@ -26,8 +28,9 @@ public class HugUI {
             t.top();
             t.x = 350;
         });
+        load();
         Vars.ui.hudGroup.fill(t -> {
-            t.button(Icon.editorSmall, HugUI::load).size(40f).tooltip(tt -> {
+            t.button(Icon.editorSmall, dialog::show).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "编辑器").pad(2f);
             });
@@ -255,5 +258,7 @@ public class HugUI {
         table.image(Icon.defense).size(50);
         table.image(Icon.planetSmall).size(50);
         table.image(Icon.planet).size(50);
+        dialog.cont.add(table);
+        dialog.addCloseButton();
     }
 }
