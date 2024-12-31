@@ -17,7 +17,7 @@ public class HugUI {
             t.x = 300;
         });
         Vars.ui.hudGroup.fill(t -> {
-            t.button(Icon.fill, BuildingRestoration::onClick).size(40f).tooltip(tt -> {
+            t.button(Icon.refresh1, BuildingRestoration::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "建筑修复").pad(2f);
             });
