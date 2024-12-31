@@ -85,7 +85,6 @@ public class HugUI {
         table.image(Icon.folder).size(50);
         table.image(Icon.steamSmall).size(50);
         table.image(Icon.steam).size(50);
-        table.row();
         table.image(Icon.downOpenSmall).size(50);
         table.image(Icon.downOpen).size(50);
         table.image(Icon.leftOpenSmall).size(50);
