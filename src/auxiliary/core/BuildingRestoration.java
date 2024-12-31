@@ -2,9 +2,11 @@ package auxiliary.core;
 
 import arc.scene.ui.layout.Table;
 import auxiliary.ui.Dialogs;
-import mindustry.gen.Groups;
+import mindustry.game.Team;
+import mindustry.gen.Building;
 
-import static auxiliary.ui.Dialogs.*;
+import static auxiliary.ui.Dialogs.dialog_no;
+import static auxiliary.ui.Dialogs.dialog_restoration;
 import static mindustry.Vars.state;
 
 public class BuildingRestoration {
@@ -35,6 +37,8 @@ public class BuildingRestoration {
     }
 
     public static void restoration() {
-        Groups.build.each(b -> b.health != b.maxHealth, b -> b.health = b.maxHealth);
+        for (Building building : Team.sharded.data().buildings) {
+            building.health = building.maxHealth;
+        }
     }
 }
