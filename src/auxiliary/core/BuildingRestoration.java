@@ -1,7 +1,11 @@
 package auxiliary.core;
 
 import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
 import auxiliary.ui.Dialogs;
+import mindustry.entities.EntityGroup;
+import mindustry.entities.effect.SeqEffect;
+import mindustry.gen.Building;
 import mindustry.gen.Groups;
 
 import static auxiliary.ui.Dialogs.*;
@@ -11,7 +15,7 @@ public class BuildingRestoration {
     private static final Table table = new Table();
 
     public static void init() {
-        table.add("你确定要修复所有建筑吗?").size(200f, 50f);
+        table.add("你确定要修复所有建筑吗?").size(200f, 50f).row();
         table.button("确定", BuildingRestoration::click_yes).size(120f, 50f);
         table.button("取消", BuildingRestoration::click_no).size(120f, 50f);
         Dialogs.setDialog_yes(dialog_restoration, table);
@@ -35,6 +39,6 @@ public class BuildingRestoration {
     }
 
     public static void restoration() {
-        Groups.build.each(b -> b.health = b.maxHealth);
+        Groups.build.each(b -> b.health != b.maxHealth, b -> b.health = b.maxHealth);
     }
 }
