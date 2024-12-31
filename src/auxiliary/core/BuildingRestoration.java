@@ -1,11 +1,7 @@
 package auxiliary.core;
 
 import arc.scene.ui.layout.Table;
-import arc.struct.Seq;
 import auxiliary.ui.Dialogs;
-import mindustry.entities.EntityGroup;
-import mindustry.entities.effect.SeqEffect;
-import mindustry.gen.Building;
 import mindustry.gen.Groups;
 
 import static auxiliary.ui.Dialogs.*;
