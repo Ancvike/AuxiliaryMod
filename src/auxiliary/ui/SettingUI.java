@@ -1,11 +1,11 @@
 package auxiliary.ui;
 
+import arc.scene.ui.layout.Table;
 import mindustry.Vars;
-import mindustry.gen.Icon;
-import mindustry.ui.Styles;
 
 public class SettingUI {
+    static Table table = new Table();
     public static void init() {
-        Vars.ui.settings.button("AuxiliaryMod设置", Icon.settings, Styles.flatt, 8*4f, () -> {});
+        Vars.ui.settings.addCategory("AuxiliaryMod设置", table -> {});
     }
 }
