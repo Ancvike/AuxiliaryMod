@@ -1,14 +1,11 @@
 package auxiliary.core.Function;
 
-import arc.Core;
 import arc.KeyBinds;
 import arc.func.Cons;
 import arc.input.KeyCode;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.Dialog;
-import arc.struct.OrderedMap;
-import arc.util.Time;
 import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
@@ -19,17 +16,15 @@ import static auxiliary.core.binding.Binding.UP;
 public class Setting extends Dialog {
     public static Cons<SettingsMenuDialog.SettingsTable> settingTable;
     private static String conveyorUP_KeyBind = "U";
-    protected Dialog rebindDialog;
-    protected KeyBinds.KeyBind rebindKey = null;
+    protected static Dialog rebindDialog;
+    protected static KeyBinds.KeyBind rebindKey = null;
 
-    public void init() {
+    public static void init() {
         settingTable = settingTable -> {
             settingTable.add("11111111111").left().padRight(40).padLeft(8);
             settingTable.label(() -> conveyorUP_KeyBind).color(Pal.accent).left().minWidth(90).padRight(20);
 
-            settingTable.button("重新绑定", Styles.defaultt, () -> {
-                openDialog(UP);
-            }).width(130f);
+            settingTable.button("重新绑定", Styles.defaultt, () -> openDialog(UP)).width(130f);
             settingTable.button("恢复默认", Styles.defaultt, Setting::setDefault_KeyBind).width(130f).pad(2f).padLeft(4f);
             settingTable.row();
         };
@@ -39,7 +34,7 @@ public class Setting extends Dialog {
         conveyorUP_KeyBind = "U";
     }
 
-    private void openDialog(KeyBinds.KeyBind name) {
+    private static void openDialog(KeyBinds.KeyBind name) {
         rebindKey = name;
         rebindDialog = new Dialog("请按一个键…");
         rebindDialog.titleTable.getCells().first().pad(4);
@@ -56,7 +51,6 @@ public class Setting extends Dialog {
             }
         });
         rebindDialog.show();
-        Time.runTask(1f, () -> getScene().setScrollFocus(rebindDialog));
     }
 
 //    void rebind(KeyBinds.Section section, KeyBinds.KeyBind bind, KeyCode newKey){
