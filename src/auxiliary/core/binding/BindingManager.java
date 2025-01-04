@@ -1,12 +1,16 @@
 package auxiliary.core.binding;
 
+import arc.input.KeyCode;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static arc.Core.input;
-import static auxiliary.core.binding.Binding.UP;
 
 public class BindingManager {
     public static void init() {
-        input.keyTap(UP);
+        if (input.keyTap(KeyCode.u)) {
+            BaseDialog dialog = new BaseDialog("Test");
+            dialog.addCloseButton();
+            dialog.show();
+        }
     }
 }
