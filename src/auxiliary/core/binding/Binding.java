@@ -5,7 +5,7 @@ import arc.input.InputDevice;
 import arc.input.KeyCode;
 
 public enum Binding implements KeyBinds.KeyBind {
-;
+    UP(KeyCode.u),;
 
     private final KeyBinds.KeybindValue defaultValue;
     private final String category;
