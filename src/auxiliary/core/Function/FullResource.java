@@ -1,4 +1,4 @@
-package auxiliary.core;
+package auxiliary.core.Function;
 
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
