@@ -8,7 +8,7 @@ import static auxiliary.ui.Dialogs.dialog_setting;
 
 public class SettingUI {
 
-    public void init() {
+    public static void init() {
         if (!Core.app.isDesktop()) {
             dialog_setting.show();
         } else {
