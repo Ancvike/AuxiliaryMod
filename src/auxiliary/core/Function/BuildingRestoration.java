@@ -1,12 +1,12 @@
 package auxiliary.core.Function;
 
 import arc.scene.ui.layout.Table;
-import auxiliary.ui.Dialogs;
+import auxiliary.dialogs.Dialogs;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 
-import static auxiliary.ui.Dialogs.dialog_no;
-import static auxiliary.ui.Dialogs.dialog_restoration;
+import static auxiliary.dialogs.Dialogs.dialog_no;
+import static auxiliary.dialogs.Dialogs.dialog_restoration;
 import static mindustry.Vars.state;
 
 public class BuildingRestoration {

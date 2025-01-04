@@ -7,7 +7,7 @@ import mindustry.type.Item;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.storage.CoreBlock;
 
-import static auxiliary.ui.Dialogs.*;
+import static auxiliary.dialogs.Dialogs.*;
 import static mindustry.Vars.state;
 import static mindustry.game.Team.sharded;
 
