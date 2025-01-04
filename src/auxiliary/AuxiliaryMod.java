@@ -1,6 +1,7 @@
 package auxiliary;
 
-import auxiliary.core.Function.BuildingRestoration;
+import auxiliary.core.Function.FunctionManager;
+import auxiliary.core.binding.BindingManager;
 import auxiliary.ui.Dialogs;
 import arc.Events;
 import auxiliary.ui.UIManager;
@@ -12,7 +13,8 @@ public class AuxiliaryMod extends Mod {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             UIManager.init();
             Dialogs.init();
-            BuildingRestoration.init();
+            BindingManager.init();
+            FunctionManager.init();
         });
     }
 }
