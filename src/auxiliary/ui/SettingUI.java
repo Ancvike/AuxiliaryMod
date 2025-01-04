@@ -1,18 +1,14 @@
 package auxiliary.ui;
 
 import arc.Core;
-import mindustry.Vars;
 
-import static auxiliary.core.Function.Setting.settingTable;
-import static auxiliary.ui.Dialogs.dialog_setting;
+import static auxiliary.dialogs.Dialogs.dialog_setting;
 
 public class SettingUI {
 
     public static void init() {
-        if (!Core.app.isDesktop()) {
+        if (Core.app.isDesktop()) {
             dialog_setting.show();
-        } else {
-            Vars.ui.settings.addCategory("AuxiliaryMod设置", settingTable);
         }
     }
 }

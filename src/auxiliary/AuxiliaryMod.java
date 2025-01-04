@@ -1,8 +1,7 @@
 package auxiliary;
 
 import auxiliary.core.Function.FunctionManager;
-import auxiliary.core.binding.BindingManager;
-import auxiliary.ui.Dialogs;
+import auxiliary.dialogs.Dialogs;
 import arc.Events;
 import auxiliary.ui.UIManager;
 import mindustry.game.EventType;
@@ -13,7 +12,6 @@ public class AuxiliaryMod extends Mod {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             Dialogs.init();
             UIManager.init();
-            BindingManager.init();
             FunctionManager.init();
         });
     }
