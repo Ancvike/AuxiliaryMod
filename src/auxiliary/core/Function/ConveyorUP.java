@@ -1,16 +1,17 @@
 package auxiliary.core.Function;
 
 import arc.Core;
-import arc.Events;
 import mindustry.Vars;
-import mindustry.game.EventType;
 import mindustry.input.Binding;
 import mindustry.ui.dialogs.BaseDialog;
+
+import static arc.Core.assets;
 
 public class ConveyorUP {
 
     public static void init() {
-        Events.on(EventType.WorldLoadEvent.class, e -> {
+        //????????????????????????????????
+        if (assets.update(500)) {
             if (!Core.app.isDesktop()) return;
             if (Vars.state.isGame()) {
                 if (!Core.scene.hasKeyboard()) {
@@ -21,6 +22,6 @@ public class ConveyorUP {
                     }
                 }
             }
-        });
+        }
     }
 }
