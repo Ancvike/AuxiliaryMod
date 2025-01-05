@@ -44,5 +44,6 @@ public class SettingUI {
                 return false;
             }
         });
+        rebindDialog.show();
     }
 }
