@@ -9,22 +9,24 @@ import mindustry.ui.Styles;
 public class HugUI {
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {
+            t.top();
+            t.left();
             t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
 //                tt.label(() -> "资源全满").pad(2f);
                 tt.label(() -> t.x + "|||" + t.y).pad(2f);
             });
-            t.top();
-            t.left();
+
         });
         Vars.ui.hudGroup.fill(t -> {
+            t.bottom();
+            t.right();
             t.button(Icon.refresh1, BuildingRestoration::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
 //                tt.label(() -> "建筑修复").pad(2f);
                 tt.label(() -> t.x + "|||" + t.y).pad(2f);
             });
-            t.bottom();
-            t.right();
+
         });
     }
 }
