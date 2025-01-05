@@ -9,7 +9,7 @@ import mindustry.ui.Styles;
 public class HugUI {
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {
-            t.top();
+            t.x = 500;
             t.left();
             t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
