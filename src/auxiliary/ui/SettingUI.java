@@ -8,6 +8,7 @@ import arc.scene.event.InputListener;
 import arc.scene.ui.Dialog;
 import auxiliary.core.binding.MyKeyBind;
 import mindustry.Vars;
+import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.SettingsMenuDialog;
 
@@ -18,7 +19,7 @@ public class SettingUI {
     static Cons<SettingsMenuDialog.SettingsTable> settingTable = table -> {
         if (Core.app.isDesktop()) {
             table.add("传送带升级").left().padRight(40).padLeft(8);
-            table.label(() -> UP.nowKeyCode.value).left().minWidth(90).padRight(20);
+            table.label(() -> UP.nowKeyCode.value).color(Pal.accent).left().minWidth(90).padRight(20);
 
             table.button("重新绑定", Styles.defaultt, () -> openDialog(UP)).width(130f);
 
