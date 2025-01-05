@@ -11,18 +11,20 @@ public class HugUI {
         Vars.ui.hudGroup.fill(t -> {
             t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
-                tt.label(() -> "资源全满").pad(2f);
+//                tt.label(() -> "资源全满").pad(2f);
+                tt.label(() -> t.x + "|||" + t.y).pad(2f);
             });
             t.top();
-            t.x = 300;
+            t.left();
         });
         Vars.ui.hudGroup.fill(t -> {
             t.button(Icon.refresh1, BuildingRestoration::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
-                tt.label(() -> "建筑修复").pad(2f);
+//                tt.label(() -> "建筑修复").pad(2f);
+                tt.label(() -> t.x + "|||" + t.y).pad(2f);
             });
-            t.top();
-            t.x = 350;
+            t.bottom();
+            t.right();
         });
     }
 }
