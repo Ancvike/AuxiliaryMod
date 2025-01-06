@@ -6,8 +6,6 @@ import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
 
-import static auxiliary.tables.Tables.UITable;
-
 public class HugUI {
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {

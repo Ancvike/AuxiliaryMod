@@ -21,6 +21,6 @@ public class Tables {
     }
 
     public static void changeSlider(Slider slider) {
-        
+
     }
 }
