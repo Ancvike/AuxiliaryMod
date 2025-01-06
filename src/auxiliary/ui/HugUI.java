@@ -11,7 +11,7 @@ import static auxiliary.function.UIMovement.table_full;
 
 public class HugUI {
     public static void init() {
-        Vars.ui.hudGroup.fill((Table.DrawRect) table_full);
+        Vars.ui.hudGroup.addChild(table_full);
 
         Vars.ui.hudGroup.fill(t -> {
             t.top();

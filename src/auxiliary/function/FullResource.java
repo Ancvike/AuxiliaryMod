@@ -1,7 +1,5 @@
 package auxiliary.function;
 
-import arc.scene.ui.Button;
-import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.core.UI;
