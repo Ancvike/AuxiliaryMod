@@ -32,13 +32,6 @@ public class FullResource {
 
     private static Table setTable() {
         return new Table(t -> {
-            t.add("调整当前图标的位置").row();
-            t.add("X:");
-            Slider sliderX = new Slider(0, 500, 1, false);
-            t.add(sliderX.getValue() + "").row();
-            t.add("Y:");
-            Slider sliderY = new Slider(0, 500, 1, false);
-            t.add(sliderY.getValue() + "").row();
             t.add("资源列表").row();
             CoreBlock.CoreBuild core = sharded.core();
             if (core == null || core.items == null) {
@@ -85,13 +78,5 @@ public class FullResource {
             if (!sharded.items().has(item)) continue;
             core.items.set(item, core.storageCapacity);
         }
-    }
-
-    public static void changeSlider(Slider slider) {
-//        slider.changed(() -> {
-//            label.setText("Block Health: "+(int)slider.getValue()+"%");
-//        });
-//        slider.change();
-//        slider.moved(hp->Groups.build.each(b->b.health(b.block.health*hp/100)));
     }
 }
