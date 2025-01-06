@@ -9,8 +9,8 @@ import mindustry.ui.Styles;
 public class HugUI {
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {
-            t.x = 850;
-            t.top();
+            t.x = 800;
+            t.y = 300;
             t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
 //                tt.label(() -> "资源全满").pad(2f);
