@@ -9,7 +9,7 @@ import mindustry.ui.Styles;
 public class HugUI {
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {
-            t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
+            t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "资源全满").pad(2f);
             });
@@ -18,7 +18,7 @@ public class HugUI {
         });
 
         Vars.ui.hudGroup.fill(t -> {
-            t.button(Icon.refresh1, BuildingRestoration::onClick).size(40f).tooltip(tt -> {
+            t.button(Icon.refresh1, BuildingRestoration::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "建筑修复").pad(2f);
             });
