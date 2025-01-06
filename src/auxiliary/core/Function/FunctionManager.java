@@ -1,5 +1,7 @@
 package auxiliary.core.Function;
 
+import auxiliary.function.FullResource;
+
 public class FunctionManager {
     public static void init() {
         FullResource.init();
