@@ -10,7 +10,7 @@ public class HugUI {
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {
             t.x = 750;
-            t.y = 400;
+            t.y = 450;
             t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
 //                tt.label(() -> "资源全满").pad(2f);
