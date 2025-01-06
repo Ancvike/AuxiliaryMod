@@ -15,9 +15,12 @@ public class UIMovement {
         });
         table_full.x = 400;
         table_full.top();
-        table_Building.button(Icon.refresh1, BuildingRestoration::onClick).size(40f).tooltip(tt -> {
-            tt.setBackground(Styles.black6);
-            tt.label(() -> "建筑修复").pad(2f);
+        table_Building.button(Icon.refresh1, BuildingRestoration::onClick).size(40f).tooltip(t -> {
+            t.setBackground(Styles.black6);
+            t.label(() -> "建筑修复").pad(2f);
+
         });
+        table_Building.top();
+        table_Building.x = 450;
     }
 }
