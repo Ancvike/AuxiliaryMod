@@ -1,15 +1,16 @@
-package auxiliary.core.Function;
+package auxiliary.function;
 
 import arc.scene.ui.layout.Table;
 import auxiliary.dialogs.Dialogs;
 import mindustry.game.Team;
 import mindustry.gen.Building;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.dialogs.Dialogs.dialog_no;
-import static auxiliary.dialogs.Dialogs.dialog_restoration;
 import static mindustry.Vars.state;
 
 public class BuildingRestoration {
+    private static final BaseDialog dialog_restoration = new BaseDialog("确认页面");
     private static final Table table = new Table();
 
     public static void init() {
@@ -27,16 +28,16 @@ public class BuildingRestoration {
         }
     }
 
-    public static void click_no() {
+    private static void click_no() {
         dialog_restoration.hide();
     }
 
-    public static void click_yes() {
+    private static void click_yes() {
         restoration();
         click_no();
     }
 
-    public static void restoration() {
+    private static void restoration() {
         for (Building building : Team.sharded.data().buildings) {
             building.health = building.maxHealth;
         }
