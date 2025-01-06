@@ -1,18 +1,29 @@
 package auxiliary.ui;
 
-import arc.func.Cons;
-import arc.scene.ui.layout.Table;
-import auxiliary.function.UIMovement;
+import auxiliary.function.BuildingRestoration;
+import auxiliary.function.FullResource;
 import mindustry.Vars;
-
-import static auxiliary.function.UIMovement.table_Building;
-import static auxiliary.function.UIMovement.table_full;
+import mindustry.gen.Icon;
+import mindustry.ui.Styles;
 
 public class HugUI {
     public static void init() {
-        UIMovement.init();
-        Vars.ui.hudGroup.fill((Cons<Table>) table_full);
+        Vars.ui.hudGroup.fill(t -> {
+            t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "资源全满").pad(2f);
+            });
+            t.x = 400;
+            t.top();
+        });
 
-        Vars.ui.hudGroup.addChild(table_Building);
+        Vars.ui.hudGroup.fill(t -> {
+            t.button(Icon.refresh1, BuildingRestoration::onClick).size(40f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "建筑修复").pad(2f);
+            });
+            t.top();
+            t.x = 450;
+        });
     }
 }
