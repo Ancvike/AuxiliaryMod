@@ -1,5 +1,6 @@
 package auxiliary.function;
 
+import arc.scene.ui.Button;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
@@ -19,7 +20,6 @@ public class FullResource {
 
     public static void init() {
     }
-
     public static void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
             itemsTable = setTable();
