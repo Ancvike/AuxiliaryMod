@@ -1,22 +1,18 @@
 package auxiliary.ui;
 
+import arc.scene.ui.layout.Table;
 import auxiliary.function.BuildingRestoration;
 import auxiliary.function.FullResource;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
 
+import static auxiliary.function.UIMovement.table_full;
+
 public class HugUI {
     public static void init() {
-        Vars.ui.hudGroup.fill(t -> {
-            t.top();
-            t.x = 400;
-            t.button(Icon.fill, FullResource::onClick).size(40f).tooltip(tt -> {
-                tt.setBackground(Styles.black6);
-                tt.label(() -> "资源全满").pad(2f);
-            });
+        Vars.ui.hudGroup.fill((Table.DrawRect) table_full);
 
-        });
         Vars.ui.hudGroup.fill(t -> {
             t.top();
             t.x = 450;
