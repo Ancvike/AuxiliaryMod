@@ -6,17 +6,18 @@ import arc.input.KeyCode;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.Dialog;
-import auxiliary.core.binding.MyKeyBind;
+import auxiliary.binding.MyKeyBind;
 import mindustry.Vars;
 import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 import mindustry.ui.dialogs.SettingsMenuDialog;
 
-import static auxiliary.core.binding.MyKeyBind.*;
-import static auxiliary.dialogs.Dialogs.dialog_setting;
+import static auxiliary.binding.MyKeyBind.*;
 
 public class SettingUI {
-    static Cons<SettingsMenuDialog.SettingsTable> settingTable = table -> {
+    private static final BaseDialog dialog_setting = new BaseDialog("确认页面");
+    private static final Cons<SettingsMenuDialog.SettingsTable> settingTable = table -> {
         if (Core.app.isDesktop()) {
             table.add("传送带升级").left().padRight(40).padLeft(8);
             table.label(() -> UP.nowKeyCode.value).color(Pal.accent).left().minWidth(90).padRight(20);
@@ -31,6 +32,7 @@ public class SettingUI {
     };
 
     public static void init() {
+        setDialog_setting();
         Vars.ui.settings.addCategory("AuxiliaryMod设置", settingTable);
     }
 
@@ -46,5 +48,10 @@ public class SettingUI {
             }
         });
         rebindDialog.show();
+    }
+
+    private static void setDialog_setting() {
+        dialog_setting.cont.add("当前Mod设置只有电脑端的更改键盘键位设置,其他端无需该功能").row();
+        dialog_setting.addCloseButton();
     }
 }

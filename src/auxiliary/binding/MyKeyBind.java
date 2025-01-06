@@ -1,4 +1,4 @@
-package auxiliary.core.binding;
+package auxiliary.binding;
 
 import arc.input.KeyCode;
 
