@@ -6,7 +6,7 @@ import mindustry.ui.dialogs.BaseDialog;
 
 public class Dialogs {
     public static final BaseDialog dialog_no = new BaseDialog("失败");
-    public static final BaseDialog dialog_full = new BaseDialog("确认页面");
+
     public static final BaseDialog dialog_restoration = new BaseDialog("确认页面");
     public static final BaseDialog dialog_setting = new BaseDialog("确认页面");
 

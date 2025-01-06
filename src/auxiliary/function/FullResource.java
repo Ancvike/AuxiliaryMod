@@ -1,4 +1,4 @@
-package auxiliary.core.Function;
+package auxiliary.function;
 
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
@@ -6,6 +6,7 @@ import mindustry.Vars;
 import mindustry.core.UI;
 import mindustry.type.Item;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.blocks.storage.CoreBlock;
 
 import static auxiliary.dialogs.Dialogs.*;
@@ -13,22 +14,23 @@ import static mindustry.Vars.state;
 import static mindustry.game.Team.sharded;
 
 public class FullResource {
-    private static Table itemTable;
+    private static final BaseDialog dialog_full = new BaseDialog("确认页面");
+    private static Table itemsTable;
 
     public static void init() {
     }
 
     public static void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
-            itemTable = setTable();
-            setDialog_yes(dialog_full, itemTable);
+            itemsTable = setTable();
+            setDialog_yes(dialog_full, itemsTable);
             dialog_full.show();
         } else {
             dialog_no.show();
         }
     }
 
-    public static Table setTable() {
+    private static Table setTable() {
         return new Table(t -> {
             t.add("调整当前图标的位置").row();
             t.add("X:");
@@ -59,21 +61,21 @@ public class FullResource {
         });
     }
 
-    public static void resetItemTable() {
-        itemTable.clearChildren();
+    private static void resetItemsTable() {
+        itemsTable.clearChildren();
     }
 
-    public static void click_no() {
-        resetItemTable();
+    private static void click_no() {
+        resetItemsTable();
         dialog_full.hide();
     }
 
-    public static void click_yes() {
+    private static void click_yes() {
         changeItems();
         click_no();
     }
 
-    public static void changeItems() {
+    private static void changeItems() {
         CoreBlock.CoreBuild core = sharded.core();
         if (core == null || core.items == null) {
             return;
