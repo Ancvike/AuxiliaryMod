@@ -16,18 +16,20 @@ public class UIMovement {
     public static int[] position;
     private static final SliderLabel label = new SliderLabel("资源全满", 400, 400);
     private static final SliderLabel label2 = new SliderLabel("建筑修复", 450, 400);
-
+    private static final SliderLabel label3 = new SliderLabel("移动UI", 350, 400);
 
     public static void init() {
 
     }
 
     public static void onClick() {
-        position = new int[4];
+        position = new int[6];
         position[0] = label.getX();
         position[1] = label.getY();
         position[2] = label2.getX();
         position[3] = label2.getY();
+        position[4] = label3.getX();
+        position[5] = label3.getY();
         table = setTable();
         setDialog_yes(dialog_movement, table);
         dialog_movement.show();
@@ -55,6 +57,12 @@ public class UIMovement {
     }
 
     public static void click_reset() {
+        label.setX(400);
+        label.setY(400);
+        label2.setX(450);
+        label2.setY(400);
+        label3.setX(350);
+        label3.setY(400);
         click_no();
         dialog_movement.hide();
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
@@ -77,11 +85,21 @@ public class UIMovement {
             t.x = 450;
             t.top();
         });
+        Vars.ui.hudGroup.fill(t -> {
+            t.name = "building-restoration";
+            t.button(Icon.refresh1, BuildingRestoration::onClick).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "移动UI").pad(2f);
+            });
+            t.x = 350;
+            t.top();
+        });
     }
 
     private static void reset() {
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
+        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("ui-move"));
         Vars.ui.hudGroup.fill(t -> {
             t.name = "full-resource";
             t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
@@ -99,6 +117,15 @@ public class UIMovement {
             });
             t.x = label2.getX();
             t.y = label2.getY();
+        });
+        Vars.ui.hudGroup.fill(t -> {
+            t.name = "ui-move";
+            t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "移动UI").pad(2f);
+            });
+            t.x = label3.getX();
+            t.y = label3.getY();
         });
     }
 }
@@ -144,5 +171,13 @@ class SliderLabel {
             sliderY.change();
             sliderY.moved(movedY -> y = (int) movedY);
         });
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
