@@ -68,6 +68,7 @@ public class UIMovement {
         dialog_movement.hide();
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
+        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("ui-move"));
         Vars.ui.hudGroup.fill(t -> {
             t.name = "full-resource";
             t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
@@ -87,8 +88,8 @@ public class UIMovement {
             t.top();
         });
         Vars.ui.hudGroup.fill(t -> {
-            t.name = "building-restoration";
-            t.button(Icon.refresh1, BuildingRestoration::onClick).size(50f).tooltip(tt -> {
+            t.name = "ui-move";
+            t.button(Icon.menu, UIMovement::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "移动UI").pad(2f);
             });
@@ -121,7 +122,7 @@ public class UIMovement {
         });
         Vars.ui.hudGroup.fill(t -> {
             t.name = "ui-move";
-            t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
+            t.button(Icon.menu, UIMovement::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "移动UI").pad(2f);
             });
