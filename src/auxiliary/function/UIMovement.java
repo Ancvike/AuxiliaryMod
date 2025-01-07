@@ -45,7 +45,7 @@ public class UIMovement {
 
     private static void click_no() {
         dialog_movement.hide();
-        dialog_movement.clearChildren();
+        table.clearChildren();
     }
 
     private static void click_yes() {
@@ -53,6 +53,7 @@ public class UIMovement {
         click_no();
     }
     public static void click_reset() {
+        click_no();
         dialog_movement.hide();
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
