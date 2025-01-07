@@ -35,10 +35,11 @@ public class UIMovement {
 
     private static void setTable() {
         table.add("UI移动界面").row();
-        table.add(label.setTable());
-        table.add(label2.setTable());
+        table.add(label.setTable()).row();
+        table.add(label2.setTable()).row();
         table.button("确定", UIMovement::click_yes).size(120f, 50f);
         table.button("取消", UIMovement::click_no).size(120f, 50f);
+        table.button("重置", UIMovement::click_reset).size(120f, 50f);
     }
 
     private static void click_no() {
@@ -50,7 +51,28 @@ public class UIMovement {
         reset();
         click_no();
     }
-
+    public static void click_reset() {
+        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
+        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
+        Vars.ui.hudGroup.fill(t -> {
+            t.name = "full-resource";
+            t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "资源全满").pad(2f);
+            });
+            t.x = 400;
+            t.top();
+        });
+        Vars.ui.hudGroup.fill(t -> {
+            t.name = "building-restoration";
+            t.button(Icon.refresh1, BuildingRestoration::onClick).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "建筑修复").pad(2f);
+            });
+            t.x = 450;
+            t.top();
+        });
+    }
     private static void reset() {
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
