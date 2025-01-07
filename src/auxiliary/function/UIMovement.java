@@ -125,8 +125,6 @@ class LabelShow {
     public Table setTable() {
         Slider sliderX = new Slider(-750, 750, 1, false);
         Slider sliderY = new Slider(-400, 400, 1, false);
-        sliderX.setSize(600, 50);
-        sliderY.setSize(600, 50);
         sliderX.setValue(x);
         sliderY.setValue(y);
         Label labelX = new Label("X:" + sliderX.getValue());
