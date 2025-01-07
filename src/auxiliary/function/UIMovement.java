@@ -152,7 +152,7 @@ class SliderLabel {
     }
 
     public Table setTable() {
-        Slider sliderX = new Slider(-750, 750, 1, false);
+        Slider sliderX = new Slider(-775, 775, 1, false);
         Slider sliderY = new Slider(-425, 425, 1, false);
         sliderX.setValue(x);
         sliderY.setValue(y);
