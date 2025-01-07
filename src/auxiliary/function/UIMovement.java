@@ -1,6 +1,5 @@
 package auxiliary.function;
 
-import arc.scene.ui.Dialog;
 import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
