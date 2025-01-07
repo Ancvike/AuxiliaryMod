@@ -14,8 +14,8 @@ public class UIMovement {
     private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
     private static Table table;
     public static int[] position;
-    private static final LabelShow label = new LabelShow("资源全满", 400, 400);
-    private static final LabelShow label2 = new LabelShow("建筑修复", 450, 400);
+    private static final SliderLabel label = new SliderLabel("资源全满", 400, 400);
+    private static final SliderLabel label2 = new SliderLabel("建筑修复", 450, 400);
 
 
     public static void init() {
@@ -103,12 +103,12 @@ public class UIMovement {
     }
 }
 
-class LabelShow {
+class SliderLabel {
     private final String text;
     private int x;
     private int y;
 
-    public LabelShow(String text, int x, int y) {
+    public SliderLabel(String text, int x, int y) {
         this.text = text;
         this.x = x;
         this.y = y;
