@@ -44,7 +44,7 @@ public class UIMovement {
 
     private static void click_no() {
         dialog_movement.hide();
-        table.clearChildren();
+        dialog_movement.removeChild(table);
     }
 
     private static void click_yes() {
