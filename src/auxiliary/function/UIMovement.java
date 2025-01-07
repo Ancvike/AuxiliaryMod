@@ -40,6 +40,7 @@ public class UIMovement {
             t.add("UI移动界面").row();
             t.add(label.setTable()).row();
             t.add(label2.setTable()).row();
+            t.add(label3.setTable()).row();
             t.button("确定", UIMovement::click_yes).size(120f, 50f);
             t.button("取消", UIMovement::click_no).size(120f, 50f);
             t.button("重置", UIMovement::click_reset).size(120f, 50f);
