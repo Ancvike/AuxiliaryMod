@@ -2,6 +2,7 @@ package auxiliary.ui;
 
 import auxiliary.function.BuildingRestoration;
 import auxiliary.function.FullResource;
+import auxiliary.function.UIMovement;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
@@ -10,7 +11,7 @@ public class HugUI {
     public static void init() {
         Vars.ui.hudGroup.fill(t -> {
             t.name = "ui-move";
-            t.button(Icon.fill, HugUI::reset).size(50f).tooltip(tt -> {
+            t.button(Icon.menu, UIMovement::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "移动UI").pad(2f);
             });
@@ -36,9 +37,5 @@ public class HugUI {
             t.top();
             t.x = 450;
         });
-    }
-
-    public static void reset() {
-        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
     }
 }
