@@ -59,11 +59,11 @@ public class UIMovement {
 
     public static void click_reset() {
         label.setX(400);
-        label.setY(400);
+        label.setY(425);
         label2.setX(450);
-        label2.setY(400);
+        label2.setY(425);
         label3.setX(350);
-        label3.setY(400);
+        label3.setY(425);
         click_no();
         dialog_movement.hide();
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
