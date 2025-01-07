@@ -12,7 +12,7 @@ import static auxiliary.dialogs.Dialogs.setDialog_yes;
 
 public class UIMovement {
     private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
-    private static final Table table = new Table();
+    private static Table table;
     public static int[] position;
     private static final LabelShow label = new LabelShow("资源全满", 400, 400);
     private static final LabelShow label2 = new LabelShow("建筑修复", 450, 400);
@@ -28,18 +28,20 @@ public class UIMovement {
         position[1] = label.getY();
         position[2] = label2.getX();
         position[3] = label2.getY();
-        setTable();
+        table = setTable();
         setDialog_yes(dialog_movement, table);
         dialog_movement.show();
     }
 
-    private static void setTable() {
-        table.add("UI移动界面").row();
-        table.add(label.setTable()).row();
-        table.add(label2.setTable()).row();
-        table.button("确定", UIMovement::click_yes).size(120f, 50f);
-        table.button("取消", UIMovement::click_no).size(120f, 50f);
-        table.button("重置", UIMovement::click_reset).size(120f, 50f);
+    private static Table setTable() {
+        return new Table(t -> {
+            t.add("UI移动界面").row();
+            t.add(label.setTable()).row();
+            t.add(label2.setTable()).row();
+            t.button("确定", UIMovement::click_yes).size(120f, 50f);
+            t.button("取消", UIMovement::click_no).size(120f, 50f);
+            t.button("重置", UIMovement::click_reset).size(120f, 50f);
+        });
     }
 
     private static void click_no() {
@@ -51,6 +53,7 @@ public class UIMovement {
         reset();
         click_no();
     }
+
     public static void click_reset() {
         click_no();
         dialog_movement.hide();
@@ -75,6 +78,7 @@ public class UIMovement {
             t.top();
         });
     }
+
     private static void reset() {
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
