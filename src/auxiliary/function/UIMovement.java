@@ -7,11 +7,12 @@ import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.dialogs.Dialogs.setDialog_yes;
 
 public class UIMovement {
-    private static final Dialog dialog_movement = new Dialog();
+    private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
     private static final Table table = new Table();
     public static int[] position;
     private static final LabelShow label = new LabelShow("资源全满", 400, 400);
@@ -44,7 +45,7 @@ public class UIMovement {
 
     private static void click_no() {
         dialog_movement.hide();
-        dialog_movement.removeChild(table);
+        dialog_movement.clearChildren();
     }
 
     private static void click_yes() {
@@ -52,6 +53,7 @@ public class UIMovement {
         click_no();
     }
     public static void click_reset() {
+        dialog_movement.hide();
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
         Vars.ui.hudGroup.fill(t -> {
@@ -117,14 +119,15 @@ class LabelShow {
     }
 
     public Table setTable() {
-        Slider sliderX = new Slider(0, 750, 1, false);
-        Slider sliderY = new Slider(0, 400, 1, false);
+        Slider sliderX = new Slider(-750, 750, 1, false);
+        Slider sliderY = new Slider(-400, 400, 1, false);
         sliderX.setValue(x);
         sliderY.setValue(y);
         Label labelX = new Label("X:" + sliderX.getValue());
         Label labelY = new Label("Y:" + sliderY.getValue());
         return new Table(t -> {
             t.add(text).row();
+
             t.add(labelX);
             t.add(sliderX).row();
             sliderX.changed(() -> labelX.setText("X:" + sliderX.getValue()));
