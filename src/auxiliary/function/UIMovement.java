@@ -14,9 +14,9 @@ public class UIMovement {
     private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
     private static Table table;
     public static int[] position;
-    private static final SliderLabel label = new SliderLabel("资源全满", 400, 400);
-    private static final SliderLabel label2 = new SliderLabel("建筑修复", 450, 400);
-    private static final SliderLabel label3 = new SliderLabel("移动UI", 350, 400);
+    private static final SliderLabel label = new SliderLabel("资源全满", 400, 425);
+    private static final SliderLabel label2 = new SliderLabel("建筑修复", 450, 425);
+    private static final SliderLabel label3 = new SliderLabel("移动UI", 350, 425);
 
     public static void init() {
 
