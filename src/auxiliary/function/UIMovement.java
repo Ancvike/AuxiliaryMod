@@ -1,5 +1,6 @@
 package auxiliary.function;
 
+import arc.Core;
 import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
@@ -152,8 +153,8 @@ class SliderLabel {
     }
 
     public Table setTable() {
-        Slider sliderX = new Slider(-775, 775, 1, false);
-        Slider sliderY = new Slider(-425, 425, 1, false);
+        Slider sliderX = new Slider(-(Core.graphics.getWidth() / 2f), (Core.graphics.getWidth() / 2f) - 50, 1, false);
+        Slider sliderY = new Slider(-(Core.graphics.getHeight() / 2f), (Core.graphics.getHeight() / 2f) - 50, 1, false);
         sliderX.setValue(x);
         sliderY.setValue(y);
         Label labelX = new Label("X:" + sliderX.getValue());
