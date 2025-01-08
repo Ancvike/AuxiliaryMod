@@ -17,9 +17,9 @@ public class FunctionManager {
                     tt.setBackground(Styles.black6);
                     tt.label(() -> function.labelName).pad(2f);
                 });
-                if (Core.settings.getBool("landscape")) t.row();
+                if (!(Core.app.isAndroid() && Core.settings.getBool("landscape"))) t.row();
             }
-            if (Core.settings.getBool("landscape")) {
+            if (Core.app.isAndroid() && Core.settings.getBool("landscape")) {
                 t.bottom();
             } else {
                 t.right();
