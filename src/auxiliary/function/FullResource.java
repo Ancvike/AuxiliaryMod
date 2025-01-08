@@ -16,12 +16,12 @@ import static mindustry.game.Team.sharded;
 public class FullResource extends Function {
     private static final BaseDialog dialog_full = new BaseDialog("确认页面");
     private Table itemsTable;
-    public static FullResource fullResource = new FullResource();
 
     public FullResource() {
-        super("full-resource", Icon.fill, fullResource::onClick, "资源全满");
+        super("full-resource", Icon.fill, "资源全满");
     }
 
+    @Override
     public void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
             itemsTable = setItemsTable();
@@ -51,8 +51,8 @@ public class FullResource extends Function {
                 t.row();
             }
             t.row();
-            t.button("确定", fullResource::click_yes).size(120f, 50f);
-            t.button("取消", fullResource::click_no).size(120f, 50f);
+            t.button("确定", this::click_yes).size(120f, 50f);
+            t.button("取消", this::click_no).size(120f, 50f);
         });
     }
 
