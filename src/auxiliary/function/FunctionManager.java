@@ -1,12 +1,11 @@
 package auxiliary.function;
 
 import arc.Core;
-import arc.Events;
-import arc.scene.event.EventListener;
-import arc.scene.event.SceneEvent;
+import arc.input.KeyCode;
+import arc.scene.event.ClickListener;
+import arc.scene.event.InputEvent;
 import arc.struct.Seq;
 import mindustry.Vars;
-import mindustry.game.EventType;
 import mindustry.ui.Styles;
 
 public class FunctionManager {
@@ -30,33 +29,25 @@ public class FunctionManager {
                 t.right();
             }
         });
-        Events.on(EventType.WorldLoadEndEvent.class, e -> {
-            if (Core.app.isAndroid()) {
-                Vars.ui.settings.addListener(new EventListener() {
-                    @Override
-                    public boolean handle(SceneEvent sceneEvent) {
-                        if (Core.app.isAndroid() && Core.settings.getBool("landscape")) {
-                            Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
-                            Vars.ui.hudGroup.fill(t -> {
-                                t.name = "auxiliary-functions";
-                                for (Function function : functions) {
-                                    t.add(function.setTable()).size(50f).tooltip(tt -> {
-                                        tt.setBackground(Styles.black6);
-                                        tt.label(() -> function.labelName).pad(2f);
-                                    });
-                                    if (!(Core.app.isAndroid() && Core.settings.getBool("landscape"))) t.row();
-                                }
-                                if (Core.app.isAndroid() && Core.settings.getBool("landscape")) {
-                                    t.bottom();
-                                } else {
-                                    t.right();
-                                }
-                            });
-                        }
-                        return false;
+        if (Core.app.isAndroid()) {
+            Vars.ui.hudGroup.addListener(new ClickListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
+                    if (Core.settings.getBool("landscape")) {
+                        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
+                        Vars.ui.hudGroup.fill(t -> {
+                            for (Function function : functions) {
+                                t.add(function.setTable()).size(50f).tooltip(tt -> {
+                                    tt.setBackground(Styles.black6);
+                                    tt.label(() -> function.labelName).pad(2f);
+                                });
+                            }
+                            t.bottom();
+                        });
                     }
-                });
-            }
-        });
+                    return false;
+                }
+            });
+        }
     }
 }
