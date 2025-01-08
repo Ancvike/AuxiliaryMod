@@ -3,6 +3,7 @@ package auxiliary.function;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.core.UI;
+import mindustry.gen.Icon;
 import mindustry.type.Item;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
@@ -12,15 +13,18 @@ import static auxiliary.dialogs.Dialogs.*;
 import static mindustry.Vars.state;
 import static mindustry.game.Team.sharded;
 
-public class FullResource {
+public class FullResource extends Function {
     private static final BaseDialog dialog_full = new BaseDialog("确认页面");
-    private static Table itemsTable;
+    private Table itemsTable;
+    public static FullResource fullResource = new FullResource();
 
-    public static void init() {
+    public FullResource() {
+        super("full-resource", Icon.fill, fullResource::onClick, "资源全满");
     }
-    public static void onClick() {
+
+    public void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
-            itemsTable = setTable();
+            itemsTable = setItemsTable();
             setDialog_yes(dialog_full, itemsTable);
             dialog_full.show();
         } else {
@@ -28,7 +32,7 @@ public class FullResource {
         }
     }
 
-    private static Table setTable() {
+    public Table setItemsTable() {
         return new Table(t -> {
             t.add("资源列表").row();
             CoreBlock.CoreBuild core = sharded.core();
@@ -47,26 +51,22 @@ public class FullResource {
                 t.row();
             }
             t.row();
-            t.button("确定", FullResource::click_yes).size(120f, 50f);
-            t.button("取消", FullResource::click_no).size(120f, 50f);
+            t.button("确定", fullResource::click_yes).size(120f, 50f);
+            t.button("取消", fullResource::click_no).size(120f, 50f);
         });
     }
 
-    private static void resetItemsTable() {
+    private void click_no() {
         itemsTable.clearChildren();
-    }
-
-    private static void click_no() {
-        resetItemsTable();
         dialog_full.hide();
     }
 
-    private static void click_yes() {
+    private void click_yes() {
         changeItems();
         click_no();
     }
 
-    private static void changeItems() {
+    private void changeItems() {
         CoreBlock.CoreBuild core = sharded.core();
         if (core == null || core.items == null) {
             return;
