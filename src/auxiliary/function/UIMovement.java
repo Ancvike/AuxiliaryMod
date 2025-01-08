@@ -10,6 +10,8 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.dialogs.Dialogs.setDialog_yes;
+import static auxiliary.function.BuildingRestoration.br;
+import static auxiliary.function.FullResource.fullResource;
 
 public class UIMovement {
     private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
@@ -72,7 +74,7 @@ public class UIMovement {
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("ui-move"));
         Vars.ui.hudGroup.fill(t -> {
             t.name = "full-resource";
-            t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
+            t.button(Icon.fill, fullResource::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "资源全满").pad(2f);
             });
@@ -81,7 +83,7 @@ public class UIMovement {
         });
         Vars.ui.hudGroup.fill(t -> {
             t.name = "building-restoration";
-            t.button(Icon.refresh1, BuildingRestoration::onClick).size(50f).tooltip(tt -> {
+            t.button(Icon.refresh1, br::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "建筑修复").pad(2f);
             });
@@ -105,7 +107,7 @@ public class UIMovement {
         Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("ui-move"));
         Vars.ui.hudGroup.fill(t -> {
             t.name = "full-resource";
-            t.button(Icon.fill, FullResource::onClick).size(50f).tooltip(tt -> {
+            t.button(Icon.fill, fullResource::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "资源全满").pad(2f);
             });
@@ -114,7 +116,7 @@ public class UIMovement {
         });
         Vars.ui.hudGroup.fill(t -> {
             t.name = "building-restoration";
-            t.button(Icon.refresh1, BuildingRestoration::onClick).size(50f).tooltip(tt -> {
+            t.button(Icon.refresh1, br::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "建筑修复").pad(2f);
             });
@@ -153,8 +155,8 @@ class SliderLabel {
     }
 
     public Table setTable() {
-        Slider sliderX = new Slider(-(Core.graphics.getWidth() / 2f), (Core.graphics.getWidth() / 2f) - 50, 1, false);
-        Slider sliderY = new Slider(-(Core.graphics.getHeight() / 2f), (Core.graphics.getHeight() / 2f) - 50, 1, false);
+        Slider sliderX = new Slider(-(Core.graphics.getWidth() / 2f + 25), (Core.graphics.getWidth() / 2f) - 25, 1, false);
+        Slider sliderY = new Slider(-(Core.graphics.getHeight() / 2f + 25), (Core.graphics.getHeight() / 2f) - 25, 1, false);
         sliderX.setValue(x);
         sliderY.setValue(y);
         Label labelX = new Label("X:" + sliderX.getValue());
