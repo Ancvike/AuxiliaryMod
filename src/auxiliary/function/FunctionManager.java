@@ -1,9 +1,6 @@
 package auxiliary.function;
 
 import arc.Core;
-import arc.input.KeyCode;
-import arc.scene.event.ClickListener;
-import arc.scene.event.InputEvent;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.ui.Styles;
