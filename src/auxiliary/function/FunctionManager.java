@@ -13,7 +13,7 @@ public class FunctionManager {
 
         Vars.ui.hudGroup.fill(t -> {
             for (Function function : functions) {
-                t.add(function.setTable()).size(40f).tooltip(tt -> {
+                t.add(function.setTable()).size(50f).tooltip(tt -> {
                     tt.setBackground(Styles.black6);
                     tt.label(() -> function.labelName).pad(2f);
                 });
