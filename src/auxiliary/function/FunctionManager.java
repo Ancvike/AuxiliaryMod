@@ -1,5 +1,6 @@
 package auxiliary.function;
 
+import arc.Core;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.ui.Styles;
@@ -16,9 +17,13 @@ public class FunctionManager {
                     tt.setBackground(Styles.black6);
                     tt.label(() -> function.labelName).pad(2f);
                 });
-                t.row();
+                if (!(Core.app.isAndroid() && Core.settings.getBool("landscape"))) t.row();
             }
-            t.right();
+            if (Core.app.isAndroid() && Core.settings.getBool("landscape")) {
+                t.bottom();
+            } else {
+                t.right();
+            }
         });
     }
 }
