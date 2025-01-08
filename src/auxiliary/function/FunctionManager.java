@@ -29,25 +29,5 @@ public class FunctionManager {
                 t.right();
             }
         });
-        if (Core.app.isAndroid()) {
-            Vars.ui.hudGroup.addListener(new ClickListener() {
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
-                    if (Core.settings.getBool("landscape")) {
-                        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
-                        Vars.ui.hudGroup.fill(t -> {
-                            for (Function function : functions) {
-                                t.add(function.setTable()).size(50f).tooltip(tt -> {
-                                    tt.setBackground(Styles.black6);
-                                    tt.label(() -> function.labelName).pad(2f);
-                                });
-                            }
-                            t.bottom();
-                        });
-                    }
-                    return false;
-                }
-            });
-        }
     }
 }
