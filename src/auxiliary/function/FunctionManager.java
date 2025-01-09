@@ -3,6 +3,7 @@ package auxiliary.function;
 import arc.Core;
 import arc.Events;
 import arc.struct.Seq;
+import auxiliary.ui.UIManager;
 import mindustry.Vars;
 
 import mindustry.game.EventType;
@@ -32,10 +33,17 @@ public class FunctionManager {
                 t.right();
             }
         });
-        Events.on(EventType.MenuOptionChooseEvent.class, e -> {
-            BaseDialog dialog = new BaseDialog("");
-            dialog.addCloseButton();
-            dialog.show();
+        Events.on(UIManager.class, e -> {
+        });
+        Events.on(EventType.WorldLoadEvent.class, e -> {
+            for (int i = 0; i < 10; i++) {
+                BaseDialog dialog = new BaseDialog("");
+                dialog.addCloseButton();
+                dialog.show();
+            }
         });
     }
+}
+
+class MyEventType {
 }
