@@ -16,44 +16,61 @@ public class FunctionManager {
     public static void init() {
         functions.addAll(new FullResource(), new BuildingRestoration());
 
-        Vars.ui.hudGroup.fill(t -> {
-            t.name = "auxiliary-functions";
-            for (Function function : functions) {
-                t.add(function.setTable()).size(50f).tooltip(tt -> {
-                    tt.setBackground(Styles.black6);
-                    tt.label(() -> function.labelName).pad(2f);
-                });
-                if (!(mobile && Core.settings.getBool("landscape"))) t.row();
-            }
-            if (mobile && Core.settings.getBool("landscape")) {
+        if (mobile && Core.settings.getBool("landscape")) {
+            Vars.ui.hudGroup.fill(t -> {
+                t.name = "auxiliary-functions-mobile-landscape";
+                for (Function function : functions) {
+                    t.add(function.setTable()).size(50f).tooltip(tt -> {
+                        tt.setBackground(Styles.black6);
+                        tt.label(() -> function.labelName).pad(2f);
+                    });
+                }
                 t.bottom();
-            } else {
                 t.right();
-            }
-        });
-
-//        if (mobile && Core.settings.getBool("landscape")) {
-            Events.run(EventType.Trigger.uiDrawEnd, () -> {
-                Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
-                Vars.ui.hudGroup.fill(t -> {
-                    t.name = "auxiliary-functions";
-                    for (Function function : functions) {
-                        t.add(function.setTable()).size(50f).tooltip(tt -> {
-                            tt.setBackground(Styles.black6);
-                            tt.label(() -> function.labelName).pad(2f);
-                        });
-                        if (!(mobile && Core.settings.getBool("landscape"))) t.row();
-                    }
-                    if (mobile && Core.settings.getBool("landscape")) {
-                        t.bottom();
-                    } else {
-                        t.right();
-                    }
-                });
             });
-//        }
+        } else {
+            Vars.ui.hudGroup.fill(t -> {
+                t.name = "auxiliary-functions";
+                for (Function function : functions) {
+                    t.add(function.setTable()).size(50f).tooltip(tt -> {
+                        tt.setBackground(Styles.black6);
+                        tt.label(() -> function.labelName).pad(2f);
+                    });
+                    t.row();
+                }
+                t.right();
+            });
+        }
+        if (mobile) {
+            Events.run(EventType.Trigger.uiDrawEnd, () -> {
+                if (Core.settings.getBool("landscape") && Vars.ui.hudGroup.find("auxiliary-functions") != null) {
+                    Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
+                    Vars.ui.hudGroup.fill(t -> {
+                        t.name = "auxiliary-functions-mobile-landscape";
+                        for (Function function : functions) {
+                            t.add(function.setTable()).size(50f).tooltip(tt -> {
+                                tt.setBackground(Styles.black6);
+                                tt.label(() -> function.labelName).pad(2f);
+                            });
+                        }
+                        t.bottom();
+                        t.right();
+                    });
+                } else {
+                    Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape"));
+                    Vars.ui.hudGroup.fill(t -> {
+                        t.name = "auxiliary-functions";
+                        for (Function function : functions) {
+                            t.add(function.setTable()).size(50f).tooltip(tt -> {
+                                tt.setBackground(Styles.black6);
+                                tt.label(() -> function.labelName).pad(2f);
+                            });
+                            t.row();
+                        }
+                        t.right();
+                    });
+                }
+            });
+        }
     }
-}
-
-class MyEventType {
 }
