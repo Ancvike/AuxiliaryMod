@@ -10,9 +10,8 @@
 //import mindustry.ui.dialogs.BaseDialog;
 //
 //import static auxiliary.dialogs.Dialogs.setDialog_yes;
-//import static auxiliary.function.BuildingRestoration.br;
 //
-//public class UIMovement {
+//public class UIMovement extends Function{
 //    private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
 //    private static Table table;
 //    public static int[] position;
@@ -20,11 +19,15 @@
 //    private static final SliderLabel label2 = new SliderLabel("建筑修复", 450, 425);
 //    private static final SliderLabel label3 = new SliderLabel("移动UI", 350, 425);
 //
-//    public static void init() {
-//
+//    public UIMovement() {
+//        super("ui-move", Icon.menu, "UI移动");
 //    }
 //
-//    public static void onClick() {
+//    public void init() {
+//
+//    }
+//    @Override
+//    public void onClick() {
 //        position = new int[6];
 //        position[0] = label.getX();
 //        position[1] = label.getY();
@@ -37,7 +40,7 @@
 //        dialog_movement.show();
 //    }
 //
-//    private static Table setTable() {
+//    private Table setTable() {
 //        return new Table(t -> {
 //            t.add("UI移动界面").row();
 //            t.add(label.setTable()).row();
@@ -49,17 +52,17 @@
 //        });
 //    }
 //
-//    private static void click_no() {
+//    private void click_no() {
 //        dialog_movement.hide();
 //        table.clearChildren();
 //    }
 //
-//    private static void click_yes() {
+//    private void click_yes() {
 //        reset();
 //        click_no();
 //    }
 //
-//    public static void click_reset() {
+//    public void click_reset() {
 //        label.setX(400);
 //        label.setY(425);
 //        label2.setX(450);
@@ -100,7 +103,7 @@
 //        });
 //    }
 //
-//    private static void reset() {
+//    private void reset() {
 //        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
 //        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
 //        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("ui-move"));
