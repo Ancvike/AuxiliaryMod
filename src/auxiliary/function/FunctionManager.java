@@ -2,10 +2,15 @@ package auxiliary.function;
 
 import arc.Core;
 import arc.Events;
+import arc.input.KeyCode;
+import arc.scene.event.ClickListener;
+import arc.scene.event.InputEvent;
+import arc.scene.event.InputListener;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.game.EventType;
+import mindustry.input.MobileInput;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
@@ -35,37 +40,20 @@ public class FunctionManager {
         });
         check();
     }
+
     public static void check() {
         if (!mobile) {
-            while (true) {
-                Events.on(EventType.WorldLoadEvent.class, e -> {
-                    time += Time.delta;
-                    if (time >= 1f) {
-                        time = 0;
+            Events.on(EventType.WorldLoadEvent.class, e -> {
+                Vars.ui.hudGroup.addListener(new ClickListener() {
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
                         BaseDialog dialog = new BaseDialog("");
                         dialog.addCloseButton();
                         dialog.show();
-//                    if (Core.settings.getBool("landscape")) {
-//                        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
-//                        Vars.ui.hudGroup.fill(t -> {
-//                            t.name = "auxiliary-functions";
-//                            for (Function function : functions) {
-//                                t.add(function.setTable()).size(50f).tooltip(tt -> {
-//                                    tt.setBackground(Styles.black6);
-//                                    tt.label(() -> function.labelName).pad(2f);
-//                                });
-//                                if (!(mobile && Core.settings.getBool("landscape"))) t.row();
-//                            }
-//                            if (mobile && Core.settings.getBool("landscape")) {
-//                                t.bottom();
-//                            } else {
-//                                t.right();
-//                            }
-//                        });
-//                    }
+                        return false;
                     }
                 });
-            }
+            });
         }
     }
 }
