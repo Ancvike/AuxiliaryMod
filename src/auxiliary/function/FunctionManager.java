@@ -1,9 +1,13 @@
 package auxiliary.function;
 
 import arc.Core;
+import arc.Events;
 import arc.struct.Seq;
 import mindustry.Vars;
+
+import mindustry.game.EventType;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.mobile;
 
@@ -28,6 +32,10 @@ public class FunctionManager {
                 t.right();
             }
         });
+        Events.on(EventType.WorldLoadEvent.class, e -> {
+            BaseDialog dialog = new BaseDialog("");
+            dialog.addCloseButton();
+            dialog.show();
+        });
     }
 }
-
