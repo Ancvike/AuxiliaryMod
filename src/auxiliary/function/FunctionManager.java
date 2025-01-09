@@ -32,7 +32,7 @@ public class FunctionManager {
                 t.right();
             }
         });
-        Events.on(EventType.WorldLoadEvent.class, e -> {
+        Events.on(EventType.MenuOptionChooseEvent.class, e -> {
             BaseDialog dialog = new BaseDialog("");
             dialog.addCloseButton();
             dialog.show();
