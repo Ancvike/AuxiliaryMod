@@ -46,17 +46,17 @@ public class FunctionManager {
             Events.run(EventType.Trigger.uiDrawEnd, () -> {
                 if (Core.settings.getBool("landscape") && Vars.ui.hudGroup.find("auxiliary-functions") != null) {
                     Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
-//                    Vars.ui.hudGroup.fill(t -> {
-//                        t.name = "auxiliary-functions-mobile-landscape";
-//                        for (Function function : functions) {
-//                            t.add(function.setTable()).size(50f).tooltip(tt -> {
-//                                tt.setBackground(Styles.black6);
-//                                tt.label(() -> function.labelName).pad(2f);
-//                            });
-//                        }
-//                        t.bottom();
-//                        t.right();
-//                    });
+                    Vars.ui.hudGroup.fill(t -> {
+                        t.name = "auxiliary-functions-mobile-landscape";
+                        for (Function function : functions) {
+                            t.add(function.setTable()).size(50f).tooltip(tt -> {
+                                tt.setBackground(Styles.black6);
+                                tt.label(() -> function.labelName).pad(2f);
+                            });
+                        }
+                        t.bottom();
+                        t.right();
+                    });
                     BaseDialog dialog = new BaseDialog("s->h");
                     dialog.addCloseButton();
                     dialog.show();
