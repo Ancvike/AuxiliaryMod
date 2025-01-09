@@ -35,9 +35,9 @@ public class FunctionManager {
         });
 
         if (!mobile) {
-            Events.run(EventType.Trigger.update, () -> {
+            Events.on(EventType.WorldLoadEvent.class, e -> {
                 time += Time.delta;
-                if (time > 1f) {
+                if (time >= 1f) {
                     time = 0;
                     BaseDialog dialog = new BaseDialog("");
                     dialog.addCloseButton();
