@@ -34,31 +34,29 @@ public class FunctionManager {
         });
 
         if (!mobile) {
-            Events.on(EventType.WorldLoadEndEvent.class, e -> {
-                Events.run(EventType.Trigger.update, () -> {
-                    time += Time.delta;
-                    if (time > 1f) {
-                        time = 0;
-                        if (Core.settings.getBool("landscape")) {
-                            Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
-                            Vars.ui.hudGroup.fill(t -> {
-                                t.name = "auxiliary-functions";
-                                for (Function function : functions) {
-                                    t.add(function.setTable()).size(50f).tooltip(tt -> {
-                                        tt.setBackground(Styles.black6);
-                                        tt.label(() -> function.labelName).pad(2f);
-                                    });
-                                    if (!(mobile && Core.settings.getBool("landscape"))) t.row();
-                                }
-                                if (mobile && Core.settings.getBool("landscape")) {
-                                    t.bottom();
-                                } else {
-                                    t.right();
-                                }
-                            });
-                        }
+            Events.run(EventType.Trigger.update, () -> {
+                time += Time.delta;
+                if (time > 1f) {
+                    time = 0;
+                    if (Core.settings.getBool("landscape")) {
+                        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
+                        Vars.ui.hudGroup.fill(t -> {
+                            t.name = "auxiliary-functions";
+                            for (Function function : functions) {
+                                t.add(function.setTable()).size(50f).tooltip(tt -> {
+                                    tt.setBackground(Styles.black6);
+                                    tt.label(() -> function.labelName).pad(2f);
+                                });
+                                if (!(mobile && Core.settings.getBool("landscape"))) t.row();
+                            }
+                            if (mobile && Core.settings.getBool("landscape")) {
+                                t.bottom();
+                            } else {
+                                t.right();
+                            }
+                        });
                     }
-                });
+                }
             });
         }
     }
