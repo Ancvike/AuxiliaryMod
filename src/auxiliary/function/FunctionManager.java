@@ -9,7 +9,6 @@ import static mindustry.Vars.mobile;
 
 public class FunctionManager {
     public static final Seq<Function> functions = new Seq<>();
-    private static float time;
 
     public static void init() {
         functions.addAll(new FullResource(), new BuildingRestoration());
