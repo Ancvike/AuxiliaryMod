@@ -7,8 +7,6 @@ import mindustry.Vars;
 
 import mindustry.game.EventType;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
-
 import static mindustry.Vars.mobile;
 
 public class FunctionManager {
