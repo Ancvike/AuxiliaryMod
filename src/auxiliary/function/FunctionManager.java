@@ -31,8 +31,9 @@ public class FunctionManager {
                 t.right();
             }
         });
-        Events.run(EventType.Trigger.uiDrawEnd, () -> {
-            if (mobile && Core.settings.getBool("landscape")) {
+
+        if (mobile && Core.settings.getBool("landscape")) {
+            Events.run(EventType.Trigger.uiDrawEnd, () -> {
                 Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
                 Vars.ui.hudGroup.fill(t -> {
                     t.name = "auxiliary-functions";
@@ -49,8 +50,8 @@ public class FunctionManager {
                         t.right();
                     }
                 });
-            }
-        });
+            });
+        }
     }
 }
 
