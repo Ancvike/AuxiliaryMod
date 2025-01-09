@@ -33,14 +33,10 @@ public class FunctionManager {
                 t.right();
             }
         });
-        Events.on(UIManager.class, e -> {
-        });
-        Events.on(EventType.WorldLoadEvent.class, e -> {
-            for (int i = 0; i < 10; i++) {
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
                 BaseDialog dialog = new BaseDialog("");
                 dialog.addCloseButton();
                 dialog.show();
-            }
         });
     }
 }
