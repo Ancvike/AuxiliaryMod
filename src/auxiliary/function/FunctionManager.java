@@ -32,7 +32,7 @@ public class FunctionManager {
             }
         });
 
-        if (mobile && Core.settings.getBool("landscape")) {
+//        if (mobile && Core.settings.getBool("landscape")) {
             Events.run(EventType.Trigger.uiDrawEnd, () -> {
                 Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
                 Vars.ui.hudGroup.fill(t -> {
@@ -51,7 +51,7 @@ public class FunctionManager {
                     }
                 });
             });
-        }
+//        }
     }
 }
 
