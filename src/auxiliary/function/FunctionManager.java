@@ -33,15 +33,18 @@ public class FunctionManager {
                 t.right();
             }
         });
-
+        check();
+    }
+    public static void check() {
         if (!mobile) {
-            Events.on(EventType.WorldLoadEvent.class, e -> {
-                time += Time.delta;
-                if (time >= 1f) {
-                    time = 0;
-                    BaseDialog dialog = new BaseDialog("");
-                    dialog.addCloseButton();
-                    dialog.show();
+            while (true) {
+                Events.on(EventType.WorldLoadEvent.class, e -> {
+                    time += Time.delta;
+                    if (time >= 1f) {
+                        time = 0;
+                        BaseDialog dialog = new BaseDialog("");
+                        dialog.addCloseButton();
+                        dialog.show();
 //                    if (Core.settings.getBool("landscape")) {
 //                        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
 //                        Vars.ui.hudGroup.fill(t -> {
@@ -60,8 +63,9 @@ public class FunctionManager {
 //                            }
 //                        });
 //                    }
-                }
-            });
+                    }
+                });
+            }
         }
     }
 }
