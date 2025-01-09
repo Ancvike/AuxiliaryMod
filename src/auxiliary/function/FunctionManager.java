@@ -3,7 +3,6 @@ package auxiliary.function;
 import arc.Core;
 import arc.Events;
 import arc.struct.Seq;
-import auxiliary.ui.UIManager;
 import mindustry.Vars;
 
 import mindustry.game.EventType;
@@ -34,9 +33,9 @@ public class FunctionManager {
             }
         });
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
-                BaseDialog dialog = new BaseDialog("");
-                dialog.addCloseButton();
-                dialog.show();
+            BaseDialog dialog = new BaseDialog("");
+            dialog.addCloseButton();
+            dialog.show();
         });
     }
 }
