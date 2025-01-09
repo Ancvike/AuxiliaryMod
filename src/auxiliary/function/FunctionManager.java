@@ -27,7 +27,6 @@ public class FunctionManager {
                     });
                 }
                 t.bottom();
-                t.right();
             });
         } else {
             Vars.ui.hudGroup.fill(t -> {
@@ -55,27 +54,20 @@ public class FunctionManager {
                             });
                         }
                         t.bottom();
-                        t.right();
                     });
-                    BaseDialog dialog = new BaseDialog("s->h");
-                    dialog.addCloseButton();
-                    dialog.show();
                 } else if (!Core.settings.getBool("landscape") && Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape") != null) {
                     Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape"));
-//                    Vars.ui.hudGroup.fill(t -> {
-//                        t.name = "auxiliary-functions";
-//                        for (Function function : functions) {
-//                            t.add(function.setTable()).size(50f).tooltip(tt -> {
-//                                tt.setBackground(Styles.black6);
-//                                tt.label(() -> function.labelName).pad(2f);
-//                            });
-//                            t.row();
-//                        }
-//                        t.right();
-//                    });
-                    BaseDialog dialog = new BaseDialog("h->s");
-                    dialog.addCloseButton();
-                    dialog.show();
+                    Vars.ui.hudGroup.fill(t -> {
+                        t.name = "auxiliary-functions";
+                        for (Function function : functions) {
+                            t.add(function.setTable()).size(50f).tooltip(tt -> {
+                                tt.setBackground(Styles.black6);
+                                tt.label(() -> function.labelName).pad(2f);
+                            });
+                            t.row();
+                        }
+                        t.right();
+                    });
                 }
             });
         }
