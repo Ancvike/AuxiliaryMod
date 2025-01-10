@@ -114,6 +114,7 @@ class DragHandleListener extends InputListener {
         lastX = v.x;
         lastY = v.y;
         table.toFront();
+        isDragged = false;
         return true;
     }
 
