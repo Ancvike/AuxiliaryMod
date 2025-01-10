@@ -109,11 +109,21 @@ public class UIMovement extends Function {
             dialog.show();
         } else {
             if (mobile && Core.settings.getBool("landscape")) {
-                Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape").x = xFloat;
-                Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape").y = yFloat;
+                Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape"));
+                Vars.ui.hudGroup.fill(t -> {
+                    t.name = "auxiliary-functions-mobile-landscape";
+                    t.add(FunctionManager.table);
+                    t.x = xFloat;
+                    t.y = yFloat;
+                });
             } else {
-                Vars.ui.hudGroup.find("auxiliary-functions").x = xFloat;
-                Vars.ui.hudGroup.find("auxiliary-functions").y = yFloat;
+                Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
+                Vars.ui.hudGroup.fill(t -> {
+                    t.name = "auxiliary-functions";
+                    t.add(FunctionManager.table);
+                    t.x = xFloat;
+                    t.y = yFloat;
+                });
             }
         }
         click_no();
