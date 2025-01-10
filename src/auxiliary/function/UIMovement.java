@@ -51,7 +51,7 @@ public class UIMovement extends Function {
             yText = t.field(null, text -> yText()).get();
             t.row();
             t.button("确定", this::click_yes).size(80f, 30f);
-            t.button("取消", this::click_no).size(800f, 30f);
+            t.button("取消", this::click_no).size(80f, 30f);
             t.button("重置", this::click_reset).size(80f, 30f);
         });
     }
