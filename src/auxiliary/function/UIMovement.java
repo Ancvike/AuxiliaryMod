@@ -2,17 +2,11 @@ package auxiliary.function;
 
 import arc.Core;
 import arc.graphics.Color;
-import arc.math.geom.Vec2;
-import arc.scene.event.InputEvent;
-import arc.scene.event.InputListener;
-import arc.scene.event.Touchable;
 import arc.scene.ui.TextField;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
-import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.gen.Icon;
-import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.dialogs.Dialogs.setDialog_yes;
@@ -40,19 +34,6 @@ public class UIMovement extends Function {
         }
         setDialog_yes(dialog_movement, table);
         dialog_movement.show();
-    }
-
-    @Override
-    public Table setTable() {
-        return new Table(t -> {
-            t.name = name;
-            t.button(icon, this::onClick).size(50f).tooltip(tt -> {
-                tt.setBackground(Styles.black6);
-                tt.label(() -> labelName).pad(2f);
-            });
-            t.touchable = Touchable.enabled;
-            t.addListener(new DragHandleListener(FunctionManager.table));
-        });
     }
 
     public Table setDialogTable_mobile() {
@@ -177,22 +158,5 @@ public class UIMovement extends Function {
     }
 
     private void yText() {
-    }
-}
-
-class DragHandleListener extends InputListener {
-    protected float lastX, lastY;
-    final Table table;
-
-    public DragHandleListener(Table table) {
-        this.table = table;
-    }
-
-    @Override
-    public void touchDragged(InputEvent event, float dx, float dy, int pointer) {
-        Vec2 v = event.listenerActor.localToStageCoordinates(Tmp.v1.set(dx, dy));
-        table.setPosition(table.x + (v.x - lastX), table.y + (v.y - lastY));
-        lastX = v.x;
-        lastY = v.y;
     }
 }
