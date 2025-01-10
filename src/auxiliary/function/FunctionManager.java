@@ -16,7 +16,7 @@ public class FunctionManager {
     public static Table table;
 
     public static void init() {
-        functions.addAll(new FullResource(), new BuildingRestoration());
+        functions.addAll(new UIMovement(), new FullResource(), new BuildingRestoration());
 
         if (mobile && Core.settings.getBool("landscape")) {
             table = new Table(t -> {
