@@ -97,9 +97,7 @@ public class FunctionManager {
             });
         }
 
-        if (mobile && Core.settings.getBool("landscape")) {
-            table.find("ui-move").addListener(new DragHandleListener(table));
-        }
+        table.find("ui-move").addListener(new DragHandleListener(table));
     }
 }
 
