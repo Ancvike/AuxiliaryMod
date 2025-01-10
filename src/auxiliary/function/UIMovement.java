@@ -2,7 +2,6 @@ package auxiliary.function;
 
 import arc.Core;
 import arc.graphics.Color;
-import arc.input.KeyCode;
 import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
@@ -190,18 +189,9 @@ class DragHandleListener extends InputListener {
     }
 
     @Override
-    public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
-        Vec2 v = event.listenerActor.localToStageCoordinates(Tmp.v1.set(x, y));
-        lastX = v.x;
-        lastY = v.y;
-        table.toFront();
-        return true;
-    }
-
-    @Override
     public void touchDragged(InputEvent event, float dx, float dy, int pointer) {
         Vec2 v = event.listenerActor.localToStageCoordinates(Tmp.v1.set(dx, dy));
-        table.setPosition( table.x + (v.x - lastX),  table.y + (v.y - lastY));
+        table.setPosition(table.x + (v.x - lastX), table.y + (v.y - lastY));
         lastX = v.x;
         lastY = v.y;
     }
