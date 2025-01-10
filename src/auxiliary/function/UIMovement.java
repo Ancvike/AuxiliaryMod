@@ -32,7 +32,9 @@ public class UIMovement extends Function {
 
     public Table setDialogTable() {
         return new Table(t -> {
-            t.add("UI移动界面" + Icon.warningSmall + "(目前只支持按钮一起移动, 后续可能会支持更多UI元素移动)").row();
+            t.add("UI移动界面");
+            t.image(Icon.warningSmall);
+            t.add("(目前只支持按钮一起移动, 后续可能会支持更多UI元素移动)").row();
             t.add("当前屏幕像素范围").color(Color.yellow).row();
             t.add("X:[" + -(Core.graphics.getWidth() / 2) + "," + Core.graphics.getWidth() / 2 + "]").color(Color.red).row();
             t.add("Y:[" + -(Core.graphics.getHeight() / 2) + "," + Core.graphics.getHeight() / 2 + "]").color(Color.red).row();
@@ -70,6 +72,7 @@ public class UIMovement extends Function {
 
     private void click_no() {
         dialog_movement.hide();
+        table.clearChildren();
     }
 
     private void click_yes() {
