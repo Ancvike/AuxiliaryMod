@@ -108,15 +108,15 @@ class DragHandleListener extends InputListener {
     public DragHandleListener(Table table) {
         this.table = table;
     }
-//
-//    @Override
-//    public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
-//        Vec2 v = event.listenerActor.localToStageCoordinates(Tmp.v1.set(x, y));
-//        lastX = v.x;
-//        lastY = v.y;
-//        table.toFront();
-//        return true;
-//    }
+
+    @Override
+    public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
+        Vec2 v = event.listenerActor.localToStageCoordinates(Tmp.v1.set(x, y));
+        lastX = v.x;
+        lastY = v.y;
+        table.toFront();
+        return true;
+    }
 
     @Override
     public void touchDragged(InputEvent event, float dx, float dy, int pointer) {
