@@ -14,6 +14,7 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.ui.Styles;
 
+import static auxiliary.function.UIMovement.dialog_movement;
 import static mindustry.Vars.mobile;
 
 public class FunctionManager {
@@ -124,5 +125,6 @@ class DragHandleListener extends InputListener {
         table.setPosition(table.x + (v.x - lastX), table.y + (v.y - lastY));
         lastX = v.x;
         lastY = v.y;
+        dialog_movement.hide();
     }
 }

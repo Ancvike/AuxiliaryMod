@@ -13,7 +13,7 @@ import static auxiliary.dialogs.Dialogs.setDialog_yes;
 import static mindustry.Vars.mobile;
 
 public class UIMovement extends Function {
-    private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
+    static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
     private static Table table;
     private float xFloat;
     private float yFloat;
