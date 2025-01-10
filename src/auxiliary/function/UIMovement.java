@@ -57,14 +57,14 @@ public class UIMovement extends Function {
             Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape"));
             Vars.ui.hudGroup.fill(t -> {
                 t.name = "auxiliary-functions-mobile-landscape";
-                t.add(table);
+                t.add(FunctionManager.table);
                 t.bottom();
             });
         } else {
             Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
             Vars.ui.hudGroup.fill(t -> {
                 t.name = "auxiliary-functions";
-                t.add(table);
+                t.add(FunctionManager.table);
                 t.right();
             });
         }
