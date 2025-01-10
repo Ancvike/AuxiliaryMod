@@ -38,7 +38,7 @@ public class UIMovement extends Function {
             t.add("当前屏幕像素范围").color(Color.yellow).row();
             t.add("X:[" + -(Core.graphics.getWidth() / 2) + "," + Core.graphics.getWidth() / 2 + "]").color(Color.red).row();
             t.add("Y:[" + -(Core.graphics.getHeight() / 2) + "," + Core.graphics.getHeight() / 2 + "]").color(Color.red).row();
-            t.add("请在下方输入你要移动到的位置坐标");
+            t.add("请在下方输入你要移动到的位置坐标").row();
             t.add("X:").color(Color.yellow);
             xText = t.field(null, text -> isXFloat()).get();
             t.row();
