@@ -4,6 +4,7 @@ import arc.Core;
 import arc.graphics.Color;
 import arc.scene.ui.TextField;
 import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
@@ -18,6 +19,7 @@ public class UIMovement extends Function {
     private float yFloat;
     private TextField xText;
     private TextField yText;
+    private final Seq<String> exceptions = new Seq<>();
 
     public UIMovement() {
         super("ui-move", Icon.menu, "UI移动");
@@ -40,10 +42,10 @@ public class UIMovement extends Function {
             t.add("Y:[" + -(Core.graphics.getHeight() / 2) + "," + Core.graphics.getHeight() / 2 + "]").color(Color.red).row();
             t.add("请在下方输入你要移动到的位置坐标").row();
             t.add("X:").color(Color.yellow);
-            xText = t.field(null, text -> isXFloat()).get();
+            xText = t.field(null, text -> xText()).get();
             t.row();
             t.add("Y:").color(Color.yellow);
-            yText = t.field(null, text -> isYFloat()).get();
+            yText = t.field(null, text -> yText()).get();
             t.row();
             t.button("确定", this::click_yes).size(120f, 50f);
             t.button("取消", this::click_no).size(120f, 50f);
@@ -76,49 +78,49 @@ public class UIMovement extends Function {
     }
 
     private void click_yes() {
-        click_no();
-        if (mobile && Core.settings.getBool("landscape")) {
-            Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape").setPosition(xFloat, yFloat);
-        } else {
-            Vars.ui.hudGroup.find("auxiliary-functions").setPosition(xFloat, yFloat);
-        }
-    }
-
-    private void isXFloat() {
+        BaseDialog dialog = new BaseDialog("错误");
+        dialog.cont.add("移动失败,原因如下:");
         try {
             xFloat = Float.parseFloat(xText.getText());
             if (xFloat < -((float) Core.graphics.getWidth() / 2) || xFloat > (float) Core.graphics.getWidth() / 2) {
                 xText.setText("");
-                BaseDialog dialog = new BaseDialog("错误");
-                dialog.cont.add("X值超出屏幕范围,请重新输入!");
-                dialog.addCloseButton();
-                dialog.show();
+                dialog.cont.add("X值超出屏幕范围");
+                exceptions.add("X值超出屏幕范围");
             }
         } catch (NumberFormatException e) {
             xText.setText("");
-            BaseDialog dialog = new BaseDialog("错误");
-            dialog.cont.add("X可能不是一个数字,请重新输入!");
-            dialog.addCloseButton();
-            dialog.show();
+            dialog.cont.add("X不是一个数字");
+            exceptions.add("X不是一个数字");
         }
-    }
-
-    private void isYFloat() {
         try {
             yFloat = Float.parseFloat(yText.getText());
             if (yFloat < -((float) Core.graphics.getHeight() / 2) || yFloat > (float) Core.graphics.getHeight() / 2) {
                 yText.setText("");
-                BaseDialog dialog = new BaseDialog("错误");
-                dialog.cont.add("Y值超出屏幕范围,请重新输入!");
-                dialog.addCloseButton();
-                dialog.show();
+                dialog.cont.add("Y值超出屏幕范围");
+                exceptions.add("Y值超出屏幕范围");
             }
         } catch (NumberFormatException e) {
             yText.setText("");
-            BaseDialog dialog = new BaseDialog("错误");
-            dialog.cont.add("Y可能不是一个数字,请重新输入!");
-            dialog.addCloseButton();
-            dialog.show();
+            dialog.cont.add("Y不是一个数字");
+            exceptions.add("Y不是一个数字");
         }
+        if (exceptions.size > 0) {
+            dialog.show();
+        } else {
+            if (mobile && Core.settings.getBool("landscape")) {
+                Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape").x = xFloat;
+                Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape").y = yFloat;
+            } else {
+                Vars.ui.hudGroup.find("auxiliary-functions").x = xFloat;
+                Vars.ui.hudGroup.find("auxiliary-functions").y = yFloat;
+            }
+        }
+        click_no();
+    }
+
+    private void xText() {
+    }
+
+    private void yText() {
     }
 }
