@@ -14,15 +14,13 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.ui.Styles;
 
-import static auxiliary.function.UIMovement.dialog_movement;
 import static mindustry.Vars.mobile;
+import static auxiliary.function.UIMovement.isDragged;
 
 public class FunctionManager {
     public static final Seq<Function> functions = new Seq<>();
     public static Table table;
 
-    //t.touchable = Touchable.enabled;
-//            t.addListener(new DragHandleListener(FunctionManager.table)
     public static void init() {
         functions.addAll(new UIMovement(), new FullResource(), new Restoration());
 
@@ -125,6 +123,6 @@ class DragHandleListener extends InputListener {
         table.setPosition(table.x + (v.x - lastX), table.y + (v.y - lastY));
         lastX = v.x;
         lastY = v.y;
-        dialog_movement.hide();
+        isDragged = true;
     }
 }
