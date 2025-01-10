@@ -1,190 +1,119 @@
-//package auxiliary.function;
-//
-//import arc.Core;
-//import arc.scene.ui.Label;
-//import arc.scene.ui.Slider;
-//import arc.scene.ui.layout.Table;
-//import mindustry.Vars;
-//import mindustry.gen.Icon;
-//import mindustry.ui.Styles;
-//import mindustry.ui.dialogs.BaseDialog;
-//
-//import static auxiliary.dialogs.Dialogs.setDialog_yes;
-//
-//public class UIMovement extends Function{
-//    private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
-//    private static Table table;
-//    public static int[] position;
-//    private static final SliderLabel label = new SliderLabel("资源全满", 400, 425);
-//    private static final SliderLabel label2 = new SliderLabel("建筑修复", 450, 425);
-//    private static final SliderLabel label3 = new SliderLabel("移动UI", 350, 425);
-//
-//    public UIMovement() {
-//        super("ui-move", Icon.menu, "UI移动");
-//    }
-//
-//    public void init() {
-//
-//    }
-//    @Override
-//    public void onClick() {
-//        position = new int[6];
-//        position[0] = label.getX();
-//        position[1] = label.getY();
-//        position[2] = label2.getX();
-//        position[3] = label2.getY();
-//        position[4] = label3.getX();
-//        position[5] = label3.getY();
-//        table = setTable();
-//        setDialog_yes(dialog_movement, table);
-//        dialog_movement.show();
-//    }
-//
-//    private Table setTable() {
-//        return new Table(t -> {
-//            t.add("UI移动界面").row();
-//            t.add(label.setTable()).row();
-//            t.add(label2.setTable()).row();
-//            t.add(label3.setTable()).row();
-//            t.button("确定", UIMovement::click_yes).size(120f, 50f);
-//            t.button("取消", UIMovement::click_no).size(120f, 50f);
-//            t.button("重置", UIMovement::click_reset).size(120f, 50f);
-//        });
-//    }
-//
-//    private void click_no() {
-//        dialog_movement.hide();
-//        table.clearChildren();
-//    }
-//
-//    private void click_yes() {
-//        reset();
-//        click_no();
-//    }
-//
-//    public void click_reset() {
-//        label.setX(400);
-//        label.setY(425);
-//        label2.setX(450);
-//        label2.setY(425);
-//        label3.setX(350);
-//        label3.setY(425);
-//        click_no();
-//        dialog_movement.hide();
-//        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
-//        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
-//        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("ui-move"));
-//        Vars.ui.hudGroup.fill(t -> {
-//            t.name = "full-resource";
-//            t.button(Icon.fill, fullResource::onClick).size(50f).tooltip(tt -> {
-//                tt.setBackground(Styles.black6);
-//                tt.label(() -> "资源全满").pad(2f);
-//            });
-//            t.x = 400;
-//            t.top();
-//        });
-//        Vars.ui.hudGroup.fill(t -> {
-//            t.name = "building-restoration";
-//            t.button(Icon.refresh1, br::onClick).size(50f).tooltip(tt -> {
-//                tt.setBackground(Styles.black6);
-//                tt.label(() -> "建筑修复").pad(2f);
-//            });
-//            t.x = 450;
-//            t.top();
-//        });
-//        Vars.ui.hudGroup.fill(t -> {
-//            t.name = "ui-move";
-//            t.button(Icon.menu, UIMovement::onClick).size(50f).tooltip(tt -> {
-//                tt.setBackground(Styles.black6);
-//                tt.label(() -> "移动UI").pad(2f);
-//            });
-//            t.x = 350;
-//            t.top();
-//        });
-//    }
-//
-//    private void reset() {
-//        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("full-resource"));
-//        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("building-restoration"));
-//        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("ui-move"));
-//        Vars.ui.hudGroup.fill(t -> {
-//            t.name = "full-resource";
-//            t.button(Icon.fill, fullResource::onClick).size(50f).tooltip(tt -> {
-//                tt.setBackground(Styles.black6);
-//                tt.label(() -> "资源全满").pad(2f);
-//            });
-//            t.x = label.getX();
-//            t.y = label.getY();
-//        });
-//        Vars.ui.hudGroup.fill(t -> {
-//            t.name = "building-restoration";
-//            t.button(Icon.refresh1, br::onClick).size(50f).tooltip(tt -> {
-//                tt.setBackground(Styles.black6);
-//                tt.label(() -> "建筑修复").pad(2f);
-//            });
-//            t.x = label2.getX();
-//            t.y = label2.getY();
-//        });
-//        Vars.ui.hudGroup.fill(t -> {
-//            t.name = "ui-move";
-//            t.button(Icon.menu, UIMovement::onClick).size(50f).tooltip(tt -> {
-//                tt.setBackground(Styles.black6);
-//                tt.label(() -> "移动UI").pad(2f);
-//            });
-//            t.x = label3.getX();
-//            t.y = label3.getY();
-//        });
-//    }
-//}
-//
-//class SliderLabel {
-//    private final String text;
-//    private int x;
-//    private int y;
-//
-//    public SliderLabel(String text, int x, int y) {
-//        this.text = text;
-//        this.x = x;
-//        this.y = y;
-//    }
-//
-//    public int getX() {
-//        return x;
-//    }
-//
-//    public int getY() {
-//        return y;
-//    }
-//
-//    public Table setTable() {
-//        Slider sliderX = new Slider(-(Core.graphics.getWidth() / 2f + 25), (Core.graphics.getWidth() / 2f) - 25, 1, false);
-//        Slider sliderY = new Slider(-(Core.graphics.getHeight() / 2f + 25), (Core.graphics.getHeight() / 2f) - 25, 1, false);
-//        sliderX.setValue(x);
-//        sliderY.setValue(y);
-//        Label labelX = new Label("X:" + sliderX.getValue());
-//        Label labelY = new Label("Y:" + sliderY.getValue());
-//        return new Table(t -> {
-//            t.add(text).row();
-//
-//            t.add(labelX);
-//            t.add(sliderX).row();
-//            sliderX.changed(() -> labelX.setText("X:" + sliderX.getValue()));
-//            sliderX.change();
-//            sliderX.moved(movedX -> x = (int) movedX);
-//
-//            t.add(labelY);
-//            t.add(sliderY);
-//            sliderY.changed(() -> labelY.setText("Y:" + sliderY.getValue()));
-//            sliderY.change();
-//            sliderY.moved(movedY -> y = (int) movedY);
-//        });
-//    }
-//
-//    public void setX(int x) {
-//        this.x = x;
-//    }
-//
-//    public void setY(int y) {
-//        this.y = y;
-//    }
-//}
+package auxiliary.function;
+
+import arc.Core;
+import arc.graphics.Color;
+import arc.scene.ui.TextField;
+import arc.scene.ui.layout.Table;
+import mindustry.Vars;
+import mindustry.gen.Icon;
+import mindustry.ui.dialogs.BaseDialog;
+
+import static auxiliary.dialogs.Dialogs.setDialog_yes;
+import static auxiliary.function.FunctionManager.table;
+import static mindustry.Vars.mobile;
+
+public class UIMovement extends Function {
+    static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
+    private float xFloat;
+    private float yFloat;
+    private TextField xText;
+    private TextField yText;
+
+    public UIMovement() {
+        super("ui-move", Icon.menu, "UI移动");
+    }
+
+    @Override
+    public void onClick() {
+        setDialog_yes(dialog_movement, setDialogTable());
+    }
+
+    public Table setDialogTable() {
+        return new Table(t -> {
+            t.add("UI移动界面" + Icon.warningSmall + "(目前只支持按钮一起移动, 后续可能会支持更多UI元素移动)").row();
+            t.add("当前屏幕像素范围").color(Color.yellow).row();
+            t.add("X:[" + -(Core.graphics.getWidth() / 2) + "," + Core.graphics.getWidth() / 2 + "]").color(Color.red).row();
+            t.add("Y:[" + -(Core.graphics.getHeight() / 2) + "," + Core.graphics.getHeight() / 2 + "]").color(Color.red).row();
+            t.add("请在下方输入你要移动到的位置坐标");
+            t.add("X:").color(Color.yellow);
+            xText = t.field(null, text -> isXFloat()).get();
+            t.row();
+            t.add("Y:").color(Color.yellow);
+            yText = t.field(null, text -> isYFloat()).get();
+            t.row();
+            t.button("确定", this::click_yes).size(120f, 50f);
+            t.button("取消", this::click_no).size(120f, 50f);
+            t.button("重置", this::click_reset).size(120f, 50f);
+        });
+    }
+
+    private void click_reset() {
+        dialog_movement.hide();
+        if (mobile && Core.settings.getBool("landscape")) {
+            Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape"));
+            Vars.ui.hudGroup.fill(t -> {
+                t.name = "auxiliary-functions-mobile-landscape";
+                t.add(table);
+                t.bottom();
+            });
+        } else {
+            Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions"));
+            Vars.ui.hudGroup.fill(t -> {
+                t.name = "auxiliary-functions";
+                t.add(table);
+                t.right();
+            });
+        }
+    }
+
+    private void click_no() {
+        dialog_movement.hide();
+    }
+
+    private void click_yes() {
+        click_no();
+        if (mobile && Core.settings.getBool("landscape")) {
+            Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape").setPosition(xFloat, yFloat);
+        } else {
+            Vars.ui.hudGroup.find("auxiliary-functions").setPosition(xFloat, yFloat);
+        }
+    }
+
+    private void isXFloat() {
+        try {
+            xFloat = Float.parseFloat(xText.getText());
+            if (xFloat < -((float) Core.graphics.getWidth() / 2) || xFloat > (float) Core.graphics.getWidth() / 2) {
+                xText.setText("");
+                BaseDialog dialog = new BaseDialog("错误");
+                dialog.cont.add("X值超出屏幕范围,请重新输入!");
+                dialog.addCloseButton();
+                dialog.show();
+            }
+        } catch (NumberFormatException e) {
+            xText.setText("");
+            BaseDialog dialog = new BaseDialog("错误");
+            dialog.cont.add("X可能不是一个数字,请重新输入!");
+            dialog.addCloseButton();
+            dialog.show();
+        }
+    }
+
+    private void isYFloat() {
+        try {
+            yFloat = Float.parseFloat(yText.getText());
+            if (yFloat < -((float) Core.graphics.getHeight() / 2) || yFloat > (float) Core.graphics.getHeight() / 2) {
+                yText.setText("");
+                BaseDialog dialog = new BaseDialog("错误");
+                dialog.cont.add("Y值超出屏幕范围,请重新输入!");
+                dialog.addCloseButton();
+                dialog.show();
+            }
+        } catch (NumberFormatException e) {
+            yText.setText("");
+            BaseDialog dialog = new BaseDialog("错误");
+            dialog.cont.add("Y可能不是一个数字,请重新输入!");
+            dialog.addCloseButton();
+            dialog.show();
+        }
+    }
+}
