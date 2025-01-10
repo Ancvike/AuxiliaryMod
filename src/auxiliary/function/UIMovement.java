@@ -13,13 +13,14 @@ import static auxiliary.dialogs.Dialogs.setDialog_yes;
 import static mindustry.Vars.mobile;
 
 public class UIMovement extends Function {
-    static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
+    private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
     private static Table table;
     private float xFloat;
     private float yFloat;
     private TextField xText;
     private TextField yText;
     private final Seq<String> exceptions = new Seq<>();
+    public static boolean isDragged = false;
 
     public UIMovement() {
         super("ui-move", Icon.menu, "UI移动");
@@ -27,6 +28,7 @@ public class UIMovement extends Function {
 
     @Override
     public void onClick() {
+        if (isDragged) return;
         if (mobile && !Core.settings.getBool("landscape")) {
             table = setDialogTable_mobile();
         } else {
