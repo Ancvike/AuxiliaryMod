@@ -63,7 +63,7 @@ public class Restoration extends Function {
 
     private void restoration_unit() {
         for (Unit unit : Team.sharded.data().units) {
-            unit.health = unit.maxHealth / 2;
+            unit.health = unit.maxHealth;
         }
     }
 }
