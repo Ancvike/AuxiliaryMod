@@ -23,12 +23,12 @@ public class Restoration extends Function {
         table1.button("取消", this::click_no).size(120f, 50f);
 
         Table table2 = new Table();
-        table2.row();
         table2.add("你确定要修复所有单位吗?").size(200f, 50f).row();
         table2.button("确定", this::unit_click_yes).size(120f, 50f);
         table2.button("取消", this::click_no).size(120f, 50f);
 
         Dialogs.setDialog_yes(dialog_restoration, table1);
+        dialog_restoration.row();
         Dialogs.setDialog_yes(dialog_restoration, table2);
     }
 
