@@ -79,29 +79,30 @@ public class UIMovement extends Function {
 
     private void click_yes() {
         BaseDialog dialog = new BaseDialog("错误");
-        dialog.cont.add("移动失败,原因如下:");
+        dialog.cont.add("移动失败,原因如下:").row();
+        dialog.addCloseButton();
         try {
             xFloat = Float.parseFloat(xText.getText());
             if (xFloat < -((float) Core.graphics.getWidth() / 2) || xFloat > (float) Core.graphics.getWidth() / 2) {
                 xText.setText("");
-                dialog.cont.add("X值超出屏幕范围");
+                dialog.cont.add("X值超出屏幕范围").row();
                 exceptions.add("X值超出屏幕范围");
             }
         } catch (NumberFormatException e) {
             xText.setText("");
-            dialog.cont.add("X不是一个数字");
+            dialog.cont.add("X不是一个数字").row();
             exceptions.add("X不是一个数字");
         }
         try {
             yFloat = Float.parseFloat(yText.getText());
             if (yFloat < -((float) Core.graphics.getHeight() / 2) || yFloat > (float) Core.graphics.getHeight() / 2) {
                 yText.setText("");
-                dialog.cont.add("Y值超出屏幕范围");
+                dialog.cont.add("Y值超出屏幕范围").row();
                 exceptions.add("Y值超出屏幕范围");
             }
         } catch (NumberFormatException e) {
             yText.setText("");
-            dialog.cont.add("Y不是一个数字");
+            dialog.cont.add("Y不是一个数字").row();
             exceptions.add("Y不是一个数字");
         }
         if (exceptions.size > 0) {
