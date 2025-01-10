@@ -54,7 +54,7 @@ public class UIMovement extends Function {
     }
 
     private void click_reset() {
-        dialog_movement.hide();
+        click_no();
         if (mobile && Core.settings.getBool("landscape")) {
             Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape"));
             Vars.ui.hudGroup.fill(t -> {
