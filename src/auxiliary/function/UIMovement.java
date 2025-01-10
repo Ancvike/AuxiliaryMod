@@ -9,11 +9,11 @@ import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.dialogs.Dialogs.setDialog_yes;
-import static auxiliary.function.FunctionManager.table;
 import static mindustry.Vars.mobile;
 
 public class UIMovement extends Function {
-    static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
+    private static final BaseDialog dialog_movement = new BaseDialog("UI移动界面");
+    private static Table table;
     private float xFloat;
     private float yFloat;
     private TextField xText;
@@ -25,7 +25,9 @@ public class UIMovement extends Function {
 
     @Override
     public void onClick() {
-        setDialog_yes(dialog_movement, setDialogTable());
+        table = setDialogTable();
+        setDialog_yes(dialog_movement, table);
+        dialog_movement.show();
     }
 
     public Table setDialogTable() {
