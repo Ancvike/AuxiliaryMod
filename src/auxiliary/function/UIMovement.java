@@ -27,11 +27,34 @@ public class UIMovement extends Function {
 
     @Override
     public void onClick() {
-        table = setDialogTable();
+        if (mobile && !Core.settings.getBool("landscape")){
+            table = setDialogTable_mobile();
+        }else {
+            table = setDialogTable();
+        }
         setDialog_yes(dialog_movement, table);
         dialog_movement.show();
     }
-
+    public Table setDialogTable_mobile() {
+        return new Table(t -> {
+            t.add("UI移动界面").row();
+            t.image(Icon.warningSmall).size(20f);
+            t.add("(目前只支持按钮一起移动, 后续可能会支持更多UI元素移动)").row();
+            t.add("当前屏幕像素范围").color(Color.yellow).row();
+            t.add("X:[" + -(Core.graphics.getWidth() / 2) + "," + Core.graphics.getWidth() / 2 + "]").color(Color.red).row();
+            t.add("Y:[" + -(Core.graphics.getHeight() / 2) + "," + Core.graphics.getHeight() / 2 + "]").color(Color.red).row();
+            t.add("请在下方输入你要移动到的位置坐标").row();
+            t.add("X:").color(Color.yellow);
+            xText = t.field(null, text -> xText()).get();
+            t.row();
+            t.add("Y:").color(Color.yellow);
+            yText = t.field(null, text -> yText()).get();
+            t.row();
+            t.button("确定", this::click_yes).size(80f, 30f);
+            t.button("取消", this::click_no).size(800f, 30f);
+            t.button("重置", this::click_reset).size(80f, 30f);
+        });
+    }
     public Table setDialogTable() {
         return new Table(t -> {
             t.add("UI移动界面");
