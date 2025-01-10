@@ -38,16 +38,16 @@ public class UIMovement extends Function {
     public Table setDialogTable_mobile() {
         return new Table(t -> {
             t.add("UI移动界面").row();
-            t.image(Icon.warningSmall).size(20f);
+            t.image(Icon.warningSmall).size(20f).row();
             t.add("(目前只支持按钮一起移动, 后续可能会支持更多UI元素移动)").row();
             t.add("当前屏幕像素范围").color(Color.yellow).row();
             t.add("X:[" + -(Core.graphics.getWidth() / 2) + "," + Core.graphics.getWidth() / 2 + "]").color(Color.red).row();
             t.add("Y:[" + -(Core.graphics.getHeight() / 2) + "," + Core.graphics.getHeight() / 2 + "]").color(Color.red).row();
             t.add("请在下方输入你要移动到的位置坐标").row();
-            t.add("X:").color(Color.yellow);
+            t.add("X:").color(Color.yellow).row();
             xText = t.field(null, text -> xText()).get();
             t.row();
-            t.add("Y:").color(Color.yellow);
+            t.add("Y:").color(Color.yellow).row();
             yText = t.field(null, text -> yText()).get();
             t.row();
             t.button("确定", this::click_yes).size(80f, 30f);
