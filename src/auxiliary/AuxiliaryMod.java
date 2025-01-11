@@ -1,6 +1,6 @@
 package auxiliary;
 
-import auxiliary.binding.KeyBind;
+import auxiliary.binding.KeyBind_Keyboard;
 import auxiliary.dialogs.Dialogs;
 import arc.Events;
 import auxiliary.function.FunctionManager;
@@ -13,7 +13,7 @@ public class AuxiliaryMod extends Mod {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             Dialogs.init();
             SettingUI.init();
-            KeyBind.init();
+            new KeyBind_Keyboard().init();
             FunctionManager.init();
         });
     }
