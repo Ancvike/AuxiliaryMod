@@ -2,6 +2,7 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.ui.dialogs.BaseDialog;
 
@@ -12,13 +13,15 @@ public class KeyBind_Keyboard {
 
     public static void init() {
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
-            if (Core.input.keyDown(CONVEYOR_CHANGE.nowKeyCode) && !is) {
-                BaseDialog dialog = new BaseDialog("传送带升级");
-                dialog.addCloseButton();
-                dialog.show();
-                is = true;
-            } else if (Core.input.keyRelease(CONVEYOR_CHANGE.nowKeyCode)) {
-                is = false;
+            if (Vars.state.isGame()) {
+                if (Core.input.keyDown(CONVEYOR_CHANGE.nowKeyCode) && !is) {
+                    BaseDialog dialog = new BaseDialog("传送带升级");
+                    dialog.addCloseButton();
+                    dialog.show();
+                    is = true;
+                } else if (Core.input.keyRelease(CONVEYOR_CHANGE.nowKeyCode)) {
+                    is = false;
+                }
             }
         });
     }
