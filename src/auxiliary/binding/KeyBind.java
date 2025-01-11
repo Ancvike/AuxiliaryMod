@@ -18,9 +18,9 @@ public class KeyBind {
                 BaseDialog dialog = new BaseDialog("传送带升级");
                 dialog.addCloseButton();
                 dialog.show();
-                dialogShown = true;  // 设置对话框已显示的标志
+                dialogShown = true;
             } else if (input.keyRelease(CONVEYOR_CHANGE.nowKeyCode)) {
-                dialogShown = false;  // 重置对话框已显示的标志
+                dialogShown = false;
             }
         });
 
