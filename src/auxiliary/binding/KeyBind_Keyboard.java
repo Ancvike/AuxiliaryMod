@@ -16,7 +16,7 @@ public class KeyBind_Keyboard extends InputHandler {
 
     public void init() {
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
-            if (state.isGame()) {
+//            if (state.isGame()) {
                 if (Core.input.keyDown(CONVEYOR_CHANGE.nowKeyCode)) {
                     schemX = World.toTile(Core.input.mouseWorld().x);
                     schemY = World.toTile(Core.input.mouseWorld().y);
@@ -30,7 +30,7 @@ public class KeyBind_Keyboard extends InputHandler {
                     schemX = -1;
                     schemY = -1;
                 }
-            }
+//            }
         });
     }
 
