@@ -3,7 +3,7 @@ package auxiliary.binding;
 import arc.input.KeyCode;
 
 public enum MyKeyBind {
-    CONVEYOR_CHANGE("传送带升级",KeyCode.u),
+    CONVEYOR_CHANGE("传送带升级", KeyCode.u),
     RECOVERY_BUDDING("建筑修复", KeyCode.i),
     RECOVERY_UNIT("单位修复", KeyCode.o),
     ;
@@ -16,7 +16,6 @@ public enum MyKeyBind {
         this.defaultKeyCode = defaultKeyCode;
         this.nowKeyCode = defaultKeyCode;
     }
-
 
     public static void update(MyKeyBind key, KeyCode keyCode) {
         key.nowKeyCode = keyCode;
