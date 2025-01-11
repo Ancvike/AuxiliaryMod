@@ -13,7 +13,6 @@ public class AuxiliaryMod extends Mod {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             Dialogs.init();
             SettingUI.init();
-            new KeyBind_Keyboard().init();
             FunctionManager.init();
         });
     }
