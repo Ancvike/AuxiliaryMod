@@ -4,12 +4,11 @@ import arc.Core;
 import arc.Events;
 import mindustry.Vars;
 import mindustry.game.EventType;
-import mindustry.input.InputHandler;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.MyKeyBind.CONVEYOR_CHANGE;
 
-public class KeyBind_Keyboard extends InputHandler {
+public class KeyBind_Keyboard {
     public static boolean is = false;
 
     public void init() {
@@ -24,7 +23,7 @@ public class KeyBind_Keyboard extends InputHandler {
                     is = false;
                 }
 
-                if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && commandMode) {
+                if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
                     BaseDialog dialog = new BaseDialog("建筑修复");
                     dialog.addCloseButton();
                     dialog.show();
