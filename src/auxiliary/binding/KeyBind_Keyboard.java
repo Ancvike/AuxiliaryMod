@@ -30,6 +30,7 @@ public class KeyBind_Keyboard {
                     for (Unit unit : selectedUnits) {
                         unit.health = unit.maxHealth;
                     }
+                    Vars.ui.hudfrag.showToast("所选单位已修复");
                     is = true;
                 } else if (Core.input.keyRelease(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
                     is = false;
