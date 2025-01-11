@@ -1,39 +1,41 @@
 package auxiliary.ui;
 
 import arc.Core;
-import arc.func.Cons;
 import arc.input.KeyCode;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.Dialog;
+import arc.struct.Seq;
 import auxiliary.binding.MyKeyBind;
 import mindustry.Vars;
 import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
-import mindustry.ui.dialogs.SettingsMenuDialog;
 
 import static auxiliary.binding.MyKeyBind.*;
 
 public class SettingUI {
     private static final BaseDialog dialog_setting = new BaseDialog("确认页面");
-    private static final Cons<SettingsMenuDialog.SettingsTable> settingTable = table -> {
-        if (Core.app.isDesktop()) {
-            table.add("传送带升级").left().padRight(40).padLeft(8);
-            table.label(() -> UP.nowKeyCode.value).color(Pal.accent).left().minWidth(90).padRight(20);
-
-            table.button("重新绑定", Styles.defaultt, () -> openDialog(UP)).width(130f);
-
-            table.button("恢复默认", Styles.defaultt, () -> resetKeyBind(UP)).width(130f).pad(2f).padLeft(4f);
-            table.row();
-        } else {
-            dialog_setting.show();
-        }
-    };
+    private static final Seq<MyKeyBind> keys = new Seq<>();
 
     public static void init() {
         setDialog_setting();
-        Vars.ui.settings.addCategory("AuxiliaryMod设置", settingTable);
+        keys.addAll(CONVEYOR_CHANGE, RECOVERY_BUDDING, RECOVERY_UNIT);
+        Vars.ui.settings.addCategory("AuxiliaryMod设置", t -> {
+            if (Core.app.isDesktop()) {
+                for (MyKeyBind key : keys) {
+                    t.add(key.getName()).left().padRight(40).padLeft(8);
+                    t.label(() -> key.nowKeyCode.value).color(Pal.accent).left().minWidth(90).padRight(20);
+
+                    t.button("重新绑定", Styles.defaultt, () -> openDialog(key)).width(130f);
+                    t.button("恢复默认", Styles.defaultt, () -> resetKeyBind(key)).width(130f).pad(2f).padLeft(4f);
+                    t.row();
+                }
+
+            } else {
+                dialog_setting.show();
+            }
+        });
     }
 
     private static void openDialog(MyKeyBind key) {
