@@ -14,7 +14,7 @@ public class KeyBind_Keyboard {
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Core.input.keyDown(CONVEYOR_CHANGE.nowKeyCode) && !is) {
                 BaseDialog dialog = new BaseDialog("传送带升级");
-                dialog.addCloseListener();
+                dialog.addCloseButton();
                 dialog.show();
                 is = true;
             } else if (Core.input.keyRelease(CONVEYOR_CHANGE.nowKeyCode)) {
