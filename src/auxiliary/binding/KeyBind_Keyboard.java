@@ -10,6 +10,7 @@ import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.input.Binding;
 import mindustry.input.InputHandler;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.MyKeyBind.CONVEYOR_CHANGE;
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
@@ -23,10 +24,13 @@ public class KeyBind_Keyboard extends InputHandler {
                 int selectX = -1;
                 int selectY = -1;
                 if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode)) {
-                    selectX = tileX(Core.input.mouseX());
-                    selectY = tileY(Core.input.mouseY());
-                    int schemX = World.toTile(Core.input.mouseWorld().x);
-                    int schemY = World.toTile(Core.input.mouseWorld().y);
+                    BaseDialog dialog = new BaseDialog("选择区域");
+                    dialog.addCloseButton();
+                    dialog.show();
+//                    selectX = tileX(Core.input.mouseX());
+//                    selectY = tileY(Core.input.mouseY());
+//                    int schemX = World.toTile(Core.input.mouseWorld().x);
+//                    int schemY = World.toTile(Core.input.mouseWorld().y);
                 } else if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
                     int cursorX = tileX(Core.input.mouseX());
                     int cursorY = tileY(Core.input.mouseY());
