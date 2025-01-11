@@ -18,12 +18,12 @@ import mindustry.ui.dialogs.BaseDialog;
 
 import static arc.Core.input;
 import static auxiliary.binding.MyKeyBind.*;
+import static mindustry.Vars.schematics;
 import static mindustry.Vars.state;
+import static mindustry.input.PlaceMode.breaking;
 
 public class KeyBind_Keyboard extends InputHandler {
     private static boolean isFinished = false;
-    public int selectX = -1;
-    public int selectY = -1;
     public static int schemX = -1;
     public static int schemY = -1;
 
@@ -31,12 +31,23 @@ public class KeyBind_Keyboard extends InputHandler {
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (state.isGame()) {
                 if (input.keyDown(RECOVERY_BUDDING.nowKeyCode) && !isFinished) {
+                    int rawCursorX = World.toTile(Core.input.mouseWorld().x), rawCursorY = World.toTile(Core.input.mouseWorld().y);
+                    if ((Core.input.keyTap(Binding.schematic_select))) {
+                        schemX = rawCursorX;
+                        schemY = rawCursorY;
+                    }
                     if (Core.input.keyDown(Binding.schematic_select) && schemX != -1 && schemY != -1) {
                         int cursorX = tileX(Core.input.mouseX());
                         int cursorY = tileY(Core.input.mouseY());
                         drawSelection(schemX, schemY, cursorX, cursorY, Vars.maxSchematicSize);
-                    } else if (input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
-                        isFinished = false;
+                    } else if (Core.input.keyRelease(Binding.schematic_select)) {
+                        lastSchematic = schematics.create(schemX, schemY, rawCursorX, rawCursorY);
+                        useSchematic(lastSchematic);
+                        if (selectPlans.isEmpty()) {
+                            lastSchematic = null;
+                        }
+                        schemX = -1;
+                        schemY = -1;
                     }
 
                     if (input.keyDown(RECOVERY_UNIT.nowKeyCode) && !isFinished) {
