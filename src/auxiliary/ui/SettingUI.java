@@ -16,7 +16,7 @@ import static auxiliary.binding.MyKeyBind.*;
 
 public class SettingUI {
     private static final BaseDialog dialog_setting = new BaseDialog("确认页面");
-    private static final Seq<MyKeyBind> keys = new Seq<>();
+    public static final Seq<MyKeyBind> keys = new Seq<>();
 
     public static void init() {
         setDialog_setting();
@@ -31,7 +31,6 @@ public class SettingUI {
                     t.button("恢复默认", Styles.defaultt, () -> resetKeyBind(key)).width(130f).pad(2f).padLeft(4f);
                     t.row();
                 }
-
             } else {
                 dialog_setting.show();
             }
