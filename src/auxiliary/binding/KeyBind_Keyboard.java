@@ -2,8 +2,10 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
+import mindustry.gen.Unit;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.MyKeyBind.CONVEYOR_CHANGE;
@@ -23,10 +25,11 @@ public class KeyBind_Keyboard {
                     is = false;
                 }
 
-                if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
-                    BaseDialog dialog = new BaseDialog("建筑修复");
-                    dialog.addCloseButton();
-                    dialog.show();
+                if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
+                    Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+                    for (Unit unit : selectedUnits) {
+                        unit.health = unit.maxHealth;
+                    }
                     is = true;
                 } else if (Core.input.keyRelease(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
                     is = false;
