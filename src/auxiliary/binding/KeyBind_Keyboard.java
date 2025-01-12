@@ -34,8 +34,8 @@ public class KeyBind_Keyboard extends InputHandler {
         Events.run(EventType.Trigger.update, () -> {
             if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
                 drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
-                if (a <= 10) {
-                    dialog.cont.add("KeyDown触发");
+                if (a <= 20) {
+                    dialog.cont.add("KeyDown触发").row();
                     a++;
                 }
 
