@@ -2,12 +2,14 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import arc.graphics.g2d.Lines;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
+import mindustry.input.Binding;
 import mindustry.input.InputHandler;
 import mindustry.ui.dialogs.BaseDialog;
 
@@ -18,7 +20,6 @@ public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     int schemX = -1, schemY = -1;
     static final BaseDialog dialog = new BaseDialog("");
-    int a = 1;
 
     public void init() {
         dialog.addCloseButton();
@@ -32,13 +33,14 @@ public class KeyBind_Keyboard extends InputHandler {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
-                drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
-                if (a <= 20) {
-                    dialog.cont.add("KeyDown触发").row();
-                    a++;
-                }
+            Lines.stroke(1f);
+            int cursorX = tileX(Core.input.mouseX());
+            int cursorY = tileY(Core.input.mouseY());
 
+            if (!Core.scene.hasKeyboard()) {
+                if (Core.input.keyDown(Binding.rebuild_select)) {
+                    drawRebuildSelection(schemX, schemY, cursorX, cursorY);
+                }
             }
         });
 
