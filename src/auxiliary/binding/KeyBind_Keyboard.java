@@ -10,7 +10,6 @@ import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.input.InputHandler;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
@@ -27,13 +26,14 @@ public class KeyBind_Keyboard extends InputHandler {
                     schemX = -1;
                     schemY = -1;
                     isTrigger = false;
-                    Vars.ui.hudfrag.showToast("所选建筑已修复");
+//                    Vars.ui.hudfrag.showToast("所选建筑已修复");
                 }
             }
 
             if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
                 schemX = World.toTile(Core.input.mouseWorld().x);
                 schemY = World.toTile(Core.input.mouseWorld().y);
+                Vars.ui.hudfrag.showToast(schemX + ", " + schemY);
                 isTrigger = true;
             }
         });
@@ -44,9 +44,6 @@ public class KeyBind_Keyboard extends InputHandler {
             int cursorY = tileY(Core.input.mouseY());
             if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
                 drawRebuildSelection(schemX, schemY, cursorX, cursorY);
-                BaseDialog dialog = new BaseDialog("选择建筑修复范围");
-                dialog.addCloseButton();
-                dialog.show();
             }
         });
 
