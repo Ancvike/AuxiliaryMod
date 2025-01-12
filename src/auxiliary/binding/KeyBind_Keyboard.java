@@ -36,6 +36,19 @@ public class KeyBind_Keyboard extends InputHandler {
         });
 
         Events.run(EventType.Trigger.update, () -> {
+            Lines.stroke(1f);
+            int cursorX = tileX(Core.input.mouseX());
+            int cursorY = tileY(Core.input.mouseY());
+
+            if (!Core.scene.hasKeyboard()) {
+
+                if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+                    drawRebuildSelection(schemX, schemY, cursorX, cursorY);
+                }
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
                 Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
                 for (Unit unit : selectedUnits) {
@@ -45,18 +58,6 @@ public class KeyBind_Keyboard extends InputHandler {
                 is = true;
             } else if (Core.input.keyRelease(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
                 is = false;
-            }
-        });
-
-        Events.run(EventType.Trigger.update, () -> {
-            Lines.stroke(1f);
-            int cursorX = tileX(Core.input.mouseX());
-            int cursorY = tileY(Core.input.mouseY());
-
-            if (!Core.scene.hasKeyboard()) {
-                if (Core.input.keyDown(Binding.rebuild_select)) {
-                    drawRebuildSelection(schemX, schemY, cursorX, cursorY);
-                }
             }
         });
     }
