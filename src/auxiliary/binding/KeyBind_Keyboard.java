@@ -23,7 +23,7 @@ public class KeyBind_Keyboard extends InputHandler {
             if (Vars.state.isGame()) {
                 int selectX = -1;
                 int selectY = -1;
-                if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode)) {
+                if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
                     BaseDialog dialog = new BaseDialog("选择区域");
                     dialog.addCloseButton();
                     dialog.show();
