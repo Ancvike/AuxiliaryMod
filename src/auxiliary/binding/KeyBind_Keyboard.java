@@ -17,11 +17,11 @@ public class KeyBind_Keyboard extends InputHandler {
     int schemX = -1, schemY = -1;
 
     public void init() {
-        Events.run(EventType.Trigger.update, () -> {
-            if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
-                drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
-            }
-        });
+//        Events.run(EventType.Trigger.update, () -> {
+//            if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+//                drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
+//            }
+//        });
 
         Events.run(EventType.Trigger.update, () -> {
             if (!Core.scene.hasKeyboard() && schemX != -1 && schemY != -1) {
