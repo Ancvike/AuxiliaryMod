@@ -14,7 +14,7 @@ import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
-//    int selectX = -1;
+    //    int selectX = -1;
 //    int selectY = -1;
     int schemX = -1, schemY = -1;
 
@@ -24,7 +24,11 @@ public class KeyBind_Keyboard extends InputHandler {
                 if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
                     drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
                 }
+            }
+        });
 
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+            if (Vars.state.isGame()) {
                 if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
                     rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
                     schemX = -1;
