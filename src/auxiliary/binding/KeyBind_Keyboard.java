@@ -10,6 +10,7 @@ import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.input.InputHandler;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
@@ -43,6 +44,9 @@ public class KeyBind_Keyboard extends InputHandler {
             int cursorY = tileY(Core.input.mouseY());
             if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
                 drawRebuildSelection(schemX, schemY, cursorX, cursorY);
+                BaseDialog dialog = new BaseDialog("选择建筑修复范围");
+                dialog.addCloseButton();
+                dialog.show();
             }
         });
 
