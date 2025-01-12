@@ -52,8 +52,8 @@ public class KeyBind_Keyboard extends InputHandler {
             int cursorX = tileX(Core.input.mouseX());
             int cursorY = tileY(Core.input.mouseY());
 
-            if (!Core.scene.hasKeyboard() && !isTrigger) {
-                if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+            if (!Core.scene.hasKeyboard()) {
+                if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && !isTrigger) {
                     drawRebuildSelection(schemX, schemY, cursorX, cursorY);
                     dialog.cont.add("KeyDown已触发");
                 }
