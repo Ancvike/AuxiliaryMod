@@ -26,26 +26,25 @@ public class KeyBind_Keyboard extends InputHandler {
                     schemX = -1;
                     schemY = -1;
                     isTrigger = false;
-//                    Vars.ui.hudfrag.showToast("所选建筑已修复");
+                    Vars.ui.hudfrag.showToast("所选建筑已修复");
                 }
             }
 
             if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
                 schemX = World.toTile(Core.input.mouseWorld().x);
                 schemY = World.toTile(Core.input.mouseWorld().y);
-                Vars.ui.hudfrag.showToast(schemX + ", " + schemY);
                 isTrigger = true;
             }
         });
 
-        Events.run(EventType.Trigger.update, () -> {
-            Lines.stroke(1f);
-            int cursorX = tileX(Core.input.mouseX());
-            int cursorY = tileY(Core.input.mouseY());
-            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
-                drawRebuildSelection(schemX, schemY, cursorX, cursorY);
-            }
-        });
+//        Events.run(EventType.Trigger.update, () -> {
+//            Lines.stroke(1f);
+//            int cursorX = tileX(Core.input.mouseX());
+//            int cursorY = tileY(Core.input.mouseY());
+//            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
+//                drawRebuildSelection(schemX, schemY, cursorX, cursorY);
+//            }
+//        });
 
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
