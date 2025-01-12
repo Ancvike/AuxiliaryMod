@@ -43,17 +43,15 @@ public class KeyBind_Keyboard extends InputHandler {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (Vars.state.isGame()) {
-                if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
-                    Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
-                    for (Unit unit : selectedUnits) {
-                        unit.health = unit.maxHealth;
-                    }
-                    Vars.ui.hudfrag.showToast("所选单位已修复");
-                    is = true;
-                } else if (Core.input.keyRelease(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
-                    is = false;
+            if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
+                Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+                for (Unit unit : selectedUnits) {
+                    unit.health = unit.maxHealth;
                 }
+                Vars.ui.hudfrag.showToast("所选单位已修复");
+                is = true;
+            } else if (Core.input.keyRelease(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
+                is = false;
             }
         });
     }
