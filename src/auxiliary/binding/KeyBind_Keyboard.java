@@ -9,19 +9,31 @@ import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.input.InputHandler;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     int schemX = -1, schemY = -1;
+    final BaseDialog dialog = new BaseDialog("");
 
     public void init() {
-//        Events.run(EventType.Trigger.update, () -> {
-//            if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
-//                drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
-//            }
-//        });
+        Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && !is) {
+                dialog.show();
+                is = true;
+            } else if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
+                is = false;
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+                drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
+                dialog.cont.add("KeyDown触发");
+            }
+        });
 
         Events.run(EventType.Trigger.update, () -> {
             if (!Core.scene.hasKeyboard() && schemX != -1 && schemY != -1) {
@@ -30,12 +42,14 @@ public class KeyBind_Keyboard extends InputHandler {
                     schemX = -1;
                     schemY = -1;
                     Vars.ui.hudfrag.showToast("所选建筑已修复");
+                    dialog.cont.add("KeyRelease触发");
                 }
             }
 
             if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
                 schemX = World.toTile(Core.input.mouseWorld().x);
                 schemY = World.toTile(Core.input.mouseWorld().y);
+                dialog.cont.add("KeyTap触发");
             }
         });
 
