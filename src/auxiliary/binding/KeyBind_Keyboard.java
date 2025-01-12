@@ -18,6 +18,7 @@ public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     int schemX = -1, schemY = -1;
     static final BaseDialog dialog = new BaseDialog("");
+    int a = 1;
 
     public void init() {
         dialog.addCloseButton();
@@ -33,7 +34,11 @@ public class KeyBind_Keyboard extends InputHandler {
         Events.run(EventType.Trigger.update, () -> {
             if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
                 drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
-                dialog.cont.add("KeyDown触发");
+                if (a == 1) {
+                    dialog.cont.add("KeyDown触发");
+                    a++;
+                }
+
             }
         });
 
