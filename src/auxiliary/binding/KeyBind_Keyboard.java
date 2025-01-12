@@ -29,10 +29,12 @@ public class KeyBind_Keyboard extends InputHandler {
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Vars.state.isGame()) {
-                if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
-                    rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
-                    schemX = -1;
-                    schemY = -1;
+                if (!Core.scene.hasKeyboard() && schemX != -1 && schemY != -1) {
+                    if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
+                        rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
+                        schemX = -1;
+                        schemY = -1;
+                    }
                 }
 
                 if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
