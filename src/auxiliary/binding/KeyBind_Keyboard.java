@@ -41,7 +41,7 @@ public class KeyBind_Keyboard extends InputHandler {
             Lines.stroke(1f);
             int cursorX = tileX(Core.input.mouseX());
             int cursorY = tileY(Core.input.mouseY());
-            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
                 drawRebuildSelection(schemX, schemY, cursorX, cursorY);
             }
         });
