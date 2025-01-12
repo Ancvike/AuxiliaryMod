@@ -44,7 +44,7 @@ public class KeyBind_Keyboard extends InputHandler {
             }
         });
 
-        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+        Events.run(EventType.Trigger.update, () -> {
             if (Vars.state.isGame()) {
                 if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
                     Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
