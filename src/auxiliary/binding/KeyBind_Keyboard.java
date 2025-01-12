@@ -11,6 +11,7 @@ import mindustry.gen.Unit;
 import mindustry.input.InputHandler;
 import mindustry.ui.dialogs.BaseDialog;
 
+import static auxiliary.binding.MyKeyBind.CONVEYOR_CHANGE;
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
@@ -20,10 +21,10 @@ public class KeyBind_Keyboard extends InputHandler {
 
     public void init() {
         Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && !is) {
+            if (Core.input.keyDown(CONVEYOR_CHANGE.nowKeyCode) && !is) {
                 dialog.show();
                 is = true;
-            } else if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
+            } else if (Core.input.keyRelease(CONVEYOR_CHANGE.nowKeyCode)) {
                 is = false;
             }
         });
