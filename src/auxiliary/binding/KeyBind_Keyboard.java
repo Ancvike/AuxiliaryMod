@@ -9,13 +9,13 @@ import mindustry.Vars;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
-import mindustry.input.Binding;
 import mindustry.input.InputHandler;
 
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
+    public static boolean isTrigger = false;
     int schemX = -1, schemY = -1;
 
     public void init() {
@@ -25,6 +25,7 @@ public class KeyBind_Keyboard extends InputHandler {
                     rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
                     schemX = -1;
                     schemY = -1;
+                    isTrigger = false;
                     Vars.ui.hudfrag.showToast("所选建筑已修复");
                 }
             }
@@ -32,6 +33,7 @@ public class KeyBind_Keyboard extends InputHandler {
             if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
                 schemX = World.toTile(Core.input.mouseWorld().x);
                 schemY = World.toTile(Core.input.mouseWorld().y);
+                isTrigger = true;
             }
         });
 
@@ -40,8 +42,7 @@ public class KeyBind_Keyboard extends InputHandler {
             int cursorX = tileX(Core.input.mouseX());
             int cursorY = tileY(Core.input.mouseY());
 
-            if (!Core.scene.hasKeyboard()) {
-
+            if (!Core.scene.hasKeyboard() && !isTrigger) {
                 if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
                     drawRebuildSelection(schemX, schemY, cursorX, cursorY);
                 }
