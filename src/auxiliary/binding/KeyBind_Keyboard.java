@@ -10,16 +10,24 @@ import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.input.InputHandler;
+import mindustry.ui.dialogs.BaseDialog;
 
+import static auxiliary.binding.MyKeyBind.CONVEYOR_CHANGE;
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     public static boolean isTrigger = false;
     int schemX = -1, schemY = -1;
+    BaseDialog dialog = new BaseDialog("");
 
     public void init() {
+        dialog.addCloseButton();
         Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyTap(CONVEYOR_CHANGE.nowKeyCode)) {
+                dialog.show();
+            }
+
             if (!Core.scene.hasKeyboard() && schemX != -1 && schemY != -1) {
                 if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
                     rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
@@ -27,6 +35,7 @@ public class KeyBind_Keyboard extends InputHandler {
                     schemY = -1;
                     isTrigger = false;
                     Vars.ui.hudfrag.showToast("所选建筑已修复");
+                    dialog.cont.add("KeyRelease已触发");
                 }
             }
 
@@ -34,6 +43,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 schemX = World.toTile(Core.input.mouseWorld().x);
                 schemY = World.toTile(Core.input.mouseWorld().y);
                 isTrigger = true;
+                dialog.cont.add("KeyTap已触发");
             }
         });
 
@@ -45,6 +55,7 @@ public class KeyBind_Keyboard extends InputHandler {
             if (!Core.scene.hasKeyboard() && !isTrigger) {
                 if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
                     drawRebuildSelection(schemX, schemY, cursorX, cursorY);
+                    dialog.cont.add("KeyDown已触发");
                 }
             }
         });
