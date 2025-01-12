@@ -8,41 +8,38 @@ import mindustry.Vars;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
-import mindustry.input.Binding;
 import mindustry.input.InputHandler;
-import mindustry.ui.dialogs.BaseDialog;
 
-import static auxiliary.binding.MyKeyBind.CONVEYOR_CHANGE;
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
+//    int selectX = -1;
+//    int selectY = -1;
+    int schemX = -1, schemY = -1;
 
     public void init() {
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Vars.state.isGame()) {
-                int selectX = -1;
-                int selectY = -1;
-                if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
-                    BaseDialog dialog = new BaseDialog("选择区域");
-                    dialog.addCloseButton();
-                    dialog.show();
-//                    selectX = tileX(Core.input.mouseX());
-//                    selectY = tileY(Core.input.mouseY());
-//                    int schemX = World.toTile(Core.input.mouseWorld().x);
-//                    int schemY = World.toTile(Core.input.mouseWorld().y);
-                } else if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
-                    int cursorX = tileX(Core.input.mouseX());
-                    int cursorY = tileY(Core.input.mouseY());
-                    removeSelection(selectX, selectY, cursorX, cursorY, !Core.input.keyDown(Binding.schematic_select) ? 100 : Vars.maxSchematicSize);
-                    if (lastSchematic != null) {
-                        useSchematic(lastSchematic);
-                        lastSchematic = null;
-                    }
-                    selectX = -1;
-                    selectY = -1;
+                if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+                    drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
                 }
 
+                if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
+                    rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
+                    schemX = -1;
+                    schemY = -1;
+                }
+
+                if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
+                    schemX = World.toTile(Core.input.mouseWorld().x);
+                    schemY = World.toTile(Core.input.mouseWorld().y);
+                }
+            }
+        });
+
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+            if (Vars.state.isGame()) {
                 if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
                     Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
                     for (Unit unit : selectedUnits) {
