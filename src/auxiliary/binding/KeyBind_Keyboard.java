@@ -17,9 +17,10 @@ import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     int schemX = -1, schemY = -1;
-    final BaseDialog dialog = new BaseDialog("");
+    static final BaseDialog dialog = new BaseDialog("");
 
     public void init() {
+        dialog.addCloseButton();
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(CONVEYOR_CHANGE.nowKeyCode) && !is) {
                 dialog.show();
