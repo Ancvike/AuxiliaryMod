@@ -18,27 +18,23 @@ public class KeyBind_Keyboard extends InputHandler {
 
     public void init() {
         Events.run(EventType.Trigger.update, () -> {
-            if (Vars.state.isGame()) {
-                if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
-                    drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
-                }
+            if (!Core.scene.hasKeyboard() && Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+                drawRebuildSelection(schemX, schemY, tileX(Core.input.mouseX()), tileY(Core.input.mouseY()));
             }
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (Vars.state.isGame()) {
-                if (!Core.scene.hasKeyboard() && schemX != -1 && schemY != -1) {
-                    if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
-                        rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
-                        schemX = -1;
-                        schemY = -1;
-                    }
+            if (!Core.scene.hasKeyboard() && schemX != -1 && schemY != -1) {
+                if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
+                    rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
+                    schemX = -1;
+                    schemY = -1;
                 }
+            }
 
-                if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
-                    schemX = World.toTile(Core.input.mouseWorld().x);
-                    schemY = World.toTile(Core.input.mouseWorld().y);
-                }
+            if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
+                schemX = World.toTile(Core.input.mouseWorld().x);
+                schemY = World.toTile(Core.input.mouseWorld().y);
             }
         });
 
