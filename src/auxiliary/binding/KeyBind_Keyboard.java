@@ -29,6 +29,7 @@ public class KeyBind_Keyboard extends InputHandler {
                     rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
                     schemX = -1;
                     schemY = -1;
+                    Vars.ui.hudfrag.showToast("所选建筑已修复");
                 }
             }
 
