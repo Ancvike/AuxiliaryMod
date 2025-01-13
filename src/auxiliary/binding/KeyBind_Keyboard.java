@@ -39,7 +39,7 @@ public class KeyBind_Keyboard extends InputHandler {
 //                Lines.stroke(1f);
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
-                drawSelection(startX, startY, endX, endY, 0, Pal.sapBulletBack, Pal.sapBullet);
+                drawSelection(startX, startY, endX, endY, 10, Pal.sapBulletBack, Pal.sapBullet);
             }
         });
 
