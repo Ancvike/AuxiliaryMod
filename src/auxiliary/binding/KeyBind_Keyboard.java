@@ -40,7 +40,7 @@ public class KeyBind_Keyboard extends InputHandler {
             int cursorX = tileX(Core.input.mouseX());
             int cursorY = tileY(Core.input.mouseY());
             for (int i = 0; i < 1; i++) {
-                Vars.ui.hudfrag.showToast(Core.input.mouseX() + "," + Core.input.mouseY());
+                Vars.ui.hudfrag.showToast(cursorX + "," + cursorY);
             }
             if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
 
