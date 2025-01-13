@@ -11,7 +11,6 @@ import mindustry.world.blocks.storage.CoreBlock;
 
 import static auxiliary.dialogs.Dialogs.*;
 import static mindustry.Vars.state;
-import static mindustry.game.Team.sharded;
 
 public class FullResource extends Function {
     private static final BaseDialog dialog_full = new BaseDialog("确认页面");
@@ -35,14 +34,14 @@ public class FullResource extends Function {
     public Table setItemsTable() {
         return new Table(t -> {
             t.add("资源列表").row();
-            CoreBlock.CoreBuild core = sharded.core();
+            CoreBlock.CoreBuild core = Vars.player.team().core();
             if (core == null || core.items == null) {
                 t.add("核心内无资源");
                 return;
             }
             for (int i = 0; i < Vars.content.items().size; i++) {
                 Item item = Vars.content.item(i);
-                if (!sharded.items().has(item)) continue;
+                if (!Vars.player.team().items().has(item)) continue;
                 t.image(item.uiIcon).tooltip(tt -> tt.background(Styles.black6).add(item.localizedName).style(Styles.outlineLabel)).margin(2f);
                 t.add(UI.formatAmount(core.items.get(item))).minWidth(5 * 8f).left();
                 t.add("->");
@@ -67,13 +66,13 @@ public class FullResource extends Function {
     }
 
     private void changeItems() {
-        CoreBlock.CoreBuild core = sharded.core();
+        CoreBlock.CoreBuild core = Vars.player.team().core();
         if (core == null || core.items == null) {
             return;
         }
         for (int i = 0; i < Vars.content.items().size; i++) {
             Item item = Vars.content.item(i);
-            if (!sharded.items().has(item)) continue;
+            if (!Vars.player.team().items().has(item)) continue;
             core.items.set(item, core.storageCapacity);
         }
     }
