@@ -2,6 +2,7 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.struct.Seq;
@@ -47,9 +48,9 @@ public class KeyBind_Keyboard extends InputHandler {
 
                 Lines.stroke(2f);
 
-                Draw.color(Pal.sapBulletBack);
+                Draw.color(Pal.darkerGray);
                 Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
-                Draw.color(Pal.sapBullet);
+                Draw.color(Pal.gray);
                 Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
             }
         });
