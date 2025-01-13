@@ -29,7 +29,6 @@ public class KeyBind_Keyboard extends InputHandler {
                     rebuildArea(startX, startY, endX, endY);
                     startX = 0;
                     startY = 0;
-                    isDraw = true;
 //                    Vars.ui.hudfrag.showToast("所选建筑已修复");
                 }
             }
@@ -46,10 +45,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
                 drawRebuildSelection(startX, startY, endX, endY);
-                if (isDraw) {
-                    Vars.ui.hudfrag.showToast("所选建筑已修复");
-                    isDraw = false;
-                }
+                Vars.ui.hudfrag.showToast("所选建筑已修复");
             }
         });
 
