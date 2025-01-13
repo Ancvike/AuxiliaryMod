@@ -10,13 +10,14 @@ import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.input.InputHandler;
 
+import static auxiliary.binding.MyKeyBind.CONVEYOR_CHANGE;
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     int startX, startY;
     int endX, endY;
-
+    int a = 0;
     public void init() {
         Events.run(EventType.Trigger.update, () -> {
             if (!Core.scene.hasKeyboard() && startX != 0 && startY != 0 && endX != 0 && endY != 0) {
@@ -40,7 +41,11 @@ public class KeyBind_Keyboard extends InputHandler {
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
                 drawRebuildSelection(startX, startY, endX, endY);
-                Draw.reset();
+                if (a < 10) {
+                    Vars.ui.hudfrag.showToast(startX + "," + startY + "," + endX + "," + endY + ",");
+                    a++;
+                }
+//                Draw.reset();
             }
         });
 
