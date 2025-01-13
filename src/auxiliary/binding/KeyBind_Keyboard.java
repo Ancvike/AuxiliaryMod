@@ -16,7 +16,6 @@ import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
-    public static boolean isTrigger = false;
     int schemX = -1, schemY = -1;
 
     public void init() {
@@ -26,15 +25,13 @@ public class KeyBind_Keyboard extends InputHandler {
                     rebuildArea(schemX, schemY, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y));
                     schemX = -1;
                     schemY = -1;
-                    isTrigger = false;
-                    Vars.ui.hudfrag.showToast("所选建筑已修复");
+//                    Vars.ui.hudfrag.showToast("所选建筑已修复");
                 }
             }
 
             if (Core.input.keyTap(RECOVERY_BUDDING.nowKeyCode) && !Core.scene.hasKeyboard()) {
                 schemX = World.toTile(Core.input.mouseWorld().x);
                 schemY = World.toTile(Core.input.mouseWorld().y);
-                isTrigger = true;
             }
         });
 
@@ -42,7 +39,7 @@ public class KeyBind_Keyboard extends InputHandler {
             Lines.stroke(1f);
             int cursorX = tileX(Core.input.mouseX());
             int cursorY = tileY(Core.input.mouseY());
-            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
+            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
                 drawSelection(schemX, schemY, cursorX, cursorY,0, Pal.sapBulletBack, Pal.sapBullet);
             }
         });
