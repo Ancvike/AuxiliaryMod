@@ -40,6 +40,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 Lines.stroke(1f);
                 int cursorX = tileX(Core.input.mouseX());
                 int cursorY = tileY(Core.input.mouseY());
+                Vars.ui.hudfrag.showToast(cursorX + "," + cursorY);
                 drawSelection(schemX, schemY, cursorX, cursorY, 0, Pal.sapBulletBack, Pal.sapBullet);
             }
         });
