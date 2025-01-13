@@ -48,6 +48,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 drawRebuildSelection(startX, startY, endX, endY);
                 if (isDraw) {
                     Vars.ui.hudfrag.showToast("所选建筑已修复");
+                    isDraw = false;
                 }
             }
         });
