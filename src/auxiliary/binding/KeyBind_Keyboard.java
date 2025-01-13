@@ -36,15 +36,11 @@ public class KeyBind_Keyboard extends InputHandler {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            Lines.stroke(1f);
-            int cursorX = tileX(Core.input.mouseX());
-            int cursorY = tileY(Core.input.mouseY());
-            for (int i = 0; i < 1; i++) {
-                Vars.ui.hudfrag.showToast(cursorX + "," + cursorY);
-            }
             if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
-
-//                drawSelection(schemX, schemY, cursorX, cursorY,0, Pal.sapBulletBack, Pal.sapBullet);
+                Lines.stroke(1f);
+                int cursorX = tileX(Core.input.mouseX());
+                int cursorY = tileY(Core.input.mouseY());
+                drawSelection(schemX, schemY, cursorX, cursorY, 0, Pal.sapBulletBack, Pal.sapBullet);
             }
         });
 
