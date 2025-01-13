@@ -20,14 +20,16 @@ public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     int startX, startY;
     int endX, endY;
+    boolean isDraw = false;
 
     public void init() {
         Events.run(EventType.Trigger.update, () -> {
             if (!Core.scene.hasKeyboard() && startX != 0 && startY != 0 && endX != 0 && endY != 0) {
                 if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
-                    rebuildArea(endX, endY, startX, startY);
+                    rebuildArea(startX, startY, endX, endY);
                     startX = 0;
                     startY = 0;
+                    isDraw = true;
 //                    Vars.ui.hudfrag.showToast("所选建筑已修复");
                 }
             }
@@ -43,7 +45,10 @@ public class KeyBind_Keyboard extends InputHandler {
 
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
-                drawRebuildSelection(endX, endY, startX, startY);
+                drawRebuildSelection(startX, startY, endX, endY);
+                if (isDraw) {
+                    Vars.ui.hudfrag.showToast("所选建筑已修复");
+                }
             }
         });
 
