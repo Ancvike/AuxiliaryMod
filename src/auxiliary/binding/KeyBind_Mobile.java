@@ -1,6 +1,5 @@
 package auxiliary.binding;
 
-import arc.Core;
 import arc.Events;
 import arc.struct.Seq;
 import mindustry.Vars;
