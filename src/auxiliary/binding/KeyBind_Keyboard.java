@@ -2,7 +2,6 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
-import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.struct.Seq;
@@ -47,7 +46,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 0, 1f);
 
                 Lines.stroke(2f);
-
+                Vars.ui.hudfrag.showToast("所选建筑已修复");
                 Draw.color(Pal.darkerGray);
                 Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
                 Draw.color(Pal.gray);
