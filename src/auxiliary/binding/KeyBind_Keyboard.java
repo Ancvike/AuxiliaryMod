@@ -12,9 +12,7 @@ public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
 
     public void init() {
-        Events.run(EventType.Trigger.update, () -> {
-            drawRebuildSelection(0, 0, 100, 100);
-        });
+
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
                 Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
