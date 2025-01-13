@@ -10,6 +10,7 @@ import mindustry.ui.Styles;
 
 
 public class KeyBind_Mobile {
+
     public void init() {
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Vars.control.input.commandMode) {
@@ -21,12 +22,12 @@ public class KeyBind_Mobile {
                     });
                 });
             } else {
-                Vars.control.input.uiGroup.removeChild(Vars.ui.hudGroup.find("mobile-recovery-unit"));
+                Vars.control.input.uiGroup.removeChild(Vars.control.input.uiGroup.find("mobile-recovery-unit"));
             }
         });
     }
 
-    private void onClick() {
+    public void onClick() {
         Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
         for (Unit unit : selectedUnits) {
             unit.health = unit.maxHealth;
