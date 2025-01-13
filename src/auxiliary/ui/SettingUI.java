@@ -15,11 +15,9 @@ import mindustry.ui.dialogs.BaseDialog;
 import static auxiliary.binding.MyKeyBind.*;
 
 public class SettingUI {
-    private static final BaseDialog dialog_setting = new BaseDialog("确认页面");
     public static final Seq<MyKeyBind> keys = new Seq<>();
 
     public static void init() {
-        setDialog_setting();
         keys.addAll(CONVEYOR_CHANGE, RECOVERY_BUDDING, RECOVERY_UNIT);
         Vars.ui.settings.addCategory("AuxiliaryMod设置", t -> {
             if (Core.app.isDesktop()) {
@@ -32,7 +30,7 @@ public class SettingUI {
                     t.row();
                 }
             } else {
-                dialog_setting.show();
+                t.add("当前Mod设置只有电脑端的更改键盘键位设置,其他端无需该功能").row();
             }
         });
     }
@@ -49,10 +47,5 @@ public class SettingUI {
             }
         });
         rebindDialog.show();
-    }
-
-    private static void setDialog_setting() {
-        dialog_setting.cont.add("当前Mod设置只有电脑端的更改键盘键位设置,其他端无需该功能").row();
-        dialog_setting.addCloseButton();
     }
 }

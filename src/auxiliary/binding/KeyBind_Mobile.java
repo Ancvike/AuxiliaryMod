@@ -19,6 +19,8 @@ public class KeyBind_Mobile {
                         tt.setBackground(Styles.black6);
                         tt.label(() -> "单位修复").pad(2f);
                     });
+                    t.left();
+                    t.bottom();
                 });
             }
         });
