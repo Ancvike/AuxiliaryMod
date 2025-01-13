@@ -2,8 +2,6 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
-import arc.graphics.g2d.Lines;
-import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
