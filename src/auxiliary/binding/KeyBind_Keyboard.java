@@ -14,7 +14,6 @@ import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
-    int schemX = -1, schemY = -1;
     int startX, startY;
     int endX, endY;
 
@@ -24,7 +23,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 if (Core.input.keyRelease(RECOVERY_BUDDING.nowKeyCode)) {
                     endX = World.toTile(Core.input.mouseWorld().x);
                     endY = World.toTile(Core.input.mouseWorld().y);
-                    rebuildArea(schemX, schemY, endX, endY);
+                    rebuildArea(startX, startY, endX, endY);
                     startX = 0;
                     startY = 0;
 //                    Vars.ui.hudfrag.showToast("所选建筑已修复");
@@ -40,7 +39,7 @@ public class KeyBind_Keyboard extends InputHandler {
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
 //                Lines.stroke(1f);
-                drawSelection(schemX, schemY, endX, endY, 0, Pal.sapBulletBack, Pal.sapBullet);
+                drawSelection(startX, startY, endX, endY, 0, Pal.sapBulletBack, Pal.sapBullet);
             }
         });
 
