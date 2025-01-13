@@ -22,6 +22,8 @@ public class KeyBind_Mobile {
                     t.left();
                     t.bottom();
                 });
+            } else {
+                Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-recovery-unit"));
             }
         });
     }
