@@ -40,7 +40,7 @@ public class KeyBind_Keyboard extends InputHandler {
             }
         });
 
-        Events.run(EventType.Trigger.update, () -> {
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
 
                 endX = World.toTile(Core.input.mouseWorld().x);
