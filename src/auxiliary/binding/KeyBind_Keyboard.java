@@ -9,6 +9,7 @@ import mindustry.Vars;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
+import mindustry.graphics.Pal;
 import mindustry.input.InputHandler;
 
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
@@ -37,14 +38,14 @@ public class KeyBind_Keyboard extends InputHandler {
             }
         });
 
-//        Events.run(EventType.Trigger.update, () -> {
-//            Lines.stroke(1f);
-//            int cursorX = tileX(Core.input.mouseX());
-//            int cursorY = tileY(Core.input.mouseY());
-//            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
-//                drawRebuildSelection(schemX, schemY, cursorX, cursorY);
-//            }
-//        });
+        Events.run(EventType.Trigger.update, () -> {
+            Lines.stroke(1f);
+            int cursorX = tileX(Core.input.mouseX());
+            int cursorY = tileY(Core.input.mouseY());
+            if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode) && isTrigger) {
+                drawSelection(schemX, schemY, cursorX, cursorY,0, Pal.sapBulletBack, Pal.sapBullet);
+            }
+        });
 
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
