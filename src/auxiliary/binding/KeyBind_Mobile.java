@@ -1,5 +1,6 @@
 package auxiliary.binding;
 
+import arc.Core;
 import arc.Events;
 import arc.struct.Seq;
 import mindustry.Vars;
@@ -13,17 +14,15 @@ public class KeyBind_Mobile {
     public void init() {
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Vars.control.input.commandMode) {
-                Vars.ui.hudGroup.fill(t -> {
+                Vars.control.input.uiGroup.fill(t -> {
                     t.name = "mobile-recovery-unit";
                     t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
                         tt.setBackground(Styles.black6);
                         tt.label(() -> "单位修复").pad(2f);
                     });
-                    t.left();
-                    t.bottom();
                 });
             } else {
-                Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-recovery-unit"));
+                Vars.control.input.uiGroup.removeChild(Vars.ui.hudGroup.find("mobile-recovery-unit"));
             }
         });
     }
