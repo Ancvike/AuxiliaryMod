@@ -11,7 +11,7 @@ import mindustry.ui.Styles;
 
 public class KeyBind_Mobile {
     public void init() {
-        Events.run(EventType.Trigger.update, () -> {
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Vars.control.input.commandMode) {
                 Vars.ui.hudGroup.fill(t -> {
                     t.name = "mobile-recovery-unit";
