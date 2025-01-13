@@ -46,6 +46,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 endY = World.toTile(Core.input.mouseWorld().y);
                 drawRebuildSelection(startX, startY, endX, endY);
                 Vars.ui.hudfrag.showToast("所选建筑已修复");
+                Draw.reset();
             }
         });
 
