@@ -40,6 +40,7 @@ public class KeyBind_Keyboard extends InputHandler {
             int cursorX = tileX(Core.input.mouseX());
             int cursorY = tileY(Core.input.mouseY());
             if (Core.input.keyDown(RECOVERY_BUDDING.nowKeyCode)) {
+                Vars.ui.hudfrag.showToast("所选建筑已修复");
                 drawSelection(schemX, schemY, cursorX, cursorY,0, Pal.sapBulletBack, Pal.sapBullet);
             }
         });
