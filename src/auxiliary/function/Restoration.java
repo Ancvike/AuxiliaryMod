@@ -2,7 +2,7 @@ package auxiliary.function;
 
 import arc.scene.ui.layout.Table;
 import auxiliary.dialogs.Dialogs;
-import mindustry.game.Team;
+import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
@@ -56,13 +56,13 @@ public class Restoration extends Function {
     }
 
     private void restoration_building() {
-        for (Building building : Team.sharded.data().buildings) {
+        for (Building building : Vars.player.team().data().buildings) {
             building.health = building.maxHealth;
         }
     }
 
     private void restoration_unit() {
-        for (Unit unit : Team.sharded.data().units) {
+        for (Unit unit : Vars.player.team().data().units) {
             unit.health = unit.maxHealth;
         }
     }
