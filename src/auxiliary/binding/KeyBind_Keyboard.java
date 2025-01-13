@@ -2,13 +2,17 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Lines;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
 import mindustry.input.InputHandler;
+import mindustry.input.Placement;
 
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
@@ -39,7 +43,14 @@ public class KeyBind_Keyboard extends InputHandler {
 //                Lines.stroke(1f);
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
-                drawSelection(startX, startY, endX, endY, 10, Pal.sapBulletBack, Pal.sapBullet);
+                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 0, 1f);
+
+                Lines.stroke(2f);
+
+                Draw.color(Pal.sapBulletBack);
+                Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
+                Draw.color(Pal.sapBullet);
+                Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
             }
         });
 
