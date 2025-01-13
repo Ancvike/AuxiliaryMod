@@ -3,16 +3,12 @@ package auxiliary.binding;
 import arc.Core;
 import arc.Events;
 import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Lines;
 import arc.struct.Seq;
 import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
-import mindustry.graphics.Pal;
 import mindustry.input.InputHandler;
-import mindustry.input.Placement;
 
 import static auxiliary.binding.MyKeyBind.RECOVERY_BUDDING;
 
@@ -20,7 +16,6 @@ public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
     int startX, startY;
     int endX, endY;
-    boolean isDraw = false;
 
     public void init() {
         Events.run(EventType.Trigger.update, () -> {
@@ -45,7 +40,6 @@ public class KeyBind_Keyboard extends InputHandler {
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
                 drawRebuildSelection(startX, startY, endX, endY);
-                Vars.ui.hudfrag.showToast("所选建筑已修复");
                 Draw.reset();
             }
         });
