@@ -28,13 +28,11 @@ public class UIMovement extends Function {
 
     @Override
     public void onClick() {
-        if (isDragged) {
-            BaseDialog dialog_no = new BaseDialog("失败");
-            dialog_no.addCloseButton();
-            dialog_no.show();
-            return;
+        if (mobile) {
+
         }
 
+        if (isDragged && !mobile) return;
         if (mobile && !Core.settings.getBool("landscape")) {
             table = setDialogTable_mobile();
         } else {
