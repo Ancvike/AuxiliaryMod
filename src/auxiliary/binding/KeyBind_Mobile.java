@@ -25,10 +25,6 @@ public class KeyBind_Mobile {
         }));
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
-
-        });
-
-        Events.run(EventType.Trigger.uiDrawEnd, () -> {
             isTrue = Vars.control.input.commandMode;
             if (isTrue && count == 0) {
                 Vars.ui.hudGroup.fill(t -> {
@@ -40,7 +36,7 @@ public class KeyBind_Mobile {
                         tt.label(() -> "单位修复").pad(2f);
                     }).left();
                     t.row();
-                    t.table().size(155f, 48f);
+                    t.table().size(48f);
                 });
                 count++;
             }
