@@ -12,7 +12,7 @@ public class KeyBind_Mobile {
     boolean isTrue = false;
 
     public void init() {
-        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+        Events.run(EventType.Trigger.uiDrawBegin, () -> {
             isTrue = Vars.control.input.commandMode;
             if (isTrue) {
                 Vars.ui.hudGroup.fill(t -> {
