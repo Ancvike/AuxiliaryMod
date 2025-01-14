@@ -9,30 +9,25 @@ import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 
 public class KeyBind_Mobile {
+    boolean isTrue = false;
 
     public void init() {
-        Vars.ui.hudGroup.fill(t -> {
-            t.bottom();
-            t.left();
-            t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
-                tt.setBackground(Styles.black6);
-                tt.label(() -> "单位修复").pad(2f);
-            });
-            t.row();
-            t.table().size(155f, 48f);
-        });
-
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
-            if (Vars.control.input.commandMode) {
-                Vars.control.input.uiGroup.fill(t -> {
-                    t.name = "mobile-recovery-unit";
+            isTrue = Vars.control.input.commandMode;
+            if (isTrue) {
+                Vars.ui.hudGroup.fill(t -> {
+                    t.name = "mobile-unit";
+                    t.bottom();
+                    t.left();
                     t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
                         tt.setBackground(Styles.black6);
                         tt.label(() -> "单位修复").pad(2f);
-                    });
+                    }).left();
+                    t.row();
+                    t.table().size(155f, 48f);
                 });
             } else {
-                Vars.control.input.uiGroup.removeChild(Vars.control.input.uiGroup.find("mobile-recovery-unit"));
+                Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-unit"));
             }
         });
     }
