@@ -127,4 +127,9 @@ class DragHandleListener extends InputListener {
         lastY = v.y;
         isDragged = true;
     }
+
+    @Override
+    public void touchUp(InputEvent event, float x, float y, int pointer, KeyCode button) {
+        isDragged = false;
+    }
 }
