@@ -10,11 +10,12 @@ import mindustry.ui.Styles;
 
 public class KeyBind_Mobile {
     boolean isTrue = false;
+    int count = 0;
 
     public void init() {
-        Events.run(EventType.Trigger.uiDrawBegin, () -> {
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
             isTrue = Vars.control.input.commandMode;
-            if (isTrue) {
+            if (isTrue && count == 0) {
                 Vars.ui.hudGroup.fill(t -> {
                     t.name = "mobile-unit";
                     t.bottom();
@@ -26,7 +27,14 @@ public class KeyBind_Mobile {
                     t.row();
                     t.table().size(155f, 48f);
                 });
-            } else {
+                count++;
+            }
+        });
+
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+            isTrue = Vars.control.input.commandMode;
+            if (!isTrue) {
+                count = 0;
                 Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-unit"));
             }
         });
