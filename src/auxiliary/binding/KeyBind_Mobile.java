@@ -13,6 +13,21 @@ public class KeyBind_Mobile {
     int count = 0;
 
     public void init() {
+        Events.run(EventType.Trigger.uiDrawEnd, () -> Vars.ui.hudGroup.fill(t -> {
+            t.name = "mobile-unit";
+            t.bottom();
+            t.right();
+            t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "建筑修复").pad(2f);
+            }).left();
+            t.table().size(98f);
+        }));
+
+        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+
+        });
+
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             isTrue = Vars.control.input.commandMode;
             if (isTrue && count == 0) {
