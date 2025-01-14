@@ -20,8 +20,8 @@ public class KeyBind_Mobile {
             t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "建筑修复").pad(2f);
-            }).left();
-            t.table().size(98f);
+            }).bottom();
+            t.table().size(148f);
         }));
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
