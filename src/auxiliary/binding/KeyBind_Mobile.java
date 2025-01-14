@@ -14,7 +14,7 @@ public class KeyBind_Mobile {
 
     public void init() {
         Events.run(EventType.Trigger.uiDrawEnd, () -> Vars.ui.hudGroup.fill(t -> {
-            t.name = "mobile-unit";
+            t.name = "mobile-building";
             t.bottom();
             t.right();
             t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
