@@ -21,7 +21,7 @@ public class KeyBind_Mobile {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "建筑修复").pad(2f);
             }).bottom();
-            t.table().size(148f);
+            t.table().size(300f,10f);
         }));
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
