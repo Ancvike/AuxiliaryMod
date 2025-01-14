@@ -8,10 +8,20 @@ import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 
-
 public class KeyBind_Mobile {
 
     public void init() {
+        Vars.ui.hudGroup.fill(t -> {
+            t.bottom();
+            t.left();
+            t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "单位修复").pad(2f);
+            });
+            t.row();
+            t.table().size(155f, 48f);
+        });
+
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (Vars.control.input.commandMode) {
                 Vars.control.input.uiGroup.fill(t -> {
