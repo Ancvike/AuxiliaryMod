@@ -69,6 +69,7 @@ public class FunctionManager {
                             });
                         }
                         t.setSize(functions.size * 50f, 50f);
+                        table.find("ui-move").addListener(new DragHandleListener(table));
                     });
                     Vars.ui.hudGroup.fill(t -> {
                         t.name = "auxiliary-functions-mobile-landscape";
@@ -92,8 +93,9 @@ public class FunctionManager {
                         t.add(table);
                         t.right();
                     });
+                    table.find("ui-move").addListener(new DragHandleListener(table));
                 }
-                table.find("ui-move").addListener(new DragHandleListener(table));
+
             });
         }
 
