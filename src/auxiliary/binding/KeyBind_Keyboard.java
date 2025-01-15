@@ -18,12 +18,12 @@ public class KeyBind_Keyboard extends InputHandler {
                 drawSelection(100,100,200,200,64);
             }
         });
-
-        Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-
-            }
-        });
+//
+//        Events.run(EventType.Trigger.update, () -> {
+//            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+//
+//            }
+//        });
 
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
