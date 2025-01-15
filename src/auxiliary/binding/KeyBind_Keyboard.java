@@ -3,38 +3,35 @@ package auxiliary.binding;
 import arc.Core;
 import arc.Events;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Lines;
+import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
 import mindustry.input.InputHandler;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
 
     public void init() {
-        Events.run(EventType.Trigger.update, () -> {
-            Draw.draw(Layer.max, this::drawTop1);
-//            Draw.reset();
-            Draw.flush();
-        });
+        Events.run(EventType.Trigger.draw, () -> {
+            float cx = Core.camera.position.x, cy = Core.camera.position.y;
+            float scaling = 8;
 
+            Draw.z(Layer.max);
 
-//        Events.run(EventType.Trigger.update, () -> {
-//
-//        });
-//
-//        Events.run(EventType.Trigger.update, () -> {
-//            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-//
-//            }
-//        });
-
-        Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                Draw.reset();
+            Lines.stroke(1f);
+            Draw.color(Pal.accent);
+            for (int i = (int) (-0.5f * Core.camera.height / 8); i < (int) (0.5f * Core.camera.height / 8); i++) {
+                Lines.line(Mathf.floor((cx - 0.5f * Core.camera.width) / 8) * 8 + 4, Mathf.floor((cy + i * 8) / 8) * 8 + 4, Mathf.floor((cx + 0.5f * Core.camera.width) / 8) * 8 + 4, Mathf.floor((cy + i * 8) / 8) * 8 + 4);
             }
+            for (int i = (int) (-0.5f * Core.camera.width / 8); i < (int) (0.5f * Core.camera.width / 8); i++) {
+                Lines.line(Mathf.floor((cx + i * 8) / 8) * 8 + 4, Mathf.floor((cy + 0.5f * Core.camera.height) / 8) * 8 + 4, Mathf.floor((cx + i * 8) / 8) * 8 + 4, Mathf.floor((cy - 0.5f * Core.camera.height) / 8) * 8 + 4);
+            }
+            Draw.reset();
         });
 
         Events.run(EventType.Trigger.update, () -> {
