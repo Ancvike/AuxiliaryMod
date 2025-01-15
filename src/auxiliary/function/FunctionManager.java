@@ -69,13 +69,13 @@ public class FunctionManager {
                             });
                         }
                         t.setSize(functions.size * 50f, 50f);
-                        table.find("ui-move").addListener(new DragHandleListener(table));
                     });
                     Vars.ui.hudGroup.fill(t -> {
                         t.name = "auxiliary-functions-mobile-landscape";
                         t.add(table);
                         t.bottom();
                     });
+                    table.find("ui-move").addListener(new DragHandleListener(table));
                 } else if (!Core.settings.getBool("landscape") && Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape") != null) {
                     Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("auxiliary-functions-mobile-landscape"));
                     table = new Table(t -> {
