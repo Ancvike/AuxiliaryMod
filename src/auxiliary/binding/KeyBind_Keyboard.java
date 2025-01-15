@@ -16,6 +16,7 @@ public class KeyBind_Keyboard extends InputHandler {
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 drawSelection(100,100,200,200,64);
+                Draw.flush();
             }
         });
 //
