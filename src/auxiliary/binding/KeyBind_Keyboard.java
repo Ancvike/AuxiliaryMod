@@ -2,11 +2,11 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import arc.graphics.g2d.Draw;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
-import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 
 public class KeyBind_Keyboard extends InputHandler {
@@ -14,8 +14,20 @@ public class KeyBind_Keyboard extends InputHandler {
 
     public void init() {
         Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                drawSelection(100,100,200,200,64);
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                Drawf.square(100, 100, 10);
+
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                Draw.reset();
             }
         });
 
