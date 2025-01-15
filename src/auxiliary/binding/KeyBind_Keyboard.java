@@ -16,7 +16,7 @@ public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
 
     public void init() {
-        Draw.draw(Layer.overlayUI, keyBind_Keyboard::drawTop1);
+        Draw.draw(200, keyBind_Keyboard::drawTop1);
 
 //        Events.run(EventType.Trigger.update, () -> {
 //
