@@ -28,7 +28,11 @@ public class UIMovement extends Function {
 
     @Override
     public void onClick() {
-        if (isDragged) return;
+        if (mobile) {
+
+        }
+
+        if (isDragged && !mobile) return;
         if (mobile && !Core.settings.getBool("landscape")) {
             table = setDialogTable_mobile();
         } else {
