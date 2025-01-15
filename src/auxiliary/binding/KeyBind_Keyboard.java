@@ -16,7 +16,7 @@ public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
 
     public void init() {
-        Draw.draw(200, keyBind_Keyboard::drawTop1);
+        Draw.draw(Layer.overlayUI, keyBind_Keyboard::drawTop1);
 
 //        Events.run(EventType.Trigger.update, () -> {
 //
@@ -49,8 +49,10 @@ public class KeyBind_Keyboard extends InputHandler {
     }
 
     public void drawTop1() {
-        if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-            drawSelection(100,100,200,200,64);
-        }
+        Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                drawSelection(100,100,120,120,64);
+            }
+        });
     }
 }
