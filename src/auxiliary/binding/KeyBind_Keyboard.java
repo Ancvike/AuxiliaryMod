@@ -7,18 +7,20 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
+import mindustry.graphics.Layer;
 import mindustry.input.InputHandler;
+
+import static auxiliary.binding.KeyBind.keyBind_Keyboard;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
 
     public void init() {
-        Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                drawSelection(100,100,200,200,64);
-                Draw.flush();
-            }
-        });
+        Draw.draw(Layer.overlayUI, keyBind_Keyboard::drawTop1);
+
+//        Events.run(EventType.Trigger.update, () -> {
+//
+//        });
 //
 //        Events.run(EventType.Trigger.update, () -> {
 //            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
@@ -44,5 +46,11 @@ public class KeyBind_Keyboard extends InputHandler {
                 is = false;
             }
         });
+    }
+
+    public void drawTop1() {
+        if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            drawSelection(100,100,200,200,64);
+        }
     }
 }
