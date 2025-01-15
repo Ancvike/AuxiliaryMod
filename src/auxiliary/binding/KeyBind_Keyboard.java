@@ -10,13 +10,13 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
 import mindustry.input.InputHandler;
 
-import static auxiliary.binding.KeyBind.keyBind_Keyboard;
-
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
 
     public void init() {
-        Draw.draw(Layer.overlayUI, keyBind_Keyboard::drawTop1);
+        Events.run(EventType.Trigger.update, () -> {
+            Draw.draw(Layer.overlayUI, this::drawTop1);
+        });
 
 //        Events.run(EventType.Trigger.update, () -> {
 //
@@ -49,10 +49,6 @@ public class KeyBind_Keyboard extends InputHandler {
     }
 
     public void drawTop1() {
-        Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                drawSelection(100,100,120,120,64);
-            }
-        });
+        drawSelection(100, 100, 120, 120, 64);
     }
 }
