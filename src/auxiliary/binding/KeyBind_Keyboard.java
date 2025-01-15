@@ -23,7 +23,7 @@ public class KeyBind_Keyboard extends InputHandler {
                 Lines.stroke(1f);
                 Draw.color(Pal.accent);
 
-                drawSelection(100, 100, 120, 120, 64);
+                //用自己的方法
 
                 Draw.reset();
             }
