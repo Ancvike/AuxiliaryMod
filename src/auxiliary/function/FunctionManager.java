@@ -95,7 +95,6 @@ public class FunctionManager {
                     });
                     table.find("ui-move").addListener(new DragHandleListener(table));
                 }
-
             });
         }
 

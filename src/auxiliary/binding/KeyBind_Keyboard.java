@@ -6,12 +6,18 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
+import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
 
     public void init() {
+        Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                Drawf.square(100, 100, 10);
+            }
+        });
 
         Events.run(EventType.Trigger.update, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
