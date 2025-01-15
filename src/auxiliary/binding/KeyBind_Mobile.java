@@ -6,9 +6,10 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
+import mindustry.input.MobileInput;
 import mindustry.ui.Styles;
 
-public class KeyBind_Mobile {
+public class KeyBind_Mobile extends MobileInput {
     boolean isTrue = false;
     int count = 0;
 
