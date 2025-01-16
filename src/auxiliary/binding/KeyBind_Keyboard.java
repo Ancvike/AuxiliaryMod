@@ -2,40 +2,40 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
-import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
+import arc.math.geom.Geometry;
+import arc.math.geom.Vec2;
+import arc.scene.ui.layout.Scl;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
+import mindustry.editor.MapEditor;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
-import mindustry.input.InputHandler;
+import mindustry.world.Tile;
 
-public class KeyBind_Keyboard extends InputHandler {
+import static mindustry.Vars.mobile;
+import static mindustry.Vars.world;
+
+public class KeyBind_Keyboard extends Table {
     public static boolean is = false;
     float startX, startY;
     float endX, endY;
+    boolean isOpen = false;
+
+    final Vec2[][] brushPolygons = new Vec2[MapEditor.brushSizes.length][0];
 
     public void init() {
+
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                float cx = Core.camera.position.x, cy = Core.camera.position.y;
-
-                Draw.z(Layer.max);
-                Lines.stroke(1f);
-                Draw.color(Color.red);
-
-                //用自己的方法
-                Lines.line(100,100,120,100);
-                Lines.line(100,100,100,80);
-                Lines.line(120,100,120,80);
-                Lines.line(100,80,120,80);
-
-                Draw.reset();
+            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                isOpen = !isOpen;
+                update();
             }
         });
 
@@ -68,5 +68,32 @@ public class KeyBind_Keyboard extends InputHandler {
                 is = false;
             }
         });
+    }
+
+    public void update() {
+        if (isOpen) {
+            for (int i = 0; i < MapEditor.brushSizes.length; i++) {
+                float size = MapEditor.brushSizes[i];
+                float mod = size % 1f;
+                brushPolygons[i] = Geometry.pixelCircle(size, (index, x, y) -> Mathf.dst(x, y, index - mod, index - mod) <= size - 0.5f);
+            }
+
+            Events.run(EventType.Trigger.draw, () -> {
+                float scaling = 8;
+
+                Draw.z(Layer.max);
+
+                Tile tile = world.tileWorld(Core.input.mouseWorldX(), Core.input.mouseWorldY());
+                if (tile == null) return;
+
+                int index = 2;
+
+                Lines.stroke(Scl.scl(2f), Pal.accent);
+
+                if (!mobile) {
+                    Lines.poly(brushPolygons[index], tile.x * 8 - 4, tile.y * 8 - 4, scaling);
+                }
+            });
+        }
     }
 }
