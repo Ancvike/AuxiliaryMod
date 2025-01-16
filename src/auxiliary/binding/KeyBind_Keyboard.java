@@ -31,9 +31,15 @@ public class KeyBind_Keyboard extends Table {
     final Vec2[][] brushPolygons = new Vec2[MapEditor.brushSizes.length][0];
 
     public void init() {
-
+        for (int i = 0; i < MapEditor.brushSizes.length; i++) {
+            float size = MapEditor.brushSizes[i];
+            float mod = size % 1f;
+            brushPolygons[i] = Geometry.pixelCircle(size, (index, x, y) -> Mathf.dst(x, y, index - mod, index - mod) <= size - 0.5f);
+        }
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
+
+
             float scaling = 8;
 
             Draw.z(Layer.max);
@@ -87,14 +93,4 @@ public class KeyBind_Keyboard extends Table {
             }
         });
     }
-
-//    public void update() {
-//        if (isOpen) {
-//            for (int i = 0; i < MapEditor.brushSizes.length; i++) {
-//                float size = MapEditor.brushSizes[i];
-//                float mod = size % 1f;
-//                brushPolygons[i] = Geometry.pixelCircle(size, (index, x, y) -> Mathf.dst(x, y, index - mod, index - mod) <= size - 0.5f);
-//            }
-//        }
-//    }
 }
