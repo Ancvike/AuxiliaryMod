@@ -6,6 +6,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
@@ -14,6 +15,8 @@ import mindustry.input.InputHandler;
 
 public class KeyBind_Keyboard extends InputHandler {
     public static boolean is = false;
+    float startX, startY;
+    float endX, endY;
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
@@ -24,8 +27,26 @@ public class KeyBind_Keyboard extends InputHandler {
                 Draw.color(Pal.accent);
 
                 //用自己的方法
+                Lines.line(100, 100, 120, 120);
 
                 Draw.reset();
+            }
+        });
+
+        Events.run(EventType.Trigger.draw, () -> {
+            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                startX = World.toTile(Core.input.mouseWorld().x);
+                startY = World.toTile(Core.input.mouseWorld().y);
+            }
+        });
+
+        Events.run(EventType.Trigger.draw, () -> {
+            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                //实现方法
+                startX = 0;
+                startY = 0;
+                endX = 0;
+                endY = 0;
             }
         });
 
