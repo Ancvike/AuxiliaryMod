@@ -2,6 +2,7 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
@@ -26,7 +27,7 @@ public class KeyBind_Keyboard extends InputHandler {
 
                 Draw.z(Layer.max);
                 Lines.stroke(1f);
-                Draw.color(Pal.accent);
+                Draw.color(Color.red);
 
                 //用自己的方法
                 Lines.line(100,100,120,100);
