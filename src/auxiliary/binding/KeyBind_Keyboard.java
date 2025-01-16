@@ -4,6 +4,7 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
+import arc.math.Mathf;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
@@ -21,13 +22,19 @@ public class KeyBind_Keyboard extends InputHandler {
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                Draw.z(Layer.max);
+                float cx = Core.camera.position.x, cy = Core.camera.position.y;
 
+                Draw.z(Layer.max);
                 Lines.stroke(1f);
                 Draw.color(Pal.accent);
 
                 //用自己的方法
-                Lines.line(100, 100, 120, 120);
+                for (int i = (int) (-0.5f * Core.camera.height / 8); i < (int) (0.5f * Core.camera.height / 8); i++) {
+                    Lines.line(Mathf.floor((cx - 0.5f * Core.camera.width) / 8) * 8 + 4, Mathf.floor((cy + i * 8) / 8) * 8 + 4, Mathf.floor((cx + 0.5f * Core.camera.width) / 8) * 8 + 4, Mathf.floor((cy + i * 8) / 8) * 8 + 4);
+                }
+                for (int i = (int) (-0.5f * Core.camera.width / 8); i < (int) (0.5f * Core.camera.width / 8); i++) {
+                    Lines.line(Mathf.floor((cx + i * 8) / 8) * 8 + 4, Mathf.floor((cy + 0.5f * Core.camera.height) / 8) * 8 + 4, Mathf.floor((cx + i * 8) / 8) * 8 + 4, Mathf.floor((cy - 0.5f * Core.camera.height) / 8) * 8 + 4);
+                }
 
                 Draw.reset();
             }
