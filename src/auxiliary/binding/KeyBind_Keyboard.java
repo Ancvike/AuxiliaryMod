@@ -33,9 +33,27 @@ public class KeyBind_Keyboard extends Table {
     public void init() {
 
         Events.run(EventType.Trigger.draw, () -> {
+            if (!isOpen) return;
+            float scaling = 8;
+
+            Draw.z(Layer.max);
+
+            Tile tile = world.tileWorld(Core.input.mouseWorldX(), Core.input.mouseWorldY());
+            if (tile == null) return;
+
+            int index = 2;
+
+            Lines.stroke(Scl.scl(2f), Pal.accent);
+
+            if (!mobile) {
+                Lines.poly(brushPolygons[index], tile.x * 8 - 4, tile.y * 8 - 4, scaling);
+            }
+        });
+
+        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 isOpen = !isOpen;
-                update();
+
             }
         });
 
@@ -70,30 +88,13 @@ public class KeyBind_Keyboard extends Table {
         });
     }
 
-    public void update() {
-        if (isOpen) {
-            for (int i = 0; i < MapEditor.brushSizes.length; i++) {
-                float size = MapEditor.brushSizes[i];
-                float mod = size % 1f;
-                brushPolygons[i] = Geometry.pixelCircle(size, (index, x, y) -> Mathf.dst(x, y, index - mod, index - mod) <= size - 0.5f);
-            }
-
-            Events.run(EventType.Trigger.draw, () -> {
-                float scaling = 8;
-
-                Draw.z(Layer.max);
-
-                Tile tile = world.tileWorld(Core.input.mouseWorldX(), Core.input.mouseWorldY());
-                if (tile == null) return;
-
-                int index = 2;
-
-                Lines.stroke(Scl.scl(2f), Pal.accent);
-
-                if (!mobile) {
-                    Lines.poly(brushPolygons[index], tile.x * 8 - 4, tile.y * 8 - 4, scaling);
-                }
-            });
-        }
-    }
+//    public void update() {
+//        if (isOpen) {
+//            for (int i = 0; i < MapEditor.brushSizes.length; i++) {
+//                float size = MapEditor.brushSizes[i];
+//                float mod = size % 1f;
+//                brushPolygons[i] = Geometry.pixelCircle(size, (index, x, y) -> Mathf.dst(x, y, index - mod, index - mod) <= size - 0.5f);
+//            }
+//        }
+//    }
 }
