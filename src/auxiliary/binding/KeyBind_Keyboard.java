@@ -26,7 +26,6 @@ public class KeyBind_Keyboard extends Table {
     public static boolean is = false;
     float startX, startY;
     float endX, endY;
-    boolean isOpen = false;
 
     final Vec2[][] brushPolygons = new Vec2[MapEditor.brushSizes.length][0];
 
@@ -37,7 +36,7 @@ public class KeyBind_Keyboard extends Table {
             brushPolygons[i] = Geometry.pixelCircle(size, (index, x, y) -> Mathf.dst(x, y, index - mod, index - mod) <= size - 0.5f);
         }
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 float scaling = 8;
                 Draw.z(Layer.max);
 
