@@ -38,28 +38,18 @@ public class KeyBind_Keyboard extends Table {
         }
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
-
-
-            float scaling = 8;
-
-            Draw.z(Layer.max);
-
-            Tile tile = world.tileWorld(Core.input.mouseWorldX(), Core.input.mouseWorldY());
-            if (tile == null) return;
-
-            int index = 2;
-
-            Lines.stroke(Scl.scl(2f), Pal.accent);
-
-            if (!mobile) {
-                Lines.poly(brushPolygons[index], tile.x * 8 - 4, tile.y * 8 - 4, scaling);
-            }
-        });
-
-        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                isOpen = !isOpen;
+                float scaling = 8;
+                Draw.z(Layer.max);
 
+                Tile tile = world.tileWorld(Core.input.mouseWorldX(), Core.input.mouseWorldY());
+                if (tile == null) return;
+
+                Lines.stroke(Scl.scl(2f), Pal.accent);
+
+                if (!mobile) {
+                    Lines.poly(brushPolygons[2], tile.x * 8 - 4, tile.y * 8 - 4, scaling);
+                }
             }
         });
 
