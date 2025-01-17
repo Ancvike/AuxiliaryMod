@@ -2,6 +2,7 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.scene.ui.layout.Table;
@@ -29,9 +30,9 @@ public class KeyBind_Keyboard extends Table {
 
                 Lines.stroke(2f);
 
-                Draw.color(Pal.accentBack);
+                Draw.color(Color.green);
                 Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
-                Draw.color(Pal.accent);
+                Draw.color(Color.scarlet);
                 Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
             }
         });
