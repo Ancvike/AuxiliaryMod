@@ -37,7 +37,6 @@ public class KeyBind_Keyboard extends Table {
             brushPolygons[i] = Geometry.pixelCircle(size, (index, x, y) -> Mathf.dst(x, y, index - mod, index - mod) <= size - 0.5f);
         }
         Events.run(EventType.Trigger.draw, () -> {
-            if (!isOpen) return;
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 float scaling = 8;
                 Draw.z(Layer.max);
