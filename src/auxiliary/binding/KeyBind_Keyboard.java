@@ -2,36 +2,34 @@ package auxiliary.binding;
 
 import arc.Core;
 import arc.Events;
-import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
-import arc.scene.ui.layout.Scl;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
-import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
+import mindustry.input.Placement;
 
 public class KeyBind_Keyboard extends Table {
     public static boolean is = false;
-    float startX, startY;
-    float endX, endY;
-
+    int startX, startY;
+    int endX, endY;
 
     public void init() {
-
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                Draw.z(Layer.max);
-                Lines.stroke(Scl.scl(2f), Color.green);
+                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 64, 1f);
 
-                endX = World.toTile(Core.input.mouseWorld().x);
-                endY = World.toTile(Core.input.mouseWorld().y);
-                float width = Math.abs(endX - startX);
-                float height = Math.abs(endY - startY);
-                Lines.rect(startX, startY, width, height);
+                Lines.stroke(2f);
+
+                Draw.color(Pal.accentBack);
+                Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
+                Draw.color(Pal.accent);
+                Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
             }
         });
 
