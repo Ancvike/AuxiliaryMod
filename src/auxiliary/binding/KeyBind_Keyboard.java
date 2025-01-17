@@ -22,6 +22,9 @@ public class KeyBind_Keyboard extends Table {
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                endX = World.toTile(Core.input.mouseWorld().x);
+                endY = World.toTile(Core.input.mouseWorld().y);
+
                 Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 64, 1f);
 
                 Lines.stroke(2f);
