@@ -11,8 +11,12 @@ import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.game.EventType;
+import mindustry.gen.Building;
 import mindustry.gen.Unit;
+import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
+
+import static mindustry.Vars.player;
 
 public class KeyBind_Keyboard extends Table {
     public static boolean is = false;
@@ -33,6 +37,12 @@ public class KeyBind_Keyboard extends Table {
                 Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
                 Draw.color(Color.acid);
                 Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
+
+                for (Building building : player.team().data().buildings) {
+                    if (isZone(building)) {
+                        Drawf.selected(building, Color.acid);
+                    }
+                }
             }
         });
 
@@ -65,5 +75,9 @@ public class KeyBind_Keyboard extends Table {
                 is = false;
             }
         });
+    }
+
+    private boolean isZone(Building building) {
+        return (building.x >= startX && building.x <= endX) || (building.x <= startX && building.x >= endX) && (building.y >= startY && building.y <= endY) || (building.y <= startY && building.y >= endY);
     }
 }
