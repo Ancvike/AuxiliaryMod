@@ -22,6 +22,7 @@ public class KeyBind_Keyboard extends Table {
     public static boolean isTap = false;
     int startX, startY;
     int endX, endY;
+    Table table = new Table();
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
@@ -39,13 +40,14 @@ public class KeyBind_Keyboard extends Table {
                 Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
 
                 for (Building building : player.team().data().buildings) {
-                    if (isZone(building)) {
-                        Vars.ui.hudfrag.showToast(building.x + "," + building.y);
-                    }
+                    table.add(building.getDisplayName() + building.x + "," + building.y).row();
                 }
             }
         });
 
+        Vars.ui.hudGroup.fill(t-> {
+            t.add(table);
+        });
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 startX = World.toTile(Core.input.mouseWorld().x);
