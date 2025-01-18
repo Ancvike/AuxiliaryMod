@@ -78,6 +78,6 @@ public class KeyBind_Keyboard extends Table {
     }
 
     private boolean isZone(Building building) {
-        return (building.x >= startX && building.x <= endX) || (building.x <= startX && building.x >= endX) && (building.y >= startY && building.y <= endY) || (building.y <= startY && building.y >= endY);
+        return ((building.x >= startX && building.x <= endX) || (building.x <= startX && building.x >= endX)) && ((building.y >= startY && building.y <= endY) || (building.y <= startY && building.y >= endY));
     }
 }
