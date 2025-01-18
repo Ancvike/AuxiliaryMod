@@ -61,6 +61,7 @@ public class KeyBind_Keyboard extends Table {
                 startY = 0;
                 endX = 0;
                 endY = 0;
+                isTap = false;
             }
         });
 
