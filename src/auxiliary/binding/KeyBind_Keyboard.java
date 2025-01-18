@@ -13,6 +13,7 @@ import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
+import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
 
 import static mindustry.Vars.player;
@@ -40,12 +41,15 @@ public class KeyBind_Keyboard extends Table {
                 Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
 
                 for (Building building : player.team().data().buildings) {
-                    table.add(building.getDisplayName() + building.x + "," + building.y).row();
+                    if (isZone(building)) {
+
+                        Drawf.selected(building, Color.acid);
+                    }
                 }
             }
         });
 
-        Vars.ui.hudGroup.fill(t-> {
+        Vars.ui.hudGroup.fill(t -> {
             t.add(table).left();
         });
         Events.run(EventType.Trigger.draw, () -> {
@@ -53,15 +57,16 @@ public class KeyBind_Keyboard extends Table {
                 startX = World.toTile(Core.input.mouseWorld().x);
                 startY = World.toTile(Core.input.mouseWorld().y);
                 isTap = true;
-                for (Building building : player.team().data().buildings) {
-                    table.add(building.getDisplayName() + building.x + "," + building.y).row();
-                }
             }
         });
 
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                //实现方法
+                for (Building building : player.team().data().buildings) {
+                    if (isZone(building)) {
+                        building.health = building.maxHealth;
+                    }
+                }
                 startX = 0;
                 startY = 0;
                 endX = 0;
@@ -85,6 +90,8 @@ public class KeyBind_Keyboard extends Table {
     }
 
     private boolean isZone(Building building) {
-        return ((building.x >= startX && building.x <= endX) || (building.x <= startX && building.x >= endX)) && ((building.y >= startY && building.y <= endY) || (building.y <= startY && building.y >= endY));
+        int x = World.toTile(building.x);
+        int y = World.toTile(building.y);
+        return ((x >= startX && x <= endX) || (x <= startX && x >= endX)) && ((y >= startY && y <= endY) || (y <= startY && y >= endY));
     }
 }
