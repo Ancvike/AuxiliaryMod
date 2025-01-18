@@ -46,7 +46,7 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Vars.ui.hudGroup.fill(t-> {
-            t.add(table);
+            t.add(table).left();
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
