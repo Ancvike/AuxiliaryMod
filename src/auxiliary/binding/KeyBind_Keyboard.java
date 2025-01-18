@@ -12,7 +12,6 @@ import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
-import mindustry.graphics.Pal;
 import mindustry.input.Placement;
 
 public class KeyBind_Keyboard extends Table {
@@ -30,9 +29,9 @@ public class KeyBind_Keyboard extends Table {
 
                 Lines.stroke(2f);
 
-                Draw.color(Color.green);
+                Draw.color(Color.acid);
                 Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
-                Draw.color(Color.scarlet);
+                Draw.color(Color.green);
                 Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
             }
         });
