@@ -53,6 +53,9 @@ public class KeyBind_Keyboard extends Table {
                 startX = World.toTile(Core.input.mouseWorld().x);
                 startY = World.toTile(Core.input.mouseWorld().y);
                 isTap = true;
+                for (Building building : player.team().data().buildings) {
+                    table.add(building.getDisplayName() + building.x + "," + building.y).row();
+                }
             }
         });
 
