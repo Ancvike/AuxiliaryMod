@@ -23,7 +23,6 @@ public class KeyBind_Keyboard extends Table {
     public static boolean isTap = false;
     int startX, startY;
     int endX, endY;
-    Table table = new Table();
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
@@ -49,9 +48,6 @@ public class KeyBind_Keyboard extends Table {
             }
         });
 
-        Vars.ui.hudGroup.fill(t -> {
-            t.add(table).left();
-        });
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 startX = World.toTile(Core.input.mouseWorld().x);
