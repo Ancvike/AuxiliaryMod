@@ -13,19 +13,19 @@ import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
-import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
 
 import static mindustry.Vars.player;
 
 public class KeyBind_Keyboard extends Table {
-    public static boolean is = false;
+    public static boolean isUnit = false;
+    public static boolean isTap = false;
     int startX, startY;
     int endX, endY;
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
 
@@ -50,6 +50,7 @@ public class KeyBind_Keyboard extends Table {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 startX = World.toTile(Core.input.mouseWorld().x);
                 startY = World.toTile(Core.input.mouseWorld().y);
+                isTap = true;
             }
         });
 
@@ -64,15 +65,15 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !is) {
+            if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !isUnit) {
                 Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
                 for (Unit unit : selectedUnits) {
                     unit.health = unit.maxHealth;
                 }
                 Vars.ui.hudfrag.showToast("所选单位已修复");
-                is = true;
+                isUnit = true;
             } else if (Core.input.keyRelease(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
-                is = false;
+                isUnit = false;
             }
         });
     }
