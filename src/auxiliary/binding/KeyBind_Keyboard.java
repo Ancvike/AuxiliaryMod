@@ -72,15 +72,12 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyDown(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !isUnit) {
+            if (Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !isUnit) {
                 Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
                 for (Unit unit : selectedUnits) {
                     unit.health = unit.maxHealth;
                 }
                 Vars.ui.hudfrag.showToast("所选单位已修复");
-                isUnit = true;
-            } else if (Core.input.keyRelease(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
-                isUnit = false;
             }
         });
     }
