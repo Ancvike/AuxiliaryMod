@@ -1,38 +1,31 @@
 package auxiliary.binding;
 
 import arc.Events;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import auxiliary.function.Function;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
-import mindustry.input.MobileInput;
 import mindustry.ui.Styles;
 
-public class KeyBind_Mobile extends MobileInput {
-    boolean isTrue = false;
+public class KeyBind_Mobile extends Function {
+    boolean isUnitTrue = false;
+    boolean isBuildingTrue = false;
     int count = 0;
 
-    public void init() {
-//        Events.run(EventType.Trigger.uiDrawEnd, () -> Vars.ui.hudGroup.fill(t -> {
-//            t.name = "mobile-building";
-//            t.bottom();
-//            t.right();
-//            t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
-//                tt.setBackground(Styles.black6);
-//                tt.label(() -> "建筑修复").pad(2f);
-//            }).bottom();
-//            t.table().size(300f,50f);
-//        }));
+    public KeyBind_Mobile() {
+        super("mobile-building-repair", Icon.android, "建筑修复");
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
-            isTrue = Vars.control.input.commandMode;
-            if (isTrue && count == 0) {
+            isUnitTrue = Vars.control.input.commandMode;
+            if (isUnitTrue && count == 0) {
                 Vars.ui.hudGroup.fill(t -> {
                     t.name = "mobile-unit";
                     t.bottom();
                     t.left();
-                    t.button(Icon.android, this::onClick).size(50f).tooltip(tt -> {
+                    t.button(Icon.android, this::unitClick).size(50f).tooltip(tt -> {
                         tt.setBackground(Styles.black6);
                         tt.label(() -> "单位修复").pad(2f);
                     }).left();
@@ -42,17 +35,29 @@ public class KeyBind_Mobile extends MobileInput {
                 count++;
             }
         });
-
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
-            isTrue = Vars.control.input.commandMode;
-            if (!isTrue && count != 0) {
+            isUnitTrue = Vars.control.input.commandMode;
+            if (!isUnitTrue && count != 0) {
                 count = 0;
                 Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-unit"));
             }
         });
     }
 
-    public void onClick() {
+    @Override
+    public Table setTable() {
+        return new Table(t -> {
+            t.name = name;
+            t.button(icon, () -> {
+
+            }).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> labelName).pad(2f);
+            }).update(b -> b.setChecked(isBuildingTrue));
+        });
+    }
+
+    public void unitClick() {
         Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
         for (Unit unit : selectedUnits) {
             unit.health = unit.maxHealth;
