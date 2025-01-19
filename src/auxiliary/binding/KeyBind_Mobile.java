@@ -48,7 +48,7 @@ public class KeyBind_Mobile extends Function {
     public Table setTable() {
         return new Table(t -> {
             t.name = name;
-            t.button(icon, Styles.clearNoneTogglei, () -> {
+            t.button(icon, () -> {
 
             }).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
