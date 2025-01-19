@@ -9,6 +9,7 @@ import arc.scene.event.InputListener;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Tmp;
+import auxiliary.binding.KeyBind_Mobile;
 import mindustry.Vars;
 
 import mindustry.game.EventType;
@@ -22,7 +23,7 @@ public class FunctionManager {
     public static Table table;
 
     public static void init() {
-        functions.addAll(new UIMovement(), new FullResource(), new Restoration());
+        functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile());
 
         if (mobile && Core.settings.getBool("landscape")) {
             table = new Table(t -> {

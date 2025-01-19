@@ -19,7 +19,7 @@ import mindustry.input.Placement;
 import static mindustry.Vars.player;
 
 public class KeyBind_Keyboard extends Table {
-    public static boolean isTap = false;
+    boolean isTap = false;
     int startX, startY;
     int endX, endY;
 
