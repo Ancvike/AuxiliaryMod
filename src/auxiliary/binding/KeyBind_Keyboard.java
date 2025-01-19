@@ -19,7 +19,6 @@ import mindustry.input.Placement;
 import static mindustry.Vars.player;
 
 public class KeyBind_Keyboard extends Table {
-    public static boolean isUnit = false;
     public static boolean isTap = false;
     int startX, startY;
     int endX, endY;
@@ -72,7 +71,7 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode && !isUnit) {
+            if (Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
                 Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
                 for (Unit unit : selectedUnits) {
                     unit.health = unit.maxHealth;
