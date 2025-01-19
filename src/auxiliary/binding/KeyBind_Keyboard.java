@@ -62,7 +62,7 @@ public class KeyBind_Keyboard extends Table {
                         building.health = building.maxHealth;
                     }
                 }
-                Vars.ui.hudfrag.showToast("所选单位已修复");
+                Vars.ui.hudfrag.showToast("所选建筑已修复");
                 startX = 0;
                 startY = 0;
                 endX = 0;
