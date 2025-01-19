@@ -41,7 +41,6 @@ public class KeyBind_Keyboard extends Table {
 
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
-
                         Drawf.selected(building, Color.acid);
                     }
                 }
