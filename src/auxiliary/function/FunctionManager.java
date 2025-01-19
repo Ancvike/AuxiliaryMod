@@ -25,9 +25,10 @@ public class FunctionManager {
     public static void init() {
         if (Vars.mobile) {
             functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile());
-        }else {
+        } else {
             functions.addAll(new UIMovement(), new FullResource(), new Restoration());
         }
+
         if (mobile && Core.settings.getBool("landscape")) {
             table = new Table(t -> {
                 for (Function function : functions) {
