@@ -12,7 +12,6 @@ import mindustry.ui.Styles;
 
 public class KeyBind_Mobile extends Function {
     boolean isUnitTrue = false;
-    boolean isBuildingTrue = false;
     int count = 0;
 
     public KeyBind_Mobile() {
