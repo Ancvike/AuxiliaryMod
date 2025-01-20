@@ -19,7 +19,7 @@ public class Function extends Table {
     public Table setTable() {
         return new Table(t -> {
             t.name = name;
-            t.button(icon, Styles.clearTogglei, this::onClick).size(50f).tooltip(tt -> {
+            t.button(icon, this::onClick).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> labelName).pad(2f);
             });
