@@ -23,11 +23,11 @@ public class FunctionManager {
     public static Table table;
 
     public static void init() {
-//        if (Vars.mobile) {
+        if (Vars.mobile) {
             functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile());
-//        } else {
-//            functions.addAll(new UIMovement(), new FullResource(), new Restoration());
-//        }
+        } else {
+            functions.addAll(new UIMovement(), new FullResource(), new Restoration());
+        }
 
         if (mobile && Core.settings.getBool("landscape")) {
             table = new Table(t -> {
