@@ -48,11 +48,13 @@ public class Restoration extends Function {
     private void building_click_yes() {
         restoration_building();
         click_no();
+        Vars.ui.hudfrag.showToast("已修复所有建筑");
     }
 
     private void unit_click_yes() {
         restoration_unit();
         click_no();
+        Vars.ui.hudfrag.showToast("已修复所有单位");
     }
 
     private void restoration_building() {

@@ -1,90 +1,20 @@
 package auxiliary.binding;
 
 import arc.Events;
-import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Lines;
 import arc.input.GestureDetector;
-import arc.input.KeyCode;
-import arc.scene.event.InputEvent;
-import arc.scene.event.InputListener;
 import arc.struct.Seq;
 import mindustry.Vars;
-import mindustry.content.Blocks;
-import mindustry.core.World;
 import mindustry.game.EventType;
-import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
-import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
-import mindustry.input.Placement;
 import mindustry.ui.Styles;
-
-import static auxiliary.function.KeyBind_Mobile_Function.isClick;
-import static mindustry.Vars.*;
 
 public class KeyBind_Mobile extends InputHandler implements GestureDetector.GestureListener {
     boolean isUnitTrue = false;
     int count = 0;
-    int startX, startY;
-    int endX, endY;
-    boolean isTouched = false;
 
     public void init() {
-        Events.run(EventType.Trigger.uiDrawEnd, () -> {
-            if (isClick) {
-                InputListener listener = new InputListener() {
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
-
-                        if (!isTouched) {
-                            startX = World.toTile(x);
-                            startY = World.toTile(y);
-                            isTouched = true;
-                        }
-                        if (isClick) {
-                            endX = World.toTile(x);
-                            endY = World.toTile(y);
-
-                            Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 64, 1f);
-
-                            Lines.stroke(2f);
-
-                            Draw.color(Color.green);
-                            Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
-                            Draw.color(Color.acid);
-                            Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
-
-                            for (Building building : player.team().data().buildings) {
-                                if (isZone(building)) {
-                                    Drawf.selected(building, Color.acid);
-                                }
-                            }
-                        }
-
-                        return false;
-                    }
-
-                    @Override
-                    public void touchUp(InputEvent event, float x, float y, int pointer, KeyCode button) {
-                        for (Building building : player.team().data().buildings) {
-                            if (isZone(building)) {
-                                building.health = building.maxHealth;
-                            }
-                        }
-                        Vars.ui.hudfrag.showToast("所选建筑已修复");
-                        startX = 0;
-                        startY = 0;
-                        endX = 0;
-                        endY = 0;
-                        isTouched = false;
-                    }
-
-                };
-                ui.hudGroup.addListener(listener);
-            }
-        });
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             isUnitTrue = Vars.control.input.commandMode;
@@ -119,57 +49,5 @@ public class KeyBind_Mobile extends InputHandler implements GestureDetector.Gest
             unit.health = unit.maxHealth;
         }
         Vars.ui.hudfrag.showToast("所选单位已修复");
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, KeyCode button) {
-        if (!isTouched) {
-            startX = World.toTile(screenX);
-            startY = World.toTile(screenY);
-            isTouched = true;
-        }
-        if (isClick) {
-            endX = World.toTile(screenX);
-            endY = World.toTile(screenY);
-
-            Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 64, 1f);
-
-            Lines.stroke(2f);
-
-            Draw.color(Color.green);
-            Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
-            Draw.color(Color.acid);
-            Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
-
-            for (Building building : player.team().data().buildings) {
-                if (isZone(building)) {
-                    Drawf.selected(building, Color.acid);
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, KeyCode button) {
-        for (Building building : player.team().data().buildings) {
-            if (isZone(building)) {
-                building.health = building.maxHealth;
-            }
-        }
-        Vars.ui.hudfrag.showToast("所选建筑已修复");
-        startX = 0;
-        startY = 0;
-        endX = 0;
-        endY = 0;
-        isTouched = false;
-
-        return false;
-    }
-
-    private boolean isZone(Building building) {
-        int x = World.toTile(building.x);
-        int y = World.toTile(building.y);
-        return ((x >= startX && x <= endX) || (x <= startX && x >= endX)) && ((y >= startY && y <= endY) || (y <= startY && y >= endY));
     }
 }
