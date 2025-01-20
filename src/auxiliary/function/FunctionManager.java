@@ -9,7 +9,6 @@ import arc.scene.event.InputListener;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Tmp;
-import auxiliary.binding.KeyBind_Mobile;
 import mindustry.Vars;
 
 import mindustry.game.EventType;
@@ -24,7 +23,7 @@ public class FunctionManager {
 
     public static void init() {
         if (Vars.mobile) {
-            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile());
+            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile_Function());
         } else {
             functions.addAll(new UIMovement(), new FullResource(), new Restoration());
         }
