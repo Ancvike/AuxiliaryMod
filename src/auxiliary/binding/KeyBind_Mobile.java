@@ -50,18 +50,15 @@ public class KeyBind_Mobile extends Function {
             t.name = name;
             t.button(icon, Styles.clearTogglei, () -> {
 
-            }).size(50f).tooltip(tt -> {
-                tt.setBackground(Styles.black6);
-                tt.label(() -> labelName).pad(2f);
-            }).update(b -> b.setChecked(isBuildingTrue));
-        });
-    }
+            }).size(50f);
+    });
+}
 
-    public void unitClick() {
-        Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
-        for (Unit unit : selectedUnits) {
-            unit.health = unit.maxHealth;
-        }
-        Vars.ui.hudfrag.showToast("所选单位已修复");
+public void unitClick() {
+    Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+    for (Unit unit : selectedUnits) {
+        unit.health = unit.maxHealth;
     }
+    Vars.ui.hudfrag.showToast("所选单位已修复");
+}
 }
