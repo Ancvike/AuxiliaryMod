@@ -47,22 +47,9 @@ public class KeyBind_Mobile extends Table {
 
         Events.run(EventType.Trigger.draw, () -> {
             if (isClick) {
-                float cx = Core.camera.position.x, cy = Core.camera.position.y;
                 float scaling = 8;
 
                 Draw.z(Layer.max);
-
-                if (Core.settings.getBool("grid")) {
-                    Lines.stroke(1f);
-                    Draw.color(Pal.accent);
-                    for (int i = (int) (-0.5f * Core.camera.height / 8); i < (int) (0.5f * Core.camera.height / 8); i++) {
-                        Lines.line(Mathf.floor((cx - 0.5f * Core.camera.width) / 8) * 8 + 4, Mathf.floor((cy + i * 8) / 8) * 8 + 4, Mathf.floor((cx + 0.5f * Core.camera.width) / 8) * 8 + 4, Mathf.floor((cy + i * 8) / 8) * 8 + 4);
-                    }
-                    for (int i = (int) (-0.5f * Core.camera.width / 8); i < (int) (0.5f * Core.camera.width / 8); i++) {
-                        Lines.line(Mathf.floor((cx + i * 8) / 8) * 8 + 4, Mathf.floor((cy + 0.5f * Core.camera.height) / 8) * 8 + 4, Mathf.floor((cx + i * 8) / 8) * 8 + 4, Mathf.floor((cy - 0.5f * Core.camera.height) / 8) * 8 + 4);
-                    }
-                    Draw.reset();
-                }
 
                 Tile tile = world.tileWorld(Core.input.mouseWorldX(), Core.input.mouseWorldY());
 
