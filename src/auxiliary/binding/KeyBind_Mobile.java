@@ -25,7 +25,7 @@ public class KeyBind_Mobile extends InputHandler implements GestureDetector.Gest
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (isClick) {
-                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, 100, 100, 120, 120, false, 64, 1f);
+                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, 100, 100, 110, 110, false, 64, 1f);
 
                 Lines.stroke(2f);
 
