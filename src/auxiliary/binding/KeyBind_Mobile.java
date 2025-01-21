@@ -2,9 +2,6 @@ package auxiliary.binding;
 
 import arc.Events;
 import arc.input.GestureDetector;
-import arc.input.KeyCode;
-import arc.scene.event.InputEvent;
-import arc.scene.event.InputListener;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
