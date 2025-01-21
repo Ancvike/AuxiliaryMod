@@ -1,13 +1,14 @@
 package auxiliary.binding;
 
+import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
-import arc.input.GestureDetector;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Blocks;
+import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
@@ -17,7 +18,7 @@ import mindustry.ui.Styles;
 
 import static auxiliary.function.KeyBind_Mobile_Function.isClick;
 
-public class KeyBind_Mobile extends InputHandler implements GestureDetector.GestureListener {
+public class KeyBind_Mobile extends InputHandler{
     boolean isUnitTrue = false;
     int count = 0;
 
@@ -25,7 +26,7 @@ public class KeyBind_Mobile extends InputHandler implements GestureDetector.Gest
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             if (isClick) {
-                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, 100, 100, 110, 110, false, 64, 1f);
+                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y), World.toTile(Core.input.mouseWorld().x), World.toTile(Core.input.mouseWorld().y), false, 64, 1f);
 
                 Lines.stroke(2f);
 
