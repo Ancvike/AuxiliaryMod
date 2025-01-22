@@ -3,9 +3,8 @@ package auxiliary.binding;
 import arc.input.KeyCode;
 
 public enum MyKeyBind {
-    CONVEYOR_CHANGE("传送带升级", KeyCode.u),
-    RECOVERY_BUDDING("建筑修复", KeyCode.i),
-    RECOVERY_UNIT("单位修复", KeyCode.o),
+    RECOVERY_BUDDING("建筑修复", KeyCode.u),
+    RECOVERY_UNIT("单位修复", KeyCode.i),
     ;
     private final String name;
     private final KeyCode defaultKeyCode;
