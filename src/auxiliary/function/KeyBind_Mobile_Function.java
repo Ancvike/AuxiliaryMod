@@ -12,7 +12,6 @@ import static mindustry.Vars.state;
 
 public class KeyBind_Mobile_Function extends Function {
     public static boolean isOpen = false;
-    public static boolean isClicked = false;
     ImageButton button = new ImageButton(icon, Styles.clearTogglei);
 
     public KeyBind_Mobile_Function() {
