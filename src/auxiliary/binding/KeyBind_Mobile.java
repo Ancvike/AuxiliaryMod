@@ -33,6 +33,7 @@ public class KeyBind_Mobile extends Table {
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
             if (isClick && Core.input.keyDown(KeyCode.mouseLeft) && isTap){
+                player.shooting = false;
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
 
@@ -54,6 +55,7 @@ public class KeyBind_Mobile extends Table {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(KeyCode.mouseLeft)) {
+                player.shooting = false;
                 startX = World.toTile(Core.input.mouseWorld().x);
                 startY = World.toTile(Core.input.mouseWorld().y);
                 isTap = true;

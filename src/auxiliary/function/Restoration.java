@@ -1,14 +1,12 @@
 package auxiliary.function;
 
 import arc.scene.ui.layout.Table;
-import auxiliary.dialogs.Dialogs;
 import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static auxiliary.dialogs.Dialogs.dialog_no;
 import static mindustry.Vars.state;
 
 public class Restoration extends Function {
@@ -27,9 +25,8 @@ public class Restoration extends Function {
         table2.button("确定", this::unit_click_yes).size(120f, 50f);
         table2.button("取消", this::click_no).size(120f, 50f);
 
-        Dialogs.setDialog_yes(dialog_restoration, table1);
-        dialog_restoration.row();
-        Dialogs.setDialog_yes(dialog_restoration, table2);
+        dialog_restoration.cont.add(table1).row();
+        dialog_restoration.cont.add(table2);
     }
 
     @Override
@@ -37,7 +34,7 @@ public class Restoration extends Function {
         if (!state.rules.waves && state.isCampaign()) {
             dialog_restoration.show();
         } else {
-            dialog_no.show();
+            Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
         }
     }
 
