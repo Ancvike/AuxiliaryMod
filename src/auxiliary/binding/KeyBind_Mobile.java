@@ -62,7 +62,7 @@ public class KeyBind_Mobile extends Table {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (isClick && Core.input.keyRelease(KeyCode.mouseLeft)) {
+            if (isClick && Core.input.keyRelease(KeyCode.mouseLeft) && isTap) {
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
                         building.health = building.maxHealth;
