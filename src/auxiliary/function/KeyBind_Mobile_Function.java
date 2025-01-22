@@ -40,7 +40,6 @@ public class KeyBind_Mobile_Function extends Function {
     @Override
     public void onClick() {
         isOpen = !isOpen;
-        isClicked = !isOpen;
         player.shooting = false;
     }
 }

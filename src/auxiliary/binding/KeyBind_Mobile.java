@@ -64,6 +64,7 @@ public class KeyBind_Mobile extends Table {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (isOpen && Core.input.keyRelease(KeyCode.mouseLeft) && isClicked) {
+                if (startX == endX && startY == endY) return;
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
                         building.health = building.maxHealth;
