@@ -26,7 +26,7 @@ public class FullResource extends Function {
             dialog_full.cont.add(itemsTable);
             dialog_full.show();
         } else {
-            Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
+            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
     }
 

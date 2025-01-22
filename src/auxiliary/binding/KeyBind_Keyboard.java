@@ -12,6 +12,7 @@ import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.gen.Building;
+import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
@@ -74,7 +75,7 @@ public class KeyBind_Keyboard extends Table {
                     startY = 0;
                     endX = 0;
                     endY = 0;
-                    Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
+                    Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
                 }
             }
         });
@@ -89,7 +90,7 @@ public class KeyBind_Keyboard extends Table {
                     }
                     Vars.ui.hudfrag.showToast("所选单位已修复");
                 } else {
-                    Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
+                    Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
                 }
             }
         });

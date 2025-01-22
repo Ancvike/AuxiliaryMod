@@ -34,7 +34,7 @@ public class Restoration extends Function {
         if (!state.rules.waves && state.isCampaign()) {
             dialog_restoration.show();
         } else {
-            Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
+            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
     }
 
