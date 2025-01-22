@@ -1,9 +1,6 @@
 package auxiliary.function;
 
 import arc.Events;
-import arc.input.KeyCode;
-import arc.scene.event.InputEvent;
-import arc.scene.event.InputListener;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
 import mindustry.game.EventType;
@@ -20,20 +17,6 @@ public class KeyBind_Mobile_Function extends Function {
 
     public KeyBind_Mobile_Function() {
         super("mobile-building-repair", Icon.android, "建筑修复");
-
-        button.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
-                isClick = !isClick;
-                return false;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, KeyCode button) {
-                isClick = !isClick;
-            }
-
-        });
 
         Events.run(EventType.Trigger.draw, () -> {
             if (!state.rules.waves && state.isCampaign()) {
