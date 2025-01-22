@@ -12,7 +12,7 @@ import static mindustry.Vars.state;
 
 public class KeyBind_Mobile_Function extends Function {
     public static boolean isOpen = false;
-    public static boolean isClick = false;
+    public static boolean isClicked = false;
     ImageButton button = new ImageButton(icon, Styles.clearTogglei);
 
     public KeyBind_Mobile_Function() {
@@ -24,7 +24,6 @@ public class KeyBind_Mobile_Function extends Function {
                 button.clicked(this::onClick);
             } else {
                 isOpen = false;
-                isClick = false;
                 button.visible = false;
             }
         });
@@ -41,7 +40,7 @@ public class KeyBind_Mobile_Function extends Function {
     @Override
     public void onClick() {
         isOpen = !isOpen;
-        isClick = !isClick;
+        isClicked = !isOpen;
         player.shooting = false;
     }
 }
