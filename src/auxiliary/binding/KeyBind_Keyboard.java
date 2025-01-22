@@ -56,18 +56,22 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                for (Building building : player.team().data().buildings) {
-                    if (isZone(building)) {
-                        building.health = building.maxHealth;
+            if (!state.rules.waves && state.isCampaign()) {
+                if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                    for (Building building : player.team().data().buildings) {
+                        if (isZone(building)) {
+                            building.health = building.maxHealth;
+                        }
                     }
+                    Vars.ui.hudfrag.showToast("所选建筑已修复");
+                    startX = 0;
+                    startY = 0;
+                    endX = 0;
+                    endY = 0;
+                    isTap = false;
                 }
-                Vars.ui.hudfrag.showToast("所选建筑已修复");
-                startX = 0;
-                startY = 0;
-                endX = 0;
-                endY = 0;
-                isTap = false;
+            } else {
+                Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
             }
         });
 
