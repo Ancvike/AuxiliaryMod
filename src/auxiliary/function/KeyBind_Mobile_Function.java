@@ -5,19 +5,23 @@ import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
+import mindustry.ui.Styles;
 
 import static mindustry.Vars.player;
 import static mindustry.Vars.state;
 
 public class KeyBind_Mobile_Function extends Function {
     public static boolean isClick = false;
-    ImageButton button = new ImageButton(icon);
+    ImageButton button = new ImageButton(icon, Styles.clearTogglei);
 
     public KeyBind_Mobile_Function() {
         super("mobile-building-repair", Icon.android, "建筑修复");
         Events.run(EventType.Trigger.update, () -> {
-            button.setDisabled(!state.rules.waves && state.isCampaign());
-            button.clicked(this::onClick);
+            if (!state.rules.waves && state.isCampaign()) {
+                button.clicked(this::onClick);
+            } else {
+                button.clicked(() -> {});
+            }
         });
     }
 
@@ -31,6 +35,7 @@ public class KeyBind_Mobile_Function extends Function {
 
     @Override
     public void onClick() {
+        button.toggle();
         isClick = !isClick;
         player.shooting = false;
     }
