@@ -3,7 +3,6 @@ package auxiliary.function;
 import arc.Events;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
-import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.ui.Styles;
