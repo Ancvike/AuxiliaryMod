@@ -9,7 +9,6 @@ import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static auxiliary.dialogs.Dialogs.setDialog_yes;
 import static mindustry.Vars.mobile;
 
 public class UIMovement extends Function {
@@ -34,7 +33,7 @@ public class UIMovement extends Function {
         } else {
             table = setDialogTable();
         }
-        setDialog_yes(dialog_movement, table);
+        dialog_movement.cont.add(table);
         dialog_movement.show();
     }
 

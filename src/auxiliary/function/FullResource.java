@@ -9,7 +9,6 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.blocks.storage.CoreBlock;
 
-import static auxiliary.dialogs.Dialogs.*;
 import static mindustry.Vars.state;
 
 public class FullResource extends Function {
@@ -24,10 +23,10 @@ public class FullResource extends Function {
     public void onClick() {
         if (!state.rules.waves && state.isCampaign()) {
             itemsTable = setItemsTable();
-            setDialog_yes(dialog_full, itemsTable);
+            dialog_full.cont.add(itemsTable);
             dialog_full.show();
         } else {
-            dialog_no.show();
+            Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
         }
     }
 
