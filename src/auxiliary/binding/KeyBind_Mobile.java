@@ -1,6 +1,8 @@
 package auxiliary.binding;
 
+import arc.Core;
 import arc.Events;
+import arc.input.KeyCode;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
@@ -14,6 +16,11 @@ public class KeyBind_Mobile extends Table {
     int count = 0;
 
     public void init() {
+        Events.run(EventType.Trigger.draw, () -> {
+            if (Core.input.keyDown(KeyCode.mouseLeft)){
+                Vars.ui.hudfrag.showToast("长按左键");
+            }
+        });
 
         Events.run(EventType.Trigger.uiDrawEnd, () -> {
             isUnitTrue = Vars.control.input.commandMode;
