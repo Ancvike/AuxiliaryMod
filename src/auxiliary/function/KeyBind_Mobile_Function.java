@@ -18,10 +18,10 @@ public class KeyBind_Mobile_Function extends Function {
     public Table setTable() {
         if (!state.rules.waves && state.isCampaign()) {
             return new Table(t -> {
-            t.name = name;
-            t.button(icon, Styles.clearTogglei, this::onClick).size(50f);
-        });
-        }else return new Table();
+                t.name = name;
+                t.button(icon, Styles.clearTogglei, this::onClick).size(50f);
+            });
+        } else return new Table();
     }
 
     @Override
