@@ -56,8 +56,8 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Events.run(EventType.Trigger.draw, () -> {
-            if (!state.rules.waves && state.isCampaign()) {
-                if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                if (!state.rules.waves && state.isCampaign()) {
                     for (Building building : player.team().data().buildings) {
                         if (isZone(building)) {
                             building.health = building.maxHealth;
@@ -69,23 +69,24 @@ public class KeyBind_Keyboard extends Table {
                     endX = 0;
                     endY = 0;
                     isTap = false;
+                } else {
+                    Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
                 }
-            } else {
-                Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
             }
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (!state.rules.waves && state.isCampaign()) {
-                if (Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
+            if (Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
+                if (!state.rules.waves && state.isCampaign()) {
+
                     Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
                     for (Unit unit : selectedUnits) {
                         unit.health = unit.maxHealth;
                     }
                     Vars.ui.hudfrag.showToast("所选单位已修复");
+                } else {
+                    Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
                 }
-            } else {
-                Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
             }
         });
     }
