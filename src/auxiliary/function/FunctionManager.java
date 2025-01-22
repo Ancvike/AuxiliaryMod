@@ -23,7 +23,7 @@ public class FunctionManager {
 
     public static void init() {
         if (Vars.mobile) {
-            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile_Function(), new test());
+            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile_Function());
         } else {
             functions.addAll(new UIMovement(), new FullResource(), new Restoration());
         }
