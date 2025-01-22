@@ -16,7 +16,15 @@ public class KeyBind_Mobile_Function extends Function {
 
     public KeyBind_Mobile_Function() {
         super("mobile-building-repair", Icon.android, "建筑修复");
-        Events.run(EventType.Trigger.draw, () -> button.visible = !state.rules.waves && state.isCampaign());
+        Events.run(EventType.Trigger.draw, () -> {
+            if (!state.rules.waves && state.isCampaign()) {
+                button.visible = true;
+                button.clicked(this::onClick);
+            }else {
+                button.visible = false;
+                button.clicked(() -> {});
+            }
+        });
     }
 
     @Override
