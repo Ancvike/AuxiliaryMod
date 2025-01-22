@@ -21,6 +21,7 @@ public class KeyBind_Mobile_Function extends Function {
                 button.visible = true;
                 button.clicked(this::onClick);
             }else {
+                isClick = false;
                 button.visible = false;
             }
         });
