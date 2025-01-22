@@ -70,6 +70,10 @@ public class KeyBind_Keyboard extends Table {
                     endY = 0;
                     isTap = false;
                 } else {
+                    startX = 0;
+                    startY = 0;
+                    endX = 0;
+                    endY = 0;
                     Vars.ui.hudfrag.showToast("区块未占领,无法使用该功能");
                 }
             }
