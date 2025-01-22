@@ -10,7 +10,6 @@ import auxiliary.binding.MyKeyBind;
 import mindustry.Vars;
 import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.MyKeyBind.*;
 
