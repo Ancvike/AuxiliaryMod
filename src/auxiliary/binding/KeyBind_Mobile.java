@@ -53,14 +53,14 @@ public class KeyBind_Mobile extends Table {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            if (Core.input.keyTap(KeyCode.mouseLeft)) {
                 startX = World.toTile(Core.input.mouseWorld().x);
                 startY = World.toTile(Core.input.mouseWorld().y);
                 isTap = true;
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            if (Core.input.keyRelease(KeyCode.mouseLeft)) {
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
                         building.health = building.maxHealth;
