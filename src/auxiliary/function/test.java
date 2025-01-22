@@ -11,6 +11,6 @@ public class test extends Function {
 
     @Override
     public void onClick() {
-        state.rules.waves = false;
+        state.rules.waves = !state.rules.waves;
     }
 }
