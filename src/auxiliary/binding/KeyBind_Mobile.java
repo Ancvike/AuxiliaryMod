@@ -19,7 +19,7 @@ import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
 import mindustry.ui.Styles;
 
-import static auxiliary.function.KeyBind_Mobile_Function.isClick;
+import static auxiliary.function.KeyBind_Mobile_Function.isClicked;
 import static auxiliary.function.KeyBind_Mobile_Function.isOpen;
 import static mindustry.Vars.player;
 
@@ -63,7 +63,7 @@ public class KeyBind_Mobile extends Table {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (isOpen && Core.input.keyRelease(KeyCode.mouseLeft) && isClick) {
+            if (isOpen && Core.input.keyRelease(KeyCode.mouseLeft) && isClicked) {
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
                         building.health = building.maxHealth;
