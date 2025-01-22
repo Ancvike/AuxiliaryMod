@@ -19,7 +19,6 @@ import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
 import mindustry.ui.Styles;
 
-import static auxiliary.function.KeyBind_Mobile_Function.isClicked;
 import static auxiliary.function.KeyBind_Mobile_Function.isOpen;
 import static mindustry.Vars.player;
 
@@ -63,7 +62,7 @@ public class KeyBind_Mobile extends Table {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (isOpen && Core.input.keyRelease(KeyCode.mouseLeft) && isClicked) {
+            if (isOpen && Core.input.keyRelease(KeyCode.mouseLeft)) {
                 if (startX == endX && startY == endY) return;
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
