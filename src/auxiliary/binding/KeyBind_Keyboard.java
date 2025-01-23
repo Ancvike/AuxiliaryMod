@@ -56,8 +56,8 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                if (!state.rules.waves && state.isCampaign() && ui.paused.isShown()) {
+            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && !ui.paused.isShown()) {
+                if (!state.rules.waves && state.isCampaign()) {
                     for (Building building : player.team().data().buildings) {
                         if (isZone(building)) {
                             building.health = building.maxHealth;
