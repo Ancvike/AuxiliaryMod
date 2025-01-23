@@ -5,6 +5,7 @@ import arc.input.KeyCode;
 public enum MyKeyBind {
     RECOVERY_BUDDING("建筑修复", KeyCode.u),
     RECOVERY_UNIT("单位修复", KeyCode.i),
+    TEST("测试", KeyCode.p),
     ;
     private final String name;
     private final KeyCode defaultKeyCode;
