@@ -27,7 +27,7 @@ public class KeyBind_Keyboard extends Table {
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyDown(MyKeyBind.TEST.nowKeyCode)) {
+            if (Core.input.keyTap(MyKeyBind.TEST.nowKeyCode)) {
                 Vars.ui.hudfrag.showToast(state.getState() + "");
             }
         });
