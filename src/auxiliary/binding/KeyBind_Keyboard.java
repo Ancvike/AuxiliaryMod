@@ -17,8 +17,7 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
 
-import static mindustry.Vars.player;
-import static mindustry.Vars.state;
+import static mindustry.Vars.*;
 
 public class KeyBind_Keyboard extends Table {
     boolean isTap = false;
@@ -26,12 +25,6 @@ public class KeyBind_Keyboard extends Table {
     int endX, endY;
 
     public void init() {
-        Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyTap(MyKeyBind.TEST.nowKeyCode)) {
-                Vars.ui.hudfrag.showToast(state.getState() + "");
-            }
-        });
-
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
                 endX = World.toTile(Core.input.mouseWorld().x);
@@ -64,7 +57,7 @@ public class KeyBind_Keyboard extends Table {
 
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                if (!state.rules.waves && state.isCampaign()) {
+                if (!state.rules.waves && state.isCampaign() && ui.paused.isShown()) {
                     for (Building building : player.team().data().buildings) {
                         if (isZone(building)) {
                             building.health = building.maxHealth;
