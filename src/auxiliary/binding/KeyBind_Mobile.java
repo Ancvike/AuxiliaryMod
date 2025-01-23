@@ -31,6 +31,13 @@ public class KeyBind_Mobile extends Table {
     boolean isTap = false;
 
     public void init() {
+
+        Vars.ui.hudGroup.fill(t -> {
+            t.button(Icon.trashSmall, () -> {
+                Vars.ui.hudfrag.showToast(isOpen + "");
+            }).size(50f);
+        });
+
         Events.run(EventType.Trigger.draw, () -> {
             if (isOpen && Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
                 player.shooting = false;
