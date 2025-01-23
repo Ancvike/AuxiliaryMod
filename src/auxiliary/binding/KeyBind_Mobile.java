@@ -21,7 +21,6 @@ import mindustry.ui.Styles;
 
 import static auxiliary.function.KeyBind_Mobile_Function.isOpen;
 import static mindustry.Vars.player;
-import static mindustry.Vars.state;
 
 public class KeyBind_Mobile extends Table {
     boolean isUnitTrue = false;
@@ -63,7 +62,7 @@ public class KeyBind_Mobile extends Table {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (isOpen && Core.input.keyRelease(KeyCode.mouseLeft) && !state.isMenu()) {
+            if (isOpen && Core.input.keyRelease(KeyCode.mouseLeft)) {
                 if (startX == endX && startY == endY) return;
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
