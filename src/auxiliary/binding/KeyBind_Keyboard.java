@@ -26,6 +26,17 @@ public class KeyBind_Keyboard extends Table {
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
+            if (Core.input.keyTap(MyKeyBind.REMOVE_FOG.nowKeyCode)) {
+                state.rules.fog = !state.rules.fog;
+                if (state.rules.fog) {
+                    Vars.ui.hudfrag.showToast("迷雾显示已开启");
+                } else {
+                    Vars.ui.hudfrag.showToast("迷雾显示已关闭");
+                }
+            }
+        });
+
+        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
@@ -46,7 +57,6 @@ public class KeyBind_Keyboard extends Table {
                 }
             }
         });
-
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 startX = World.toTile(Core.input.mouseWorld().x);
@@ -54,7 +64,6 @@ public class KeyBind_Keyboard extends Table {
                 isTap = true;
             }
         });
-
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && !ui.paused.isShown()) {
                 if (!state.rules.waves && state.isCampaign()) {
