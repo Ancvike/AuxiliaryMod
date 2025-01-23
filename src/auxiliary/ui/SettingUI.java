@@ -17,7 +17,7 @@ public class SettingUI {
     public static final Seq<MyKeyBind> keys = new Seq<>();
 
     public static void init() {
-        keys.addAll(RECOVERY_BUDDING, RECOVERY_UNIT, TEST);
+        keys.addAll(RECOVERY_BUDDING, RECOVERY_UNIT);
         Vars.ui.settings.addCategory("AuxiliaryMod设置", t -> {
             if (Core.app.isDesktop()) {
                 for (MyKeyBind key : keys) {
