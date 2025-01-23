@@ -27,6 +27,12 @@ public class KeyBind_Keyboard extends Table {
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
+            if (Core.input.keyDown(MyKeyBind.TEST.nowKeyCode)) {
+                Vars.ui.hudfrag.showToast(state.getState() + "");
+            }
+        });
+
+        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
@@ -57,7 +63,7 @@ public class KeyBind_Keyboard extends Table {
         });
 
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && !state.isMenu()) {
+            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 if (!state.rules.waves && state.isCampaign()) {
                     for (Building building : player.team().data().buildings) {
                         if (isZone(building)) {
