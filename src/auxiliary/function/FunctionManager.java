@@ -9,6 +9,8 @@ import arc.scene.event.InputListener;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Tmp;
+import auxiliary.function.mobile_special.RemoveFog_Mobile;
+import auxiliary.function.mobile_special.RestorationButton_Mobile;
 import mindustry.Vars;
 
 import mindustry.game.EventType;
@@ -23,7 +25,7 @@ public class FunctionManager {
 
     public static void init() {
         if (Vars.mobile) {
-            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new KeyBind_Mobile_Function());
+            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new RestorationButton_Mobile(), new RemoveFog_Mobile());
         } else {
             functions.addAll(new UIMovement(), new FullResource(), new Restoration());
         }
