@@ -19,7 +19,7 @@ import mindustry.graphics.Drawf;
 import mindustry.input.Placement;
 import mindustry.ui.Styles;
 
-import static auxiliary.function.KeyBind_Mobile_Function.isOpen;
+import static auxiliary.function.mobile_special.RestorationButton_Mobile.isOpen;
 import static mindustry.Vars.player;
 
 public class KeyBind_Mobile extends Table {
