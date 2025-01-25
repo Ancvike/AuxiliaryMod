@@ -6,7 +6,7 @@ public enum MyKeyBind {
     RECOVERY_BUDDING("建筑修复", KeyCode.u),
     RECOVERY_UNIT("单位修复", KeyCode.i),
     REMOVE_FOG("迷雾显示开关", KeyCode.o),
-    CONVEYOR_UP("传送带速度", KeyCode.k),
+    TEST("测试", KeyCode.k),
     ;
     private final String name;
     private final KeyCode defaultKeyCode;
