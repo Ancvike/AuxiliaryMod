@@ -10,6 +10,7 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.core.World;
+import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
@@ -23,8 +24,21 @@ public class KeyBind_Keyboard extends Table {
     boolean isTap = false;
     int startX, startY;
     int endX, endY;
+    int a;
 
     public void init() {
+        Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyTap(MyKeyBind.TEST.nowKeyCode)) {
+                for (Building building : player.team().data().buildings) {
+                    if (building.block == Blocks.conveyor) {
+                        a++;
+                    }
+                }
+                ui.hudfrag.showToast("传送带有" + a);
+//                player.unit().addBuild(new BuildPlan(plan.x, plan.y, plan.rotation, content.block(plan.block), plan.config));
+            }
+        });
+
         Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.REMOVE_FOG.nowKeyCode)) {
                 state.rules.fog = !state.rules.fog;
