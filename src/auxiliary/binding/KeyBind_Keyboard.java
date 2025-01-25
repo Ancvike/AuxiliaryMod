@@ -26,16 +26,6 @@ public class KeyBind_Keyboard extends Table {
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyTap(MyKeyBind.TEST.nowKeyCode)) {
-                for (Building building : player.team().data().buildings) {
-                    if(building.block == Blocks.mechanicalDrill) {
-                        building.block = Blocks.pneumaticDrill;
-                    }
-                }
-            }
-        });
-
-        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.REMOVE_FOG.nowKeyCode)) {
                 state.rules.fog = !state.rules.fog;
                 if (state.rules.fog) {
