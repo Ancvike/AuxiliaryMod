@@ -25,9 +25,9 @@ public class FunctionManager {
 
     public static void init() {
         if (Vars.mobile) {
-            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new RemoveFog_Mobile(), new RestorationButton_Mobile());
+            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new EnemyRemove(), new RemoveFog_Mobile(), new RestorationButton_Mobile());
         } else {
-            functions.addAll(new UIMovement(), new FullResource(), new Restoration());
+            functions.addAll(new UIMovement(), new FullResource(), new Restoration(), new EnemyRemove());
         }
 
         if (mobile && Core.settings.getBool("landscape")) {
