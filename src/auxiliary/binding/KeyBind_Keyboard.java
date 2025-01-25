@@ -10,7 +10,6 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.core.World;
-import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
@@ -35,6 +34,7 @@ public class KeyBind_Keyboard extends Table {
                     }
                 }
                 ui.hudfrag.showToast("传送带有" + a);
+                a = 0;
 //                player.unit().addBuild(new BuildPlan(plan.x, plan.y, plan.rotation, content.block(plan.block), plan.config));
             }
         });
