@@ -15,6 +15,7 @@ public class EnemyRemove extends Function {
     public void onClick() {
         for (Building building : Team.derelict.data().buildings) {
             a++;
+            building.remove();
         }
         Vars.ui.hudfrag.showToast(a + "");
         a = 0;
