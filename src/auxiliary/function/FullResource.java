@@ -74,5 +74,6 @@ public class FullResource extends Function {
             if (!Vars.player.team().items().has(item)) continue;
             core.items.set(item, core.storageCapacity);
         }
+        Vars.ui.hudfrag.showToast("核心资源已到达最大值");
     }
 }
