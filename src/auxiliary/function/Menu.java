@@ -27,8 +27,7 @@ public class Menu {
     }
 
     public void onClick() {
-        dialog.cont.add("辅助功能").size(200, 50);
-        dialog.cont.add("辅助功能2").size(200, 50);
+        dialog.cont.add("辅助功能");
         dialog.addCloseButton();
         dialog.show();
     }
