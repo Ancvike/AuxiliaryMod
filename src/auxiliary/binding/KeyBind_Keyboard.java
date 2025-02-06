@@ -47,7 +47,7 @@ public class KeyBind_Keyboard extends Table {
             }
         });
 
-        Events.run(EventType.Trigger.update, () -> {
+        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
@@ -68,14 +68,14 @@ public class KeyBind_Keyboard extends Table {
                 }
             }
         });
-        Events.run(EventType.Trigger.update, () -> {
+        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
                 startX = World.toTile(Core.input.mouseWorld().x);
                 startY = World.toTile(Core.input.mouseWorld().y);
                 isTap = true;
             }
         });
-        Events.run(EventType.Trigger.update, () -> {
+        Events.run(EventType.Trigger.draw, () -> {
             if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && state.isPlaying()) {
                 if (!state.rules.waves && state.isCampaign()) {
                     for (Building building : player.team().data().buildings) {
