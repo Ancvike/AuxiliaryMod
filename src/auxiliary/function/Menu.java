@@ -23,6 +23,7 @@ public class Menu {
             t.name = "auxiliary-functions";
             t.add(button);
             t.right();
+            
         });
     }
 
