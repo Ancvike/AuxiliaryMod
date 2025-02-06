@@ -76,7 +76,7 @@ public class KeyBind_Keyboard extends Table {
             }
         });
         Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && !ui.paused.isShown()) {
+            if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && state.isPlaying()) {
                 if (!state.rules.waves && state.isCampaign()) {
                     for (Building building : player.team().data().buildings) {
                         if (isZone(building)) {
