@@ -34,12 +34,16 @@ public class Menu {
     public void setDialog(BaseDialog dialog) {
         int width = Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
-        dialog.cont.table(table -> {
-            table.add("0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-        }).size(width, height).color(Color.red);
-        dialog.cont.table().size(width, height).color(Color.yellow);
-        dialog.cont.table().size(width, height).color(Color.blue);
-        dialog.cont.table().size(width, height).color(Color.green);
+        dialog.cont.table().size(width, height);
+        dialog.cont.table(t -> {
+            t.add("aaa").top().row();
+            t.add("bbb").top().row();
+        }).size(width, height);
+        dialog.cont.table(t -> {
+            t.add("aaa").top().row();
+            t.add("bbb").top().row();
+        }).size(width, height);
+        dialog.cont.table().size(width, height);
         dialog.addCloseButton();
     }
 
