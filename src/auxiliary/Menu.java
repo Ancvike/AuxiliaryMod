@@ -22,7 +22,7 @@ public class Menu {
             t.add(button);
             t.right();
         });
-        DragListener drag = new DragListener(button);
+        button.addListener(new DragListener(button));
     }
 
     public void onClick() {
