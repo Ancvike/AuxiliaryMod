@@ -11,11 +11,16 @@ import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 
+import static auxiliary.Menu.isDragged;
+
 public class Menu {
     ImageButton button = new ImageButton(Icon.menu);
     BaseDialog dialog = new BaseDialog("功能面板");
+    static boolean isDragged = false;
 
     public Menu() {
+        dialog.cont.add("辅助功能");
+        dialog.addCloseButton();
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
@@ -26,9 +31,7 @@ public class Menu {
     }
 
     public void onClick() {
-        dialog.cont.add("辅助功能");
-        dialog.addCloseButton();
-        dialog.show();
+        if (!isDragged) dialog.show();
     }
 }
 
@@ -46,6 +49,7 @@ class DragListener extends InputListener {
         lastX = v.x;
         lastY = v.y;
         table.toFront();
+        isDragged = true;
         return true;
     }
 
@@ -55,5 +59,6 @@ class DragListener extends InputListener {
         table.setPosition(table.x + (v.x - lastX), table.y + (v.y - lastY));
         lastX = v.x;
         lastY = v.y;
+        isDragged = true;
     }
 }
