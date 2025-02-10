@@ -1,5 +1,7 @@
 package auxiliary;
 
+import arc.Core;
+import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
@@ -19,8 +21,7 @@ public class Menu {
     static boolean isDragged = false;
 
     public Menu() {
-        dialog.cont.add("辅助功能");
-        dialog.addCloseButton();
+        setDialog(dialog);
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
@@ -28,6 +29,16 @@ public class Menu {
             t.right();
         });
         button.addListener(new DragListener(button));
+    }
+
+    public void setDialog(BaseDialog dialog) {
+        int width = Core.graphics.getWidth() / 4;
+        int height = Core.graphics.getHeight() - 64;
+        dialog.cont.table().size(width, height).color(Color.red);
+        dialog.cont.table().size(width, height).color(Color.yellow);
+        dialog.cont.table().size(width, height).color(Color.blue);
+        dialog.cont.table().size(width, height).color(Color.green);
+        dialog.addCloseButton();
     }
 
     public void onClick() {
