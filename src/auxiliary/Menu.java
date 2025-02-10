@@ -49,7 +49,7 @@ class DragListener extends InputListener {
         lastX = v.x;
         lastY = v.y;
         table.toFront();
-        isDragged = true;
+        isDragged = false;
         return true;
     }
 
