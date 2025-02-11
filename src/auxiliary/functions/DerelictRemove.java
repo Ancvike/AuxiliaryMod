@@ -10,7 +10,6 @@ import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.state;
 
 public class DerelictRemove extends Function {
-    int a;
 
     public DerelictRemove() {
         super("清除废墟");
@@ -20,8 +19,8 @@ public class DerelictRemove extends Function {
     public void onClick() {
 //        if (!state.rules.waves && state.isCampaign()) {
             Seq<Building> buildings = Team.derelict.data().buildings;
+            int a = buildings.size;
             for (Building building : buildings) {
-                a++;
                 building.kill();
             }
             Vars.ui.hudfrag.showToast(a + "");
