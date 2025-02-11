@@ -17,8 +17,9 @@ public class BuildingRestoration extends Function {
         if (!state.rules.waves && state.isCampaign()) {
             for (Building building : Vars.player.team().data().buildings) {
                 building.health = building.maxHealth;
-                dialog.hide();
             }
+            dialog.hide();
+            Vars.ui.hudfrag.showToast("已修复所有建筑");
         } else {
             dialog.hide();
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
