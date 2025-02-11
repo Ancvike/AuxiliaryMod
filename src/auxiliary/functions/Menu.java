@@ -60,7 +60,6 @@ public class Menu {
         functions.addAll(new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
         int width = Core.graphics.getWidth() / 2;
         int height = Core.graphics.getHeight() - 64;
-        dialog.cont.table().size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
                 t.add(function.getName()).row();
@@ -71,7 +70,6 @@ public class Menu {
                 t.button("使用", function::onClick).row();
             }
         }).size(width, height);
-        dialog.cont.table().size(width, height);
         dialog.addCloseButton();
     }
 
