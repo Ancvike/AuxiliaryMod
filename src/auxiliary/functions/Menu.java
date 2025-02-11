@@ -1,27 +1,33 @@
-package auxiliary;
+package auxiliary.functions;
 
 import arc.Core;
-import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
 import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static auxiliary.Menu.isDragged;
+import static auxiliary.functions.Menu.isDragged;
+import static mindustry.Vars.mobile;
 
 public class Menu {
     ImageButton button = new ImageButton(Icon.menu);
-    BaseDialog dialog = new BaseDialog("功能面板");
+    public static BaseDialog dialog = new BaseDialog("功能面板");
     static boolean isDragged = false;
+    Seq<Function> functions = new Seq<>();
 
     public Menu() {
-        setDialog(dialog);
+        if (mobile && !Core.settings.getBool("landscape")) {
+            setDialog_mobile(dialog);
+        }else {
+            setDialog(dialog);
+        }
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
@@ -32,16 +38,38 @@ public class Menu {
     }
 
     public void setDialog(BaseDialog dialog) {
+        functions.addAll(new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
         int width = Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
         dialog.cont.table().size(width, height);
         dialog.cont.table(t -> {
-            t.add("aaa").top().row();
-            t.add("bbb").top().row();
+            for (Function function : functions) {
+                t.add(function.getName()).row();
+            }
         }).size(width, height);
         dialog.cont.table(t -> {
-            t.add("aaa").top().row();
-            t.add("bbb").top().row();
+            for (Function function : functions) {
+                t.button("使用", function::onClick).row();
+            }
+        }).size(width, height);
+        dialog.cont.table().size(width, height);
+        dialog.addCloseButton();
+    }
+
+    public void setDialog_mobile(BaseDialog dialog) {
+        functions.addAll(new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
+        int width = Core.graphics.getWidth() / 4;
+        int height = Core.graphics.getHeight() - 64;
+        dialog.cont.table().size(width, height);
+        dialog.cont.table(t -> {
+            for (Function function : functions) {
+                t.add(function.getName());
+            }
+        }).size(width, height);
+        dialog.cont.table(t -> {
+            for (Function function : functions) {
+                t.button("使用", function::onClick);
+            }
         }).size(width, height);
         dialog.cont.table().size(width, height);
         dialog.addCloseButton();
