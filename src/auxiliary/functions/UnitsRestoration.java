@@ -18,7 +18,7 @@ public class UnitsRestoration extends Function {
             for (Unit unit : Vars.player.team().data().units) {
                 unit.health = unit.maxHealth;
             }
-            Vars.ui.hudfrag.showToast("已修复所有建筑");
+            Vars.ui.hudfrag.showToast("已修复所有单位");
             dialog.hide();
         } else {
             dialog.hide();
