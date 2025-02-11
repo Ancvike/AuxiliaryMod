@@ -67,7 +67,7 @@ public class Menu {
         }).size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.button("使用", function::onClick).size(50, 20).row();
+                t.button("使用", function::onClick).size(50, 200).row();
             }
         }).size(width, height);
         dialog.addCloseButton();
