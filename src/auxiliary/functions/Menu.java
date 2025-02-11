@@ -44,12 +44,12 @@ public class Menu {
         dialog.cont.table().size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.add(function.getName()).row();
+                t.add(function.getName()).size(width, 20).row();
             }
         }).size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.button("使用", function::onClick).row();
+                t.button("使用", function::onClick).size(50, 20).row();
             }
         }).size(width, height);
         dialog.cont.table().size(width, height);
@@ -67,7 +67,7 @@ public class Menu {
         }).size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.button("使用", function::onClick).size(50, 200).row();
+                t.button("使用", function::onClick).size(50, 20).row();
             }
         }).size(width, height);
         dialog.addCloseButton();
