@@ -18,7 +18,7 @@ public class DerelictRemove extends Function {
 
     @Override
     public void onClick() {
-        if (!state.rules.waves && state.isCampaign()) {
+//        if (!state.rules.waves && state.isCampaign()) {
             Seq<Building> buildings = Team.derelict.data().buildings;
             for (Building building : buildings) {
                 a++;
@@ -27,9 +27,9 @@ public class DerelictRemove extends Function {
             Vars.ui.hudfrag.showToast(a + "");
             a = 0;
             dialog.hide();
-        } else {
-            dialog.hide();
-            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
-        }
+//        } else {
+//            dialog.hide();
+//            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
+//        }
     }
 }
