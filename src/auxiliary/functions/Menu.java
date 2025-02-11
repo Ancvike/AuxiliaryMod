@@ -6,6 +6,7 @@ import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.ImageButton;
+import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Tmp;
@@ -15,6 +16,7 @@ import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.mobile;
+import static mindustry.Vars.state;
 
 public class Menu {
     ImageButton button = new ImageButton(Icon.menu);
@@ -38,7 +40,7 @@ public class Menu {
     }
 
     public void setDialog(BaseDialog dialog) {
-        functions.addAll(new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
+        functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
         int width = Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
         dialog.cont.table().size(width, height);
@@ -49,7 +51,18 @@ public class Menu {
         }).size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.button("使用", function::onClick).size(100, 50).row();
+                if (function.getButtonID() == 0) t.button("使用", function::onClick).size(100, 50).row();
+                if (function.getButtonID() == 1) {
+                    t.add("开");
+                    Slider slider = new Slider(0, 100, 1, false);
+                    slider.moved(isOpen -> {
+                        if (isOpen == 0) state.rules.fog = true;
+                        else if (isOpen == 50) state.rules.fog = false;
+                    });
+                    t.add(slider);
+                    t.add("关");
+                    t.row();
+                }
             }
         }).size(width, height);
         dialog.cont.table().size(width, height);
@@ -57,7 +70,7 @@ public class Menu {
     }
 
     public void setDialog_mobile(BaseDialog dialog) {
-        functions.addAll(new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
+        functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
         int width = Core.graphics.getWidth() / 2;
         int height = Core.graphics.getHeight() - 64;
         dialog.cont.table(t -> {

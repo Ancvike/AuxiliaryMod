@@ -12,7 +12,7 @@ import static mindustry.Vars.state;
 public class DerelictRemove extends Function {
 
     public DerelictRemove() {
-        super("清除废墟");
+        super(0, "清除废墟");
     }
 
     @Override
