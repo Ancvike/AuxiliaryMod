@@ -80,7 +80,18 @@ public class Menu {
         }).size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.button("使用", function::onClick).size(100, 50).row();
+                if (function.getButtonID() == 0) t.button("使用", function::onClick).size(100, 50).row();
+                if (function.getButtonID() == 1) {
+                    t.add("开");
+                    Slider slider = new Slider(0, 50, 50, false);
+                    slider.moved(isOpen -> {
+                        if (isOpen == 0) state.rules.fog = true;
+                        else if (isOpen == 50) state.rules.fog = false;
+                    });
+                    t.add(slider);
+                    t.add("关");
+                    t.row();
+                }
             }
         }).size(width, height);
         dialog.addCloseButton();
