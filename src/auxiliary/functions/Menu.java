@@ -25,7 +25,7 @@ public class Menu {
     public Menu() {
         if (mobile && !Core.settings.getBool("landscape")) {
             setDialog_mobile(dialog);
-        }else {
+        } else {
             setDialog(dialog);
         }
         button.clicked(this::onClick);
@@ -62,12 +62,12 @@ public class Menu {
         int height = Core.graphics.getHeight() - 64;
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.add(function.getName()).row();
+                t.add(function.getName()).size(width, 20).row();
             }
         }).size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
-                t.button("使用", function::onClick).row();
+                t.button("使用", function::onClick).size(50, 20).row();
             }
         }).size(width, height);
         dialog.addCloseButton();
