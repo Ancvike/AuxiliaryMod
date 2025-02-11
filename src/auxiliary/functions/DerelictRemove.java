@@ -18,14 +18,16 @@ public class DerelictRemove extends Function {
     @Override
     public void onClick() {
 //        if (!state.rules.waves && state.isCampaign()) {
-            Seq<Building> buildings = Team.derelict.data().buildings;
-            int a = buildings.size;
+        Seq<Building> buildings = Team.derelict.data().buildings;
+        int a = buildings.size;
+        while (a != 0) {
             for (Building building : buildings) {
+                a--;
                 building.kill();
             }
-            Vars.ui.hudfrag.showToast(a + "");
-            a = 0;
-            dialog.hide();
+        }
+        Vars.ui.hudfrag.showToast("清除废墟成功");
+        dialog.hide();
 //        } else {
 //            dialog.hide();
 //            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
