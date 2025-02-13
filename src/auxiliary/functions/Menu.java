@@ -14,7 +14,6 @@ import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.functions.Menu.isDragged;
-import static mindustry.Vars.mobile;
 import static mindustry.Vars.state;
 
 public class Menu {
