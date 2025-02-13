@@ -37,7 +37,7 @@ public class Menu {
     public void setDialog(BaseDialog dialog) {
         functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
 
-        int width = Core.graphics.getWidth() / 2;
+        int width = mobile && !Core.settings.getBool("landscape") ? Core.graphics.getWidth() / 2 : Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
 
         dialog.cont.clear();
@@ -58,14 +58,14 @@ public class Menu {
                         actions.table(sliderTable -> {
                             sliderTable.defaults().growX().fillX();
 
-                            sliderTable.add("开").width(20f).left();
+                            sliderTable.add("开").width(20f);
 
                             sliderTable.slider(0, 50, 50, state.rules.fog ? 0 : 50, moved -> {
                                 if (moved == 0) state.rules.fog = true;
                                 else if (moved == 50) state.rules.fog = false;
                             }).growX().height(50f);
 
-                            sliderTable.add("关").width(20f).right();
+                            sliderTable.add("关").width(20f);
                         }).growX().height(50f).row();
                     }
                 }
