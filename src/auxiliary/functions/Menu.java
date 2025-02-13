@@ -24,11 +24,7 @@ public class Menu {
     Seq<Function> functions = new Seq<>();
 
     public Menu() {
-        if (mobile && !Core.settings.getBool("landscape")) {
-            setDialog_mobile(dialog);
-        } else {
-            setDialog(dialog);
-        }
+        setDialog(dialog);
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
@@ -40,36 +36,13 @@ public class Menu {
 
     public void setDialog(BaseDialog dialog) {
         functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
-        int width = Core.graphics.getWidth() / 4;
-        int height = Core.graphics.getHeight() - 64;
-        dialog.cont.table().size(width, height);
-        dialog.cont.table(t -> {
-            for (Function function : functions) {
-                t.add(function.getName()).height(50).row();
-            }
-        }).size(width, height);
-        dialog.cont.table(t -> {
-            for (Function function : functions) {
-                if (function.getButtonID() == 0) t.button("使用", function::onClick).size(100, 50).row();
-                if (function.getButtonID() == 1) {
-                    t.add("开").size(25, 50).pad(0).margin(0);
-                    t.slider(0, 50, 50, 50, isOpen -> {
-                        if (isOpen == 0) state.rules.fog = true;
-                        else if (isOpen == 50) state.rules.fog = false;
-                    }).size(50, 50).margin(0).pad(0);
-                    t.add("关").size(25, 50).pad(0).margin(0);
-                    t.row();
-                }
-            }
-        }).size(width, height);
-        dialog.cont.table().size(width, height);
-        dialog.addCloseButton();
-    }
 
-    public void setDialog_mobile(BaseDialog dialog) {
-        functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
-        int width = Core.graphics.getWidth() / 2;
+        int width;
+        if (mobile && !Core.settings.getBool("landscape")) width = Core.graphics.getWidth() / 2;
+        else width = Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
+
+        dialog.cont.table().size(width, height);
         dialog.cont.table(t -> {
             for (Function function : functions) {
                 t.add(function.getName()).height(50).row();
@@ -79,16 +52,17 @@ public class Menu {
             for (Function function : functions) {
                 if (function.getButtonID() == 0) t.button("使用", function::onClick).size(100, 50).row();
                 if (function.getButtonID() == 1) {
-                    t.add("开");
+                    t.add("开").size(5, 50).pad(0).margin(0);
                     t.slider(0, 50, 50, 50, isOpen -> {
                         if (isOpen == 0) state.rules.fog = true;
                         else if (isOpen == 50) state.rules.fog = false;
-                    });
-                    t.add("关");
+                    }).size(90, 50).margin(0).pad(0);
+                    t.add("关").size(5, 50).pad(0).margin(0);
                     t.row();
                 }
             }
         }).size(width, height);
+        dialog.cont.table().size(width, height);
         dialog.addCloseButton();
     }
 
