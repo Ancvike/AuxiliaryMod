@@ -47,7 +47,7 @@ public class Menu {
                 for (Function function : functions) {
                     list.add(function.getName()).height(50).row();
                 }
-            }).width(width / 2f).height(height);
+            }).size(width / 2f, height);
 
             t.table(actions -> {
                 for (Function function : functions) {
@@ -69,8 +69,8 @@ public class Menu {
                         actions.row();
                     }
                 }
-            }).width(width / 2f).height(height);
-        }).size(Core.graphics.getWidth(), height);
+            }).size(width / 2f, height);
+        }).size(width, height);
 
         dialog.addCloseButton();
     }
