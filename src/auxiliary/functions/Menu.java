@@ -40,6 +40,7 @@ public class Menu {
         int width = mobile && !Core.settings.getBool("landscape") ? Core.graphics.getWidth() / 2 : Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
 
+        dialog.cont.clear();
         dialog.cont.table(t -> {
             t.defaults().growX().fillX().margin(0).pad(0);
 
