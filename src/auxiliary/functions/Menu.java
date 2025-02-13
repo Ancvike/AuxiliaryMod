@@ -14,6 +14,7 @@ import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.functions.Menu.isDragged;
+import static mindustry.Vars.mobile;
 import static mindustry.Vars.state;
 
 public class Menu {
@@ -36,20 +37,22 @@ public class Menu {
     public void setDialog(BaseDialog dialog) {
         functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
 
-        int width = Core.graphics.getWidth() / 2;
+        int width = mobile && !Core.settings.getBool("landscape") ? Core.graphics.getWidth() / 2 : Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
 
-        dialog.cont.clear();
-        dialog.cont.table(t -> {
-            t.defaults().growX().fillX().margin(0).pad(0);
+        dialog.cont.clear(); // 清空原有内容
+        dialog.cont.table(main -> {
+            main.defaults().growX().fillX().margin(0).pad(0);
 
-            t.table(list -> {
+            // 功能列表
+            main.table(list -> {
                 for (Function function : functions) {
                     list.add(function.getName()).height(50).row();
                 }
             }).width(width / 2f).height(height);
 
-            t.table(actions -> {
+            // 功能操作区
+            main.table(actions -> {
                 for (Function function : functions) {
                     if (function.getButtonID() == 0) {
                         actions.button("使用", function::onClick).size(100, 50).row();
@@ -65,8 +68,7 @@ public class Menu {
                             }).growX().height(50f);
 
                             sliderTable.add("关").width(20f).right();
-                        }).growX().height(50f);
-                        actions.row();
+                        }).growX().height(50f).row();
                     }
                 }
             }).width(width / 2f).height(height);
