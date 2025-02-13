@@ -41,34 +41,33 @@ public class Menu {
         int height = Core.graphics.getHeight() - 64;
 
         dialog.cont.clear(); // 清空原有内容
-        dialog.cont.table(main -> {
-            main.defaults().growX().fillX().margin(0).pad(0);
+        dialog.cont.table(t -> {
+            t.defaults().growX().fillX().margin(0).pad(0);
 
-            // 功能列表
-            main.table(list -> {
+            t.table(list -> {
                 for (Function function : functions) {
                     list.add(function.getName()).height(50).row();
                 }
             }).width(width / 2f).height(height);
 
-            // 功能操作区
-            main.table(actions -> {
+            t.table(actions -> {
                 for (Function function : functions) {
                     if (function.getButtonID() == 0) {
                         actions.button("使用", function::onClick).size(100, 50).row();
                     } else if (function.getButtonID() == 1) {
                         actions.table(sliderTable -> {
-                            sliderTable.defaults().growX().fillX().margin(0).pad(0);
+                            sliderTable.defaults().growX().fillX();
 
-                            sliderTable.add("开").width(20f).left().margin(0).pad(0);
+                            sliderTable.add("开").width(20f).left();
 
                             sliderTable.slider(0, 50, 50, state.rules.fog ? 0 : 50, moved -> {
                                 if (moved == 0) state.rules.fog = true;
                                 else if (moved == 50) state.rules.fog = false;
-                            }).growX().height(50f).margin(0).pad(0);
+                            }).growX().height(50f);
 
-                            sliderTable.add("关").width(20f).right().margin(0).pad(0);
-                        }).growX().height(50f).margin(0).pad(0).row();
+                            sliderTable.add("关").width(20f).right();
+                        }).growX().height(50f);
+                        actions.row();
                     }
                 }
             }).width(width / 2f).height(height);
