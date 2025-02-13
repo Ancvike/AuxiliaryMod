@@ -37,7 +37,7 @@ public class Menu {
     public void setDialog(BaseDialog dialog) {
         functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
 
-        int width = mobile && !Core.settings.getBool("landscape") ? Core.graphics.getWidth() / 2 : Core.graphics.getWidth() / 4;
+        int width = Core.graphics.getWidth() / 2;
         int height = Core.graphics.getHeight() - 64;
 
         dialog.cont.clear();
@@ -48,7 +48,7 @@ public class Menu {
                 for (Function function : functions) {
                     list.add(function.getName()).height(50).row();
                 }
-            }).width(width / 2f).height(height);
+            }).size(width / 2f, height);
 
             t.table(actions -> {
                 for (Function function : functions) {
@@ -70,8 +70,8 @@ public class Menu {
                         actions.row();
                     }
                 }
-            }).width(width / 2f).height(height);
-        }).size(width, height);
+            }).size(width / 2f, height);
+        }).size(Core.graphics.getWidth(), height);
 
         dialog.addCloseButton();
     }
