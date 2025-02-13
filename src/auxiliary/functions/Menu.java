@@ -56,7 +56,7 @@ public class Menu {
                     t.slider(0, 50, 50, 50, isOpen -> {
                         if (isOpen == 0) state.rules.fog = true;
                         else if (isOpen == 50) state.rules.fog = false;
-                    }).size(50, 50);
+                    }).size(50, 50).margin(0).pad(0);
                     t.add("关").size(25, 50).pad(0).margin(0);
                     t.row();
                 }
