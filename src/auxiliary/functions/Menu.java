@@ -52,12 +52,12 @@ public class Menu {
             for (Function function : functions) {
                 if (function.getButtonID() == 0) t.button("使用", function::onClick).size(100, 50).row();
                 if (function.getButtonID() == 1) {
-                    t.add("开").size(25, 50);
+                    t.add("开").size(25, 50).pad(0).margin(0);
                     t.slider(0, 50, 50, 50, isOpen -> {
                         if (isOpen == 0) state.rules.fog = true;
                         else if (isOpen == 50) state.rules.fog = false;
                     }).size(50, 50);
-                    t.add("关").size(25, 50);
+                    t.add("关").size(25, 50).pad(0).margin(0);
                     t.row();
                 }
             }
