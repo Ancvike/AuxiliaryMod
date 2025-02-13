@@ -37,7 +37,7 @@ public class Menu {
     public void setDialog(BaseDialog dialog) {
         functions.addAll(new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove());
 
-        int width = mobile && !Core.settings.getBool("landscape") ? Core.graphics.getWidth() / 2 : Core.graphics.getWidth() / 4;
+        int width = Core.graphics.getWidth() / 2;
         int height = Core.graphics.getHeight() - 64;
 
         dialog.cont.clear();
