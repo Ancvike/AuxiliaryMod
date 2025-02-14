@@ -77,7 +77,7 @@ public class KeyBind_Mobile extends Table {
             }
         });
 
-        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+        Events.run(EventType.Trigger.update, () -> {
             isUnitTrue = Vars.control.input.commandMode;
             if (isUnitTrue && count == 0) {
                 Vars.ui.hudGroup.fill(t -> {
@@ -94,7 +94,7 @@ public class KeyBind_Mobile extends Table {
                 count++;
             }
         });
-        Events.run(EventType.Trigger.uiDrawEnd, () -> {
+        Events.run(EventType.Trigger.update, () -> {
             isUnitTrue = Vars.control.input.commandMode;
             if (!isUnitTrue && count != 0) {
                 count = 0;
