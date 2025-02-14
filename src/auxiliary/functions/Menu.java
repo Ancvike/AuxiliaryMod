@@ -27,7 +27,7 @@ public class Menu {
     Seq<Function> functions = new Seq<>();
 
     public Menu() {
-        Events.run(EventType.Trigger.update, () -> button.visible = !Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown());
+        Events.run(EventType.Trigger.update, () -> button.visible = Vars.ui.hudfrag.shown || !Vars.ui.minimapfrag.shown());
         setDialog(dialog);
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
