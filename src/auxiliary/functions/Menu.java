@@ -1,6 +1,7 @@
 package auxiliary.functions;
 
 import arc.Core;
+import arc.Events;
 import arc.input.KeyCode;
 import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
@@ -12,6 +13,7 @@ import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.Tmp;
 import mindustry.Vars;
+import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 
@@ -25,6 +27,9 @@ public class Menu {
     Seq<Function> functions = new Seq<>();
 
     public Menu() {
+        Events.run(EventType.Trigger.update, () -> {
+            button.visible = !Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown();
+        });
         setDialog(dialog);
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
@@ -75,7 +80,7 @@ public class Menu {
                             speedTable.add(speedLabel).width(20f).left().margin(0).pad(0);
 
                             float[] speedValues = {1f, 2f, 5f, 10f, 20f};
-                            speedTable.slider(0, speedValues.length - 1, 1, 1, value -> {
+                            speedTable.slider(0, speedValues.length - 1, 1, 0, value -> {
                                 float selectedSpeed = speedValues[(int) value];
                                 Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * selectedSpeed, 3.0f));
                                 speedLabel.setText((int) selectedSpeed + "x");
