@@ -27,7 +27,7 @@ public class Menu {
     Seq<Function> functions = new Seq<>();
 
     public Menu() {
-        Events.run(EventType.Trigger.update, () -> button.visible = Vars.ui.hudfrag.shown || !Vars.ui.minimapfrag.shown());
+        Events.run(EventType.Trigger.update, () -> button.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
         setDialog(dialog);
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
@@ -82,7 +82,7 @@ public class Menu {
                                 float selectedSpeed = speedValues[(int) value];
                                 Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * selectedSpeed, 3.0f));
                                 speedLabel.setText((int) selectedSpeed + "x");
-                            }).growX().height(50f).margin(0).pad(0);
+                            }).growX().height(50f).margin(0).pad(0).center();
                         }).growX().height(50f).margin(0).pad(0).row();
                     }
                 }
