@@ -68,17 +68,13 @@ public class Menu {
                             sliderTable.add("关").width(20f);
                         }).growX().height(50f).row();
                     } else if (function.getButtonID() == 2) {
-                        // 新增游戏速度调节组件
                         actions.table(speedTable -> {
                             speedTable.defaults().growX().fillX().margin(0).pad(0);
 
-                            // 标签显示当前速度（例如 "1x"）
                             Label speedLabel = new Label("1x");
-                            speedTable.add(speedLabel).width(40f).left().margin(0).pad(0);
+                            speedTable.add(speedLabel).width(20f).left().margin(0).pad(0);
 
-                            // 滑动条（1x~5x，步长 1）
                             speedTable.slider(1, 5, 1, 1, value -> {
-                                // 修改 Time.delta 的提供器以调整速度
                                 Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * value, 3.0f));
                                 speedLabel.setText((int) value + "x");
                             }).growX().height(50f).margin(0).pad(0);
