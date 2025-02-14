@@ -75,7 +75,7 @@ public class Menu {
                             speedTable.add(speedLabel).width(20f).left().margin(0).pad(0);
 
                             float[] speedValues = {1f, 2f, 5f, 10f, 20f};
-                            speedTable.slider(0, speedValues.length - 1, 0, 1, value -> {
+                            speedTable.slider(0, speedValues.length - 1, 1, 1, value -> {
                                 float selectedSpeed = speedValues[(int) value];
                                 Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * selectedSpeed, 3.0f));
                                 speedLabel.setText((int) selectedSpeed + "x");
