@@ -17,7 +17,7 @@ public class FullResource extends Function {
 
     @Override
     public void onClick() {
-        if (!state.rules.waves && state.isCampaign() && state.rules.mode() == Gamemode.sandbox) {
+        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             CoreBlock.CoreBuild core = Vars.player.team().core();
             if (core == null || core.items == null) {
                 return;
