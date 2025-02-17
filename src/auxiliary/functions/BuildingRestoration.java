@@ -1,6 +1,7 @@
 package auxiliary.functions;
 
 import mindustry.Vars;
+import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 
@@ -14,7 +15,7 @@ public class BuildingRestoration extends Function {
 
     @Override
     public void onClick() {
-        if (!state.rules.waves && state.isCampaign()) {
+        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             for (Building building : Vars.player.team().data().buildings) {
                 building.health = building.maxHealth;
             }

@@ -11,6 +11,7 @@ import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.core.World;
 import mindustry.game.EventType;
+import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
@@ -60,7 +61,7 @@ public class KeyBind_Keyboard extends Table {
         Events.run(EventType.Trigger.draw, () -> {
             if (Vars.ui.hudfrag.shown || !Vars.ui.minimapfrag.shown()) {
                 if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && state.isPlaying()) {
-                    if (!state.rules.waves && state.isCampaign()) {
+                    if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
                         for (Building building : player.team().data().buildings) {
                             if (isZone(building)) {
                                 building.health = building.maxHealth;
@@ -86,7 +87,7 @@ public class KeyBind_Keyboard extends Table {
         Events.run(EventType.Trigger.update, () -> {
             if (Vars.ui.hudfrag.shown || !Vars.ui.minimapfrag.shown()) {
                 if (Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
-                    if (!state.rules.waves && state.isCampaign()) {
+                    if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
                         Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
                         for (Unit unit : selectedUnits) {
                             unit.health = unit.maxHealth;
