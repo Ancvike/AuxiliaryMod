@@ -1,6 +1,7 @@
 package auxiliary.functions;
 
 import mindustry.Vars;
+import mindustry.game.Gamemode;
 import mindustry.gen.Icon;
 import mindustry.type.Item;
 import mindustry.world.blocks.storage.CoreBlock;
@@ -16,7 +17,7 @@ public class FullResource extends Function {
 
     @Override
     public void onClick() {
-        if (!state.rules.waves && state.isCampaign()) {
+        if (!state.rules.waves && state.isCampaign() && state.rules.mode() == Gamemode.sandbox) {
             CoreBlock.CoreBuild core = Vars.player.team().core();
             if (core == null || core.items == null) {
                 return;
