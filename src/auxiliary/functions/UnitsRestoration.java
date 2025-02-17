@@ -1,6 +1,7 @@
 package auxiliary.functions;
 
 import mindustry.Vars;
+import mindustry.game.Gamemode;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 
@@ -14,7 +15,7 @@ public class UnitsRestoration extends Function {
 
     @Override
     public void onClick() {
-        if (!state.rules.waves && state.isCampaign()) {
+        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             for (Unit unit : Vars.player.team().data().units) {
                 unit.health = unit.maxHealth;
             }

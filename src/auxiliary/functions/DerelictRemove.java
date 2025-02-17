@@ -2,6 +2,7 @@ package auxiliary.functions;
 
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.game.Gamemode;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
@@ -17,7 +18,7 @@ public class DerelictRemove extends Function {
 
     @Override
     public void onClick() {
-        if (!state.rules.waves && state.isCampaign()) {
+        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             Seq<Building> buildings = Team.derelict.data().buildings;
             int a = buildings.size;
             while (a != 0) {
