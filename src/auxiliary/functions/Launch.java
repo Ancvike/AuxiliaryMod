@@ -1,12 +1,15 @@
 package auxiliary.functions;
 
+import arc.func.Cons;
 import mindustry.Vars;
+import mindustry.type.Sector;
 import mindustry.ui.dialogs.PlanetDialog;
 
 import static mindustry.Vars.state;
+import static mindustry.ui.dialogs.PlanetDialog.Mode.look;
 
 public class Launch extends Function {
-    public PlanetDialog dialog;
+    public PlanetDialog dialog = new MyPlanetDialog();
 
     public Launch() {
         super(0, "从此区块发射");
@@ -15,8 +18,8 @@ public class Launch extends Function {
     @Override
     public void onClick() {
         if (state.isCampaign()) {
-            Vars.ui.planet.showPlanetLaunch(state.rules.sector, other -> {
-                if (state.isCampaign() && other.planet == state.rules.sector.planet) {
+            dialog.showSelect(state.rules.sector, other -> {
+                if (other.planet == state.rules.sector.planet) {
                     Vars.ui.planet.launchSector = other;
                 }
             });
@@ -27,5 +30,23 @@ public class Launch extends Function {
 }
 
 class MyPlanetDialog extends PlanetDialog {
+    @Override
+    public void showSelect(Sector sector, Cons<Sector> listener) {
+        selected = null;
+        hovered = null;
+        launching = false;
+        this.listener = listener;
 
+        //update view to sector
+//        lookAt(sector);
+        zoom = 1f;
+        state.zoom = 1f;
+        state.uiAlpha = 0f;
+        state.otherCamPos = null;
+        launchSector = sector;
+
+        mode = look;
+
+        super.show();
+    }
 }
