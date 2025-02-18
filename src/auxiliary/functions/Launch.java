@@ -13,8 +13,12 @@ public class Launch extends Function {
     @Override
     public void onClick() {
         if (state.isCampaign()) {
-            Vars.ui.hudfrag.showToast("111");
-        }else {
+            Vars.ui.planet.showSelect(state.rules.sector, other -> {
+                if (state.isCampaign() && other.planet == state.rules.sector.planet) {
+                    state.rules.sector.info.destination = other;
+                }
+            });
+        } else {
             Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
         }
     }
