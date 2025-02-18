@@ -5,6 +5,7 @@ import mindustry.Vars;
 import mindustry.type.Sector;
 import mindustry.ui.dialogs.PlanetDialog;
 
+import static mindustry.Vars.control;
 import static mindustry.Vars.state;
 import static mindustry.ui.dialogs.PlanetDialog.Mode.look;
 
@@ -20,7 +21,7 @@ public class Launch extends Function {
         if (state.isCampaign()) {
             dialog.showSelect(state.rules.sector, other -> {
                 if (other.planet == state.rules.sector.planet) {
-                    Vars.ui.planet.launchSector = other;
+                    control.playSector(other);
                 }
             });
         } else {
