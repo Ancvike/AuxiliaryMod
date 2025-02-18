@@ -14,7 +14,7 @@ public class Launch extends Function {
     public void onClick() {
         if (state.isCampaign()) {
             Vars.ui.planet.showSelect(state.rules.sector, other -> {
-                if (state.isCampaign() && other.planet == state.rules.sector.planet) {
+                if (other.planet == state.rules.sector.planet) {
                     state.rules.sector.info.destination = other;
                 }
             });
