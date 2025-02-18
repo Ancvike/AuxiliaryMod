@@ -10,7 +10,7 @@ import static mindustry.Vars.state;
 import static mindustry.ui.dialogs.PlanetDialog.Mode.look;
 
 public class Launch extends Function {
-    public PlanetDialog dialog = new MyPlanetDialog();
+    public MyPlanetDialog dialog;
 
     public Launch() {
         super(0, "从此区块发射");
@@ -19,6 +19,7 @@ public class Launch extends Function {
     @Override
     public void onClick() {
         if (state.isCampaign()) {
+            dialog = (MyPlanetDialog) Vars.ui.planet;
             dialog.showSelect(state.rules.sector, other -> {
                 if (other.planet == state.rules.sector.planet) {
                     control.playSector(other);
@@ -33,21 +34,6 @@ public class Launch extends Function {
 class MyPlanetDialog extends PlanetDialog {
     @Override
     public void showSelect(Sector sector, Cons<Sector> listener) {
-        selected = null;
-        hovered = null;
-        launching = false;
-        this.listener = listener;
 
-        //update view to sector
-//        lookAt(sector);
-        zoom = 1f;
-        state.zoom = 1f;
-        state.uiAlpha = 0f;
-        state.otherCamPos = null;
-        launchSector = sector;
-
-        mode = look;
-
-        super.show();
     }
 }
