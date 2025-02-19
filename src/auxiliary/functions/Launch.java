@@ -1,14 +1,13 @@
 package auxiliary.functions;
 
-import arc.func.Cons;
 import mindustry.Vars;
-import mindustry.type.Sector;
 import mindustry.ui.dialogs.PlanetDialog;
 
-import static mindustry.Vars.state;
+import static mindustry.Vars.*;
 
 public class Launch extends Function {
-    PlanetDialog dialog = new PlanetDialog();
+    MyPlanetDialog dialog = new MyPlanetDialog();
+
     public Launch() {
         super(0, "从此区块发射");
 
@@ -17,14 +16,14 @@ public class Launch extends Function {
     @Override
     public void onClick() {
         if (state.isCampaign()) {
-//            state.rules.sector
-            dialog.show();
+            PlanetDialog.debugSelect = true;
         } else {
             Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
         }
     }
 
-    public void selectSector(Cons<Sector> listener) {
 
-    }
+}
+
+class MyPlanetDialog extends PlanetDialog {
 }
