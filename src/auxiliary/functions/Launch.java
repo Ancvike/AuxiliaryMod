@@ -1,6 +1,8 @@
 package auxiliary.functions;
 
+import arc.func.Cons;
 import mindustry.Vars;
+import mindustry.type.Sector;
 import mindustry.ui.dialogs.PlanetDialog;
 
 import static mindustry.Vars.*;
@@ -16,7 +18,9 @@ public class Launch extends Function {
     @Override
     public void onClick() {
         if (state.isCampaign()) {
-            PlanetDialog.debugSelect = true;
+            dialog.showSelect(state.rules.sector, sector -> {
+
+            });
         } else {
             Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
         }
@@ -26,4 +30,23 @@ public class Launch extends Function {
 }
 
 class MyPlanetDialog extends PlanetDialog {
+
+    @Override
+    public void showSelect(Sector sector, Cons<Sector> listener) {
+        selected = null;
+        hovered = null;
+        launching = false;
+        this.listener = listener;
+
+        //update view to sector
+        zoom = 1f;
+        state.zoom = 1f;
+        state.uiAlpha = 0f;
+        state.otherCamPos = null;
+        launchSector = sector;
+
+        mode = Mode.select;
+
+        super.show();
+    }
 }
