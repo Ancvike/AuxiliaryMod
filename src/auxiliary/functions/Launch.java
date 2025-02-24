@@ -2,10 +2,8 @@ package auxiliary.functions;
 
 import arc.Core;
 import arc.Events;
-import arc.assets.loaders.TextureLoader;
 import arc.func.Cons;
 import arc.graphics.Color;
-import arc.graphics.Texture;
 import arc.input.KeyCode;
 import arc.math.Mathf;
 import arc.math.geom.Vec3;
@@ -52,9 +50,7 @@ public class Launch extends Function {
     @Override
     public void onClick() {
         if (state.isCampaign()) {
-            dialog.showSelect(state.rules.sector, sector -> {
-
-            });
+            dialog.show();
         } else {
             Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
         }
@@ -62,8 +58,6 @@ public class Launch extends Function {
 }
 
 class MyPlanetDialog extends PlanetDialog {
-
-    private final Texture[] planetTextures;
 
     public MyPlanetDialog() {
         //这里将 PlanetDialog 实例自身设置为渲染器，并设置 drawUi 标志为 true，表示需要绘制 UI。
@@ -170,15 +164,15 @@ class MyPlanetDialog extends PlanetDialog {
         //});
 
         //加载并设置星球的纹理。
-        planetTextures = new Texture[2];
-        String[] names = {"sprites/planets/serpulo.png", "sprites/planets/erekir.png"};
-        for (int i = 0; i < names.length; i++) {
-            int fi = i;
-            assets.load(names[i], Texture.class, new TextureLoader.TextureParameter() {{
-                minFilter = magFilter = Texture.TextureFilter.linear;
-            }}).loaded = t -> planetTextures[fi] = t;
-            assets.finishLoadingAsset(names[i]);
-        }
+//        planetTextures = new Texture[2];
+//        String[] names = {"sprites/planets/serpulo.png", "sprites/planets/erekir.png"};
+//        for (int i = 0; i < names.length; i++) {
+//            int fi = i;
+//            assets.load(names[i], Texture.class, new TextureLoader.TextureParameter() {{
+//                minFilter = magFilter = Texture.TextureFilter.linear;
+//            }}).loaded = t -> planetTextures[fi] = t;
+//            assets.finishLoadingAsset(names[i]);
+//        }
 
         //根据游戏状态解锁默认的内容（如特定的建筑块或物品）。
         if (content.planets().contains(p -> p.sectors.contains(Sector::hasBase)) || Blocks.scatter.unlocked() || Blocks.router.unlocked()) {
