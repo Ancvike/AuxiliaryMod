@@ -37,6 +37,7 @@ import mindustry.ui.dialogs.PlanetDialog;
 import mindustry.world.blocks.storage.CoreBlock;
 
 import static arc.Core.*;
+import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.*;
 import static mindustry.ui.dialogs.PlanetDialog.Mode.*;
 
@@ -480,6 +481,8 @@ class MyPlanetDialog extends PlanetDialog {
         }
 
         if (shouldHide) hide();
+
+        dialog.hide();
     }
 
     void setup() {
