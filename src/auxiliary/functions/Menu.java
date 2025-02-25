@@ -2,6 +2,7 @@ package auxiliary.functions;
 
 import arc.Core;
 import arc.Events;
+import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
@@ -15,6 +16,7 @@ import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
+import mindustry.graphics.Pal;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.functions.Menu.isDragged;
@@ -61,20 +63,21 @@ public class Menu {
                         actions.table(sliderTable -> {
                             sliderTable.defaults().growX().fillX();
 
-                            sliderTable.add("开").width(20f);
+                            sliderTable.add("开").width(20f).color(Color.green);
 
                             sliderTable.slider(0, 50, 50, state.rules.fog ? 0 : 50, moved -> {
                                 if (moved == 0) state.rules.fog = true;
                                 else if (moved == 50) state.rules.fog = false;
                             }).growX().height(50f).padLeft(20f).padRight(20).margin(0);
 
-                            sliderTable.add("关").width(20f);
+                            sliderTable.add("关").width(20f).color(Color.red);
                         }).growX().height(50f).row();
                     } else if (function.getButtonID() == 2) {
                         actions.table(speedTable -> {
                             speedTable.defaults().growX().fillX().margin(0).pad(0);
 
                             Label speedLabel = new Label("1x");
+                            speedLabel.setColor(Pal.accent);
                             speedTable.add(speedLabel).width(20f).left().margin(0).pad(0);
 
                             float[] speedValues = {1f, 2f, 5f, 10f, 20f};
