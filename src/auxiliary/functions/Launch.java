@@ -20,7 +20,6 @@ import arc.util.*;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.Items;
-import mindustry.content.Planets;
 import mindustry.content.TechTree;
 import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
@@ -28,7 +27,6 @@ import mindustry.game.EventType;
 import mindustry.game.Objectives;
 import mindustry.gen.Icon;
 import mindustry.graphics.Pal;
-import mindustry.input.Binding;
 import mindustry.maps.SectorDamage;
 import mindustry.type.*;
 import mindustry.ui.Styles;
@@ -52,6 +50,7 @@ public class Launch extends Function {
     public void onClick() {
         if (state.isCampaign()) {
             dialog.show();
+            Menu.dialog.hide();
         } else {
             Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
         }
@@ -70,26 +69,6 @@ class MyPlanetDialog extends PlanetDialog {
 
         //从游戏设置中加载上次访问的星球，如果未找到则默认设置为 serpulo 星球
         state.planet = content.getByName(ContentType.planet, Core.settings.getString("lastplanet", "serpulo"));
-        if (state.planet == null) state.planet = Planets.serpulo;
-
-        //添加了一个键盘监听器，用于处理特定的按键事件（如 ESC、返回键等），以实现对话框的隐藏、扇区选择清除等功能。
-        addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, KeyCode key) {
-                if (event.targetActor == MyPlanetDialog.this && (key == KeyCode.escape || key == KeyCode.back || key == Core.keybinds.get(Binding.planet_map).key)) {
-                    if (showing() && newPresets.size > 1) {
-                        //clear all except first, which is the last sector.
-                        newPresets.truncate(1);
-                    } else if (selected != null) {
-                        selectSector(null);
-                    } else {
-                        Core.app.post(() -> hide());
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
 
         //设置悬停标签的样式和对齐方式。
         hoverLabel.setStyle(Styles.outlineLabel);
@@ -159,22 +138,6 @@ class MyPlanetDialog extends PlanetDialog {
         //当对话框显示时，调用 setup() 方法进行初始化设置。
         shown(this::setup);
 
-        //如果玩家是初次游戏且没有基地，则显示星球选择对话框。
-        //shown(() -> {
-        //    // 检查并显示星球选择对话框
-        //});
-
-        //加载并设置星球的纹理。
-//        planetTextures = new Texture[2];
-//        String[] names = {"sprites/planets/serpulo.png", "sprites/planets/erekir.png"};
-//        for (int i = 0; i < names.length; i++) {
-//            int fi = i;
-//            assets.load(names[i], Texture.class, new TextureLoader.TextureParameter() {{
-//                minFilter = magFilter = Texture.TextureFilter.linear;
-//            }}).loaded = t -> planetTextures[fi] = t;
-//            assets.finishLoadingAsset(names[i]);
-//        }
-
         //根据游戏状态解锁默认的内容（如特定的建筑块或物品）。
         if (content.planets().contains(p -> p.sectors.contains(Sector::hasBase)) || Blocks.scatter.unlocked() || Blocks.router.unlocked()) {
             Seq.with(Blocks.junction, Blocks.mechanicalDrill, Blocks.conveyor, Blocks.duo, Items.copper, Items.lead).each(UnlockableContent::quietUnlock);
@@ -199,11 +162,6 @@ class MyPlanetDialog extends PlanetDialog {
 
     boolean showing() {
         return newPresets.any();
-    }
-
-    void selectSector(Sector sector) {
-        selected = sector;
-        updateSelected();
     }
 
     void updateSelected() {
