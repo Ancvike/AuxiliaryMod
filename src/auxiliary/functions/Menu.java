@@ -81,7 +81,7 @@ public class Menu {
                                 float selectedSpeed = speedValues[(int) value];
                                 Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * selectedSpeed, 3.0f));
                                 speedLabel.setText((int) selectedSpeed + "x");
-                            }).growX().height(50f).margin(0).padLeft(10).center();
+                            }).growX().height(50f).margin(0).padLeft(10);
                         }).growX().height(50f).margin(0).pad(0).row();
                     }
                 }
