@@ -20,7 +20,6 @@ import mindustry.graphics.Pal;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.functions.Menu.isDragged;
-import static mindustry.Vars.state;
 
 public class Menu {
     ImageButton button = new ImageButton(Icon.menu);
