@@ -65,10 +65,7 @@ public class Menu {
 
                             sliderTable.add("开").width(20f).color(Color.green);
 
-                            sliderTable.slider(0, 50, 50, state.rules.fog ? 0 : 50, moved -> {
-                                if (moved == 0) state.rules.fog = true;
-                                else if (moved == 50) state.rules.fog = false;
-                            }).growX().height(50f).padLeft(20f).padRight(20).margin(0);
+                            sliderTable.add(function.slider).growX().height(50f).padLeft(20f).padRight(20).margin(0);
 
                             sliderTable.add("关").width(20f).color(Color.red);
                         }).growX().height(50f).row();
