@@ -2,6 +2,7 @@ package auxiliary;
 
 import auxiliary.binding.KeyBind;
 import auxiliary.functions.Menu;
+import auxiliary.ui.SettingUI;
 import mindustry.mod.Mod;
 
 public class AuxiliaryMod extends Mod {
@@ -9,5 +10,6 @@ public class AuxiliaryMod extends Mod {
     public void init() {
         new Menu();
         KeyBind.init();
+        SettingUI.init();
     }
 }
