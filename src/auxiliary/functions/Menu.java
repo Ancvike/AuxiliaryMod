@@ -17,9 +17,12 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.graphics.Pal;
+import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
+import static auxiliary.binding.KeyBind_Mobile.isOpen;
 import static auxiliary.functions.Menu.isDragged;
+import static mindustry.Vars.mobile;
 
 public class Menu {
     ImageButton button = new ImageButton(Icon.menu);
@@ -29,11 +32,13 @@ public class Menu {
 
     public Menu() {
         Events.run(EventType.Trigger.update, () -> button.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
+
         setDialog(dialog);
         button.clicked(this::onClick);
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
-            t.add(button);
+            t.add(button).row();
+            if (mobile) t.button(Icon.android, () -> isOpen = !isOpen);
             t.right();
         });
         button.addListener(new DragListener(button));
