@@ -37,7 +37,7 @@ public class Menu {
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
             t.add(button).row();
-            if (mobile) t.button(Icon.android, () -> isOpen = !isOpen);
+            if (mobile) t.button(Icon.android, new ImageButton.ImageButtonStyle(), () -> isOpen = !isOpen);
             t.right();
         });
         button.addListener(new DragListener(button));
