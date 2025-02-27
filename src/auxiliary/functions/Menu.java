@@ -17,10 +17,9 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.graphics.Pal;
-import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static auxiliary.binding.KeyBind_Mobile.isOpen;
+import static auxiliary.binding.KeyBind.isOpen;
 import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.mobile;
 
