@@ -6,6 +6,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.input.KeyCode;
+import arc.scene.event.InputListener;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
@@ -16,34 +17,38 @@ import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
+import mindustry.input.InputHandler;
 import mindustry.input.Placement;
 import mindustry.ui.Styles;
 
 import static mindustry.Vars.player;
 
-public class KeyBind_Mobile extends Table {
+public class KeyBind_Mobile extends InputHandler {
     boolean isUnitTrue = false;
     int count = 0;
 
     int startX, startY;
     int endX, endY;
     boolean isTap = false;
+    public static boolean isOpen = false;
 
     public void init() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
+            if (Core.input.keyDown(KeyCode.mouseLeft) && isTap && isOpen) {
                 player.shooting = false;
                 endX = World.toTile(Core.input.mouseWorld().x);
                 endY = World.toTile(Core.input.mouseWorld().y);
 
-                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 64, 1f);
+                drawSelection(startX, startY, endX, endY, 64, Color.green, Color.acid);
 
-                Lines.stroke(2f);
-
-                Draw.color(Color.green);
-                Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
-                Draw.color(Color.acid);
-                Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
+//                Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 64, 1f);
+//
+//                Lines.stroke(2f);
+//
+//                Draw.color(Color.green);
+//                Lines.rect(result.x, result.y - 1, result.x2 - result.x, result.y2 - result.y);
+//                Draw.color(Color.acid);
+//                Lines.rect(result.x, result.y, result.x2 - result.x, result.y2 - result.y);
 
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
@@ -53,7 +58,7 @@ public class KeyBind_Mobile extends Table {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyTap(KeyCode.mouseLeft)) {
+            if (Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
                 player.shooting = false;
                 startX = World.toTile(Core.input.mouseWorld().x);
                 startY = World.toTile(Core.input.mouseWorld().y);
@@ -61,7 +66,7 @@ public class KeyBind_Mobile extends Table {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyRelease(KeyCode.mouseLeft)) {
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
                 if (startX == endX && startY == endY) return;
                 for (Building building : player.team().data().buildings) {
                     if (isZone(building)) {
@@ -84,7 +89,13 @@ public class KeyBind_Mobile extends Table {
                     t.name = "mobile-unit";
                     t.bottom();
                     t.left();
-                    t.button(Icon.android, this::unitClick).size(50f).tooltip(tt -> {
+                    t.button(Icon.android, () -> {
+                        Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+                        for (Unit unit : selectedUnits) {
+                            unit.health = unit.maxHealth;
+                        }
+                        Vars.ui.hudfrag.showToast("所选单位已修复");
+                    }).size(50f).tooltip(tt -> {
                         tt.setBackground(Styles.black6);
                         tt.label(() -> "单位修复").pad(2f);
                     }).left();
@@ -101,15 +112,6 @@ public class KeyBind_Mobile extends Table {
                 Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-unit"));
             }
         });
-    }
-
-
-    public void unitClick() {
-        Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
-        for (Unit unit : selectedUnits) {
-            unit.health = unit.maxHealth;
-        }
-        Vars.ui.hudfrag.showToast("所选单位已修复");
     }
 
     private boolean isZone(Building building) {
