@@ -9,7 +9,7 @@ public class AuxiliaryMod extends Mod {
     @Override
     public void init() {
         new Menu();
-        KeyBind.init();
+        new KeyBind().init();
         SettingUI.init();
     }
 }
