@@ -38,12 +38,28 @@ public class Menu {
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
             t.add(button).row();
-            if (mobile) {
-                t.button(Icon.android, Styles.squarei, () -> isOpen = !isOpen);
-            }
+            if (mobile) t.button(Icon.android, Styles.selecti, () -> isOpen = !isOpen);
             t.right();
         });
         button.addListener(new DragListener(button));
+
+        Vars.ui.hudGroup.fill(t -> {
+            t.button(Icon.android, Styles.defaulti, () -> {});
+            t.button(Icon.android, Styles.nodei, () -> {});
+            t.button(Icon.android, Styles.emptyi, () -> {});
+            t.button(Icon.android, Styles.emptyTogglei, () -> {});
+            t.button(Icon.android, Styles.selecti, () -> {});
+            t.button(Icon.android, Styles.logici, () -> {});
+            t.button(Icon.android, Styles.geni, () -> {});
+            t.button(Icon.android, Styles.grayi, () -> {});
+            t.button(Icon.android, Styles.flati, () -> {});
+            t.button(Icon.android, Styles.squarei, () -> {});
+            t.button(Icon.android, Styles.squareTogglei, () -> {});
+            t.button(Icon.android, Styles.clearNonei, () -> {});
+            t.button(Icon.android, Styles.cleari, () -> {});
+            t.button(Icon.android, Styles.clearTogglei, () -> {});
+            t.button(Icon.android, Styles.clearNoneTogglei, () -> {});
+        });
     }
 
     public void setDialog(BaseDialog dialog) {
