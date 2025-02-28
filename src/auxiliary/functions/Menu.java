@@ -39,7 +39,7 @@ public class Menu {
             t.name = "auxiliary-functions";
             t.add(button).row();
             if (mobile) {
-                t.button(Icon.android, Styles.squareTogglei, () -> isOpen = !isOpen);
+                t.button(Icon.android, Styles.squarei, () -> isOpen = !isOpen);
             }
             t.right();
         });
