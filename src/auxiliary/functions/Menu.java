@@ -17,6 +17,7 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.graphics.Pal;
+import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.KeyBind.isOpen;
@@ -37,7 +38,9 @@ public class Menu {
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
             t.add(button).row();
-            if (mobile) t.button(Icon.android, new ImageButton.ImageButtonStyle(), () -> isOpen = !isOpen);
+            if (mobile) {
+                t.button(Icon.android, Styles.defaulti, () -> isOpen = !isOpen);
+            }
             t.right();
         });
         button.addListener(new DragListener(button));
