@@ -137,7 +137,7 @@ public class KeyBind extends InputHandler {
                 }
             });
             Events.run(EventType.Trigger.draw, () -> {
-                if ((Vars.ui.hudfrag.shown || !Vars.ui.minimapfrag.shown()) && state.isMenu()) {
+                if ((Vars.ui.hudfrag.shown || !Vars.ui.minimapfrag.shown()) && !state.isMenu()) {
                     if (Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && state.isPlaying()) {
                         if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
                             for (Building building : player.team().data().buildings) {
