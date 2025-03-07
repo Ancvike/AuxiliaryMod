@@ -4,9 +4,9 @@ import arc.scene.ui.Slider;
 
 import static mindustry.Vars.enableLight;
 
-public class Light extends Function {
+public class SunLight extends Function {
 
-    public Light() {
+    public SunLight() {
         super(1, "太阳光阴影");
 
         slider = new Slider(0, 50, 50, false);

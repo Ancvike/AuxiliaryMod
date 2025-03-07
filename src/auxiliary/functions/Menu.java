@@ -48,7 +48,11 @@ public class Menu {
                         this.disabled = Tex.buttonDisabled;
                     }
                 };
+                ImageButton androidButton = new ImageButton(Icon.android, style);
+                androidButton.clicked(() -> isOpen = !isOpen);
+                t.add(androidButton);
                 t.button(Icon.android, style, () -> isOpen = !isOpen);
+                androidButton.addListener(new DragListener(androidButton));
             }
             t.right();
         });
@@ -56,7 +60,7 @@ public class Menu {
     }
 
     public void setDialog(BaseDialog dialog) {
-        functions.addAll(new SpeedChange(), new Light(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
+        functions.addAll(new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
 
         int width = Core.graphics.getWidth() / 4;
         int height = Core.graphics.getHeight() - 64;
