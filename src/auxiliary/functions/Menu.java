@@ -18,6 +18,7 @@ import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
+import mindustry.ui.Fonts;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.KeyBind.isOpen;
@@ -41,9 +42,11 @@ public class Menu {
             if (mobile) {
                 ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle() {
                     {
+                        this.checked = Tex.buttonDown;
                         this.down = Tex.buttonDown;
                         this.up = Tex.button;
                         this.over = Tex.buttonOver;
+                        this.disabled = Tex.buttonDisabled;
                     }
                 };
                 t.button(Icon.android, style, () -> isOpen = !isOpen);
