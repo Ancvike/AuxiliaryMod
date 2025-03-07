@@ -16,7 +16,6 @@ import static auxiliary.binding.MyKeyBind.*;
 
 public class SettingUI {
     public static final Seq<MyKeyBind> keys = new Seq<>();
-    public boolean isOpen = false;
 
     public void init() {
         keys.addAll(RECOVERY_BUDDING, RECOVERY_UNIT);
@@ -28,9 +27,9 @@ public class SettingUI {
 
                     t.button("重新绑定", Styles.defaultt, () -> openDialog(key)).width(130f);
                     t.button("恢复默认", Styles.defaultt, () -> resetKeyBind(key)).width(130f).padLeft(4f);
-                    TextButton button = new TextButton(isOpen ? "禁用" : "启用");
-                    button.clicked(() -> isOpen = !isOpen);
-                    button.update(() -> button.setText(isOpen ? "禁用" : "启用"));
+                    TextButton button = new TextButton(key.getIsOpen() ? "禁用" : "启用");
+                    button.clicked(() -> key.setOpen(!key.getIsOpen()));
+                    button.update(() -> button.setText(key.getIsOpen() ? "禁用" : "启用"));
                     t.add(button).width(130f).padLeft(4f);
                     t.row();
                 }
