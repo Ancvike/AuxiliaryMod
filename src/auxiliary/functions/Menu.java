@@ -16,6 +16,7 @@ import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
+import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
 import mindustry.ui.dialogs.BaseDialog;
 
@@ -38,8 +39,13 @@ public class Menu {
             t.name = "auxiliary-functions";
             t.add(button).row();
             if (mobile) {
-                ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-                style.imageCheckedColor = Pal.accent;
+                ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle() {
+                    {
+                        this.down = Tex.buttonDown;
+                        this.up = Tex.button;
+                        this.over = Tex.buttonOver;
+                    }
+                };
                 t.button(Icon.android, style, () -> isOpen = !isOpen);
             }
             t.right();
