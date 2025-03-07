@@ -18,7 +18,6 @@ import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
-import mindustry.ui.Fonts;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.KeyBind.isOpen;
