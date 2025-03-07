@@ -31,6 +31,7 @@ public class SettingUI {
                     TextButton button = new TextButton(isOpen ? "禁用" : "启用");
                     button.clicked(() -> isOpen = !isOpen);
                     button.update(() -> button.setText(isOpen ? "禁用" : "启用"));
+                    t.add(button).width(130f).padLeft(4f);
                     t.row();
                 }
             } else {
