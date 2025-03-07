@@ -10,6 +10,6 @@ public class AuxiliaryMod extends Mod {
     public void init() {
         new Menu();
         new KeyBind().init();
-        SettingUI.init();
+        new SettingUI().init();
     }
 }

@@ -5,6 +5,7 @@ import arc.input.KeyCode;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.Dialog;
+import arc.scene.ui.TextButton;
 import arc.struct.Seq;
 import auxiliary.binding.MyKeyBind;
 import mindustry.Vars;
@@ -15,8 +16,9 @@ import static auxiliary.binding.MyKeyBind.*;
 
 public class SettingUI {
     public static final Seq<MyKeyBind> keys = new Seq<>();
+    public boolean isOpen = false;
 
-    public static void init() {
+    public void init() {
         keys.addAll(RECOVERY_BUDDING, RECOVERY_UNIT);
         Vars.ui.settings.addCategory("AuxiliaryMod设置", t -> {
             if (Core.app.isDesktop()) {
@@ -25,7 +27,10 @@ public class SettingUI {
                     t.label(() -> key.nowKeyCode.value).color(Pal.accent).left().minWidth(90).padRight(20);
 
                     t.button("重新绑定", Styles.defaultt, () -> openDialog(key)).width(130f);
-                    t.button("恢复默认", Styles.defaultt, () -> resetKeyBind(key)).width(130f).pad(2f).padLeft(4f);
+                    t.button("恢复默认", Styles.defaultt, () -> resetKeyBind(key)).width(130f).padLeft(4f);
+                    TextButton button = new TextButton(isOpen ? "禁用" : "启用");
+                    button.clicked(() -> isOpen = !isOpen);
+                    button.update(() -> button.setText(isOpen ? "禁用" : "启用"));
                     t.row();
                 }
             } else {
