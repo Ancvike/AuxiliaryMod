@@ -25,37 +25,46 @@ import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.mobile;
 
 public class Menu {
+    Table table = new Table();
     ImageButton button = new ImageButton(Icon.menu);
     public static BaseDialog dialog = new BaseDialog("功能面板");
     public static boolean isDragged = false;
     Seq<Function> functions = new Seq<>();
 
     public Menu() {
-        Events.run(EventType.Trigger.update, () -> button.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
+        Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
 
         setDialog(dialog);
+
+        table.add(button).row();
+        if (mobile) {
+            ImageButton androidButton = getImageButton();
+            table.add(androidButton);
+        }
+
         button.clicked(this::onClick);
+
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
-            t.add(button).row();
-            if (mobile) {
-                ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle() {
-                    {
-                        this.checked = Tex.buttonDown;
-                        this.down = Tex.buttonDown;
-                        this.up = Tex.button;
-                        this.over = Tex.buttonOver;
-                        this.disabled = Tex.buttonDisabled;
-                    }
-                };
-                ImageButton androidButton = new ImageButton(Icon.android, style);
-                androidButton.clicked(() -> isOpen = !isOpen);
-                t.add(androidButton);
-                androidButton.addListener(new DragListener(androidButton));
-            }
+            t.add(table).row();
             t.right();
         });
-        button.addListener(new DragListener(button));
+        table.addListener(new DragListener(table));
+    }
+
+    private static ImageButton getImageButton() {
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle() {
+            {
+                this.checked = Tex.buttonDown;
+                this.down = Tex.buttonDown;
+                this.up = Tex.button;
+                this.over = Tex.buttonOver;
+                this.disabled = Tex.buttonDisabled;
+            }
+        };
+        ImageButton androidButton = new ImageButton(Icon.android, style);
+        androidButton.clicked(() -> isOpen = !isOpen);
+        return androidButton;
     }
 
     public void setDialog(BaseDialog dialog) {
