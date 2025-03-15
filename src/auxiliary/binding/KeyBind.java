@@ -108,12 +108,11 @@ public class KeyBind extends InputHandler {
 
     // 输入状态验证
     private boolean shouldHandleInput() {
-        return isOpen && // 功能开关
-            !Vars.ui.chatfrag.shown() && // 未打开聊天框
-            Core.scene.getKeyboardFocus() == null && // 无文本输入焦点
-            Vars.ui.hudfrag.shown && // HUD正常显示
-            Vars.state.isPlaying() && // 游戏进行中
-            Vars.player != null; // 玩家实体存在
+        return !Vars.ui.chatfrag.shown() && // 未打开聊天框
+                Core.scene.getKeyboardFocus() == null && // 无文本输入焦点
+                Vars.ui.hudfrag.shown && // HUD正常显示
+                Vars.state.isPlaying() && // 游戏进行中
+                Vars.player != null; // 玩家实体存在
     }
 
     // 处理框选绘制
@@ -156,8 +155,7 @@ public class KeyBind extends InputHandler {
         endX = World.toTile(Core.input.mouseWorld().x);
         endY = World.toTile(Core.input.mouseWorld().y);
 
-        Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(
-            Blocks.air, startX, startY, endX, endY, false, 64, 1f);
+        Placement.NormalizeDrawResult result = Placement.normalizeDrawArea(Blocks.air, startX, startY, endX, endY, false, 64, 1f);
 
         Lines.stroke(2f);
         Draw.color(Color.green);
@@ -229,8 +227,7 @@ public class KeyBind extends InputHandler {
     private boolean isZone(Building building) {
         int x = World.toTile(building.x);
         int y = World.toTile(building.y);
-        return ((x >= startX && x <= endX) || (x <= startX && x >= endX)) &&
-               ((y >= startY && y <= endY) || (y <= startY && y >= endY));
+        return ((x >= startX && x <= endX) || (x <= startX && x >= endX)) && ((y >= startY && y <= endY) || (y <= startY && y >= endY));
     }
 
     // 重置选择状态
