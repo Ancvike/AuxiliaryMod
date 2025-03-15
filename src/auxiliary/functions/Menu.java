@@ -51,7 +51,6 @@ public class Menu {
                 ImageButton androidButton = new ImageButton(Icon.android, style);
                 androidButton.clicked(() -> isOpen = !isOpen);
                 t.add(androidButton);
-                t.button(Icon.android, style, () -> isOpen = !isOpen);
                 androidButton.addListener(new DragListener(androidButton));
             }
             t.right();

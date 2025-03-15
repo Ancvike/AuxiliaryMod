@@ -35,17 +35,17 @@ public class KeyBind extends InputHandler {
 
     private void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
+            if (shouldHandleInput() && Core.input.keyDown(KeyCode.mouseLeft) && isTap && isOpen) {
                 handleSelectionDraw();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft)) {
+            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
                 startSelection();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft)) {
+            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
                 handleSelectionEnd();
             }
         });
@@ -75,7 +75,7 @@ public class KeyBind extends InputHandler {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                handleDesktopSelectionEnd();
+                handleSelectionEnd();
             }
         });
 
@@ -115,18 +115,6 @@ public class KeyBind extends InputHandler {
     }
 
     private void handleSelectionEnd() {
-        if (startX == endX && startY == endY) return;
-
-        for (Building building : player.team().data().buildings) {
-            if (isZone(building)) {
-                building.health = building.maxHealth;
-            }
-        }
-        Vars.ui.hudfrag.showToast("所选建筑已修复");
-        resetSelection();
-    }
-
-    private void handleDesktopSelectionEnd() {
         if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             for (Building building : player.team().data().buildings) {
                 if (isZone(building)) {
