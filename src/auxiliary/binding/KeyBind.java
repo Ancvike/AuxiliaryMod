@@ -16,7 +16,6 @@ import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
 
-import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.*;
 
 public class KeyBind extends InputHandler {
@@ -36,17 +35,17 @@ public class KeyBind extends InputHandler {
 
     private void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyDown(KeyCode.mouseLeft) && isTap && isOpen && isDragged) {
+            if (shouldHandleInput() && Core.input.keyDown(KeyCode.mouseLeft) && isTap && isOpen) {
                 handleSelectionDraw();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen && isDragged) {
+            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
                 startSelection();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen && isDragged) {
+            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
                 handleSelectionEnd();
             }
         });
