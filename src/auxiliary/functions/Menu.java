@@ -27,7 +27,7 @@ import static mindustry.Vars.mobile;
 public class Menu {
     ImageButton button = new ImageButton(Icon.menu);
     public static BaseDialog dialog = new BaseDialog("功能面板");
-    static boolean isDragged = false;
+    public static boolean isDragged = false;
     Seq<Function> functions = new Seq<>();
 
     public Menu() {
