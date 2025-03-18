@@ -43,7 +43,7 @@ public class KeyBind extends InputHandler {
                 pressTime += Core.graphics.getDeltaTime();
             }
 
-            if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 1f) {
+            if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 0.5f) {
                 handleSelectionDraw();
             }
         });
@@ -55,7 +55,7 @@ public class KeyBind extends InputHandler {
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
 
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && pressTime >= 1f) {
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && pressTime >= 0.5f) {
                 pressTime = 0f;
                 handleSelectionEnd();
             }
