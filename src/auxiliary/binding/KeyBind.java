@@ -25,6 +25,8 @@ public class KeyBind extends InputHandler {
     private int count = 0;
     public static boolean isOpen = false;
 
+    private float pressTime = 0f;
+
     public void init() {
         if (mobile) {
             setupMobileEvents();
@@ -35,7 +37,13 @@ public class KeyBind extends InputHandler {
 
     private void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyDown(KeyCode.mouseLeft) && isTap && isOpen) {
+            if (!(shouldHandleInput() && isTap && isOpen)) return;
+
+            if (pressTime < 1f) {
+                pressTime += Core.graphics.getDeltaTime();
+            }
+
+            if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 1f) {
                 handleSelectionDraw();
             }
         });
@@ -45,7 +53,10 @@ public class KeyBind extends InputHandler {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
+            if (!(shouldHandleInput() && isOpen)) return;
+
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && pressTime >= 1f) {
+                pressTime = 0f;
                 handleSelectionEnd();
             }
         });

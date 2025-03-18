@@ -8,8 +8,6 @@ public enum MyKeyBind {
     ;
     private final String name;
     private final KeyCode defaultKeyCode;
-
-    private boolean isOpen = false;
     public KeyCode nowKeyCode;
 
     MyKeyBind(String name, KeyCode defaultKeyCode) {
@@ -28,13 +26,5 @@ public enum MyKeyBind {
 
     public String getName() {
         return name;
-    }
-
-
-    public void setOpen(boolean open) {
-        isOpen = open;
-    }
-    public boolean getIsOpen() {
-        return isOpen;
     }
 }

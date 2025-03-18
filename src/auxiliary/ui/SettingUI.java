@@ -5,7 +5,6 @@ import arc.input.KeyCode;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.Dialog;
-import arc.scene.ui.TextButton;
 import arc.struct.Seq;
 import auxiliary.binding.MyKeyBind;
 import mindustry.Vars;
@@ -27,10 +26,6 @@ public class SettingUI {
 
                     t.button("重新绑定", Styles.defaultt, () -> openDialog(key)).width(130f);
                     t.button("恢复默认", Styles.defaultt, () -> resetKeyBind(key)).width(130f).padLeft(4f);
-                    TextButton button = new TextButton(key.getIsOpen() ? "禁用" : "启用");
-                    button.clicked(() -> key.setOpen(!key.getIsOpen()));
-                    button.update(() -> button.setText(key.getIsOpen() ? "禁用" : "启用"));
-                    t.add(button).width(130f).padLeft(4f);
                     t.row();
                 }
             } else {
