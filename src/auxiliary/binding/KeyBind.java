@@ -39,7 +39,7 @@ public class KeyBind extends InputHandler {
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isTap && isOpen)) return;
 
-            if (pressTime < 1f) {
+            if (pressTime < 0.5f) {
                 pressTime += Core.graphics.getDeltaTime();
             }
 
@@ -49,6 +49,7 @@ public class KeyBind extends InputHandler {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
+                ui.hudfrag.showToast(Core.input.mouseWorld().x + "," + Core.input.mouseWorld().y);
                 startSelection();
             }
         });
