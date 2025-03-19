@@ -15,6 +15,7 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.*;
 
@@ -26,6 +27,7 @@ public class KeyBind extends InputHandler {
     public static boolean isOpen = false;
 
     private float pressTime = 0f;
+    BaseDialog dialog = new BaseDialog("");
 
     public void init() {
         if (mobile) {
@@ -36,7 +38,13 @@ public class KeyBind extends InputHandler {
     }
 
     private void setupMobileEvents() {
+        ui.hudGroup.fill(e -> e.button("0000", () -> dialog.show()));
+
         Events.run(EventType.Trigger.draw, () -> {
+            if (Core.input.keyDown(KeyCode.mouseLeft)) {
+                dialog.cont.add(Core.input.mouseX() + "  ,  " + Core.input.mouseY()).row();
+            }
+
             if (!(shouldHandleInput() && isTap && isOpen)) return;
 
             if (pressTime < 0.5f) {
@@ -49,7 +57,6 @@ public class KeyBind extends InputHandler {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
-                ui.hudfrag.showToast(Core.input.mouseWorld().x + "," + Core.input.mouseWorld().y);
                 startSelection();
             }
         });
