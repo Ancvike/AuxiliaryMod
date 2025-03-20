@@ -15,7 +15,6 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.*;
 
@@ -27,7 +26,7 @@ public class KeyBind extends InputHandler {
     public static boolean isOpen = false;
 
     private float pressTime = 0f;
-    BaseDialog dialog = new BaseDialog("");
+    private int unitX, unitY;
 
     public void init() {
         if (mobile) {
@@ -38,18 +37,12 @@ public class KeyBind extends InputHandler {
     }
 
     private void setupMobileEvents() {
-        ui.hudGroup.fill(e -> e.button("0000", () -> dialog.show()));
-
         Events.run(EventType.Trigger.draw, () -> {
-            if (Core.input.keyDown(KeyCode.mouseLeft)) {
-                dialog.cont.add(Core.input.mouseX() + "  ,  " + Core.input.mouseY()).row();
-            }
-
             if (!(shouldHandleInput() && isTap && isOpen)) return;
 
-            if (pressTime < 0.5f) {
-                pressTime += Core.graphics.getDeltaTime();
-            }
+            if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
+
+            if (pressTime < 0.5f && player.tileX() == unitX && player.tileY() == unitY) return;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 0.5f) {
                 handleSelectionDraw();
@@ -57,11 +50,15 @@ public class KeyBind extends InputHandler {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
+                unitX = player.tileX();
+                unitY = player.tileY();
                 startSelection();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
+
+            if (pressTime < 0.5f && player.tileX() == unitX && player.tileY() == unitY) return;
 
             if (Core.input.keyRelease(KeyCode.mouseLeft) && pressTime >= 0.5f) {
                 pressTime = 0f;
