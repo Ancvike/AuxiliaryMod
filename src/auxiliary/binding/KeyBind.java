@@ -61,6 +61,8 @@ public class KeyBind extends InputHandler {
             if (pressTime < 0.5f && player.tileX() == unitX && player.tileY() == unitY) return;
 
             if (Core.input.keyRelease(KeyCode.mouseLeft) && pressTime >= 0.5f) {
+                unitX = 0;
+                unitY = 0;
                 pressTime = 0f;
                 handleSelectionEnd();
             }
