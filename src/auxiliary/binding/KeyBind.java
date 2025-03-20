@@ -42,7 +42,7 @@ public class KeyBind extends InputHandler {
 
             if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
 
-            if (pressTime < 0.5f && player.tileX() == unitX && player.tileY() == unitY) return;
+            if (pressTime < 0.5f && player.tileX() != unitX && player.tileY() != unitY) return;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 0.5f) {
                 handleSelectionDraw();
@@ -58,7 +58,7 @@ public class KeyBind extends InputHandler {
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
 
-            if (pressTime < 0.5f && player.tileX() == unitX && player.tileY() == unitY) return;
+            if (pressTime < 0.5f && player.tileX() != unitX && player.tileY() != unitY) return;
 
             if (Core.input.keyRelease(KeyCode.mouseLeft) && pressTime >= 0.5f) {
                 unitX = 0;
