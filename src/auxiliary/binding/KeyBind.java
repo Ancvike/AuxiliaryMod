@@ -26,7 +26,9 @@ public class KeyBind extends InputHandler {
     public static boolean isOpen = false;
 
     private float pressTime = 0f;
-    private int unitX, unitY;
+    private int unitPreX, unitPreY;
+    private int unitNowX, unitNowY;
+    private boolean isOver = false;
 
     public void init() {
         if (mobile) {
@@ -42,27 +44,30 @@ public class KeyBind extends InputHandler {
 
             if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
 
-            if (pressTime < 0.5f && player.tileX() != unitX && player.tileY() != unitY) return;
+            if (pressTime < 0.5f ) return;
 
-            if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 0.5f) {
+            unitNowX = player.tileX();
+            unitNowY = player.tileY();
+
+            if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 0.5f && unitNowX == unitPreX && unitNowY == unitPreY) {
                 handleSelectionDraw();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
-                unitX = player.tileX();
-                unitY = player.tileY();
+                unitPreX = player.tileX();
+                unitPreY = player.tileY();
                 startSelection();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
 
-            if (pressTime < 0.5f && player.tileX() != unitX && player.tileY() != unitY) return;
+            if (pressTime < 0.5f) return;
 
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && pressTime >= 0.5f) {
-                unitX = 0;
-                unitY = 0;
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOver) {
+                unitPreX = 0;
+                unitPreY = 0;
                 pressTime = 0f;
                 handleSelectionEnd();
             }
@@ -123,6 +128,8 @@ public class KeyBind extends InputHandler {
                 Drawf.selected(building, Color.acid);
             }
         }
+
+        isOver = true;
     }
 
     private void startSelection() {
