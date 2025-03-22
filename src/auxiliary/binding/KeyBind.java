@@ -29,6 +29,7 @@ public class KeyBind extends InputHandler {
     private int unitPreX, unitPreY;
     private int unitNowX, unitNowY;
     private boolean isOver = false;
+    private boolean isMoved = false;
 
     public void init() {
         if (mobile) {
@@ -49,7 +50,11 @@ public class KeyBind extends InputHandler {
             unitNowX = player.tileX();
             unitNowY = player.tileY();
 
-            if (Core.input.keyDown(KeyCode.mouseLeft) && pressTime >= 0.5f && unitNowX == unitPreX && unitNowY == unitPreY) {
+            if (pressTime >= 0.5f && unitNowX != unitPreX && unitNowY != unitPreY) {
+                isMoved = true;
+            }
+
+            if (Core.input.keyDown(KeyCode.mouseLeft) && !isMoved) {
                 handleSelectionDraw();
             }
         });
@@ -69,6 +74,7 @@ public class KeyBind extends InputHandler {
                 unitPreX = 0;
                 unitPreY = 0;
                 pressTime = 0f;
+                isMoved = false;
                 handleSelectionEnd();
             }
         });
