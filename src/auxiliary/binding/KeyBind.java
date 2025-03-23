@@ -73,9 +73,10 @@ public class KeyBind extends InputHandler {
                 unitPreX = 0;
                 unitPreY = 0;
                 pressTime = 0f;
-                isMoved = false;
                 handleSelectionEnd();
             }
+
+            if (Core.input.keyRelease(KeyCode.mouseLeft)) isMoved = false;
         });
 
         Events.run(EventType.Trigger.update, () -> {
