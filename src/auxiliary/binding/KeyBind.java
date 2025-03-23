@@ -31,6 +31,7 @@ public class KeyBind extends InputHandler {
     private int unitNowX, unitNowY;
     private boolean isOver = false;
     private boolean isMoved = false;
+    double testTime = 0;
 
     public void init() {
         if (mobile) {
@@ -43,9 +44,15 @@ public class KeyBind extends InputHandler {
             BaseDialog dialog = new BaseDialog("按键设置");
             dialog.addCloseButton();
             t.button("00", () -> {
-                dialog.cont.add(player.shooting + "");
+                dialog.cont.add(testTime + "");
                 dialog.show();
             });
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            if (Core.input.keyTap(KeyCode.mouseLeft) && !player.shooting) {
+                testTime += Core.graphics.getDeltaTime();
+            }
         });
     }
 
