@@ -70,7 +70,6 @@ public class KeyBind extends InputHandler {
             if (pressTime < 0.7f) return;
 
             if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved) {
-
                 handleSelectionEnd();
             }
 
