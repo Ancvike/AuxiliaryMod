@@ -50,7 +50,7 @@ public class KeyBind extends InputHandler {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyTap(KeyCode.mouseLeft) && !player.shooting) {
+            if (Core.input.keyDown(KeyCode.mouseLeft) && !player.shooting) {
                 testTime += Core.graphics.getDeltaTime();
             }
         });
