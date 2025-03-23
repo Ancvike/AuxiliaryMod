@@ -28,7 +28,6 @@ public class KeyBind extends InputHandler {
     private float pressTime = 0f;
     private int unitPreX, unitPreY;
     private int unitNowX, unitNowY;
-    private boolean isOver = false;
     private boolean isMoved = false;
 
     public void init() {
@@ -70,7 +69,7 @@ public class KeyBind extends InputHandler {
 
             if (pressTime < 0.5f) return;
 
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved && isOver) {
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved) {
                 unitPreX = 0;
                 unitPreY = 0;
                 pressTime = 0f;
@@ -134,8 +133,6 @@ public class KeyBind extends InputHandler {
                 Drawf.selected(building, Color.acid);
             }
         }
-
-        isOver = true;
     }
 
     private void startSelection() {
