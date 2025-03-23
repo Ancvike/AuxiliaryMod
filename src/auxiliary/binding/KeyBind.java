@@ -45,12 +45,12 @@ public class KeyBind extends InputHandler {
 
             if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
 
-            if (pressTime < 0.75f) return;
+            if (pressTime < 0.5f) return;
 
             unitNowX = player.tileX();
             unitNowY = player.tileY();
 
-            if (pressTime >= 0.75f && unitNowX != unitPreX && unitNowY != unitPreY) {
+            if (pressTime >= 0.5f && unitNowX != unitPreX && unitNowY != unitPreY) {
                 isMoved = true;
             }
 
@@ -68,9 +68,9 @@ public class KeyBind extends InputHandler {
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
 
-            if (pressTime < 0.75f) return;
+            if (pressTime < 0.5f) return;
 
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOver) {
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved && isOver) {
                 unitPreX = 0;
                 unitPreY = 0;
                 pressTime = 0f;
