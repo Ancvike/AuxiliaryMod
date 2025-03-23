@@ -15,7 +15,6 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.*;
 
@@ -31,7 +30,6 @@ public class KeyBind extends InputHandler {
     private int unitNowX, unitNowY;
     private boolean isOver = false;
     private boolean isMoved = false;
-    double testTime = 0;
 
     public void init() {
         if (mobile) {
@@ -39,21 +37,6 @@ public class KeyBind extends InputHandler {
         } else {
             setupDesktopEvents();
         }
-
-        Vars.ui.hudGroup.fill(t -> {
-            BaseDialog dialog = new BaseDialog("按键设置");
-            dialog.addCloseButton();
-            t.button("00", () -> {
-                dialog.cont.add(testTime + "");
-                dialog.show();
-            });
-        });
-
-        Events.run(EventType.Trigger.update, () -> {
-            if (Core.input.keyDown(KeyCode.mouseLeft) && !player.shooting) {
-                testTime += Core.graphics.getDeltaTime();
-            }
-        });
     }
 
     private void setupMobileEvents() {
@@ -62,12 +45,12 @@ public class KeyBind extends InputHandler {
 
             if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
 
-            if (pressTime < 0.5f) return;
+            if (pressTime < 0.75f) return;
 
             unitNowX = player.tileX();
             unitNowY = player.tileY();
 
-            if (pressTime >= 0.5f && unitNowX != unitPreX && unitNowY != unitPreY) {
+            if (pressTime >= 0.75f && unitNowX != unitPreX && unitNowY != unitPreY) {
                 isMoved = true;
             }
 
@@ -85,7 +68,7 @@ public class KeyBind extends InputHandler {
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
 
-            if (pressTime < 0.5f) return;
+            if (pressTime < 0.75f) return;
 
             if (Core.input.keyRelease(KeyCode.mouseLeft) && isOver) {
                 unitPreX = 0;
