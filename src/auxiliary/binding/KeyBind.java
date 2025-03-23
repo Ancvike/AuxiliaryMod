@@ -15,6 +15,7 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.*;
 
@@ -37,6 +38,15 @@ public class KeyBind extends InputHandler {
         } else {
             setupDesktopEvents();
         }
+
+        Vars.ui.hudGroup.fill(t -> {
+            BaseDialog dialog = new BaseDialog("按键设置");
+            dialog.addCloseButton();
+            t.button("00", () -> {
+                dialog.cont.add(player.shooting + "");
+                dialog.show();
+            });
+        });
     }
 
     private void setupMobileEvents() {
@@ -45,7 +55,7 @@ public class KeyBind extends InputHandler {
 
             if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
 
-            if (pressTime < 0.5f ) return;
+            if (pressTime < 0.5f) return;
 
             unitNowX = player.tileX();
             unitNowY = player.tileY();
