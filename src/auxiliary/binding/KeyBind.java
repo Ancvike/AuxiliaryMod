@@ -70,13 +70,16 @@ public class KeyBind extends InputHandler {
             if (pressTime < 0.7f) return;
 
             if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved) {
-                unitPreX = 0;
-                unitPreY = 0;
-                pressTime = 0f;
+
                 handleSelectionEnd();
             }
 
-            if (Core.input.keyRelease(KeyCode.mouseLeft)) isMoved = false;
+            if (Core.input.keyRelease(KeyCode.mouseLeft)) {
+                unitPreX = 0;
+                unitPreY = 0;
+                pressTime = 0f;
+                isMoved = false;
+            }
         });
 
         Events.run(EventType.Trigger.update, () -> {
