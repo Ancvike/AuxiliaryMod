@@ -32,7 +32,7 @@ import static auxiliary.binding.KeyBind.isOpen;
 import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.mobile;
 
-public class Menu extends Dialog{
+public class Menu extends Dialog {
     Table table = new Table();
     ImageButton button = new ImageButton(Icon.menu);
     public static BaseDialog dialog = new BaseDialog("功能面板");
@@ -51,6 +51,7 @@ public class Menu extends Dialog{
         Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
 
         setDialog(dialog);
+        //new
         setup();
 
         table.add(button).row();
@@ -59,12 +60,15 @@ public class Menu extends Dialog{
             table.add(androidButton);
         }
 
-        button.clicked(this::onClick);
+        button.clicked(() -> {
+            if (!isDragged) dialog.show();
+        });
 
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
             t.add(table).row();
             t.right();
+            //new
             t.button("00", () -> {
                 testDialog.show();
             });
@@ -137,10 +141,6 @@ public class Menu extends Dialog{
         }).size(width, height);
 
         dialog.addCloseButton();
-    }
-
-    public void onClick() {
-        if (!isDragged) dialog.show();
     }
 
     private void setup() {
@@ -257,8 +257,6 @@ public class Menu extends Dialog{
             }
 
             table.visible(() -> this.section.equals(section));
-
-            table.button("@settings.reset", () -> keybinds.resetToDefaults()).colspan(4).padTop(4).fill();
 
             stack.add(table);
         }
