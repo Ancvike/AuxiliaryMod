@@ -91,7 +91,7 @@ public class Menu {
         }
 
         stack.add(table);
-        dialog.cont.add(stack);
+//        dialog.cont.add(stack);
 
 //        int width = Core.graphics.getWidth() / 2;
 //        int height = Core.graphics.getHeight() - 64;
