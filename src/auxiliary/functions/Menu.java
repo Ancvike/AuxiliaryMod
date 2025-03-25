@@ -35,7 +35,7 @@ import static mindustry.Vars.mobile;
 public class Menu {
     Table table = new Table();
     ImageButton button = new ImageButton(Icon.menu);
-    public static MyDialog dialog = new MyDialog(
+    static MyDialog dialog = new MyDialog(
             //"功能面板"
     );
     public static boolean isDragged = false;
@@ -119,7 +119,6 @@ class MyDialog extends Dialog {
     protected KeyCode minKey = null;
     protected Dialog rebindDialog;
     protected float scroll;
-    protected ObjectIntMap<KeyBinds.Section> sectionControls = new ObjectIntMap<>();
 
     public MyDialog() {
         super("功能面板");
@@ -155,14 +154,6 @@ class MyDialog extends Dialog {
 
             Table table = new Table();
 
-            table.add().height(10);
-            table.row();
-            if (section.device.type() == InputDevice.DeviceType.controller) {
-                table.table(info -> info.add("Controller Type: [lightGray]" +
-                        Strings.capitalize(section.device.name())).left());
-            }
-            table.row();
-
             String lastCategory = null;
             var tstyle = Styles.defaultt;
 
@@ -182,9 +173,10 @@ class MyDialog extends Dialog {
                         rebindMin = false;
                         openDialog(section, keybind);
                     }).width(130f);
+
+                    table.button("重置", tstyle, () -> keybinds.resetToDefault(section, keybind)).width(130f).pad(2f).padLeft(4f);
+                    table.row();
                 }
-                table.button("重置", tstyle, () -> keybinds.resetToDefault(section, keybind)).width(130f).pad(2f).padLeft(4f);
-                table.row();
             }
 
             table.visible(() -> this.section.equals(section));
