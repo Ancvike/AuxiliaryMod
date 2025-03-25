@@ -153,24 +153,24 @@ class MyDialog extends Dialog {
         this.section = sections[0];
 
         for (KeyBinds.Section section : sections) {
-            if (!sectionControls.containsKey(section))
-                sectionControls.put(section, input.getDevices().indexOf(section.device, true));
-
-            if (sectionControls.get(section, 0) >= input.getDevices().size) {
-                sectionControls.put(section, 0);
-                section.device = input.getDevices().get(0);
-            }
-
-            if (sections.length != 1) {
-                TextButton button = new TextButton(section.name);
-                if (section.equals(this.section))
-                    button.toggle();
-
-                button.clicked(() -> this.section = section);
-
-                group.add(button);
-                cont.add(button).fill();
-            }
+//            if (!sectionControls.containsKey(section))
+//                sectionControls.put(section, input.getDevices().indexOf(section.device, true));
+//
+//            if (sectionControls.get(section, 0) >= input.getDevices().size) {
+//                sectionControls.put(section, 0);
+//                section.device = input.getDevices().get(0);
+//            }
+//
+//            if (sections.length != 1) {
+//                TextButton button = new TextButton(section.name);
+//                if (section.equals(this.section))
+//                    button.toggle();
+//
+//                button.clicked(() -> this.section = section);
+//
+//                group.add(button);
+//                cont.add(button).fill();
+//            }
 
             Table table = new Table();
 
