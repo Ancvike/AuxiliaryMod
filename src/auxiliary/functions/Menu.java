@@ -2,7 +2,9 @@ package auxiliary.functions;
 
 import arc.Core;
 import arc.Events;
+import arc.KeyBinds;
 import arc.graphics.Color;
+import arc.input.InputDevice;
 import arc.input.KeyCode;
 import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
@@ -10,7 +12,11 @@ import arc.scene.event.InputListener;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
+import arc.struct.ObjectIntMap;
+import arc.struct.OrderedMap;
 import arc.struct.Seq;
+import arc.util.Align;
+import arc.util.Strings;
 import arc.util.Time;
 import arc.util.Tmp;
 import mindustry.Vars;
@@ -18,8 +24,10 @@ import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
-import mindustry.ui.dialogs.BaseDialog;
+import mindustry.ui.Styles;
 
+import static arc.Core.*;
+import static arc.Core.bundle;
 import static auxiliary.binding.KeyBind.isOpen;
 import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.mobile;
@@ -27,14 +35,14 @@ import static mindustry.Vars.mobile;
 public class Menu {
     Table table = new Table();
     ImageButton button = new ImageButton(Icon.menu);
-    public static BaseDialog dialog = new BaseDialog("功能面板");
+    public static MyDialog dialog = new MyDialog(
+            //"功能面板"
+    );
     public static boolean isDragged = false;
     Seq<Function> functions = new Seq<>();
 
     public Menu() {
         Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
-
-        setDialog(dialog);
 
         table.add(button).row();
         if (mobile) {
@@ -69,75 +77,9 @@ public class Menu {
         return androidButton;
     }
 
-    public void setDialog(BaseDialog dialog) {
+    public void setDialog(Dialog dialog) {
         functions.addAll(new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
 
-        Stack stack = new Stack();
-        ScrollPane pane = new ScrollPane(stack);
-        pane.setFadeScrollBars(false);
-
-        dialog.cont.row();
-        dialog.cont.add(pane).growX().colspan(functions.size);
-
-        dialog.cont.add("通用").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
-        dialog.cont.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
-
-        Table table = new Table();
-        for (Function function : functions) {
-            table.add(function.getName());
-            table.row();
-        }
-
-        stack.add(table);
-//        dialog.cont.add(stack);
-
-//        int width = Core.graphics.getWidth() / 2;
-//        int height = Core.graphics.getHeight() - 64;
-//
-//        dialog.cont.table(main -> {
-//            main.defaults().growX().fillX().margin(0).pad(0);
-//
-//            main.table(list -> {
-//                for (Function function : functions) {
-//                    list.add(function.getName()).height(50).row();
-//                }
-//            }).size(width / 2f, height);
-//
-//            main.table(actions -> {
-//                for (Function function : functions) {
-//                    if (function.getButtonID() == 0) {
-//                        actions.button("使用", function::onClick).size(100, 50).row();
-//                    } else if (function.getButtonID() == 1) {
-//                        actions.table(sliderTable -> {
-//                            sliderTable.defaults().growX().fillX();
-//
-//                            sliderTable.add("开").width(20f).color(Color.green);
-//
-//                            sliderTable.add(function.slider).growX().height(50f).padLeft(20f).padRight(20).margin(0);
-//
-//                            sliderTable.add("关").width(20f).color(Color.red);
-//                        }).growX().height(50f).row();
-//                    } else if (function.getButtonID() == 2) {
-//                        actions.table(speedTable -> {
-//                            speedTable.defaults().growX().fillX().margin(0).pad(0);
-//
-//                            Label speedLabel = new Label("1x");
-//                            speedLabel.setColor(Pal.accent);
-//                            speedTable.add(speedLabel).width(20f).left().margin(0).pad(0);
-//
-//                            float[] speedValues = {1f, 2f, 5f, 10f, 20f};
-//                            speedTable.slider(0, speedValues.length - 1, 1, 0, value -> {
-//                                float selectedSpeed = speedValues[(int) value];
-//                                Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * selectedSpeed, 3.0f));
-//                                speedLabel.setText((int) selectedSpeed + "x");
-//                            }).growX().height(50f).margin(0).padLeft(10);
-//                        }).growX().height(50f).margin(0).pad(0).row();
-//                    }
-//                }
-//            }).size(width / 2f, height);
-//        }).size(width, height);
-
-        dialog.addCloseButton();
     }
 }
 
@@ -166,5 +108,193 @@ class DragListener extends InputListener {
         lastX = v.x;
         lastY = v.y;
         isDragged = true;
+    }
+}
+
+class MyDialog extends Dialog {
+    protected KeyBinds.Section section;
+    protected KeyBinds.KeyBind rebindKey = null;
+    protected boolean rebindAxis = false;
+    protected boolean rebindMin = true;
+    protected KeyCode minKey = null;
+    protected Dialog rebindDialog;
+    protected float scroll;
+    protected ObjectIntMap<KeyBinds.Section> sectionControls = new ObjectIntMap<>();
+
+    public MyDialog() {
+        super("功能面板");
+        setup();
+        addCloseButton();
+        setFillParent(true);
+        title.setAlignment(Align.center);
+        titleTable.row();
+        titleTable.add(new Image()).growX().height(3f).pad(4f).get().setColor(Pal.accent);
+    }
+
+    @Override
+    public void addCloseButton() {
+        buttons.button("返回", Icon.left, this::hide).size(210f, 64f);
+
+        keyDown(key -> {
+            if (key == KeyCode.escape || key == KeyCode.back) hide();
+        });
+    }
+
+    private void setup() {
+        cont.clear();
+
+        KeyBinds.Section[] sections = Core.keybinds.getSections();
+
+        Stack stack = new Stack();
+        ButtonGroup<TextButton> group = new ButtonGroup<>();
+        ScrollPane pane = new ScrollPane(stack);
+        pane.setFadeScrollBars(false);
+        pane.update(() -> scroll = pane.getScrollY());
+        this.section = sections[0];
+
+        for (KeyBinds.Section section : sections) {
+            if (!sectionControls.containsKey(section))
+                sectionControls.put(section, input.getDevices().indexOf(section.device, true));
+
+            if (sectionControls.get(section, 0) >= input.getDevices().size) {
+                sectionControls.put(section, 0);
+                section.device = input.getDevices().get(0);
+            }
+
+            if (sections.length != 1) {
+                TextButton button = new TextButton(section.name);
+                if (section.equals(this.section))
+                    button.toggle();
+
+                button.clicked(() -> this.section = section);
+
+                group.add(button);
+                cont.add(button).fill();
+            }
+
+            Table table = new Table();
+
+            Label device = new Label("Keyboard");
+            //device.setColor(style.controllerColor);
+            device.setAlignment(Align.center);
+
+            device.setText(input.getDevices().get(sectionControls.get(section, 0)).name());
+
+            table.add().height(10);
+            table.row();
+            if (section.device.type() == InputDevice.DeviceType.controller) {
+                table.table(info -> info.add("Controller Type: [lightGray]" +
+                        Strings.capitalize(section.device.name())).left());
+            }
+            table.row();
+
+            String lastCategory = null;
+            var tstyle = Styles.defaultt;
+
+            for (KeyBinds.KeyBind keybind : keybinds.getKeybinds()) {
+                if (lastCategory != keybind.category() && keybind.category() != null) {
+                    table.add(keybind.category()).color(Color.gray).colspan(4).pad(10).padBottom(4).row();
+                    table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
+                    lastCategory = keybind.category();
+                }
+
+                if (keybind.defaultValue(section.device.type()) instanceof KeyBinds.Axis) {
+                    table.add(keybind.name(), Color.white).left().padRight(40).padLeft(8);
+
+                    table.labelWrap(() -> {
+                        KeyBinds.Axis axis = keybinds.get(section, keybind);
+                        return axis.key != null ? axis.key.toString() : axis.min + " [red]/[] " + axis.max;
+                    }).color(Pal.accent).left().minWidth(90).fillX().padRight(20);
+
+                    table.button("@settings.rebind", tstyle, () -> {
+                        rebindAxis = true;
+                        rebindMin = true;
+                        openDialog(section, keybind);
+                    }).width(130f);
+                } else {
+                    table.add(keybind.name(), Color.white).left().padRight(40).padLeft(8);
+                    table.label(() -> keybinds.get(section, keybind).key.toString()).color(Pal.accent).left().minWidth(90).padRight(20);
+
+                    table.button("绑定", tstyle, () -> {
+                        rebindAxis = false;
+                        rebindMin = false;
+                        openDialog(section, keybind);
+                    }).width(130f);
+                }
+                table.button("重置", tstyle, () -> keybinds.resetToDefault(section, keybind)).width(130f).pad(2f).padLeft(4f);
+                table.row();
+            }
+
+            table.visible(() -> this.section.equals(section));
+
+            table.button("一键重置", () -> keybinds.resetToDefaults()).colspan(4).padTop(4).fill();
+
+            stack.add(table);
+        }
+
+        cont.row();
+        cont.add(pane).growX().colspan(sections.length);
+
+    }
+
+    void rebind(KeyBinds.Section section, KeyBinds.KeyBind bind, KeyCode newKey) {
+        if (rebindKey == null) return;
+        rebindDialog.hide();
+        boolean isAxis = bind.defaultValue(section.device.type()) instanceof KeyBinds.Axis;
+
+        if (isAxis) {
+            if (newKey.axis || !rebindMin) {
+                section.binds.get(section.device.type(), OrderedMap::new).put(rebindKey, newKey.axis ? new KeyBinds.Axis(newKey) : new KeyBinds.Axis(minKey, newKey));
+            }
+        } else {
+            section.binds.get(section.device.type(), OrderedMap::new).put(rebindKey, new KeyBinds.Axis(newKey));
+        }
+
+        if (rebindAxis && isAxis && rebindMin && !newKey.axis) {
+            rebindMin = false;
+            minKey = newKey;
+            openDialog(section, rebindKey);
+        } else {
+            rebindKey = null;
+            rebindAxis = false;
+        }
+    }
+
+    private void openDialog(KeyBinds.Section section, KeyBinds.KeyBind name) {
+        rebindDialog = new Dialog(rebindAxis ? bundle.get("keybind.press.axis") : bundle.get("keybind.press"));
+
+        rebindKey = name;
+
+        rebindDialog.titleTable.getCells().first().pad(4);
+
+        if (section.device.type() == InputDevice.DeviceType.keyboard) {
+
+            rebindDialog.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
+                    if (Core.app.isAndroid()) return false;
+                    rebind(section, name, button);
+                    return false;
+                }
+
+                @Override
+                public boolean keyDown(InputEvent event, KeyCode keycode) {
+                    rebindDialog.hide();
+                    rebind(section, name, keycode);
+                    return false;
+                }
+
+                @Override
+                public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
+                    if (!rebindAxis) return false;
+                    rebindDialog.hide();
+                    rebind(section, name, KeyCode.scroll);
+                    return false;
+                }
+            });
+        }
+
+        rebindDialog.show();
+        Time.runTask(1f, () -> getScene().setScrollFocus(rebindDialog));
     }
 }
