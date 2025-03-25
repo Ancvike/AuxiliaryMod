@@ -146,39 +146,20 @@ class MyDialog extends Dialog {
         KeyBinds.Section[] sections = Core.keybinds.getSections();
 
         Stack stack = new Stack();
-        ButtonGroup<TextButton> group = new ButtonGroup<>();
         ScrollPane pane = new ScrollPane(stack);
         pane.setFadeScrollBars(false);
         pane.update(() -> scroll = pane.getScrollY());
         this.section = sections[0];
 
         for (KeyBinds.Section section : sections) {
-//            if (!sectionControls.containsKey(section))
-//                sectionControls.put(section, input.getDevices().indexOf(section.device, true));
-//
-//            if (sectionControls.get(section, 0) >= input.getDevices().size) {
-//                sectionControls.put(section, 0);
-//                section.device = input.getDevices().get(0);
-//            }
-//
-//            if (sections.length != 1) {
-//                TextButton button = new TextButton(section.name);
-//                if (section.equals(this.section))
-//                    button.toggle();
-//
-//                button.clicked(() -> this.section = section);
-//
-//                group.add(button);
-//                cont.add(button).fill();
-//            }
 
             Table table = new Table();
 
-            Label device = new Label("Keyboard");
-            //device.setColor(style.controllerColor);
-            device.setAlignment(Align.center);
-
-            device.setText(input.getDevices().get(sectionControls.get(section, 0)).name());
+//            Label device = new Label("Keyboard");
+//            //device.setColor(style.controllerColor);
+//            device.setAlignment(Align.center);
+//
+//            device.setText(input.getDevices().get(sectionControls.get(section, 0)).name());
 
             table.add().height(10);
             table.row();
