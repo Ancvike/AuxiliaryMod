@@ -155,12 +155,6 @@ class MyDialog extends Dialog {
 
             Table table = new Table();
 
-//            Label device = new Label("Keyboard");
-//            //device.setColor(style.controllerColor);
-//            device.setAlignment(Align.center);
-//
-//            device.setText(input.getDevices().get(sectionControls.get(section, 0)).name());
-
             table.add().height(10);
             table.row();
             if (section.device.type() == InputDevice.DeviceType.controller) {
@@ -179,20 +173,7 @@ class MyDialog extends Dialog {
                     lastCategory = keybind.category();
                 }
 
-                if (keybind.defaultValue(section.device.type()) instanceof KeyBinds.Axis) {
-                    table.add(keybind.name(), Color.white).left().padRight(40).padLeft(8);
-
-                    table.labelWrap(() -> {
-                        KeyBinds.Axis axis = keybinds.get(section, keybind);
-                        return axis.key != null ? axis.key.toString() : axis.min + " [red]/[] " + axis.max;
-                    }).color(Pal.accent).left().minWidth(90).fillX().padRight(20);
-
-                    table.button("@settings.rebind", tstyle, () -> {
-                        rebindAxis = true;
-                        rebindMin = true;
-                        openDialog(section, keybind);
-                    }).width(130f);
-                } else {
+                if (!(keybind.defaultValue(section.device.type()) instanceof KeyBinds.Axis)) {
                     table.add(keybind.name(), Color.white).left().padRight(40).padLeft(8);
                     table.label(() -> keybinds.get(section, keybind).key.toString()).color(Pal.accent).left().minWidth(90).padRight(20);
 
@@ -208,14 +189,11 @@ class MyDialog extends Dialog {
 
             table.visible(() -> this.section.equals(section));
 
-            table.button("一键重置", () -> keybinds.resetToDefaults()).colspan(4).padTop(4).fill();
-
             stack.add(table);
         }
 
         cont.row();
         cont.add(pane).growX().colspan(sections.length);
-
     }
 
     void rebind(KeyBinds.Section section, KeyBinds.KeyBind bind, KeyCode newKey) {
