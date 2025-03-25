@@ -81,12 +81,13 @@ public class Menu {
         dialog.cont.row();
         dialog.cont.add(pane).growX().colspan(functions.size);
 
-        table.add("通用").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
-        table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
+        dialog.cont.add("通用").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
+        dialog.cont.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
 
         Table table = new Table();
         for (Function function : functions) {
             table.add(function.getName());
+            table.row();
         }
 
         stack.add(table);
