@@ -59,6 +59,17 @@ public class Menu {
 
         table.add("aaaaaa").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
         table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
+
+        table.add("1110 + 1 =", Color.white).left().padRight(40).padLeft(8);
+        table.label(() -> "1111").color(Pal.accent).left().minWidth(90).padRight(20);
+
+        table.button("绑定", Styles.defaultt, () -> {
+        }).width(130f);
+
+        table.button("重置", Styles.defaultt, () -> {
+        }).width(130f).pad(2f).padLeft(4f);
+        table.row();
+
         table.add("bbbbbb").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
         table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
 
