@@ -10,7 +10,7 @@ import static mindustry.Vars.state;
 
 public class BuildingRestoration extends Function {
     public BuildingRestoration() {
-        super(0, "建筑修复");
+        super(1, "建筑修复");
     }
 
     @Override

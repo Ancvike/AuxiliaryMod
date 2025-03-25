@@ -81,61 +81,62 @@ public class Menu {
         dialog.cont.row();
         dialog.cont.add(pane).growX().colspan(functions.size);
 
-        Vars.ui.hudGroup.fill(t -> {
-            BaseDialog baseDialog = new BaseDialog("0");
-            baseDialog.addCloseButton();
-            t.button("00", () -> {
-                baseDialog.cont.add(functions.size + "");
-                baseDialog.show();
-            });
-        });
-//调试代码
+        table.add("通用").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
+        table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
 
-        int width = Core.graphics.getWidth() / 2;
-        int height = Core.graphics.getHeight() - 64;
+        Table table = new Table();
+        for (Function function : functions) {
+            table.add(function.getName());
+        }
 
-        dialog.cont.table(main -> {
-            main.defaults().growX().fillX().margin(0).pad(0);
+        stack.add(table);
+        dialog.cont.add(stack);
 
-            main.table(list -> {
-                for (Function function : functions) {
-                    list.add(function.getName()).height(50).row();
-                }
-            }).size(width / 2f, height);
-
-            main.table(actions -> {
-                for (Function function : functions) {
-                    if (function.getButtonID() == 0) {
-                        actions.button("使用", function::onClick).size(100, 50).row();
-                    } else if (function.getButtonID() == 1) {
-                        actions.table(sliderTable -> {
-                            sliderTable.defaults().growX().fillX();
-
-                            sliderTable.add("开").width(20f).color(Color.green);
-
-                            sliderTable.add(function.slider).growX().height(50f).padLeft(20f).padRight(20).margin(0);
-
-                            sliderTable.add("关").width(20f).color(Color.red);
-                        }).growX().height(50f).row();
-                    } else if (function.getButtonID() == 2) {
-                        actions.table(speedTable -> {
-                            speedTable.defaults().growX().fillX().margin(0).pad(0);
-
-                            Label speedLabel = new Label("1x");
-                            speedLabel.setColor(Pal.accent);
-                            speedTable.add(speedLabel).width(20f).left().margin(0).pad(0);
-
-                            float[] speedValues = {1f, 2f, 5f, 10f, 20f};
-                            speedTable.slider(0, speedValues.length - 1, 1, 0, value -> {
-                                float selectedSpeed = speedValues[(int) value];
-                                Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * selectedSpeed, 3.0f));
-                                speedLabel.setText((int) selectedSpeed + "x");
-                            }).growX().height(50f).margin(0).padLeft(10);
-                        }).growX().height(50f).margin(0).pad(0).row();
-                    }
-                }
-            }).size(width / 2f, height);
-        }).size(width, height);
+//        int width = Core.graphics.getWidth() / 2;
+//        int height = Core.graphics.getHeight() - 64;
+//
+//        dialog.cont.table(main -> {
+//            main.defaults().growX().fillX().margin(0).pad(0);
+//
+//            main.table(list -> {
+//                for (Function function : functions) {
+//                    list.add(function.getName()).height(50).row();
+//                }
+//            }).size(width / 2f, height);
+//
+//            main.table(actions -> {
+//                for (Function function : functions) {
+//                    if (function.getButtonID() == 0) {
+//                        actions.button("使用", function::onClick).size(100, 50).row();
+//                    } else if (function.getButtonID() == 1) {
+//                        actions.table(sliderTable -> {
+//                            sliderTable.defaults().growX().fillX();
+//
+//                            sliderTable.add("开").width(20f).color(Color.green);
+//
+//                            sliderTable.add(function.slider).growX().height(50f).padLeft(20f).padRight(20).margin(0);
+//
+//                            sliderTable.add("关").width(20f).color(Color.red);
+//                        }).growX().height(50f).row();
+//                    } else if (function.getButtonID() == 2) {
+//                        actions.table(speedTable -> {
+//                            speedTable.defaults().growX().fillX().margin(0).pad(0);
+//
+//                            Label speedLabel = new Label("1x");
+//                            speedLabel.setColor(Pal.accent);
+//                            speedTable.add(speedLabel).width(20f).left().margin(0).pad(0);
+//
+//                            float[] speedValues = {1f, 2f, 5f, 10f, 20f};
+//                            speedTable.slider(0, speedValues.length - 1, 1, 0, value -> {
+//                                float selectedSpeed = speedValues[(int) value];
+//                                Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * selectedSpeed, 3.0f));
+//                                speedLabel.setText((int) selectedSpeed + "x");
+//                            }).growX().height(50f).margin(0).padLeft(10);
+//                        }).growX().height(50f).margin(0).pad(0).row();
+//                    }
+//                }
+//            }).size(width / 2f, height);
+//        }).size(width, height);
 
         dialog.addCloseButton();
     }

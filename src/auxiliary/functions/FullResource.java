@@ -12,7 +12,7 @@ import static mindustry.Vars.state;
 public class FullResource extends Function {
 
     public FullResource() {
-        super(0, "核心资源最大化");
+        super(1, "核心资源最大化");
     }
 
     @Override
