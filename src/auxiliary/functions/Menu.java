@@ -37,7 +37,7 @@ public class Menu {
             //"功能面板"
     );
 
-    Dialog dialog2 = new Dialog() {{
+    Dialog dialog2 = new Dialog("功能面板") {{
         setFillParent(true);
         title.setAlignment(Align.center);
         titleTable.row();
@@ -48,6 +48,24 @@ public class Menu {
         keyDown(key -> {
             if (key == KeyCode.escape || key == KeyCode.back) hide();
         });
+
+        cont.clear();
+
+        Stack stack = new Stack();
+        ScrollPane pane = new ScrollPane(stack);
+        pane.setFadeScrollBars(false);
+
+        Table table = new Table();
+
+        table.add("aaaaaa").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
+        table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
+        table.add("bbbbbb").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
+        table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
+
+        stack.add(table);
+
+        cont.row();
+        cont.add(pane).growX().colspan(2);
     }};
     public static boolean isDragged = false;
     Seq<Function> functions = new Seq<>();
