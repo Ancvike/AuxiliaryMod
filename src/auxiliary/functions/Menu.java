@@ -72,8 +72,6 @@ public class Menu {
     public void setDialog(BaseDialog dialog) {
         functions.addAll(new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
 
-        dialog.cont.clear();
-
         Stack stack = new Stack();
         ScrollPane pane = new ScrollPane(stack);
         pane.setFadeScrollBars(false);
