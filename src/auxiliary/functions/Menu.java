@@ -12,11 +12,9 @@ import arc.scene.event.InputListener;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
-import arc.struct.ObjectIntMap;
 import arc.struct.OrderedMap;
 import arc.struct.Seq;
 import arc.util.Align;
-import arc.util.Strings;
 import arc.util.Time;
 import arc.util.Tmp;
 import mindustry.Vars;
@@ -38,6 +36,19 @@ public class Menu {
     static MyDialog dialog = new MyDialog(
             //"功能面板"
     );
+
+    Dialog dialog2 = new Dialog() {{
+        setFillParent(true);
+        title.setAlignment(Align.center);
+        titleTable.row();
+        titleTable.add(new Image()).growX().height(3f).pad(4f).get().setColor(Pal.accent);
+
+        buttons.button("返回", Icon.left, this::hide).size(210f, 64f);
+
+        keyDown(key -> {
+            if (key == KeyCode.escape || key == KeyCode.back) hide();
+        });
+    }};
     public static boolean isDragged = false;
     Seq<Function> functions = new Seq<>();
 
@@ -51,7 +62,7 @@ public class Menu {
         }
 
         button.clicked(() -> {
-            if (!isDragged) dialog.show();
+            if (!isDragged) dialog2.show();
         });
 
         Vars.ui.hudGroup.fill(t -> {
