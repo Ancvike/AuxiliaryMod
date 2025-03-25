@@ -8,6 +8,7 @@ import arc.math.geom.Vec2;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.*;
+import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
@@ -70,6 +71,25 @@ public class Menu {
 
     public void setDialog(BaseDialog dialog) {
         functions.addAll(new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
+
+        dialog.cont.clear();
+
+        Stack stack = new Stack();
+        ScrollPane pane = new ScrollPane(stack);
+        pane.setFadeScrollBars(false);
+
+        dialog.cont.row();
+        dialog.cont.add(pane).growX().colspan(functions.size);
+
+        Vars.ui.hudGroup.fill(t -> {
+            BaseDialog baseDialog = new BaseDialog("0");
+            baseDialog.addCloseButton();
+            t.button("00", () -> {
+                baseDialog.cont.add(functions.size + "");
+                baseDialog.show();
+            });
+        });
+//调试代码
 
         int width = Core.graphics.getWidth() / 2;
         int height = Core.graphics.getHeight() - 64;
