@@ -1,5 +1,6 @@
 package auxiliary.functions;
 
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.Gamemode;
@@ -13,11 +14,11 @@ import static mindustry.Vars.state;
 public class DerelictRemove extends Function {
 
     public DerelictRemove() {
-        super(1, "清除废墟");
+        super(1, 999, "清除废墟");
     }
 
     @Override
-    public void onClick() {
+    public Table function() {
         if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             Seq<Building> buildings = Team.derelict.data().buildings;
             int a = buildings.size;
@@ -33,5 +34,6 @@ public class DerelictRemove extends Function {
             dialog.hide();
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
+        return null;
     }
 }

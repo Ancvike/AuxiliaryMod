@@ -1,5 +1,6 @@
 package auxiliary.functions;
 
+import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.game.Gamemode;
 import mindustry.gen.Icon;
@@ -12,15 +13,15 @@ import static mindustry.Vars.state;
 public class FullResource extends Function {
 
     public FullResource() {
-        super(1, "核心资源最大化");
+        super(0,999, "核心资源最大化");
     }
 
     @Override
-    public void onClick() {
+    public Table function() {
         if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             CoreBlock.CoreBuild core = Vars.player.team().core();
             if (core == null || core.items == null) {
-                return;
+                return null;
             }
             for (int i = 0; i < Vars.content.items().size; i++) {
                 Item item = Vars.content.item(i);
@@ -33,5 +34,6 @@ public class FullResource extends Function {
             dialog.hide();
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
+        return null;
     }
 }

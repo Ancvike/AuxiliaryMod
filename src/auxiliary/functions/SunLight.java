@@ -7,7 +7,7 @@ import static mindustry.Vars.enableLight;
 public class SunLight extends Function {
 
     public SunLight() {
-        super(0, "太阳光阴影");
+        super(0,999, "太阳光阴影");
 
         Slider slider = new Slider(0, 50, 50, false);
         slider.setValue(enableLight ? 0 : 50);

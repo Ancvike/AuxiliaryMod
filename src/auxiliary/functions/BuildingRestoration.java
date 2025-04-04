@@ -1,5 +1,6 @@
 package auxiliary.functions;
 
+import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.game.Gamemode;
 import mindustry.gen.Building;
@@ -10,11 +11,11 @@ import static mindustry.Vars.state;
 
 public class BuildingRestoration extends Function {
     public BuildingRestoration() {
-        super(1, "建筑修复");
+        super(0, 999, "建筑修复");
     }
 
     @Override
-    public void onClick() {
+    public Table function() {
         if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
             for (Building building : Vars.player.team().data().buildings) {
                 building.health = building.maxHealth;
@@ -25,5 +26,6 @@ public class BuildingRestoration extends Function {
             dialog.hide();
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
+        return null;
     }
 }
