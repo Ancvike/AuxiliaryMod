@@ -1,11 +1,12 @@
 package auxiliary.functions;
 
 import arc.Core;
+import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
 
 public class SpeedChange extends Function {
-    String speedLabel = "1x";
+    Label speedLabel = new Label("1x");
 
     public SpeedChange() {
         super(0, 0, "改变游戏速度");
@@ -18,7 +19,7 @@ public class SpeedChange extends Function {
             t.add(speedLabel).margin(0f).pad(0f).growX();
             t.slider(0, speeds.length - 1, 1, 0, value -> {
                 Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * speeds[(int) value], 3.0f));
-                speedLabel = value + "x";
+                speedLabel.setText(value + "x");
             }).margin(0f).pad(0f).growX();
         });
     }
