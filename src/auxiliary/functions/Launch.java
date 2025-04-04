@@ -43,7 +43,7 @@ public class Launch extends Function {
     MyPlanetDialog dialog = new MyPlanetDialog();
 
     public Launch() {
-        super(2, 999, "从此区块发射");
+        super(2, "从此区块发射");
     }
 
     @Override
