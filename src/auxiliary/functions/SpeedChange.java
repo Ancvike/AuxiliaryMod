@@ -1,7 +1,6 @@
 package auxiliary.functions;
 
 import arc.Core;
-import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
 
@@ -14,7 +13,7 @@ public class SpeedChange extends Function {
 
     @Override
     public Table function() {
-        float speeds[] = {1f, 2f, 5f, 10f, 20f, 50f, 100f};
+        float[] speeds = {1f, 2f, 5f, 10f, 20f, 50f, 100f};
         return new Table(t -> {
             t.add(speedLabel).margin(0f).pad(0f).growX();
             t.row();
