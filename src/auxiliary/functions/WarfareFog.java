@@ -1,6 +1,7 @@
 package auxiliary.functions;
 
 import arc.scene.ui.Slider;
+import arc.scene.ui.layout.Table;
 
 import static mindustry.Vars.state;
 
@@ -8,12 +9,18 @@ public class WarfareFog extends Function {
 
     public WarfareFog() {
         super(0, "战争迷雾");
+    }
 
-        Slider slider = new Slider(0, 50, 50, false);
-        slider.setValue(state.rules.fog ? 0 : 50);
-        slider.moved(moved -> {
-            if (moved == 0) state.rules.fog = true;
-            else if (moved == 50) state.rules.fog = false;
+    @Override
+    public Table function() {
+        return new Table(t -> {
+            Slider slider = new Slider(0, 1, 1, false);
+            slider.setValue(state.rules.fog ? 0 : 1);
+            slider.moved(value -> {
+                if (value == 0) state.rules.fog = true;
+                else if (value == 1) state.rules.fog = false;
+            });
+            t.add(slider);
         });
     }
 }
