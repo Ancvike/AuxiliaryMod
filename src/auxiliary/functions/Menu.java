@@ -56,7 +56,7 @@ public class Menu {
             for (Function function : functions) {
                 if (function.getClassID() == i) {
                     table.add(function.getName(), Color.white).left().padRight(40).padLeft(8);
-                    table.add(function.function()).width(200f).pad(2f).padLeft(4f).growX();
+                    table.add(function.function()).width(200f).pad(2f).padLeft(4f);
                     table.row();
                 }
             }
