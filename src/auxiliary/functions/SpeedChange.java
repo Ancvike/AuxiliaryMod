@@ -17,7 +17,7 @@ public class SpeedChange extends Function {
         return new Table(t -> {
             t.add(speedLabel).margin(0f).pad(0f).growX();
             t.slider(0, speeds.length - 1, 1, 0, value -> {
-                Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * value, 3.0f));
+                Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * speeds[(int) value], 3.0f));
                 speedLabel = value + "x";
             }).margin(0f).pad(0f).growX();
         });
