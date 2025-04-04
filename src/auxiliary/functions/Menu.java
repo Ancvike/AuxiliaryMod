@@ -25,7 +25,11 @@ import static mindustry.Vars.mobile;
 public class Menu {
     Table table = new Table();
     ImageButton button = new ImageButton(Icon.menu);
+    static Seq<Function> functions = new Seq<>();
+    private static final String[] tips = {"通用", "已占领或沙盒模式", "仅战役模式", "仅沙盒模式"};
     static Dialog dialog = new Dialog("功能面板") {{
+        functions.addAll(new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
+
         setFillParent(true);
         title.setAlignment(Align.center);
         titleTable.row();
@@ -45,10 +49,19 @@ public class Menu {
 
         Table table = new Table();
 
-        table.add("aaaaaa").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
-        table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
+        for (int i = 0; i < tips.length; i++) {
+            table.add(tips[i]).color(Color.gray).colspan(4).pad(10).padBottom(4).row();
+            table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
 
-        table.add(new SpeedChange().getName(), Color.white).left().padRight(40).padLeft(8);
+            for (Function function : functions) {
+                if (function.getClassID() == i) {
+                    table.add(function.getName(), Color.white).left().padRight(40).padLeft(8);
+                    table.add(function.function()).width(200f).pad(2f).padLeft(4f);
+                    table.row();
+                }
+            }
+        }
+
 //        table.label(() -> "1111").color(Pal.accent).left().minWidth(90).padRight(20);
 //
 //        table.button("绑定", Styles.defaultt, () -> {
@@ -57,14 +70,6 @@ public class Menu {
 //        table.button("重置", Styles.defaultt, () -> {
 //
 //        }).width(130f).pad(2f).padLeft(4f);
-        table.add(new SpeedChange().function()).width(200f).pad(2f).padLeft(4f);
-        table.row();
-
-        table.add(new SunLight().function()).width(200f).pad(2f).padLeft(4f);
-        table.row();
-
-        table.add("bbbbbb").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
-        table.image().color(Color.gray).fillX().height(3).pad(6).colspan(4).padTop(0).padBottom(10).row();
 
         stack.add(table);
 
@@ -73,7 +78,6 @@ public class Menu {
     }};
 
     public static boolean isDragged = false;
-    Seq<Function> functions = new Seq<>();
 
     public Menu() {
         Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
@@ -112,7 +116,7 @@ public class Menu {
     }
 
     public void setDialog(Dialog dialog) {
-        functions.addAll(new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
+
 
     }
 }
