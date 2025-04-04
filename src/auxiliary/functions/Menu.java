@@ -114,11 +114,6 @@ public class Menu {
         androidButton.clicked(() -> isOpen = !isOpen);
         return androidButton;
     }
-
-    public void setDialog(Dialog dialog) {
-
-
-    }
 }
 
 class DragListener extends InputListener {
