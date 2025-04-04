@@ -1,11 +1,15 @@
 package auxiliary.functions;
 
+import arc.scene.ui.layout.Table;
+
 public class Function {
-    private final int buttonID;
+    private final int classID;
+    private final int functionID;
     private final String name;
 
-    public Function(int buttonID, String name) {
-        this.buttonID = buttonID;
+    public Function(int classID, int functionID, String name) {
+        this.classID = classID;
+        this.functionID = functionID;
         this.name = name;
     }
 
@@ -13,11 +17,15 @@ public class Function {
         return name;
     }
 
-    public int getButtonID() {
-        return buttonID;
+    public int getClassID() {
+        return classID;
     }
 
-    public void onClick() {
+    public int getFunctionID() {
+        return functionID;
+    }
 
+    public Table function() {
+        return null;
     }
 }

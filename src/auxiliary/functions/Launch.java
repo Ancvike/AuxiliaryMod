@@ -43,17 +43,18 @@ public class Launch extends Function {
     MyPlanetDialog dialog = new MyPlanetDialog();
 
     public Launch() {
-        super(2, "从此区块发射");
+        super(2, 999, "从此区块发射");
     }
 
     @Override
-    public void onClick() {
+    public Table function() {
         if (state.isCampaign()) {
             dialog.show();
             Menu.dialog.hide();
         } else {
             Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
         }
+        return null;
     }
 }
 
