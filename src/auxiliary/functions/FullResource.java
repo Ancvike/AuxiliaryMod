@@ -35,6 +35,6 @@ public class FullResource extends Function {
                 dialog.hide();
                 Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
             }
-        }));
+        }).width(200f));
     }
 }

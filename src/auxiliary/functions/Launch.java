@@ -48,7 +48,6 @@ public class Launch extends Function {
 
     @Override
     public Table function() {
-
         return new Table(t -> t.button("使用", () -> {
             if (state.isCampaign()) {
                 dialog.show();
@@ -56,7 +55,7 @@ public class Launch extends Function {
             } else {
                 Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
             }
-        }));
+        }).width(200f));
     }
 }
 
