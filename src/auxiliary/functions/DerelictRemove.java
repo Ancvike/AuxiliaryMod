@@ -19,21 +19,22 @@ public class DerelictRemove extends Function {
 
     @Override
     public Table function() {
-        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
-            Seq<Building> buildings = Team.derelict.data().buildings;
-            int a = buildings.size;
-            while (a != 0) {
-                for (Building building : buildings) {
-                    a--;
-                    building.kill();
+        return new Table(t -> t.button("使用", () -> {
+            if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
+                Seq<Building> buildings = Team.derelict.data().buildings;
+                int a = buildings.size;
+                while (a != 0) {
+                    for (Building building : buildings) {
+                        a--;
+                        building.kill();
+                    }
                 }
+                Vars.ui.hudfrag.showToast("清除废墟成功");
+                dialog.hide();
+            } else {
+                dialog.hide();
+                Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
             }
-            Vars.ui.hudfrag.showToast("清除废墟成功");
-            dialog.hide();
-        } else {
-            dialog.hide();
-            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
-        }
-        return null;
+        }));
     }
 }

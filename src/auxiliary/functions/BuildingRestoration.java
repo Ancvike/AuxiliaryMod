@@ -11,21 +11,22 @@ import static mindustry.Vars.state;
 
 public class BuildingRestoration extends Function {
     public BuildingRestoration() {
-        super(0, "建筑修复");
+        super(1, "建筑修复");
     }
 
     @Override
     public Table function() {
-        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
-            for (Building building : Vars.player.team().data().buildings) {
-                building.health = building.maxHealth;
+        return new Table(t -> t.button("使用", () -> {
+            if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
+                for (Building building : Vars.player.team().data().buildings) {
+                    building.health = building.maxHealth;
+                }
+                dialog.hide();
+                Vars.ui.hudfrag.showToast("已修复所有建筑");
+            } else {
+                dialog.hide();
+                Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
             }
-            dialog.hide();
-            Vars.ui.hudfrag.showToast("已修复所有建筑");
-        } else {
-            dialog.hide();
-            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
-        }
-        return null;
+        }));
     }
 }

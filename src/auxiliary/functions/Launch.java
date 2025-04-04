@@ -48,13 +48,15 @@ public class Launch extends Function {
 
     @Override
     public Table function() {
-        if (state.isCampaign()) {
-            dialog.show();
-            Menu.dialog.hide();
-        } else {
-            Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
-        }
-        return null;
+
+        return new Table(t -> t.button("使用", () -> {
+            if (state.isCampaign()) {
+                dialog.show();
+                Menu.dialog.hide();
+            } else {
+                Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
+            }
+        }));
     }
 }
 
@@ -224,7 +226,7 @@ class MyPlanetDialog extends PlanetDialog {
             stable.table(t -> {
                 t.add("@sectors.resources").padRight(4);
                 for (UnlockableContent c : sector.info.resources) {
-                    if (c == null) continue; //apparently this is possible.
+                    if (c == null) continue;
                     t.image(c.uiIcon).padRight(3).scaling(Scaling.fit).size(iconSmall);
                 }
             }).padLeft(10f).fillX().row();
@@ -291,7 +293,6 @@ class MyPlanetDialog extends PlanetDialog {
                         }, Styles.underlineb, () -> {
 
                         }).margin(8f).marginLeft(13f).marginBottom(6f).marginTop(6f).padBottom(3f).padTop(3f).growX().checked(b -> selected == sec).row();
-                        //for resources: .tooltip(sec.info.resources.toString("", u -> u.emoji()))
                     }
                 }
 
@@ -318,18 +319,18 @@ class MyPlanetDialog extends PlanetDialog {
 
     boolean canSelect(Sector sector) {
         if (mode == select) return sector.hasBase() && launchSector != null && sector.planet == launchSector.planet;
-        //cannot launch to existing sector w/ accelerator TODO test
+
         if (mode == planetLaunch) return sector.id == sector.planet.startSector;
         if (sector.hasBase() || sector.id == sector.planet.startSector) return true;
-        //preset sectors can only be selected once unlocked
+
         if (sector.preset != null) {
             TechTree.TechNode node = sector.preset.techNode;
             return sector.preset.unlocked() || node == null || node.parent == null || (node.parent.content.unlocked() && (!(node.parent.content instanceof SectorPreset preset) || preset.sector.hasBase()));
         }
 
         return sector.planet.generator != null ?
-                //use planet impl when possible
-                sector.planet.generator.allowLanding(sector) : sector.hasBase() || sector.near().contains(Sector::hasBase); //near an occupied sector
+
+                sector.planet.generator.allowLanding(sector) : sector.hasBase() || sector.near().contains(Sector::hasBase);
     }
 
     void playSelected() {
@@ -338,7 +339,6 @@ class MyPlanetDialog extends PlanetDialog {
         Sector sector = selected;
 
         if (sector.isBeingPlayed()) {
-            //already at this sector
             hide();
             return;
         }
@@ -347,10 +347,8 @@ class MyPlanetDialog extends PlanetDialog {
             return;
         }
 
-        //make sure there are no under-attack sectors (other than this one)
         for (Planet planet : content.planets()) {
             if (!planet.allowWaveSimulation && !debugSelect && planet.allowWaveSimulation == sector.planet.allowWaveSimulation) {
-                //if there are two or more attacked sectors... something went wrong, don't show the dialog to prevent softlock
                 Sector attacked = planet.sectors.find(s -> s.isAttacked() && s != sector);
                 if (attacked != null && planet.sectors.count(Sector::isAttacked) < 2) {
                     BaseDialog dialog = new BaseDialog("@sector.noswitch.title");
@@ -365,12 +363,10 @@ class MyPlanetDialog extends PlanetDialog {
 
         boolean shouldHide = true;
 
-        //save before launch.
         if (control.saves.getCurrent() != null && Vars.state.isGame() && mode != select) {
             try {
                 control.saves.getCurrent().save();
             } catch (Throwable e) {
-                e.printStackTrace();
                 ui.showException("[accent]" + Core.bundle.get("savefail"), e);
             }
         }
@@ -380,9 +376,8 @@ class MyPlanetDialog extends PlanetDialog {
             Sector from = Vars.state.rules.sector;
 
             if (from == null) {
-                //clear loadout information, so only the basic loadout gets used
                 universe.clearLoadoutInfo();
-                //free launch.
+
                 control.playSector(sector);
             } else {
                 CoreBlock block = sector.allowLaunchSchematics() ? (from.info.bestCoreType instanceof CoreBlock b ? b : (CoreBlock) from.planet.defaultCore) : (CoreBlock) from.planet.defaultCore;
@@ -397,25 +392,19 @@ class MyPlanetDialog extends PlanetDialog {
 
                     CoreBlock.CoreBuild core = player.team().core();
                     if (core == null || settings.getBool("skipcoreanimation")) {
-                        //just... go there
+
                         control.playSector(from, sector);
-                        //hide only after load screen is shown
                         Time.runTask(8f, this::hide);
                     } else {
-                        //hide immediately so launch sector is visible
                         hide();
 
-                        //allow planet dialog to finish hiding before actually launching
                         Time.runTask(5f, () -> {
                             Runnable doLaunch = () -> {
                                 renderer.showLaunch(schemCore);
-                                //run with less delay, as the loading animation is delayed by several frames
                                 Time.runTask(152f, () -> control.playSector(from, sector));
                             };
 
-                            //load launchFrom sector right before launching so animation is correct
                             if (!from.isBeingPlayed()) {
-                                //run *after* the loading animation is done
                                 Time.runTask(9f, doLaunch);
                                 control.playSector(from);
                             } else {
@@ -427,15 +416,13 @@ class MyPlanetDialog extends PlanetDialog {
             }
         } else if (mode == select) {
             listener.get(sector);
-        } else if (mode == planetLaunch) { //TODO make sure it doesn't have a base already.
-            //TODO animation
-            //schematic selection and cost handled by listener
+        } else if (mode == planetLaunch) {
             listener.get(sector);
-            //unlock right before launch
+
             sector.planet.unlockedOnLand.each(UnlockableContent::unlock);
             control.playSector(sector);
         } else {
-            //sector should have base here
+
             control.playSector(sector);
         }
 
@@ -456,7 +443,6 @@ class MyPlanetDialog extends PlanetDialog {
 
         stack(new Element() {
                   {
-                      //add listener to the background rect, so it doesn't get unnecessary touch input
                       addListener(new ElementGestureListener() {
                           @Override
                           public void tap(InputEvent event, float x, float y, int count, KeyCode button) {
@@ -482,20 +468,18 @@ class MyPlanetDialog extends PlanetDialog {
                       planets.render(state);
                   }
               },
-                //info text
                 new Table(t -> {
                     t.touchable = Touchable.disabled;
                     t.top();
                     t.label(() -> mode == select ? "@sectors.select" : "").style(Styles.outlineLabel).color(Pal.accent);
                 }), buttons,
 
-                // planet selection
                 new Table(t -> {
                     t.top().left();
                     ScrollPane pane = new ScrollPane(null, Styles.smallPane);
                     t.add(pane).colspan(2).row();
 
-                    t.add().height(64f); //padding for close button
+                    t.add().height(64f);
                     Table starsTable = new Table(Styles.black);
                     pane.setWidget(starsTable);
                     pane.setScrollingDisabled(true, false);
@@ -512,18 +496,14 @@ class MyPlanetDialog extends PlanetDialog {
         if (state.planet.sectors.contains(Sector::hasBase)) {
             int attacked = state.planet.sectors.count(Sector::isAttacked);
 
-            //sector notifications & search
             c.top().right();
             c.defaults().width(290f);
 
-            c.button(bundle.get("sectorlist") +
-                                    (attacked == 0 ? "" : "\n[red]⚠[lightgray] " + bundle.format("sectorlist.attacked", "[red]" + attacked + "[]")),
-                            Icon.downOpen, Styles.squareTogglet, () -> sectorsShown = !sectorsShown)
-                    .height(60f).checked(b -> {
-                        Image image = (Image) b.getCells().first().get();
-                        image.setDrawable(sectorsShown ? Icon.upOpen : Icon.downOpen);
-                        return sectorsShown;
-                    }).with(t -> t.left().margin(7f)).with(t -> t.getLabelCell().grow().left()).row();
+            c.button(bundle.get("sectorlist") + (attacked == 0 ? "" : "\n[red]⚠[lightgray] " + bundle.format("sectorlist.attacked", "[red]" + attacked + "[]")), Icon.downOpen, Styles.squareTogglet, () -> sectorsShown = !sectorsShown).height(60f).checked(b -> {
+                Image image = (Image) b.getCells().first().get();
+                image.setDrawable(sectorsShown ? Icon.upOpen : Icon.downOpen);
+                return sectorsShown;
+            }).with(t -> t.left().margin(7f)).with(t -> t.getLabelCell().grow().left()).row();
 
             c.collapser(t -> {
                 t.background(Styles.black8);
