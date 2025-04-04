@@ -7,7 +7,7 @@ import static mindustry.Vars.state;
 public class WarfareFog extends Function {
 
     public WarfareFog() {
-        super(0, 999, "战争迷雾");
+        super(0, "战争迷雾");
 
         Slider slider = new Slider(0, 50, 50, false);
         slider.setValue(state.rules.fog ? 0 : 50);

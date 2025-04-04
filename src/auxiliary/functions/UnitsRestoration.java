@@ -11,7 +11,7 @@ import static mindustry.Vars.state;
 
 public class UnitsRestoration extends Function {
     public UnitsRestoration() {
-        super(0,999, "单位修复");
+        super(0, "单位修复");
     }
 
     @Override

@@ -9,7 +9,7 @@ public class SpeedChange extends Function {
     Label speedLabel = new Label("1x");
 
     public SpeedChange() {
-        super(0, 0, "改变游戏速度");
+        super(0, "改变游戏速度");
     }
 
     @Override
