@@ -69,7 +69,7 @@ public class Menu {
 //        table.button("重置", Styles.defaultt, () -> {
 //
 //        }).width(130f).pad(2f).padLeft(4f);
-        table.add(new SpeedChange().function()).width(130f).pad(2f).padLeft(4f);
+        table.add(new SpeedChange().function()).width(150f).pad(2f).padLeft(4f);
         table.row();
 
         table.add("bbbbbb").color(Color.gray).colspan(4).pad(10).padBottom(4).row();
