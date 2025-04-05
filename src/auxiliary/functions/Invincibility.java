@@ -21,17 +21,17 @@ public class Invincibility extends Function {
         super(1, "当前单位和所控制单位无敌");
 
         Events.run(EventType.Trigger.update, () -> {
-            if (units != null && unitPlayer != null) {
-                if (unitPlayer != Vars.player.unit()) {
-                    unitPlayer.health = unitPlayer.maxHealth;
-                }
-                if (units != Vars.control.input.selectedUnits) {
-                    for (Unit unit : units) {
-                        unit.health = unit.maxHealth;
+            if (isInvincible) {
+                if (units != null && unitPlayer != null) {
+                    if (unitPlayer != Vars.player.unit()) {
+                        unitPlayer.health = unitPlayer.maxHealth;
+                    }
+                    if (units != Vars.control.input.selectedUnits) {
+                        for (Unit unit : units) {
+                            unit.health = unit.maxHealth;
+                        }
                     }
                 }
-            }
-            if (isInvincible) {
                 unitPlayer = Vars.player.unit();
                 units = Vars.control.input.selectedUnits;
 
