@@ -24,12 +24,11 @@ public class TeamChange extends Function {
                 button.getStyle().imageUpColor = team.color;
                 button.clicked(() -> {
                     player.team(team);
-                    //editor.drawTeam = team;
                 });
                 button.update(() -> {
-                    //button.setChecked(editor.drawTeam == team);
+                    button.setChecked(player.team() == team);
                 });
-                t.add(button);
+                t.add(button).size(40f);
 
                 if (i++ % 3 == 2) t.row();
             }
