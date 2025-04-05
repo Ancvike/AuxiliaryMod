@@ -30,13 +30,6 @@ public class Invincibility extends Function {
                     }
                 }
             }
-
-            if (!isInvincible) {
-                Vars.player.unit().health = Vars.player.unit().maxHealth;
-                for (Unit unit : Vars.control.input.selectedUnits) {
-                    unit.health = unit.maxHealth;
-                }
-            }
             if (isInvincible) {
                 unitPlayer = Vars.player.unit();
                 units = Vars.control.input.selectedUnits;
@@ -44,6 +37,14 @@ public class Invincibility extends Function {
                 player.unit().health = 999999999;
                 for (Unit unit : Vars.control.input.selectedUnits) {
                     unit.health = 999999999;
+                }
+            }
+        });
+        Events.run(EventType.Trigger.update, () -> {
+            if (!isInvincible) {
+                Vars.player.unit().health = Vars.player.unit().maxHealth;
+                for (Unit unit : Vars.control.input.selectedUnits) {
+                    unit.health = unit.maxHealth;
                 }
             }
         });
