@@ -22,12 +22,8 @@ public class TeamChange extends Function {
                 button.margin(4f);
                 button.getImageCell().grow();
                 button.getStyle().imageUpColor = team.color;
-                button.clicked(() -> {
-                    player.team(team);
-                });
-                button.update(() -> {
-                    button.setChecked(player.team() == team);
-                });
+                button.clicked(() -> player.team(team));
+                button.update(() -> button.setChecked(player.team() == team));
                 t.add(button).size(40f);
 
                 if (i++ % 3 == 2) t.row();
