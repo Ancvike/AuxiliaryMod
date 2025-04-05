@@ -17,9 +17,9 @@ public class Invincibility extends Function {
 
         Events.run(EventType.Trigger.update, () -> {
             if (isInvincible) {
-                player.unit().health = player.unit().maxHealth;
+                player.unit().health = 999999999;
                 for (Unit unit : Vars.control.input.selectedUnits) {
-                    unit.health = unit.maxHealth;
+                    unit.health = 999999999;
                 }
             }
         });
