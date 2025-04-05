@@ -20,17 +20,6 @@ public class Invincibility extends Function {
                 //Vars.control.input.selectedUnits
             }
         });
-
-
-        Vars.ui.hudGroup.fill(t -> {
-            BaseDialog baseDialog = new BaseDialog("按键设置");
-            baseDialog.addCloseButton();
-            t.button("00", () -> {
-                baseDialog.cont.add(player.name);
-                baseDialog.show();
-            });
-        });
-        //调试代码
     }
 
     @Override
