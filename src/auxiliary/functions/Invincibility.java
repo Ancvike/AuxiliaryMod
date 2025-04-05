@@ -41,14 +41,6 @@ public class Invincibility extends Function {
                 }
             }
         });
-        Events.run(EventType.Trigger.update, () -> {
-            if (!isInvincible) {
-                Vars.player.unit().health = Vars.player.unit().maxHealth;
-                for (Unit unit : Vars.control.input.selectedUnits) {
-                    unit.health = unit.maxHealth;
-                }
-            }
-        });
 
         Vars.ui.hudGroup.fill(t -> {
             BaseDialog baseDialog = new BaseDialog("按键设置");
@@ -58,7 +50,7 @@ public class Invincibility extends Function {
                 baseDialog.show();
             });
         });
-//调试代码
+        //调试代码
     }
 
     @Override
@@ -68,7 +60,13 @@ public class Invincibility extends Function {
             slider.setValue(isInvincible ? 0 : 1);
             slider.moved(value -> {
                 if (value == 0) isInvincible = true;
-                else if (value == 1) isInvincible = false;
+                else if (value == 1) {
+                    isInvincible = false;
+                    Vars.player.unit().health = Vars.player.unit().maxHealth;
+                    for (Unit unit : Vars.control.input.selectedUnits) {
+                        unit.health = unit.maxHealth;
+                    }
+                }
             });
 
             t.add("[green]开");
