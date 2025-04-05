@@ -53,7 +53,7 @@ public class Launch extends Function {
                 dialog.show();
                 Menu.dialog.hide();
             } else {
-                Vars.ui.hudfrag.showToast("当前功能仅在战役中使用");
+                Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]当前功能仅在战役中使用");
             }
         }).width(200f));
     }
