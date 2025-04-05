@@ -25,7 +25,7 @@ public class BuildingRestoration extends Function {
                 Vars.ui.hudfrag.showToast("已修复所有建筑");
             } else {
                 dialog.hide();
-                Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
+                Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
             }
         }).width(200f));
     }
