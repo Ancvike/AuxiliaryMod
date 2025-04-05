@@ -59,9 +59,9 @@ public class Invincibility extends Function {
                 else if (value == 1) isInvincible = false;
             });
 
-            t.add("[green]开").margin(0f).pad(0f);
+            t.add("[green]开");
             t.add(slider);
-            t.add("[red]关").margin(0f).pad(0f);
+            t.add("[red]关");
         });
     }
 }
