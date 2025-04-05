@@ -3,6 +3,7 @@ package auxiliary.functions;
 import arc.Events;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
@@ -13,11 +14,26 @@ import static mindustry.Vars.player;
 public class Invincibility extends Function {
     private boolean isInvincible = false;
 
+    Seq<Unit> units = null;
+    Unit unitPlayer = null;
+
     public Invincibility() {
         super(1, "当前单位和所控制单位无敌");
 
         Events.run(EventType.Trigger.update, () -> {
+            if (units != null && unitPlayer != null) {
+                if (unitPlayer != Vars.player.unit()) {
+                    unitPlayer.health = unitPlayer.maxHealth;
+                }
+                if (units != Vars.control.input.selectedUnits) {
+                    for (Unit unit : units) {
+                        unit.health = unit.maxHealth;
+                    }
+                }
+            }
             if (isInvincible) {
+                unitPlayer = Vars.player.unit();
+                units = Vars.control.input.selectedUnits;
                 player.unit().health = 999999999;
                 for (Unit unit : Vars.control.input.selectedUnits) {
                     unit.health = 999999999;
