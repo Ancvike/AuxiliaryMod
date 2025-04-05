@@ -31,7 +31,7 @@ public class Menu {
     static Seq<Function> functions = new Seq<>();
     private static final String[] tips = {"通用", "已占领或沙盒模式", "仅战役模式", "仅沙盒模式"};
     static Dialog dialog = new Dialog("功能面板") {{
-        functions.addAll(new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
+        functions.addAll(new Invincibility(), new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
 
         setFillParent(true);
         title.setAlignment(Align.center);
@@ -101,16 +101,6 @@ public class Menu {
             t.right();
         });
         table.addListener(new DragListener(table));
-
-        Vars.ui.hudGroup.fill(t -> {
-            BaseDialog baseDialog = new BaseDialog("按键设置");
-            baseDialog.addCloseButton();
-            t.button("00", () -> {
-                baseDialog.cont.add(player.unit().x + "," + player.unit().y);
-                baseDialog.show();
-            });
-        });
-        //调试代码
     }
 
     private static ImageButton getImageButton() {
