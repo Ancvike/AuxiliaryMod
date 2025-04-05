@@ -6,6 +6,7 @@ import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.player;
 
@@ -23,6 +24,16 @@ public class Invincibility extends Function {
                 }
             }
         });
+
+        Vars.ui.hudGroup.fill(t -> {
+            BaseDialog baseDialog = new BaseDialog("按键设置");
+            baseDialog.addCloseButton();
+            t.button("00", () -> {
+                baseDialog.cont.add(player.unit().health + "");
+                baseDialog.show();
+            });
+        });
+        //调试代码
     }
 
     @Override
