@@ -7,7 +7,6 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Unit;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.player;
 
