@@ -2,8 +2,10 @@ package auxiliary.functions;
 
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
+import mindustry.Vars;
 import mindustry.game.Gamemode;
 import mindustry.game.Team;
+import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.ui.Styles;
 
@@ -28,7 +30,7 @@ public class TeamChange extends Function {
                     if (state.rules.mode() == Gamemode.sandbox) {
                         player.team(team);
                     } else {
-                        player.sendMessage("[scarlet]只能在沙盒模式中改变队伍");
+                        Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]只能在沙盒模式中改变队伍");
                     }
                 });
                 button.update(() -> button.setChecked(player.team() == team));
