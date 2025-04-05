@@ -6,10 +6,12 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
+import mindustry.game.Gamemode;
 import mindustry.gen.Unit;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.player;
+import static mindustry.Vars.state;
 
 public class Invincibility extends Function {
     private boolean isInvincible = false;
@@ -72,6 +74,8 @@ public class Invincibility extends Function {
             t.add("[green]开");
             t.add(slider);
             t.add("[red]关");
+
+            t.visibility = () -> (!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox;
         });
     }
 }
