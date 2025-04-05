@@ -14,16 +14,13 @@ import arc.util.Align;
 import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.game.EventType;
-import mindustry.gen.Call;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.KeyBind.isOpen;
 import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.mobile;
-import static mindustry.Vars.player;
 
 public class Menu {
     Table table = new Table();
@@ -64,15 +61,6 @@ public class Menu {
                 }
             }
         }
-
-//        table.label(() -> "1111").color(Pal.accent).left().minWidth(90).padRight(20);
-//
-//        table.button("绑定", Styles.defaultt, () -> {
-//        }).width(130f);
-
-//        table.button("重置", Styles.defaultt, () -> {
-//
-//        }).width(130f).pad(2f).padLeft(4f);
 
         stack.add(table);
 
