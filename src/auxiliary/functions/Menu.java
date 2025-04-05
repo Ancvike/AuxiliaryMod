@@ -14,6 +14,7 @@ import arc.util.Align;
 import arc.util.Tmp;
 import mindustry.Vars;
 import mindustry.game.EventType;
+import mindustry.gen.Call;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
@@ -105,7 +106,7 @@ public class Menu {
             BaseDialog baseDialog = new BaseDialog("按键设置");
             baseDialog.addCloseButton();
             t.button("00", () -> {
-                baseDialog.cont.add(player.name);
+                baseDialog.cont.add(player.unit().x + "," + player.unit().y);
                 baseDialog.show();
             });
         });
