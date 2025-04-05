@@ -17,10 +17,12 @@ import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static auxiliary.binding.KeyBind.isOpen;
 import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.mobile;
+import static mindustry.Vars.player;
 
 public class Menu {
     Table table = new Table();
@@ -98,6 +100,16 @@ public class Menu {
             t.right();
         });
         table.addListener(new DragListener(table));
+
+        Vars.ui.hudGroup.fill(t -> {
+            BaseDialog baseDialog = new BaseDialog("按键设置");
+            baseDialog.addCloseButton();
+            t.button("00", () -> {
+                baseDialog.cont.add(player.name);
+                baseDialog.show();
+            });
+        });
+        //调试代码
     }
 
     private static ImageButton getImageButton() {
