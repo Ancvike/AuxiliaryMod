@@ -50,7 +50,8 @@ public class Invincibility extends Function {
             Slider slider = new Slider(0, 1, 1, false);
             slider.setValue(isInvincible ? 0 : 1);
             slider.moved(value -> {
-                if (value == 0) isInvincible = true;
+                if (value == 0 && (!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox)
+                    isInvincible = true;
                 else if (value == 1) {
                     isInvincible = false;
                     Vars.player.unit().health = Vars.player.unit().maxHealth;
@@ -63,8 +64,6 @@ public class Invincibility extends Function {
             t.add("[green]开");
             t.add(slider);
             t.add("[red]关");
-
-            t.visibility = () -> (!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox;
         });
     }
 }
