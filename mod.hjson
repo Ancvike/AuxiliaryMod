@@ -11,10 +11,10 @@ author: "Ancvike"
 main: "auxiliary.AuxiliaryMod"
 
 #the mod description as seen in the mod dialog
-description: "满资源,一键修复建筑和单位"
+description: "太多功能以至于简介不想打字了"
 
 #the mod version
-version: 1.0.6
+version: 1.0.7
 
 #the minimum game build required to run this mod
 minGameVersion: 145
