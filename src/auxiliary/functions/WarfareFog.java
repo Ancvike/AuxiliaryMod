@@ -14,21 +14,11 @@ public class WarfareFog extends Function {
     @Override
     public Table function() {
         return new Table(t -> {
-//            Slider slider = new Slider(0, 1, 1, false);
-//            slider.setValue(state.rules.fog ? 0 : 1);
-//            slider.moved(value -> {
-//                if (value == 0) state.rules.fog = true;
-//                else if (value == 1) state.rules.fog = false;
-//            });
-//
-//            t.add("[green]开");
-//            t.add(slider);
-//            t.add("[red]关");
             CheckBox box = new CheckBox("");
             box.update(() -> box.setChecked(state.rules.fog));
             box.changed(() -> state.rules.fog = !state.rules.fog);
 
-            t.add(box).right();
+            t.add(box);
         });
     }
 }
