@@ -25,8 +25,9 @@ public class WarfareFog extends Function {
 //            t.add(slider);
 //            t.add("[red]关");
             CheckBox box = new CheckBox("");
-            box.changed(() -> state.rules.fog = !state.rules.fog);
             box.update(() -> box.setChecked(state.rules.fog));
+            box.changed(() -> state.rules.fog = !state.rules.fog);
+
             t.add(box).right();
         });
     }
