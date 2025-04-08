@@ -28,7 +28,7 @@ public class Menu {
     static Seq<Function> functions = new Seq<>();
     private static final String[] tips = {"通用", "已占领或沙盒模式", "仅战役模式", "仅沙盒模式"};
     static Dialog dialog = new Dialog("功能面板") {{
-        functions.addAll(new TeamChange(), new Invincibility(), new SpeedChange(), new SunLight(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
+        functions.addAll(new TeamChange(), new Invincibility(), new SpeedChange(), new WarfareFog(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new Launch());
 
         setFillParent(true);
         title.setAlignment(Align.center);
