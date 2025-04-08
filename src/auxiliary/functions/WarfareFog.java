@@ -24,9 +24,9 @@ public class WarfareFog extends Function {
 //            t.add("[green]开");
 //            t.add(slider);
 //            t.add("[red]关");
-            CheckBox box = new CheckBox("战争迷雾");
+            CheckBox box = new CheckBox("");
             box.update(() -> box.setChecked(state.rules.fog));
-            t.add(box);
+            t.add(box).right();
         });
     }
 }
