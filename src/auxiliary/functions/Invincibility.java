@@ -1,12 +1,13 @@
 package auxiliary.functions;
 
 import arc.Events;
-import arc.scene.ui.Slider;
+import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Gamemode;
+import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 
 import static mindustry.Vars.player;
@@ -47,23 +48,21 @@ public class Invincibility extends Function {
     @Override
     public Table function() {
         return new Table(t -> {
-            Slider slider = new Slider(0, 1, 1, false);
-            slider.setValue(isInvincible ? 0 : 1);
-            slider.moved(value -> {
-                if (value == 0 && (!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox)
-                    isInvincible = true;
-                else if (value == 1) {
-                    isInvincible = false;
-                    Vars.player.unit().health = Vars.player.unit().maxHealth;
-                    for (Unit unit : Vars.control.input.selectedUnits) {
-                        unit.health = unit.maxHealth;
+            CheckBox box = new CheckBox("");
+            box.update(() -> box.setChecked(isInvincible));
+            box.changed(() -> {
+                if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
+                    isInvincible = !isInvincible;
+                    if (!isInvincible) {
+                        Vars.player.unit().health = Vars.player.unit().maxHealth;
+                        for (Unit unit : Vars.control.input.selectedUnits) {
+                            unit.health = unit.maxHealth;
+                        }
                     }
-                }
+                } else Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
             });
 
-            t.add("[green]开");
-            t.add(slider);
-            t.add("[red]关");
+            t.add(box);
         });
     }
 }
