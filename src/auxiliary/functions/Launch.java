@@ -2,7 +2,6 @@ package auxiliary.functions;
 
 import arc.Core;
 import arc.Events;
-import arc.func.Cons;
 import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.math.Mathf;
@@ -144,22 +143,6 @@ class MyPlanetDialog extends PlanetDialog {
         if (content.planets().contains(p -> p.sectors.contains(Sector::hasBase)) || Blocks.scatter.unlocked() || Blocks.router.unlocked()) {
             Seq.with(Blocks.junction, Blocks.mechanicalDrill, Blocks.conveyor, Blocks.duo, Items.copper, Items.lead).each(UnlockableContent::quietUnlock);
         }
-    }
-
-    @Override
-    public void showSelect(Sector sector, Cons<Sector> listener) {
-        selected = null;
-        hovered = null;
-        launching = false;
-        this.listener = listener;
-
-        zoom = 1f;
-        state.zoom = 1f;
-        state.uiAlpha = 0f;
-        state.otherCamPos = null;
-        launchSector = sector;
-
-        mode = select;
     }
 
     boolean showing() {
