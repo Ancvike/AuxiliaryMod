@@ -17,7 +17,8 @@ public class BuildingRestoration extends Function {
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
+            if (Vars.state.rules.sector.isCaptured()){
+//              (!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox
                 for (Building building : Vars.player.team().data().buildings) {
                     building.health = building.maxHealth;
                 }
