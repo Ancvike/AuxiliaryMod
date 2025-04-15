@@ -2,12 +2,10 @@ package auxiliary.functions;
 
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
-import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 
 import static auxiliary.functions.Menu.dialog;
-import static mindustry.Vars.state;
 
 public class BuildingRestoration extends Function {
     public BuildingRestoration() {
@@ -17,8 +15,7 @@ public class BuildingRestoration extends Function {
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if (Vars.state.rules.sector.isCaptured()){
-//              (!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox
+            if (Vars.state.rules.sector.isCaptured()) {
                 for (Building building : Vars.player.team().data().buildings) {
                     building.health = building.maxHealth;
                 }

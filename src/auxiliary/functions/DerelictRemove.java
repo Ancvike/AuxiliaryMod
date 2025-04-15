@@ -3,13 +3,11 @@ package auxiliary.functions;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
-import mindustry.game.Gamemode;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 
 import static auxiliary.functions.Menu.dialog;
-import static mindustry.Vars.state;
 
 public class DerelictRemove extends Function {
 
@@ -20,7 +18,7 @@ public class DerelictRemove extends Function {
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
+            if (Vars.state.rules.sector.isCaptured()) {
                 Seq<Building> buildings = Team.derelict.data().buildings;
                 int a = buildings.size;
                 while (a != 0) {
