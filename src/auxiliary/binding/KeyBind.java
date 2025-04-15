@@ -8,7 +8,6 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
 import mindustry.game.EventType;
-import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
@@ -146,7 +145,7 @@ public class KeyBind extends InputHandler {
     }
 
     private void handleSelectionEnd() {
-        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
+        if (Vars.state.rules.sector.isCaptured()) {
             for (Building building : player.team().data().buildings) {
                 if (isZone(building)) {
                     building.health = building.maxHealth;
@@ -183,7 +182,7 @@ public class KeyBind extends InputHandler {
     }
 
     private void healSelectedUnits() {
-        if ((!state.rules.waves && state.isCampaign()) || state.rules.mode() == Gamemode.sandbox) {
+        if (Vars.state.rules.sector.isCaptured()) {
             Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
             for (Unit unit : selectedUnits) {
                 unit.health = unit.maxHealth;
