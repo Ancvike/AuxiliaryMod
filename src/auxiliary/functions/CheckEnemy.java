@@ -19,7 +19,6 @@ import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static arc.Core.bundle;
 import static arc.Core.settings;
 import static mindustry.Vars.state;
 
