@@ -18,12 +18,12 @@ import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static arc.Core.settings;
 import static mindustry.Vars.state;
 
 public class CheckEnemy extends Function {
     private final BaseDialog dialog = new BaseDialog("敌人波次");
     ScrollPane waveEnemy = new ScrollPane(build());
+    int wave = 0;
 
     public CheckEnemy() {
         super(0, "查看波次敌人");
@@ -32,15 +32,17 @@ public class CheckEnemy extends Function {
         dialog.addCloseButton();
 
         Events.on(EventType.WorldLoadEvent.class, e -> {
+            wave = 0;
             waveEnemy.clearChildren();
             waveEnemy.setWidget(build());
-            //重建面板
+            if (state.rules.winWave == 0) wave = state.wave + 20;
         });
 
         Events.on(EventType.WaveEvent.class, e -> {
+            wave = 0;
             waveEnemy.clearChildren();
             waveEnemy.setWidget(build());
-            //重建面板
+            if (state.rules.winWave == 0) wave = state.wave + 20;
         });
     }
 
@@ -53,10 +55,7 @@ public class CheckEnemy extends Function {
         return new Table(t -> {
             t.center().defaults().growX();
 
-            for (int i = 1; i <=
-                    //Math.min(state.wave + settings.getInt("wavemax"), (state.isCampaign() && state.rules.winWave > 0 ? state.rules.winWave : Integer.MAX_VALUE))
-                    state.rules.winWave
-                    ; i++) {
+            for (int i = 1; i <= wave; i++) {
                 final int index = i;
 
                 t.table(waveRow -> {
@@ -69,25 +68,27 @@ public class CheckEnemy extends Function {
                         ObjectIntMap<SpawnGroup> groups = getWaveGroup(index - 1);
 
                         int row = 0;
-                        int max = 32;
+                        int max = 16;
                         for (SpawnGroup group : groups.keys()) {
                             int spawners = state.rules.waveTeam.cores().size;
                             int amount = groups.get(group);
                             unitTable.stack(new Table(ttt -> {
-                                ttt.center();
-                                ttt.image(group.type.shadowRegion).size(64);
-                                ttt.pack();
-                            }), new Table(ttt -> {
-                                ttt.bottom().left();
-                                ttt.add(amount + "").padTop(2f).fontScale(0.9f);
-                                ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
-                                ttt.pack();
-                            }), new Table(ttt -> {
-                                ttt.top().right();
-                                ttt.image(Icon.warning.getRegion()).update(img -> img.setColor(Tmp.c2.set(Color.orange).lerp(Color.scarlet, Mathf.absin(Time.time, 2f, 1f)))).size(12f);
-                                ttt.visible(() -> group.effect == StatusEffects.boss);
-                                ttt.pack();
-                            })).pad(2f).get().addListener(new Tooltip(to -> {
+                                        ttt.center();
+                                        ttt.image(group.type.shadowRegion).size(64);
+                                        ttt.pack();
+                                    }),
+//                                    new Table(ttt -> {
+//                                        ttt.bottom().left();
+//                                        ttt.add(amount + "").padTop(2f).fontScale(0.9f);
+//                                        ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
+//                                        ttt.pack();
+//                                    }),
+                                    new Table(ttt -> {
+                                        ttt.top().right();
+                                        ttt.image(Icon.warning.getRegion()).update(img -> img.setColor(Tmp.c2.set(Color.orange).lerp(Color.scarlet, Mathf.absin(Time.time, 2f, 1f)))).size(12f);
+                                        ttt.visible(() -> group.effect == StatusEffects.boss);
+                                        ttt.pack();
+                                    })).pad(2f).get().addListener(new Tooltip(to -> {
                                 to.background(Styles.black6);
                                 to.margin(4f).left();
                                 to.add("[stat]" + group.type.localizedName + "[]");
