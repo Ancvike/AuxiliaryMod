@@ -48,7 +48,7 @@ public class CheckEnemy extends Function {
 
     @Override
     public Table function() {
-        return new Table(t -> t.button("查看", dialog::show));
+        return new Table(t -> t.button("查看", dialog::show).width(200f));
     }
 
     public Table build() {
@@ -62,13 +62,7 @@ public class CheckEnemy extends Function {
                 t.table(waveRow -> {
                     waveRow.left();
 
-                    waveRow.add(String.valueOf(index)).update(label -> {
-                        Color color = Pal.accent;
-                        if (state.wave == index) color = Color.red;
-                        else if (state.wave - 1 == index && state.enemies > 0)
-                            color = Color.red.cpy().shiftHue(Time.time);
-                        label.setColor(color);
-                    });
+                    waveRow.add(String.valueOf(index)).update(label -> label.setColor(Pal.accent));
                     waveRow.table(unitTable -> {
                         unitTable.center();
 
@@ -101,14 +95,6 @@ public class CheckEnemy extends Function {
                                 to.background(Styles.black6);
                                 to.margin(4f).left();
                                 to.add("[stat]" + group.type.localizedName + "[]");
-                                to.row();
-                                to.add(bundle.format("shar-stat-waveAmount", amount + " [lightgray]x" + spawners + "[]"));
-                                to.row();
-                                to.add(bundle.format("shar-stat-waveShield", group.getShield(index - 1)));
-                                to.row();
-                                if (group.effect != null && group.effect != StatusEffects.none) {
-                                    to.add(bundle.get("shar-stat.waveStatus") + group.effect.emoji() + "[stat]" + group.effect.localizedName);
-                                }
                             }));
                             if (row++ % max == max - 1) {
                                 unitTable.row();
