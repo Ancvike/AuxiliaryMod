@@ -3,7 +3,6 @@ package auxiliary.functions;
 import arc.Events;
 import arc.graphics.Color;
 import arc.math.Mathf;
-import arc.scene.event.Touchable;
 import arc.scene.ui.ScrollPane;
 import arc.scene.ui.Tooltip;
 import arc.scene.ui.layout.Table;
@@ -52,10 +51,12 @@ public class CheckEnemy extends Function {
 
     public Table build() {
         return new Table(t -> {
-            t.touchable = Touchable.enabled;
             t.center().defaults().growX();
 
-            for (int i = 1; i <= Math.min(state.wave + settings.getInt("wavemax"), (state.isCampaign() && state.rules.winWave > 0 ? state.rules.winWave : Integer.MAX_VALUE)); i++) {
+            for (int i = 1; i <=
+                    //Math.min(state.wave + settings.getInt("wavemax"), (state.isCampaign() && state.rules.winWave > 0 ? state.rules.winWave : Integer.MAX_VALUE))
+                    state.rules.winWave
+                    ; i++) {
                 final int index = i;
 
                 t.table(waveRow -> {
@@ -72,25 +73,21 @@ public class CheckEnemy extends Function {
                         for (SpawnGroup group : groups.keys()) {
                             int spawners = state.rules.waveTeam.cores().size;
                             int amount = groups.get(group);
-                            unitTable.stack(
-                                    new Table(ttt -> {
-                                        ttt.center();
-                                        ttt.image(group.type.shadowRegion).size(64);
-                                        ttt.pack();
-                                    }),
-                                    new Table(ttt -> {
-                                        ttt.bottom().left();
-                                        ttt.add(amount + "").padTop(2f).fontScale(0.9f);
-                                        ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
-                                        ttt.pack();
-                                    }),
-                                    new Table(ttt -> {
-                                        ttt.top().right();
-                                        ttt.image(Icon.warning.getRegion()).update(img -> img.setColor(Tmp.c2.set(Color.orange).lerp(Color.scarlet, Mathf.absin(Time.time, 2f, 1f)))).size(12f);
-                                        ttt.visible(() -> group.effect == StatusEffects.boss);
-                                        ttt.pack();
-                                    })
-                            ).pad(2f).get().addListener(new Tooltip(to -> {
+                            unitTable.stack(new Table(ttt -> {
+                                ttt.center();
+                                ttt.image(group.type.shadowRegion).size(64);
+                                ttt.pack();
+                            }), new Table(ttt -> {
+                                ttt.bottom().left();
+                                ttt.add(amount + "").padTop(2f).fontScale(0.9f);
+                                ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
+                                ttt.pack();
+                            }), new Table(ttt -> {
+                                ttt.top().right();
+                                ttt.image(Icon.warning.getRegion()).update(img -> img.setColor(Tmp.c2.set(Color.orange).lerp(Color.scarlet, Mathf.absin(Time.time, 2f, 1f)))).size(12f);
+                                ttt.visible(() -> group.effect == StatusEffects.boss);
+                                ttt.pack();
+                            })).pad(2f).get().addListener(new Tooltip(to -> {
                                 to.background(Styles.black6);
                                 to.margin(4f).left();
                                 to.add("[stat]" + group.type.localizedName + "[]");
