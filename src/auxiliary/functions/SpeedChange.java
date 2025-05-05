@@ -26,7 +26,6 @@ public class SpeedChange extends Function {
                 speedLabel.setText("[accent]" + (int) speeds[(int) value] + "x");
             }).margin(0f).pad(0f).growX();
             t.row();
-            t.add("[red]锁帧可能导致大倍率加速失效").fontScale(0.8f);
         });
     }
 }
