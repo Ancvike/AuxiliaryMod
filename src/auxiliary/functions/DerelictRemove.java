@@ -19,7 +19,7 @@ public class DerelictRemove extends Function {
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if (Vars.state.rules.sector.isCaptured() || Vars.state.rules.mode() == Gamemode.sandbox) {
+            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox) {
                 Seq<Building> buildings = Team.derelict.data().buildings;
                 int a = buildings.size;
                 while (a != 0) {
