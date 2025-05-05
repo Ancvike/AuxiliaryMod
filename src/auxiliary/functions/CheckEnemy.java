@@ -37,6 +37,7 @@ public class CheckEnemy extends Function {
             waveEnemy.clearChildren();
             waveEnemy.setWidget(build());
             if (state.rules.winWave == 0) wave = state.wave + 20;
+            else wave = state.rules.winWave;
         });
 
         Events.on(EventType.WaveEvent.class, e -> {
@@ -44,6 +45,7 @@ public class CheckEnemy extends Function {
             waveEnemy.clearChildren();
             waveEnemy.setWidget(build());
             if (state.rules.winWave == 0) wave = state.wave + 20;
+            else wave = state.rules.winWave;
         });
     }
 
