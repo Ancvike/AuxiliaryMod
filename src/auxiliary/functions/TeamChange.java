@@ -14,7 +14,7 @@ import static mindustry.Vars.state;
 
 public class TeamChange extends Function {
     public TeamChange() {
-        super(3, "改变队伍");
+        super(3, new Table(table -> table.add("改变队伍")));
     }
 
     @Override

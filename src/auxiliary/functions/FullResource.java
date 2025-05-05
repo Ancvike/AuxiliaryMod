@@ -11,7 +11,7 @@ import static auxiliary.functions.Menu.dialog;
 public class FullResource extends Function {
 
     public FullResource() {
-        super(1, "核心资源最大化");
+        super(1, new Table(table -> table.add("核心内资源最大化")));
     }
 
     @Override

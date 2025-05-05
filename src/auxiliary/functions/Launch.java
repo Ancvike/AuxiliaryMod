@@ -42,7 +42,7 @@ public class Launch extends Function {
     MyPlanetDialog dialog = new MyPlanetDialog();
 
     public Launch() {
-        super(2, "从此区块发射");
+        super(2, new Table(table -> table.add("从此区块发射")));
     }
 
     @Override

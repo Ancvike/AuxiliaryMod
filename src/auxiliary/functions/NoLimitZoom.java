@@ -3,12 +3,11 @@ package auxiliary.functions;
 import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
-import mindustry.type.Sector;
 
 public class NoLimitZoom extends Function {
 
     public NoLimitZoom() {
-        super(0, "无限制缩放");
+        super(0, new Table(table -> table.add("无限制缩放")));
     }
 
     @Override

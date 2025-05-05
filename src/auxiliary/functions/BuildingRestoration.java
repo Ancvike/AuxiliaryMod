@@ -9,7 +9,7 @@ import static auxiliary.functions.Menu.dialog;
 
 public class BuildingRestoration extends Function {
     public BuildingRestoration() {
-        super(1, "建筑修复");
+        super(1, new Table(table -> table.add("建筑修复")));
     }
 
     @Override
