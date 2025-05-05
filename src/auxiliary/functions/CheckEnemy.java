@@ -18,6 +18,7 @@ import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
+import static arc.Core.settings;
 import static mindustry.Vars.state;
 
 public class CheckEnemy extends Function {
@@ -36,7 +37,6 @@ public class CheckEnemy extends Function {
             waveEnemy.clearChildren();
             waveEnemy.setWidget(build());
             if (state.rules.winWave == 0) wave = state.wave + 20;
-            else wave = state.rules.winWave;
         });
 
         Events.on(EventType.WaveEvent.class, e -> {
@@ -44,13 +44,15 @@ public class CheckEnemy extends Function {
             waveEnemy.clearChildren();
             waveEnemy.setWidget(build());
             if (state.rules.winWave == 0) wave = state.wave + 20;
-            else wave = state.rules.winWave;
         });
     }
 
     @Override
     public Table function() {
-        return new Table(t -> t.button("查看", dialog::show).width(200f));
+        return new Table(t -> t.button("查看", () -> {
+            dialog.cont.add("" + Math.min(state.wave + settings.getInt("wavemax"), (state.isCampaign() && state.rules.winWave > 0 ? state.rules.winWave : Integer.MAX_VALUE)));
+            dialog.show();
+        }).width(200f));
     }
 
     public Table build() {
