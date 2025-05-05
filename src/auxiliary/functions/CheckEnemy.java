@@ -45,7 +45,6 @@ public class CheckEnemy extends Function {
             if (state.rules.winWave == 0) wave = state.wave + 20;
             else wave = state.rules.winWave;
             waveEnemy.setWidget(build());
-
         });
     }
 
@@ -82,7 +81,7 @@ public class CheckEnemy extends Function {
                             }), new Table(ttt -> {
                                 ttt.bottom().left();
                                 ttt.add(amount + "").padTop(2f).fontScale(0.9f);
-                                ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
+//                                ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
                                 ttt.pack();
                             }), new Table(ttt -> {
                                 ttt.top().right();
