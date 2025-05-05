@@ -118,7 +118,7 @@ public class KeyBind extends InputHandler {
 
         Events.run(EventType.Trigger.update, () -> {
             if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.OPEN_MENU.nowKeyCode)) {
-                dialog.visible = !dialog.visible;
+                dialog.show();
             }
         });
     }
