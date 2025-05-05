@@ -81,18 +81,14 @@ public class CheckEnemy extends Function {
                             }), new Table(ttt -> {
                                 ttt.bottom().left();
                                 ttt.add(amount + "").padTop(2f).fontScale(0.9f);
-//                                ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
+                                ttt.add("[stat]" + group.type.localizedName + "[]").padTop(10f).fontScale(0.7f);
                                 ttt.pack();
                             }), new Table(ttt -> {
                                 ttt.top().right();
                                 ttt.image(Icon.warning.getRegion()).update(img -> img.setColor(Tmp.c2.set(Color.orange).lerp(Color.scarlet, Mathf.absin(Time.time, 2f, 1f)))).size(12f);
                                 ttt.visible(() -> group.effect == StatusEffects.boss);
                                 ttt.pack();
-                            })).pad(2f).get().addListener(new Tooltip(to -> {
-                                to.background(Styles.black6);
-                                to.margin(4f).left();
-                                to.add("[stat]" + group.type.localizedName + "[]");
-                            }));
+                            })).pad(2f).get();
                             if (row++ % max == max - 1) {
                                 unitTable.row();
                             }
