@@ -2,6 +2,7 @@ package auxiliary.functions;
 
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
+import mindustry.game.Gamemode;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 
@@ -15,7 +16,7 @@ public class UnitsRestoration extends Function {
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if (Vars.state.rules.sector.isCaptured()) {
+            if (Vars.state.rules.sector.isCaptured() || Vars.state.rules.mode() == Gamemode.sandbox) {
                 for (Unit unit : Vars.player.team().data().units) {
                     unit.health = unit.maxHealth;
                 }

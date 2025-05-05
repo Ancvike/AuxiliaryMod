@@ -6,6 +6,7 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
+import mindustry.game.Gamemode;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 
@@ -49,7 +50,7 @@ public class Invincibility extends Function {
             CheckBox box = new CheckBox("");
             box.update(() -> box.setChecked(isInvincible));
             box.changed(() -> {
-                if (Vars.state.rules.sector.isCaptured()) {
+                if (Vars.state.rules.sector.isCaptured() || Vars.state.rules.mode() == Gamemode.sandbox) {
                     isInvincible = !isInvincible;
                     if (!isInvincible) {
                         Vars.player.unit().health = Vars.player.unit().maxHealth;
