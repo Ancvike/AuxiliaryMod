@@ -16,12 +16,13 @@ public class SpeedChange extends Function {
     public Table function() {
         float[] speeds = {1f, 2f, 5f, 10f, 20f, 50f, 100f};
         return new Table(t -> {
-            t.add("[red]锁帧可能导致大倍率加速失效");
             t.add(speedLabel).margin(0f).pad(0f).growX();
             t.slider(0, speeds.length - 1, 1, 0, value -> {
                 Time.setDeltaProvider(() -> Math.min(Core.graphics.getDeltaTime() * 60.0f * speeds[(int) value], 3.0f));
                 speedLabel.setText("[accent]" + (int) speeds[(int) value] + "x");
             }).margin(0f).pad(0f).growX();
+            t.row();
+            t.add("[red]锁帧可能导致大倍率加速失效").padTop(10f).fontScale(0.8f);
         });
     }
 }
