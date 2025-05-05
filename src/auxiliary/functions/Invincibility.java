@@ -50,7 +50,7 @@ public class Invincibility extends Function {
             CheckBox box = new CheckBox("");
             box.update(() -> box.setChecked(isInvincible));
             box.changed(() -> {
-                if (Vars.state.rules.sector.isCaptured() || Vars.state.rules.mode() == Gamemode.sandbox) {
+                if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox) {
                     isInvincible = !isInvincible;
                     if (!isInvincible) {
                         Vars.player.unit().health = Vars.player.unit().maxHealth;
