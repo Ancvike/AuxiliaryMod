@@ -53,7 +53,7 @@ public class CheckEnemy extends Function {
     public Table function() {
         return new Table(t -> t.button("查看", () -> {
             //dialog.cont.add("" + Math.min(state.wave + settings.getInt("wavemax"), (state.isCampaign() && state.rules.winWave > 0 ? state.rules.winWave : Integer.MAX_VALUE)));
-            dialog.cont.add("" + wave);
+            dialog.cont.add("..." + wave);
             dialog.show();
         }).width(200f));
     }
