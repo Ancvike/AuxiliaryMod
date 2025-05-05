@@ -4,7 +4,6 @@ import arc.Events;
 import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.scene.ui.ScrollPane;
-import arc.scene.ui.Tooltip;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectIntMap;
 import arc.struct.Seq;
@@ -15,7 +14,6 @@ import mindustry.game.EventType;
 import mindustry.game.SpawnGroup;
 import mindustry.gen.Icon;
 import mindustry.graphics.Pal;
-import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
 import static mindustry.Vars.state;
@@ -72,7 +70,7 @@ public class CheckEnemy extends Function {
                         int row = 0;
                         int max = 16;
                         for (SpawnGroup group : groups.keys()) {
-                            int spawners = state.rules.waveTeam.cores().size;
+                            state.rules.waveTeam.cores();
                             int amount = groups.get(group);
                             unitTable.stack(new Table(ttt -> {
                                 ttt.center();
@@ -81,7 +79,7 @@ public class CheckEnemy extends Function {
                             }), new Table(ttt -> {
                                 ttt.bottom().left();
                                 ttt.add(amount + "").padTop(2f).fontScale(0.9f);
-                                ttt.add("[stat]" + group.type.localizedName + "[]").padTop(10f).fontScale(0.7f);
+                                ttt.add("[stat]" + group.type.localizedName + "[]").padTop(10f).fontScale(1f);
                                 ttt.pack();
                             }), new Table(ttt -> {
                                 ttt.top().right();
