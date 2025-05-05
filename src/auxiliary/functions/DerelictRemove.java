@@ -12,7 +12,7 @@ import static auxiliary.functions.Menu.dialog;
 public class DerelictRemove extends Function {
 
     public DerelictRemove() {
-        super(1, "清除废墟");
+        super(1, new Table(table -> table.add("清除废墟")));
     }
 
     @Override

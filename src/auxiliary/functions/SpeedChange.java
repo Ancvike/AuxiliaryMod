@@ -2,6 +2,7 @@ package auxiliary.functions;
 
 import arc.Core;
 import arc.scene.ui.Label;
+import arc.scene.ui.Tooltip;
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
 
@@ -9,7 +10,10 @@ public class SpeedChange extends Function {
     Label speedLabel = new Label("[accent]1x");
 
     public SpeedChange() {
-        super(0, "改变游戏速度");
+        super(0, new Table(table -> {
+            table.add("改变游戏速度");
+            table.addListener(new Tooltip(t -> t.add("[red]锁帧可能导致大倍率加速失效")));
+        }));
     }
 
     @Override

@@ -9,7 +9,7 @@ import static auxiliary.functions.Menu.dialog;
 
 public class UnitsRestoration extends Function {
     public UnitsRestoration() {
-        super(1, "单位修复");
+        super(1, new Table(table -> table.add("单位修复")));
     }
 
     @Override

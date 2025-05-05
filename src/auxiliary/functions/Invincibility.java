@@ -18,7 +18,7 @@ public class Invincibility extends Function {
     Unit unitPlayer = null;
 
     public Invincibility() {
-        super(1, "当前单位和所控制单位无敌");
+        super(1, new Table(table -> table.add("当前单位和所控制单位无敌")));
 
         Events.run(EventType.Trigger.update, () -> {
             if (isInvincible) {
