@@ -18,6 +18,7 @@ import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 
+import static arc.Core.settings;
 import static mindustry.Vars.state;
 
 public class CheckEnemy extends Function {
@@ -55,7 +56,7 @@ public class CheckEnemy extends Function {
         return new Table(t -> {
             t.center().defaults().growX();
 
-            for (int i = 1; i <= wave; i++) {
+            for (int i = 1; i <= Math.min(state.wave + settings.getInt("wavemax"), (state.isCampaign() && state.rules.winWave > 0 ? state.rules.winWave : Integer.MAX_VALUE)); i++) {
                 final int index = i;
 
                 t.table(waveRow -> {
