@@ -27,7 +27,7 @@ public class CheckEnemy extends Function {
     public CheckEnemy() {
         super(0, new Table(table -> {
             table.add("查看敌人波次");
-            table.addListener(new Tooltip(t -> t.add("查看敌人波次信息,若非战役模式则只显示当前波次及后20波次信息")));
+            table.addListener(new Tooltip(t -> t.add("查看敌人波次信息,若非战役模式则只显示当前波次及后20波次信息,[red]三角警示代表BOSS")));
         }));
 
         dialog.cont.add(waveEnemy).grow();
