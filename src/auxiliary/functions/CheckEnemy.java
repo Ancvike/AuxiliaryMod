@@ -72,11 +72,13 @@ public class CheckEnemy extends Function {
                         for (SpawnGroup group : groups.keys()) {
                             int spawners = state.rules.waveTeam.cores().size;
                             int amount = groups.get(group);
-                            unitTable.stack(new Table(ttt -> {
-                                ttt.center();
-                                ttt.image(group.type.shadowRegion).size(64);
-                                ttt.pack();
-                            }), new Table(ttt -> {
+                            unitTable.stack(
+//                                    new Table(ttt -> {
+//                                ttt.center();
+//                                ttt.image(group.type.shadowRegion).size(64);
+//                                ttt.pack();
+//                            }),
+                                    new Table(ttt -> {
                                 ttt.bottom().left();
                                 ttt.add(amount + "").padTop(2f).fontScale(0.9f);
                                 ttt.add("[gray]x" + spawners).padTop(10f).fontScale(0.7f);
