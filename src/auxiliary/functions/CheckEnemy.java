@@ -29,7 +29,6 @@ public class CheckEnemy extends Function {
     public CheckEnemy() {
         super(0, "查看波次敌人");
 
-        dialog.cont.add("波次: " + state.rules.winWave);
         dialog.cont.add(waveEnemy).grow();
         dialog.addCloseButton();
 
@@ -50,7 +49,10 @@ public class CheckEnemy extends Function {
 
     @Override
     public Table function() {
-        return new Table(t -> t.button("查看", dialog::show).width(200f));
+        return new Table(t -> t.button("查看", () -> {
+            dialog.cont.add("波次: " + state.rules.winWave);
+            dialog.show();
+        }).width(200f));
     }
 
     public Table build() {
