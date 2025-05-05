@@ -15,6 +15,7 @@ import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
 
+import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.*;
 
 public class KeyBind extends InputHandler {
@@ -112,6 +113,12 @@ public class KeyBind extends InputHandler {
         Events.run(EventType.Trigger.update, () -> {
             if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
                 healSelectedUnits();
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.OPEN_MENU.nowKeyCode)) {
+                dialog.visible = !dialog.visible;
             }
         });
     }
