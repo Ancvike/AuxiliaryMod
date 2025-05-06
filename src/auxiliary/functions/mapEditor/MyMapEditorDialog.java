@@ -14,7 +14,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
             try{
                 BaseDialog baseDialog = new BaseDialog("Loading Successfully");
                 baseDialog.addCloseButton();
-                baseDialog.show();
+                if (file == null) baseDialog.show();
                 editor.beginEdit(MapIO.createMap(file, true));
                 show();
             }catch(Exception e){
