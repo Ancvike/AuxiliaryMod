@@ -1,6 +1,7 @@
-package auxiliary.functions;
+package auxiliary.functions.mapEditor;
 
 import arc.Core;
+import arc.files.Fi;
 import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.Pixmap;
@@ -19,6 +20,7 @@ import arc.struct.StringMap;
 import arc.util.*;
 import mindustry.Vars;
 import mindustry.content.UnitTypes;
+import mindustry.core.GameState.State;
 import mindustry.editor.*;
 import mindustry.game.Gamemode;
 import mindustry.game.MapObjectives.MapObjective;
@@ -44,7 +46,7 @@ import mindustry.world.meta.Env;
 
 import static mindustry.Vars.*;
 
-public class MapEditorDialog extends Dialog implements Disposable{
+public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
     private MapView view;
     private MapInfoDialog infoDialog;
     private MapLoadDialog loadDialog;
@@ -56,11 +58,12 @@ public class MapEditorDialog extends Dialog implements Disposable{
     private BaseDialog menu;
     private Table blockSelection;
     private Rules lastSavedRules;
+    private boolean saved = false; //currently never read
     private boolean shownWithMap = false;
     private Seq<Block> blocksOut = new Seq<>();
 
-    public MapEditorDialog(){
-        super("");
+    public MyMapEditorDialog(){
+        super();
 
         background(Styles.black);
 
@@ -102,13 +105,15 @@ public class MapEditorDialog extends Dialog implements Disposable{
             t.button("@editor.import", Icon.download, () -> createDialog("@editor.import",
                 "@editor.importmap", "@editor.importmap.description", Icon.download, (Runnable)loadDialog::show,
                 "@editor.importfile", "@editor.importfile.description", Icon.file, (Runnable)() ->
-                platform.showFileChooser(true, mapExtension, file -> ui.loadAnd(() -> maps.tryCatchMapError(() -> {
-                    if(MapIO.isImage(file)){
-                        ui.showInfo("@editor.errorimage");
-                    }else{
-                        editor.beginEdit(MapIO.createMap(file, true));
-                    }
-                }))),
+                platform.showFileChooser(true, mapExtension, file -> ui.loadAnd(() -> {
+                    maps.tryCatchMapError(() -> {
+                        if(MapIO.isImage(file)){
+                            ui.showInfo("@editor.errorimage");
+                        }else{
+                            editor.beginEdit(MapIO.createMap(file, true));
+                        }
+                    });
+                })),
 
                 "@editor.importimage", "@editor.importimage.description", Icon.fileImage, (Runnable)() ->
                 platform.showFileChooser(true, "png", file ->
@@ -195,7 +200,9 @@ public class MapEditorDialog extends Dialog implements Disposable{
 
         resizeDialog = new MapResizeDialog((width, height, shiftX, shiftY) -> {
             if(!(editor.width() == width && editor.height() == height && shiftX == 0 && shiftY == 0)){
-                ui.loadAnd(() -> editor.resize(width, height, shiftX, shiftY));
+                ui.loadAnd(() -> {
+                    editor.resize(width, height, shiftX, shiftY);
+                });
             }
         });
 
@@ -221,6 +228,7 @@ public class MapEditorDialog extends Dialog implements Disposable{
 
         shown(() -> {
 
+            saved = true;
             if(!Core.settings.getBool("landscape")) platform.beginForceLandscape();
             editor.clearOp();
             Core.scene.setScrollFocus(view);
@@ -242,6 +250,16 @@ public class MapEditorDialog extends Dialog implements Disposable{
         });
 
         shown(this::build);
+    }
+
+    public void resumeEditing(){
+        state.set(State.menu);
+        shownWithMap = true;
+        show();
+        state.rules = (lastSavedRules == null ? new Rules() : lastSavedRules);
+        lastSavedRules = null;
+        saved = false;
+        editor.renderer.updateAll();
     }
 
     private void editInGame(){
@@ -285,6 +303,10 @@ public class MapEditorDialog extends Dialog implements Disposable{
 
             player.checkSpawn();
         });
+    }
+
+    public void resumeAfterPlaytest(Map map){
+        beginEditMap(map.file);
     }
 
     private void playtest(){
@@ -334,7 +356,7 @@ public class MapEditorDialog extends Dialog implements Disposable{
         }else{
             Map map = maps.all().find(m -> m.name().equals(name));
             if(map != null && !map.custom && !map.workshop){
-                handleSaveBuiltin();
+                handleSaveBuiltin(map);
             }else{
                 boolean workshop = false;
                 //try to preserve Steam ID
@@ -351,12 +373,13 @@ public class MapEditorDialog extends Dialog implements Disposable{
         }
 
         menu.hide();
+        saved = true;
         state.rules.editor = isEditor;
         return returned;
     }
 
     /** Called when a built-in map save is attempted.*/
-    protected void handleSaveBuiltin(){
+    protected void handleSaveBuiltin(Map map){
         ui.showErrorMessage("@editor.save.overwrite");
     }
 
@@ -416,6 +439,35 @@ public class MapEditorDialog extends Dialog implements Disposable{
     @Override
     public void dispose(){
         editor.renderer.dispose();
+    }
+
+    public void beginEditMap(Fi file){
+        ui.loadAnd(() -> {
+            try{
+                shownWithMap = true;
+                editor.beginEdit(MapIO.createMap(file, true));
+                show();
+            }catch(Exception e){
+                Log.err(e);
+                ui.showException("@editor.errorload", e);
+            }
+        });
+    }
+
+    public MapView getView(){
+        return view;
+    }
+
+    public MapGenerateDialog getGenerateDialog(){
+        return generateDialog;
+    }
+
+    public void resetSaved(){
+        saved = false;
+    }
+
+    public boolean hasPane(){
+        return Core.scene.getScrollFocus() == pane || Core.scene.getKeyboardFocus() != this;
     }
 
     public void build(){
@@ -596,12 +648,16 @@ public class MapEditorDialog extends Dialog implements Disposable{
                 mid.row();
 
                 if(!mobile){
-                    mid.table(t -> t.button("@editor.center", Icon.move, Styles.flatt, view::center).growX().margin(9f)).growX().top();
+                    mid.table(t -> {
+                        t.button("@editor.center", Icon.move, Styles.flatt, view::center).growX().margin(9f);
+                    }).growX().top();
                 }
 
                 mid.row();
 
-                mid.table(t -> t.button("@editor.cliffs", Icon.terrain, Styles.flatt, editor::addCliffs).growX().margin(9f)).growX().top();
+                mid.table(t -> {
+                    t.button("@editor.cliffs", Icon.terrain, Styles.flatt, editor::addCliffs).growX().margin(9f);
+                }).growX().top();
             }).margin(0).left().growY();
 
 
