@@ -62,7 +62,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
     private boolean shownWithMap = false;
     private Seq<Block> blocksOut = new Seq<>();
 
-    public MyMapEditorDialog(){
+    public MyMapEditorDialog() {
         super();
 
         background(Styles.black);
@@ -103,39 +103,39 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
             t.row();
 
             t.button("@editor.import", Icon.download, () -> createDialog("@editor.import",
-                "@editor.importmap", "@editor.importmap.description", Icon.download, (Runnable)loadDialog::show,
-                "@editor.importfile", "@editor.importfile.description", Icon.file, (Runnable)() ->
-                platform.showFileChooser(true, mapExtension, file -> ui.loadAnd(() -> maps.tryCatchMapError(() -> {
-                    if(MapIO.isImage(file)){
-                        ui.showInfo("@editor.errorimage");
-                    }else{
-                        editor.beginEdit(MapIO.createMap(file, true));
-                    }
-                }))),
+                    "@editor.importmap", "@editor.importmap.description", Icon.download, (Runnable) loadDialog::show,
+                    "@editor.importfile", "@editor.importfile.description", Icon.file, (Runnable) () ->
+                            platform.showFileChooser(true, mapExtension, file -> ui.loadAnd(() -> maps.tryCatchMapError(() -> {
+                                if (MapIO.isImage(file)) {
+                                    ui.showInfo("@editor.errorimage");
+                                } else {
+                                    editor.beginEdit(MapIO.createMap(file, true));
+                                }
+                            }))),
 
-                "@editor.importimage", "@editor.importimage.description", Icon.fileImage, (Runnable)() ->
-                platform.showFileChooser(true, "png", file ->
-                ui.loadAnd(() -> {
-                    try{
-                        Pixmap pixmap = new Pixmap(file);
-                        editor.beginEdit(pixmap);
-                        pixmap.dispose();
-                    }catch(Exception e){
-                        ui.showException("@editor.errorload", e);
-                        Log.err(e);
-                    }
-                })))
+                    "@editor.importimage", "@editor.importimage.description", Icon.fileImage, (Runnable) () ->
+                            platform.showFileChooser(true, "png", file ->
+                                    ui.loadAnd(() -> {
+                                        try {
+                                            Pixmap pixmap = new Pixmap(file);
+                                            editor.beginEdit(pixmap);
+                                            pixmap.dispose();
+                                        } catch (Exception e) {
+                                            ui.showException("@editor.errorload", e);
+                                            Log.err(e);
+                                        }
+                                    })))
             );
 
             t.button("@editor.export", Icon.upload, () -> createDialog("@editor.export",
-            "@editor.exportfile", "@editor.exportfile.description", Icon.file,
-                (Runnable)() -> platform.export(editor.tags.get("name", "unknown"), mapExtension, file -> MapIO.writeMap(file, editor.createMap(file))),
-            "@editor.exportimage", "@editor.exportimage.description", Icon.fileImage,
-                (Runnable)() -> platform.export(editor.tags.get("name", "unknown"), "png", file -> {
-                    Pixmap out = MapIO.writeImage(editor.tiles());
-                    file.writePng(out);
-                    out.dispose();
-                })));
+                    "@editor.exportfile", "@editor.exportfile.description", Icon.file,
+                    (Runnable) () -> platform.export(editor.tags.get("name", "unknown"), mapExtension, file -> MapIO.writeMap(file, editor.createMap(file))),
+                    "@editor.exportimage", "@editor.exportimage.description", Icon.fileImage,
+                    (Runnable) () -> platform.export(editor.tags.get("name", "unknown"), "png", file -> {
+                        Pixmap out = MapIO.writeImage(editor.tiles());
+                        file.writePng(out);
+                        out.dispose();
+                    })));
 
             t.row();
 
@@ -146,39 +146,39 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
 
         menu.cont.row();
 
-        if(steam){
+        if (steam) {
             menu.cont.button("@editor.publish.workshop", Icon.link, () -> {
                 Map builtin = maps.all().find(m -> m.name().equals(editor.tags.get("name", "").trim()));
 
-                if(editor.tags.containsKey("steamid") && builtin != null && !builtin.custom){
+                if (editor.tags.containsKey("steamid") && builtin != null && !builtin.custom) {
                     platform.viewListingID(editor.tags.get("steamid"));
                     return;
                 }
 
                 Map map = save();
 
-                if(editor.tags.containsKey("steamid") && map != null){
+                if (editor.tags.containsKey("steamid") && map != null) {
                     platform.viewListing(map);
                     return;
                 }
 
-                if(map == null) return;
+                if (map == null) return;
 
-                if(map.tags.get("description", "").length() < 4){
+                if (map.tags.get("description", "").length() < 4) {
                     ui.showErrorMessage("@editor.nodescription");
                     return;
                 }
 
-                if(!Structs.contains(Gamemode.all, g -> g.valid(map))){
+                if (!Structs.contains(Gamemode.all, g -> g.valid(map))) {
                     ui.showErrorMessage("@map.nospawn");
                     return;
                 }
 
                 platform.publish(map);
             }).padTop(-3).size(swidth * 2f + 10, 60f).update(b ->
-                b.setText(editor.tags.containsKey("steamid") ?
-                    editor.tags.get("author", "").equals(steamPlayerName) ? "@workshop.listing" : "@view.workshop" :
-                "@editor.publish.workshop"));
+                    b.setText(editor.tags.containsKey("steamid") ?
+                            editor.tags.get("author", "").equals(steamPlayerName) ? "@workshop.listing" : "@view.workshop" :
+                            "@editor.publish.workshop"));
 
             menu.cont.row();
         }
@@ -197,15 +197,15 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         }).padTop(1).size(swidth * 2f + 10, 60f);
 
         resizeDialog = new MapResizeDialog((width, height, shiftX, shiftY) -> {
-            if(!(editor.width() == width && editor.height() == height && shiftX == 0 && shiftY == 0)){
+            if (!(editor.width() == width && editor.height() == height && shiftX == 0 && shiftY == 0)) {
                 ui.loadAnd(() -> editor.resize(width, height, shiftX, shiftY));
             }
         });
 
         loadDialog = new MapLoadDialog(map -> ui.loadAnd(() -> {
-            try{
+            try {
                 editor.beginEdit(map);
-            }catch(Exception e){
+            } catch (Exception e) {
                 ui.showException("@editor.errorload", e);
                 Log.err(e);
             }
@@ -217,17 +217,17 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         margin(0);
 
         update(() -> {
-            if(hasKeyboard()){
+            if (hasKeyboard()) {
                 doInput();
             }
         });
 
         shown(() -> {
 
-            if(!Core.settings.getBool("landscape")) platform.beginForceLandscape();
+            if (!Core.settings.getBool("landscape")) platform.beginForceLandscape();
             editor.clearOp();
             Core.scene.setScrollFocus(view);
-            if(!shownWithMap){
+            if (!shownWithMap) {
                 //clear units, rules and other unnecessary stuff
                 logic.reset();
                 state.rules = new Rules();
@@ -241,22 +241,13 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         hidden(() -> {
             editor.clearOp();
             platform.updateRPC();
-            if(!Core.settings.getBool("landscape")) platform.endForceLandscape();
+            if (!Core.settings.getBool("landscape")) platform.endForceLandscape();
         });
 
         shown(this::build);
     }
 
-    public void resumeEditing(){
-        state.set(State.menu);
-        shownWithMap = true;
-        show();
-        state.rules = (lastSavedRules == null ? new Rules() : lastSavedRules);
-        lastSavedRules = null;
-        editor.renderer.updateAll();
-    }
-
-    private void editInGame(){
+    private void editInGame() {
         menu.hide();
         ui.loadAnd(() -> {
             lastSavedRules = state.rules;
@@ -269,17 +260,17 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
             state.rules.sector = null;
             state.rules.fog = false;
             state.map = new Map(StringMap.of(
-                "name", "Editor Playtesting",
-                "width", editor.width(),
-                "height", editor.height()
+                    "name", "Editor Playtesting",
+                    "width", editor.width(),
+                    "height", editor.height()
             ));
             world.endMapLoad();
-            player.set(world.width() * tilesize/2f, world.height() * tilesize/2f);
+            player.set(world.width() * tilesize / 2f, world.height() * tilesize / 2f);
             Core.camera.position.set(player);
             player.clearUnit();
 
-            for(var unit : Groups.unit){
-                if(unit.spawnedByCore){
+            for (var unit : Groups.unit) {
+                if (unit.spawnedByCore) {
                     unit.remove();
                 }
             }
@@ -288,8 +279,8 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
             Groups.weather.clear();
             logic.play();
 
-            if(player.team().core() == null){
-                player.set(world.width() * tilesize/2f, world.height() * tilesize/2f);
+            if (player.team().core() == null) {
+                player.set(world.width() * tilesize / 2f, world.height() * tilesize / 2f);
                 var unit = (state.rules.hasEnv(Env.scorching) ? UnitTypes.evoke : UnitTypes.alpha).spawn(player.team(), player.x, player.y);
                 unit.spawnedByCore = true;
                 player.unit(unit);
@@ -299,32 +290,32 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         });
     }
 
-    public void resumeAfterPlaytest(Map map){
+    public void resumeAfterPlaytest(Map map) {
         beginEditMap(map.file);
     }
 
-    private void playtest(){
+    private void playtest() {
         menu.hide();
         Map map = save();
 
-        if(map != null){
+        if (map != null) {
             //skip dialog, play immediately when shift clicked
-            if(Core.input.shift()){
+            if (Core.input.shift()) {
                 hide();
                 //auto pick best fit
                 control.playMap(map, map.applyRules(
-                    Gamemode.survival.valid(map) ? Gamemode.survival :
-                    Gamemode.attack.valid(map) ? Gamemode.attack :
-                    Gamemode.sandbox), true
+                        Gamemode.survival.valid(map) ? Gamemode.survival :
+                                Gamemode.attack.valid(map) ? Gamemode.attack :
+                                        Gamemode.sandbox), true
                 );
-            }else{
+            } else {
                 playtestDialog.playListener = this::hide;
                 playtestDialog.show(map, true);
             }
         }
     }
 
-    public @Nullable Map save(){
+    public @Nullable Map save() {
         boolean isEditor = state.rules.editor;
         state.rules.editor = false;
         state.rules.objectiveFlags.clear();
@@ -338,28 +329,28 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
 
         //remove player unit
         Unit unit = Groups.unit.find(u -> u.spawnedByCore);
-        if(unit != null){
+        if (unit != null) {
             unit.remove();
         }
 
         Map returned = null;
 
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             infoDialog.show();
             Core.app.post(() -> ui.showErrorMessage("@editor.save.noname"));
-        }else{
+        } else {
             Map map = maps.all().find(m -> m.name().equals(name));
-            if(map != null && !map.custom && !map.workshop){
+            if (map != null && !map.custom && !map.workshop) {
                 handleSaveBuiltin(map);
-            }else{
+            } else {
                 boolean workshop = false;
                 //try to preserve Steam ID
-                if(map != null && map.tags.containsKey("steamid")){
+                if (map != null && map.tags.containsKey("steamid")) {
                     editor.tags.put("steamid", map.tags.get("steamid"));
                     workshop = true;
                 }
                 returned = maps.saveMap(editor.tags);
-                if(workshop){
+                if (workshop) {
                     returned.workshop = workshop;
                 }
                 ui.showInfoFade("@editor.saved");
@@ -371,8 +362,10 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         return returned;
     }
 
-    /** Called when a built-in map save is attempted.*/
-    protected void handleSaveBuiltin(Map map){
+    /**
+     * Called when a built-in map save is attempted.
+     */
+    protected void handleSaveBuiltin(Map map) {
         ui.showErrorMessage("@editor.save.overwrite");
     }
 
@@ -383,18 +376,18 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
      * 2) icon name
      * 3) listener
      */
-    private void createDialog(String title, Object... arguments){
+    private void createDialog(String title, Object... arguments) {
         BaseDialog dialog = new BaseDialog(title);
 
         float h = 90f;
 
         dialog.cont.defaults().size(360f, h).padBottom(5).padRight(5).padLeft(5);
 
-        for(int i = 0; i < arguments.length; i += 4){
-            String name = (String)arguments[i];
-            String description = (String)arguments[i + 1];
-            Drawable iconname = (Drawable)arguments[i + 2];
-            Runnable listenable = (Runnable)arguments[i + 3];
+        for (int i = 0; i < arguments.length; i += 4) {
+            String name = (String) arguments[i];
+            String description = (String) arguments[i + 1];
+            Drawable iconname = (Drawable) arguments[i + 2];
+            Runnable listenable = (Runnable) arguments[i + 3];
 
             TextButton button = dialog.cont.button(name, () -> {
                 listenable.run();
@@ -420,49 +413,52 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
     }
 
     @Override
-    public Dialog show(){
+    public Dialog show() {
         return super.show(Core.scene, Actions.sequence(Actions.alpha(1f)));
     }
 
     @Override
-    public void hide(){
+    public void hide() {
         super.hide(Actions.sequence(Actions.alpha(0f)));
     }
 
     @Override
-    public void dispose(){
+    public void dispose() {
         editor.renderer.dispose();
     }
 
-    public void beginEditMap(Fi file){
+    public void beginEditMap(Fi file) {
         ui.loadAnd(() -> {
-            try{
+            try {
+                BaseDialog baseDialog = new BaseDialog("Loading Successfully");
+                baseDialog.addCloseButton();
+                baseDialog.show();
                 shownWithMap = true;
                 editor.beginEdit(MapIO.createMap(file, true));
                 show();
-            }catch(Exception e){
+            } catch (Exception e) {
                 Log.err(e);
                 ui.showException("@editor.errorload", e);
             }
         });
     }
 
-    public MapView getView(){
+    public MapView getView() {
         return view;
     }
 
-    public MapGenerateDialog getGenerateDialog(){
+    public MapGenerateDialog getGenerateDialog() {
         return generateDialog;
     }
 
-    public void resetSaved(){
+    public void resetSaved() {
     }
 
-    public boolean hasPane(){
+    public boolean hasPane() {
         return Core.scene.getScrollFocus() == pane || Core.scene.getKeyboardFocus() != this;
     }
 
-    public void build(){
+    public void build() {
         float size = mobile ? 50f : 58f;
 
         clearChildren();
@@ -482,33 +478,33 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
                     ImageButton button = new ImageButton(ui.getIcon(tool.name()), Styles.squareTogglei);
                     button.clicked(() -> {
                         view.setTool(tool);
-                        if(lastTable[0] != null){
+                        if (lastTable[0] != null) {
                             lastTable[0].remove();
                         }
                     });
                     button.update(() -> button.setChecked(view.getTool() == tool));
                     group.add(button);
 
-                    if(tool.altModes.length > 0){
+                    if (tool.altModes.length > 0) {
                         button.clicked(l -> {
-                            if(!mobile){
+                            if (!mobile) {
                                 //desktop: rightclick
                                 l.setButton(KeyCode.mouseRight);
                             }
                         }, e -> {
                             //need to double tap
-                            if(mobile && e.getTapCount() < 2){
+                            if (mobile && e.getTapCount() < 2) {
                                 return;
                             }
 
-                            if(lastTable[0] != null){
+                            if (lastTable[0] != null) {
                                 lastTable[0].remove();
                             }
 
                             Table table = new Table(Styles.black9);
                             table.defaults().size(300f, 70f);
 
-                            for(int i = 0; i < tool.altModes.length; i++){
+                            for (int i = 0; i < tool.altModes.length; i++) {
                                 int mode = i;
                                 String name = tool.altModes[i];
 
@@ -529,7 +525,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
                             table.update(() -> {
                                 Vec2 v = button.localToStageCoordinates(Tmp.v1.setZero());
                                 table.setPosition(v.x, v.y, Align.topLeft);
-                                if(!isShown()){
+                                if (!isShown()) {
                                     table.remove();
                                     lastTable[0] = null;
                                 }
@@ -595,7 +591,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
                 tools.row();
 
                 tools.table(Tex.underline, t -> t.add("@editor.teams"))
-                .colspan(3).height(40).width(size * 3f + 3f).padBottom(3);
+                        .colspan(3).height(40).width(size * 3f + 3f).padBottom(3);
 
                 tools.row();
 
@@ -603,7 +599,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
 
                 int i = 0;
 
-                for(Team team : Team.baseTeams){
+                for (Team team : Team.baseTeams) {
                     ImageButton button = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
                     button.margin(4f);
                     button.getImageCell().grow();
@@ -613,7 +609,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
                     teamgroup.add(button);
                     tools.add(button);
 
-                    if(i++ % 3 == 2) tools.row();
+                    if (i++ % 3 == 2) tools.row();
                 }
 
                 mid.add(tools).top().padBottom(-6);
@@ -622,9 +618,9 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
 
                 mid.table(Tex.underline, t -> {
                     Slider slider = new Slider(0, MapEditor.brushSizes.length - 1, 1, false);
-                    slider.moved(f -> editor.brushSize = MapEditor.brushSizes[(int)f]);
-                    for(int j = 0; j < MapEditor.brushSizes.length; j++){
-                        if(MapEditor.brushSizes[j] == editor.brushSize){
+                    slider.moved(f -> editor.brushSize = MapEditor.brushSizes[(int) f]);
+                    for (int j = 0; j < MapEditor.brushSizes.length; j++) {
+                        if (MapEditor.brushSizes[j] == editor.brushSize) {
                             slider.setValue(j);
                         }
                     }
@@ -639,7 +635,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
 
                 mid.row();
 
-                if(!mobile){
+                if (!mobile) {
                     mid.table(t -> t.button("@editor.center", Icon.move, Styles.flatt, view::center).growX().margin(9f)).growX().top();
                 }
 
@@ -656,69 +652,69 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         }).grow();
     }
 
-    private void doInput(){
+    private void doInput() {
 
-        if(Core.input.ctrl()){
+        if (Core.input.ctrl()) {
             //alt mode select
-            for(int i = 0; i < view.getTool().altModes.length; i++){
-                if(i + 1 < KeyCode.numbers.length && Core.input.keyTap(KeyCode.numbers[i + 1])){
+            for (int i = 0; i < view.getTool().altModes.length; i++) {
+                if (i + 1 < KeyCode.numbers.length && Core.input.keyTap(KeyCode.numbers[i + 1])) {
                     view.getTool().mode = i;
                 }
             }
-        }else{
-            for(EditorTool tool : EditorTool.all){
-                if(Core.input.keyTap(tool.key)){
+        } else {
+            for (EditorTool tool : EditorTool.all) {
+                if (Core.input.keyTap(tool.key)) {
                     view.setTool(tool);
                     break;
                 }
             }
         }
 
-        if(Core.input.keyTap(KeyCode.escape)){
-            if(!menu.isShown()){
+        if (Core.input.keyTap(KeyCode.escape)) {
+            if (!menu.isShown()) {
                 menu.show();
             }
         }
 
-        if(Core.input.keyTap(KeyCode.r)){
+        if (Core.input.keyTap(KeyCode.r)) {
             editor.rotation = Mathf.mod(editor.rotation + 1, 4);
         }
 
-        if(Core.input.keyTap(KeyCode.e)){
+        if (Core.input.keyTap(KeyCode.e)) {
             editor.rotation = Mathf.mod(editor.rotation - 1, 4);
         }
 
         //ctrl keys (undo, redo, save)
-        if(Core.input.ctrl()){
-            if(Core.input.keyTap(KeyCode.z)){
+        if (Core.input.ctrl()) {
+            if (Core.input.keyTap(KeyCode.z)) {
                 editor.undo();
             }
 
-            if(Core.input.keyTap(KeyCode.y)){
+            if (Core.input.keyTap(KeyCode.y)) {
                 editor.redo();
             }
 
-            if(Core.input.keyTap(KeyCode.s)){
+            if (Core.input.keyTap(KeyCode.s)) {
                 save();
             }
 
-            if(Core.input.keyTap(KeyCode.g)){
+            if (Core.input.keyTap(KeyCode.g)) {
                 view.setGrid(!view.isGrid());
             }
         }
     }
 
-    private void tryExit(){
+    private void tryExit() {
         ui.showConfirm("@confirm", "@editor.unsaved", this::hide);
     }
 
-    private void addBlockSelection(Table cont){
+    private void addBlockSelection(Table cont) {
         blockSelection = new Table();
         pane = new ScrollPane(blockSelection, Styles.smallPane);
         pane.setFadeScrollBars(false);
         pane.setOverscroll(true, false);
         pane.exited(() -> {
-            if(pane.hasScroll()){
+            if (pane.hasScroll()) {
                 Core.scene.setScrollFocus(view);
             }
         });
@@ -726,7 +722,7 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         cont.table(search -> {
             search.image(Icon.zoom).padRight(8);
             search.field("", this::rebuildBlockSelection).growX()
-            .name("editor/search").maxTextLength(maxNameLength).get().setMessageText("@players.search");
+                    .name("editor/search").maxTextLength(maxNameLength).get().setMessageText("@players.search");
         }).growX().pad(-2).padLeft(6f);
         cont.row();
         cont.table(Tex.underline, extra -> extra.labelWrap(() -> editor.drawBlock.localizedName).width(200f).center()).growX();
@@ -736,27 +732,27 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
         rebuildBlockSelection("");
     }
 
-    private void rebuildBlockSelection(String searchText){
+    private void rebuildBlockSelection(String searchText) {
         blockSelection.clear();
 
         blocksOut.clear();
         blocksOut.addAll(Vars.content.blocks());
         blocksOut.sort((b1, b2) -> {
             int core = -Boolean.compare(b1 instanceof CoreBlock, b2 instanceof CoreBlock);
-            if(core != 0) return core;
+            if (core != 0) return core;
             int synth = Boolean.compare(b1.synthetic(), b2.synthetic());
-            if(synth != 0) return synth;
+            if (synth != 0) return synth;
             int ore = Boolean.compare(b1 instanceof OverlayFloor, b2 instanceof OverlayFloor);
-            if(ore != 0) return ore;
+            if (ore != 0) return ore;
             return Integer.compare(b1.id, b2.id);
         });
 
         int i = 0;
 
-        for(Block block : blocksOut){
+        for (Block block : blocksOut) {
             TextureRegion region = block.uiIcon;
 
-            if(!Core.atlas.isFound(region) || !block.inEditor
+            if (!Core.atlas.isFound(region) || !block.inEditor
                     || block.buildVisibility == BuildVisibility.debugOnly
                     || (!searchText.isEmpty() && !block.localizedName.toLowerCase().contains(searchText.trim().replaceAll(" +", " ").toLowerCase()))
             ) continue;
@@ -768,14 +764,14 @@ public class MyMapEditorDialog extends mindustry.editor.MapEditorDialog {
             button.update(() -> button.setChecked(editor.drawBlock == block));
             blockSelection.add(button).size(50f).tooltip(block.localizedName);
 
-            if(i == 0) editor.drawBlock = block;
+            if (i == 0) editor.drawBlock = block;
 
-            if(++i % 6 == 0){
+            if (++i % 6 == 0) {
                 blockSelection.row();
             }
         }
 
-        if(i == 0){
+        if (i == 0) {
             blockSelection.add("@none.found").padLeft(54f).padTop(10f);
         }
     }
