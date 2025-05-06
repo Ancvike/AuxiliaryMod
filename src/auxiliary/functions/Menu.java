@@ -83,6 +83,8 @@ public class Menu {
             if (!isDragged) dialog.show();
         });
 
+        table.button(Icon.cancel, () -> new MapEditorDialog().show());
+
         Vars.ui.hudGroup.fill(t -> {
             t.name = "auxiliary-functions";
             t.add(table).row();
