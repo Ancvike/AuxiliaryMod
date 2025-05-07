@@ -12,7 +12,7 @@ public class MyMapEditorDialog extends MapEditorDialog {
     public void beginEditMap(Fi file) {
         ui.loadAnd(() -> {
             try {
-                Log.info("成功替换地图编辑器实例");
+                if (file == null) Log.info("11111");
                 editor.beginEdit(MapIO.createMap(file, true));
                 show();
             } catch (Exception e) {
