@@ -17,8 +17,6 @@ public class AuxiliaryMod extends Mod {
         new KeyBind().init();
         new SettingUI().init();
 
-        Events.run(EventType.ClientLoadEvent.class, () -> {
-            ui.editor = new MyMapEditorDialog();
-        });
+        Events.run(EventType.ClientLoadEvent.class, () -> ui.editor = new MyMapEditorDialog());
     }
 }
