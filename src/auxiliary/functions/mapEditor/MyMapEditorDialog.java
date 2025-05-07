@@ -21,6 +21,7 @@ public class MyMapEditorDialog extends MapEditorDialog {
                 Log.info("Loading map...");
                 editor.beginEdit(MapIO.createMap(file, true));
                 show();
+                editor.renderer.updateAll();
             } catch (Exception e) {
                 Log.err(e);
                 ui.showException("@editor.errorload", e);
