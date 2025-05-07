@@ -1,9 +1,11 @@
 package auxiliary;
 
+import arc.Events;
 import auxiliary.binding.KeyBind;
 import auxiliary.functions.Menu;
 import auxiliary.functions.mapEditor.MyMapEditorDialog;
 import auxiliary.ui.SettingUI;
+import mindustry.game.EventType;
 import mindustry.mod.Mod;
 
 import static mindustry.Vars.ui;
@@ -15,6 +17,8 @@ public class AuxiliaryMod extends Mod {
         new KeyBind().init();
         new SettingUI().init();
 
-        ui.editor = new MyMapEditorDialog();
+        Events.run(EventType.ClientLoadEvent.class, () -> {
+            ui.editor = new MyMapEditorDialog();
+        });
     }
 }

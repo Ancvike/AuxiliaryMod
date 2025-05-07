@@ -7,14 +7,15 @@ import mindustry.io.MapIO;
 
 import static mindustry.Vars.*;
 
-public class MyMapEditorDialog extends MapEditorDialog{
-
-    public void beginEditMap(Fi file){
+public class MyMapEditorDialog extends MapEditorDialog {
+    @Override
+    public void beginEditMap(Fi file) {
         ui.loadAnd(() -> {
-            try{
+            try {
+                Log.info("成功替换地图编辑器实例");
                 editor.beginEdit(MapIO.createMap(file, true));
                 show();
-            }catch(Exception e){
+            } catch (Exception e) {
                 Log.err(e);
                 ui.showException("@editor.errorload", e);
             }
