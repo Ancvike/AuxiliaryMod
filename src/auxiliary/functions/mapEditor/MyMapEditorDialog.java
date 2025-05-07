@@ -42,7 +42,7 @@ public class MyMapEditorDialog extends MapEditorDialog {
     private boolean shownWithMap = false;
 
     public MyMapEditorDialog() {
-        super();
+//        super();
 
         background(Styles.black);
 
