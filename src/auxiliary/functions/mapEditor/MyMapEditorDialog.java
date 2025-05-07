@@ -1,6 +1,7 @@
 package auxiliary.functions.mapEditor;
 
 import arc.Core;
+import arc.files.Fi;
 import arc.graphics.Color;
 import arc.graphics.Pixmap;
 import arc.input.KeyCode;
@@ -42,7 +43,7 @@ public class MyMapEditorDialog extends MapEditorDialog {
     private boolean shownWithMap = false;
 
     public MyMapEditorDialog() {
-//        super();
+        super();
 
         background(Styles.black);
 
@@ -382,4 +383,7 @@ public class MyMapEditorDialog extends MapEditorDialog {
         }
     }
 
+    public void beginEditMap(Fi file) {
+        super.beginEditMap(file);
+    }
 }
