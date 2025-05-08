@@ -38,7 +38,6 @@ public class MyMapEditorDialog extends MapEditorDialog {
     private MapPlayDialog playtestDialog;
     private BaseDialog menu;
     private Rules lastSavedRules;
-    //currently never read
 
     public MyMapEditorDialog() {
         background(Styles.black);
