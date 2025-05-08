@@ -18,7 +18,7 @@ public class FullResource extends Function {
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox) {
+            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
                 CoreBlock.CoreBuild core = Vars.player.team().core();
                 if (core == null || core.items == null) {
                     return;

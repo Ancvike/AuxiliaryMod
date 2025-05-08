@@ -20,7 +20,7 @@ public class WarfareFog extends Function {
             CheckBox box = new CheckBox("");
             box.update(() -> box.setChecked(state.rules.fog));
             box.changed(() -> {
-                if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox)
+                if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor)
                     state.rules.fog = !state.rules.fog;
                 else Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
             });
