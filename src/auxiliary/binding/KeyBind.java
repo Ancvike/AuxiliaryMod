@@ -153,7 +153,7 @@ public class KeyBind extends InputHandler {
     }
 
     private void handleSelectionEnd() {
-        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox) {
+        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
                     building.health = building.maxHealth;
@@ -190,7 +190,7 @@ public class KeyBind extends InputHandler {
     }
 
     private void healSelectedUnits() {
-        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox) {
+        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
             Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
             for (Unit unit : selectedUnits) {
                 unit.health = unit.maxHealth;

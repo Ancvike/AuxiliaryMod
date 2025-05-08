@@ -27,7 +27,7 @@ public class TeamChange extends Function {
                 button.getImageCell().grow();
                 button.getStyle().imageUpColor = team.color;
                 button.clicked(() -> {
-                    if (state.rules.mode() == Gamemode.sandbox) {
+                    if (state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
                         player.team(team);
                     } else {
                         Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]只能在沙盒模式中改变队伍");
