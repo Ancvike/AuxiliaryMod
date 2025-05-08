@@ -1,7 +1,6 @@
 package auxiliary.functions.mapEditor;
 
 import arc.Core;
-import arc.scene.ui.ScrollPane;
 import arc.util.Log;
 import arc.util.Structs;
 import arc.util.Time;
@@ -12,7 +11,6 @@ import mindustry.gen.Icon;
 import mindustry.maps.Map;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
-import mindustry.ui.dialogs.MapPlayDialog;
 
 import static mindustry.Vars.*;
 import static mindustry.Vars.platform;
