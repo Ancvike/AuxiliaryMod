@@ -55,7 +55,7 @@ public class KeyBind extends InputHandler {
             }
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && !isMoved) {
-                handleSelectionDraw();
+                handleSelectionDraw(Color.green, Color.acid);
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
@@ -97,7 +97,7 @@ public class KeyBind extends InputHandler {
     private void setupDesktopEvents() {
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
-                handleSelectionDraw();
+                handleSelectionDraw(Color.green, Color.acid);
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
@@ -122,6 +122,22 @@ public class KeyBind extends InputHandler {
                 dialog.show();
             }
         });
+
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.CHANGE_HP.nowKeyCode) && isTap) {
+                handleSelectionDraw(Color.blue, Color.sky);
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.CHANGE_HP.nowKeyCode)) {
+                startSelection();
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.CHANGE_HP.nowKeyCode)) {
+                handleSelectionEnd();
+            }
+        });
     }
 
     private boolean shouldHandleInput() {
@@ -132,15 +148,15 @@ public class KeyBind extends InputHandler {
                 Vars.player != null; // 玩家实体存在
     }
 
-    private void handleSelectionDraw() {
+    private void handleSelectionDraw(Color color1, Color color2) {
         player.shooting = false;
         endX = World.toTile(Core.input.mouseWorld().x);
         endY = World.toTile(Core.input.mouseWorld().y);
-        drawSelection(startX, startY, endX, endY, 64, Color.green, Color.acid);
+        drawSelection(startX, startY, endX, endY, 64, color1, color2);
 
         for (Building building : player.team().data().buildings) {
             if (inZone(building)) {
-                Drawf.selected(building, Color.acid);
+                Drawf.selected(building, color2);
             }
         }
     }
