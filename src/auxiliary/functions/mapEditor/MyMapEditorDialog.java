@@ -6,7 +6,6 @@ import arc.util.Structs;
 import arc.util.Time;
 import mindustry.editor.*;
 import mindustry.game.Gamemode;
-import mindustry.game.Rules;
 import mindustry.gen.Icon;
 import mindustry.maps.Map;
 import mindustry.ui.Styles;
@@ -22,7 +21,6 @@ public class MyMapEditorDialog extends MapEditorDialog {
     private MapGenerateDialog generateDialog;
     private SectorGenerateDialog sectorGenDialog;
     private BaseDialog menu;
-    private boolean shownWithMap = false;
 
     public MyMapEditorDialog() {
         background(Styles.black);
