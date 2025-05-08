@@ -17,6 +17,7 @@ import mindustry.game.EventType;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
+import mindustry.maps.Map;
 
 import static auxiliary.binding.KeyBind.isOpen;
 import static auxiliary.functions.Menu.isDragged;
@@ -73,7 +74,11 @@ public class Menu {
     public Menu() {
         Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
 
-        table.button("new", () -> editor.beginEdit(maps.byName("1")));
+        int a = 0;
+        for (Map map : maps.all()) {
+            if (a == 0) table.button("new", () -> editor.beginEdit(map));
+            a++;
+        }
 
         table.add(button).row();
         if (mobile) {
