@@ -73,8 +73,6 @@ public class Menu {
     public Menu() {
         Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
 
-        table.button("z", () -> ui.editor.show());
-
         table.add(button).row();
         if (mobile) {
             ImageButton androidButton = getImageButton();

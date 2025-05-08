@@ -8,6 +8,7 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
 import mindustry.game.EventType;
+import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
@@ -138,7 +139,7 @@ public class KeyBind extends InputHandler {
         drawSelection(startX, startY, endX, endY, 64, Color.green, Color.acid);
 
         for (Building building : player.team().data().buildings) {
-            if (isZone(building)) {
+            if (inZone(building)) {
                 Drawf.selected(building, Color.acid);
             }
         }
@@ -152,9 +153,9 @@ public class KeyBind extends InputHandler {
     }
 
     private void handleSelectionEnd() {
-        if (Vars.state.rules.sector.isCaptured()) {
+        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox) {
             for (Building building : player.team().data().buildings) {
-                if (isZone(building)) {
+                if (inZone(building)) {
                     building.health = building.maxHealth;
                 }
             }
@@ -189,7 +190,7 @@ public class KeyBind extends InputHandler {
     }
 
     private void healSelectedUnits() {
-        if (Vars.state.rules.sector.isCaptured()) {
+        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox) {
             Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
             for (Unit unit : selectedUnits) {
                 unit.health = unit.maxHealth;
@@ -200,7 +201,7 @@ public class KeyBind extends InputHandler {
         }
     }
 
-    private boolean isZone(Building building) {
+    private boolean inZone(Building building) {
         int x = World.toTile(building.x);
         int y = World.toTile(building.y);
         return ((x >= startX && x <= endX) || (x <= startX && x >= endX)) && ((y >= startY && y <= endY) || (y <= startY && y >= endY));
