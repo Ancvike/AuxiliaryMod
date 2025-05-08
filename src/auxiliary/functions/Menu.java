@@ -20,7 +20,7 @@ import mindustry.graphics.Pal;
 
 import static auxiliary.binding.KeyBind.isOpen;
 import static auxiliary.functions.Menu.isDragged;
-import static mindustry.Vars.mobile;
+import static mindustry.Vars.*;
 
 public class Menu {
     Table table = new Table();
@@ -72,6 +72,8 @@ public class Menu {
 
     public Menu() {
         Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
+
+        table.button("new", () -> editor.beginEdit(maps.byName("1")));
 
         table.add(button).row();
         if (mobile) {

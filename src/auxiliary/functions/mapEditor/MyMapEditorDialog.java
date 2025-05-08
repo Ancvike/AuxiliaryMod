@@ -1,7 +1,6 @@
 package auxiliary.functions.mapEditor;
 
 import arc.Core;
-import arc.files.Fi;
 import arc.graphics.Color;
 import arc.graphics.Pixmap;
 import arc.input.KeyCode;
@@ -39,7 +38,6 @@ public class MyMapEditorDialog extends MapEditorDialog {
     private final MapPlayDialog playtestDialog;
     private final BaseDialog menu;
     private Rules lastSavedRules;
-    //currently never read
     private boolean shownWithMap = false;
 
     public MyMapEditorDialog() {
@@ -381,9 +379,5 @@ public class MyMapEditorDialog extends MapEditorDialog {
                 view.setGrid(!view.isGrid());
             }
         }
-    }
-
-    public void beginEditMap(Fi file) {
-        super.beginEditMap(file);
     }
 }
