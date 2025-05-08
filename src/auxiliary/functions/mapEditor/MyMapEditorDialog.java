@@ -146,7 +146,7 @@ public class MyMapEditorDialog extends MapEditorDialog {
 
         update(() -> {
             if (hasKeyboard()) {
-                Log.info("doInput");
+//                Log.info("doInput");
                 //doInput();
             }
         });
