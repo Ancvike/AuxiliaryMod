@@ -4,6 +4,7 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.input.KeyCode;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
@@ -30,6 +31,9 @@ public class KeyBind extends InputHandler {
     private int unitPreX, unitPreY;
     private int unitNowX, unitNowY;
     private boolean isMoved = false;
+
+    Seq<Building> buildings = new Seq<>();
+    Table changeHP = new Table();
 
     public void init() {
         if (mobile) {
