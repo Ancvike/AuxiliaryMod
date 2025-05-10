@@ -75,7 +75,7 @@ public class ChangeHP_KeyBind extends KeyBind {
         changeHP.setHeight(60f);
 
         dragTable.table(Tex.buttonEdge1, Table::left).grow();
-        dragTable.addListener(new DragListener(changeHP));
+        changeHP.addListener(new DragListener(changeHP));
 
         changeHP.add(dragTable).grow();
         changeHP.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
