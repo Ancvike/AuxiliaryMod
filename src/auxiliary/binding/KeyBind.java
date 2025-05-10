@@ -1,158 +1,26 @@
 package auxiliary.binding;
 
 import arc.Core;
-import arc.Events;
 import arc.graphics.Color;
-import arc.input.KeyCode;
-import arc.scene.ui.layout.Table;
-import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.core.World;
-import mindustry.game.EventType;
-import mindustry.game.Gamemode;
 import mindustry.gen.Building;
-import mindustry.gen.Icon;
-import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.input.InputHandler;
-import mindustry.ui.Styles;
 
-import static auxiliary.functions.Menu.dialog;
-import static mindustry.Vars.*;
+import static mindustry.Vars.player;
 
 public class KeyBind extends InputHandler {
-    private boolean isTap = false;
-    private int startX, startY, endX, endY;
-    private boolean isUnitTrue = false;
-    private int count = 0;
-    public static boolean isOpen = false;
+    int startX, endX, startY, endY;
+    boolean isTap = false;
 
-    private float pressTime = 0f;
-    private int unitPreX, unitPreY;
-    private int unitNowX, unitNowY;
-    private boolean isMoved = false;
-
-    Seq<Building> buildings = new Seq<>();
-    Table changeHP = new Table();
-
-    public void init() {
-        if (mobile) {
-            setupMobileEvents();
-        } else {
-            setupDesktopEvents();
-        }
+    void setupMobileEvents() {
     }
 
-    private void setupMobileEvents() {
-        Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isTap && isOpen)) return;
-
-            if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
-
-            if (pressTime < 0.7f) return;
-
-            unitNowX = player.tileX();
-            unitNowY = player.tileY();
-
-            if (pressTime >= 0.7f && unitNowX != unitPreX && unitNowY != unitPreY) {
-                isMoved = true;
-            }
-
-            if (Core.input.keyDown(KeyCode.mouseLeft) && !isMoved) {
-                handleSelectionDraw(Color.green, Color.acid);
-            }
-        });
-        Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
-                unitPreX = player.tileX();
-                unitPreY = player.tileY();
-                startSelection();
-            }
-        });
-        Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isOpen)) return;
-
-            if (pressTime < 0.7f) return;
-
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved) {
-                handleSelectionEnd();
-            }
-
-            if (Core.input.keyRelease(KeyCode.mouseLeft)) {
-                unitPreX = 0;
-                unitPreY = 0;
-                pressTime = 0f;
-                isMoved = false;
-            }
-        });
-
-        Events.run(EventType.Trigger.update, () -> {
-            isUnitTrue = Vars.control.input.commandMode;
-            if (isUnitTrue && count == 0) {
-                addUnitHealButton();
-                count++;
-            } else if (!isUnitTrue && count != 0) {
-                removeUnitHealButton();
-                count = 0;
-            }
-        });
+    void setupDesktopEvents() {
     }
 
-    private void setupDesktopEvents() {
-        Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
-                handleSelectionDraw(Color.green, Color.acid);
-            }
-        });
-        Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                startSelection();
-            }
-        });
-        Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
-                handleSelectionEnd();
-            }
-        });
-
-        Events.run(EventType.Trigger.update, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
-                healSelectedUnits();
-            }
-        });
-
-        Events.run(EventType.Trigger.update, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.OPEN_MENU.nowKeyCode)) {
-                dialog.show();
-            }
-        });
-
-        Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.CHANGE_HP.nowKeyCode) && isTap) {
-                handleSelectionDraw(Color.blue, Color.sky);
-            }
-        });
-        Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.CHANGE_HP.nowKeyCode)) {
-                startSelection();
-            }
-        });
-        Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.CHANGE_HP.nowKeyCode)) {
-                handleSelectionEnd();
-            }
-        });
-    }
-
-    private boolean shouldHandleInput() {
-        return !Vars.ui.chatfrag.shown() && // 未打开聊天框
-                Core.scene.getKeyboardFocus() == null && // 无文本输入焦点
-                Vars.ui.hudfrag.shown && // HUD正常显示
-                Vars.state.isPlaying() && // 游戏进行中
-                Vars.player != null; // 玩家实体存在
-    }
-
-    private void handleSelectionDraw(Color color1, Color color2) {
+    void handleSelectionDraw(Color color1, Color color2) {
         player.shooting = false;
         endX = World.toTile(Core.input.mouseWorld().x);
         endY = World.toTile(Core.input.mouseWorld().y);
@@ -165,69 +33,31 @@ public class KeyBind extends InputHandler {
         }
     }
 
-    private void startSelection() {
+    void startSelection() {
         player.shooting = false;
         startX = World.toTile(Core.input.mouseWorld().x);
         startY = World.toTile(Core.input.mouseWorld().y);
         isTap = true;
     }
 
-    private void handleSelectionEnd() {
-        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-            for (Building building : player.team().data().buildings) {
-                if (inZone(building)) {
-                    building.health = building.maxHealth;
-                }
-            }
-            Vars.ui.hudfrag.showToast("所选建筑已修复");
-        } else {
-            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
-        }
-        resetSelection();
+    void handleSelectionEnd() {
     }
 
-    private void addUnitHealButton() {
-        Vars.ui.hudGroup.fill(t -> {
-            t.name = "mobile-unit";
-            t.bottom().left();
-            t.button(Icon.android, () -> {
-                Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
-                for (Unit unit : selectedUnits) {
-                    unit.health = unit.maxHealth;
-                }
-                Vars.ui.hudfrag.showToast("所选单位已修复");
-            }).size(50f).tooltip(tt -> {
-                tt.setBackground(Styles.black6);
-                tt.label(() -> "单位修复").pad(2f);
-            }).left();
-            t.row();
-            t.table().size(48f);
-        });
+    boolean shouldHandleInput() {
+        return !Vars.ui.chatfrag.shown() && // 未打开聊天框
+                Core.scene.getKeyboardFocus() == null && // 无文本输入焦点
+                Vars.ui.hudfrag.shown && // HUD正常显示
+                Vars.state.isPlaying() && // 游戏进行中
+                Vars.player != null; // 玩家实体存在
     }
 
-    private void removeUnitHealButton() {
-        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-unit"));
-    }
-
-    private void healSelectedUnits() {
-        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-            Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
-            for (Unit unit : selectedUnits) {
-                unit.health = unit.maxHealth;
-            }
-            Vars.ui.hudfrag.showToast("所选单位已修复");
-        } else {
-            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
-        }
-    }
-
-    private boolean inZone(Building building) {
+    boolean inZone(Building building) {
         int x = World.toTile(building.x);
         int y = World.toTile(building.y);
         return ((x >= startX && x <= endX) || (x <= startX && x >= endX)) && ((y >= startY && y <= endY) || (y <= startY && y >= endY));
     }
 
-    private void resetSelection() {
+    void resetSelection() {
         startX = startY = endX = endY = 0;
         isTap = false;
     }
