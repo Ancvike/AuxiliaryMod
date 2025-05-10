@@ -1,0 +1,173 @@
+package auxiliary.binding;
+
+import arc.Core;
+import arc.Events;
+import arc.graphics.Color;
+import arc.input.KeyCode;
+import arc.struct.Seq;
+import mindustry.Vars;
+import mindustry.game.EventType;
+import mindustry.game.Gamemode;
+import mindustry.gen.Building;
+import mindustry.gen.Icon;
+import mindustry.gen.Unit;
+import mindustry.ui.Styles;
+
+import static auxiliary.functions.Menu.dialog;
+import static mindustry.Vars.*;
+
+public class Heal_KeyBind extends KeyBind {
+    private boolean isUnitTrue = false;
+    private int count = 0;
+    public static boolean isOpen = false;
+
+    private float pressTime = 0f;
+    private int unitPreX, unitPreY;
+    private int unitNowX, unitNowY;
+    private boolean isMoved = false;
+
+    public Heal_KeyBind() {
+        if (mobile) {
+            setupMobileEvents();
+        } else {
+            setupDesktopEvents();
+        }
+    }
+
+    @Override
+    void setupMobileEvents() {
+        Events.run(EventType.Trigger.draw, () -> {
+            if (!(shouldHandleInput() && isTap && isOpen)) return;
+
+            if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
+
+            if (pressTime < 0.7f) return;
+
+            unitNowX = player.tileX();
+            unitNowY = player.tileY();
+
+            if (pressTime >= 0.7f && unitNowX != unitPreX && unitNowY != unitPreY) {
+                isMoved = true;
+            }
+
+            if (Core.input.keyDown(KeyCode.mouseLeft) && !isMoved) {
+                handleSelectionDraw(Color.green, Color.acid);
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
+                unitPreX = player.tileX();
+                unitPreY = player.tileY();
+                startSelection();
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (!(shouldHandleInput() && isOpen)) return;
+
+            if (pressTime < 0.7f) return;
+
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved) {
+                handleSelectionEnd();
+            }
+
+            if (Core.input.keyRelease(KeyCode.mouseLeft)) {
+                unitPreX = 0;
+                unitPreY = 0;
+                pressTime = 0f;
+                isMoved = false;
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            isUnitTrue = Vars.control.input.commandMode;
+            if (isUnitTrue && count == 0) {
+                addUnitHealButton();
+                count++;
+            } else if (!isUnitTrue && count != 0) {
+                removeUnitHealButton();
+                count = 0;
+            }
+        });
+    }
+
+    @Override
+    void setupDesktopEvents() {
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
+                handleSelectionDraw(Color.green, Color.acid);
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                startSelection();
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+                handleSelectionEnd();
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
+                healSelectedUnits();
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.OPEN_MENU.nowKeyCode)) {
+                dialog.show();
+            }
+        });
+    }
+
+    @Override
+    void handleSelectionEnd() {
+        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+            for (Building building : player.team().data().buildings) {
+                if (inZone(building)) {
+                    building.health = building.maxHealth;
+                }
+            }
+            Vars.ui.hudfrag.showToast("所选建筑已修复");
+        } else {
+            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
+        }
+        resetSelection();
+    }
+
+    private void addUnitHealButton() {
+        Vars.ui.hudGroup.fill(t -> {
+            t.name = "mobile-unit";
+            t.bottom().left();
+            t.button(Icon.android, () -> {
+                Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+                for (Unit unit : selectedUnits) {
+                    unit.health = unit.maxHealth;
+                }
+                Vars.ui.hudfrag.showToast("所选单位已修复");
+            }).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "单位修复").pad(2f);
+            }).left();
+            t.row();
+            t.table().size(48f);
+        });
+    }
+
+    private void removeUnitHealButton() {
+        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-unit"));
+    }
+
+    private void healSelectedUnits() {
+        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+            Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+            for (Unit unit : selectedUnits) {
+                unit.health = unit.maxHealth;
+            }
+            Vars.ui.hudfrag.showToast("所选单位已修复");
+        } else {
+            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
+        }
+    }
+}
