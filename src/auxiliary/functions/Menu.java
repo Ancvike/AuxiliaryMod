@@ -3,15 +3,12 @@ package auxiliary.functions;
 import arc.Events;
 import arc.graphics.Color;
 import arc.input.KeyCode;
-import arc.math.geom.Vec2;
-import arc.scene.event.InputEvent;
-import arc.scene.event.InputListener;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Align;
-import arc.util.Tmp;
+import auxiliary.functions.dragFunction.DragListener;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
@@ -19,7 +16,6 @@ import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
 
 import static auxiliary.binding.KeyBind.isOpen;
-import static auxiliary.functions.Menu.isDragged;
 import static mindustry.Vars.*;
 
 public class Menu {
@@ -104,33 +100,5 @@ public class Menu {
         ImageButton androidButton = new ImageButton(Icon.android, style);
         androidButton.clicked(() -> isOpen = !isOpen);
         return androidButton;
-    }
-}
-
-class DragListener extends InputListener {
-    protected float lastX, lastY;
-    final Table table;
-
-    public DragListener(Table table) {
-        this.table = table;
-    }
-
-    @Override
-    public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
-        Vec2 v = event.listenerActor.localToStageCoordinates(Tmp.v1.set(x, y));
-        lastX = v.x;
-        lastY = v.y;
-        table.toFront();
-        isDragged = false;
-        return true;
-    }
-
-    @Override
-    public void touchDragged(InputEvent event, float dx, float dy, int pointer) {
-        Vec2 v = event.listenerActor.localToStageCoordinates(Tmp.v1.set(dx, dy));
-        table.setPosition(table.x + (v.x - lastX), table.y + (v.y - lastY));
-        lastX = v.x;
-        lastY = v.y;
-        isDragged = true;
     }
 }
