@@ -5,6 +5,7 @@ import arc.Events;
 import arc.graphics.Color;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.Log;
 import auxiliary.functions.dragFunction.DragListener;
 import mindustry.Vars;
 import mindustry.game.EventType;
@@ -65,6 +66,7 @@ public class ChangeHP_KeyBind extends KeyBind {
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
                     inZoom = true;
+                    Log.info("选中区块内建筑");
                 }
             }
 
