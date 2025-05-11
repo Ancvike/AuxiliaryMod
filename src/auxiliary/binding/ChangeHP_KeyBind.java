@@ -4,6 +4,7 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.scene.event.Touchable;
+import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Log;
@@ -112,15 +113,15 @@ public class ChangeHP_KeyBind extends KeyBind {
 
 
         changeHP.table(Styles.black5, t -> {
-            t.slider(0f, 10f, 1f, 10f, v -> {
-                if (buildings != null) {
-                    for (Building building : buildings) {
-                        building.health = building.maxHealth * v * 0.1f;
-                    }
-                    value = (int) (v * 10);
-                    Log.info("选中区块内建筑");
+            Slider slider = new Slider(0f, 10f, 1f, false);
+            slider.setValue(10f);
+            slider.changed(() -> value = (int) (slider.getValue() * 10));
+            slider.moved(v -> {
+                for (Building building : buildings) {
+                    building.health = building.maxHealth * v * 0.1f;
                 }
             });
+            t.add(slider);
             t.add(value + "%").grow();
         }).grow();
 
