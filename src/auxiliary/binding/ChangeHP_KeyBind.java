@@ -77,6 +77,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                         buildings.addAll(building);
                     }
                 }
+                show = true;
             } else {
                 buildings = null;
                 show = false;
