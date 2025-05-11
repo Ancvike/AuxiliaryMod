@@ -122,7 +122,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                     building.health = building.maxHealth * v * 0.1f;
                 }
             });
-        }).grow();
+        });
 
         changeHP.visible(() -> show);
 
