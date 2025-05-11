@@ -18,7 +18,7 @@ import static mindustry.Vars.mobile;
 import static mindustry.Vars.player;
 
 public class ChangeHP_KeyBind extends KeyBind {
-    Seq<Building> buildings = new Seq<>();
+    Seq<Building> buildings;
 
     boolean show = false;
     Table changeHP = new Table();
@@ -62,10 +62,17 @@ public class ChangeHP_KeyBind extends KeyBind {
         if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
-                    buildings.add(building);
+                    show = true;
                 }
             }
-            show = true;
+            if (show) buildings = new Seq<>();
+            if (buildings != null) {
+                for (Building building : player.team().data().buildings) {
+                    if (inZone(building)) {
+                        buildings.addAll(building);
+                    }
+                }
+            }
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
@@ -82,13 +89,13 @@ public class ChangeHP_KeyBind extends KeyBind {
         changeHP.add(dragTable).grow();
         changeHP.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
             show = false;
-            buildings.clear();
+            buildings = null;
         }).grow()).maxWidth(80f).maxHeight(40f);
         changeHP.row();
 
         changeHP.table(Styles.black5, t -> {
-            t.slider(1f, 10f, 1f, 10f, v -> {
-                if (buildings.size != 0) {
+            t.slider(0f, 10f, 1f, 10f, v -> {
+                if (buildings != null) {
                     for (Building building : buildings) {
                         building.health = building.maxHealth * v * 0.1f;
                     }
