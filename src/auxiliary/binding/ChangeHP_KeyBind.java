@@ -70,16 +70,17 @@ public class ChangeHP_KeyBind extends KeyBind {
                 }
             }
 
-            if (inZoom) buildings = new Seq<>();
-            else buildings = null;
-
-            if (buildings != null) {
+            if (inZoom) {
+                buildings = new Seq<>();
                 for (Building building : player.team().data().buildings) {
                     if (inZone(building)) {
                         buildings.addAll(building);
                     }
                 }
-            } else show = false;
+            } else {
+                buildings = null;
+                show = false;
+            }
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
