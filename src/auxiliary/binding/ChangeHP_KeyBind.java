@@ -19,6 +19,8 @@ import static mindustry.Vars.player;
 
 public class ChangeHP_KeyBind extends KeyBind {
     Seq<Building> buildings = new Seq<>();
+
+    boolean show = false;
     Table changeHP = new Table();
     Table dragTable = new Table();
 
@@ -60,10 +62,10 @@ public class ChangeHP_KeyBind extends KeyBind {
         if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
-                    building.health = building.maxHealth;
+                    buildings.add(building);
                 }
             }
-            Vars.ui.hudfrag.showToast("所选建筑已修复");
+            show = true;
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
@@ -71,15 +73,30 @@ public class ChangeHP_KeyBind extends KeyBind {
     }
 
     void build() {
-        changeHP.setWidth(160f);
-        changeHP.setHeight(60f);
+        changeHP.setWidth(400f);
+        changeHP.setHeight(200f);
 
-        dragTable.table(Tex.buttonEdge1, Table::left).grow();
+        dragTable.table(Tex.buttonEdge1, Table::left).maxHeight(40f).growX();
         changeHP.addListener(new DragListener(changeHP));
 
         changeHP.add(dragTable).grow();
         changeHP.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
-        }).grow()).maxWidth(8 * 15f).growY();
+            show = false;
+            buildings.clear();
+        }).grow()).maxWidth(80f).maxHeight(40f);
+        changeHP.row();
+
+        changeHP.table(Styles.black5, t -> {
+            t.slider(1f, 10f, 1f, 10f, v -> {
+                if (buildings.size != 0) {
+                    for (Building building : buildings) {
+                        building.health = building.maxHealth * v * 0.1f;
+                    }
+                }
+            });
+        }).grow();
+
+        changeHP.visible(() -> show);
 
         Vars.ui.hudGroup.fill(t -> {
             t.name = "changeHP";
