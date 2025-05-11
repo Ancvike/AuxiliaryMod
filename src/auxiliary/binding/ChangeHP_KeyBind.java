@@ -91,14 +91,14 @@ public class ChangeHP_KeyBind extends KeyBind {
     }
 
     void build() {
-        changeHP.setWidth(400f);
-        changeHP.setHeight(200f);
+        changeHP.setWidth(200f);
+        changeHP.setHeight(100f);
 
         dragTable.table(Tex.buttonEdge1, t -> {
             t.left();
             t.image().scaling(Scaling.fill).size(20f);
             t.add("改变血量").padLeft(20);
-        }).maxHeight(40f).growX();
+        }).maxHeight(40f).grow();
         dragTable.touchable = Touchable.enabled;
         dragTable.addListener(new DragListener(changeHP));
 
@@ -107,7 +107,7 @@ public class ChangeHP_KeyBind extends KeyBind {
             show = false;
             inZoom = false;
             buildings = null;
-        }).grow()).maxWidth(120f).growY();
+        }).grow()).maxWidth(20f).growY();
         changeHP.row();
 
 
