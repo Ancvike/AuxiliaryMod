@@ -23,6 +23,7 @@ public class ChangeHP_KeyBind extends KeyBind {
     boolean show = false;
     Table changeHP = new Table();
     Table dragTable = new Table();
+    boolean inZoom = false;
 
     public ChangeHP_KeyBind() {
         build();
@@ -62,17 +63,20 @@ public class ChangeHP_KeyBind extends KeyBind {
         if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
-                    show = true;
+                    inZoom = true;
                 }
             }
-            if (show) buildings = new Seq<>();
+
+            if (inZoom) buildings = new Seq<>();
+            else buildings = null;
+
             if (buildings != null) {
                 for (Building building : player.team().data().buildings) {
                     if (inZone(building)) {
                         buildings.addAll(building);
                     }
                 }
-            }
+            } else show = false;
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
