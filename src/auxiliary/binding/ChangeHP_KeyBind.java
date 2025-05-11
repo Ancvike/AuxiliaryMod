@@ -27,7 +27,7 @@ public class ChangeHP_KeyBind extends KeyBind {
     Table changeHP = new Table();
     Table dragTable = new Table();
     boolean inZoom = false;
-    int value;
+    int value = 100;
 
     public ChangeHP_KeyBind() {
         build();
@@ -69,7 +69,6 @@ public class ChangeHP_KeyBind extends KeyBind {
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
                     inZoom = true;
-                    Log.info("选中区块内建筑");
                 }
             }
 
@@ -119,6 +118,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                         building.health = building.maxHealth * v * 0.1f;
                     }
                     value = (int) (v * 10);
+                    Log.info("选中区块内建筑");
                 }
             });
             t.add(value + "%").grow();
