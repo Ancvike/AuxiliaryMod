@@ -7,7 +7,6 @@ import arc.scene.event.Touchable;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Scaling;
 import auxiliary.functions.dragFunction.DragListener;
 import mindustry.Vars;
