@@ -99,15 +99,13 @@ public class ChangeHP_KeyBind extends KeyBind {
         }).grow()).maxWidth(80f).maxHeight(40f);
         changeHP.row();
 
-        changeHP.table(Styles.black5, t -> {
-            t.slider(0f, 10f, 1f, 10f, v -> {
-                if (buildings != null) {
-                    for (Building building : buildings) {
-                        building.health = building.maxHealth * v * 0.1f;
-                    }
+        changeHP.table(Styles.black5, t -> t.slider(0f, 10f, 1f, 10f, v -> {
+            if (buildings != null) {
+                for (Building building : buildings) {
+                    building.health = building.maxHealth * v * 0.1f;
                 }
-            });
-        }).grow();
+            }
+        })).grow();
 
         changeHP.visible(() -> show);
 
