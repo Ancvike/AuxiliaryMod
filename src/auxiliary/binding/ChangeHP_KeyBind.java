@@ -61,6 +61,7 @@ public class ChangeHP_KeyBind extends KeyBind {
     @Override
     void handleSelectionEnd() {
         if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+            inZoom = false;
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
                     inZoom = true;
@@ -93,6 +94,7 @@ public class ChangeHP_KeyBind extends KeyBind {
         changeHP.add(dragTable).grow();
         changeHP.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
             show = false;
+            inZoom = false;
             buildings = null;
         }).grow()).maxWidth(80f).maxHeight(40f);
         changeHP.row();
