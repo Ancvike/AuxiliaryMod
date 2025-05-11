@@ -108,7 +108,7 @@ public class ChangeHP_KeyBind extends KeyBind {
             show = false;
             inZoom = false;
             buildings = null;
-        }).grow()).maxWidth(80f).maxHeight(40f);
+        }).grow()).maxWidth(120f).growY();
         changeHP.row();
 
 
