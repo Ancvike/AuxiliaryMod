@@ -3,9 +3,11 @@ package auxiliary.binding;
 import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
+import arc.scene.event.Touchable;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Log;
+import arc.util.Scaling;
 import auxiliary.functions.dragFunction.DragListener;
 import mindustry.Vars;
 import mindustry.game.EventType;
@@ -93,8 +95,13 @@ public class ChangeHP_KeyBind extends KeyBind {
         changeHP.setWidth(400f);
         changeHP.setHeight(200f);
 
-        dragTable.table(Tex.buttonEdge1, Table::left).maxHeight(40f).growX();
-        changeHP.addListener(new DragListener(changeHP));
+        dragTable.table(Tex.buttonEdge1, t -> {
+            t.left();
+            t.image().scaling(Scaling.fill).size(20f);
+            t.add("改变血量").padLeft(20);
+        }).maxHeight(40f).growX();
+        dragTable.touchable = Touchable.enabled;
+        dragTable.addListener(new DragListener(changeHP));
 
         changeHP.add(dragTable).grow();
         changeHP.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
@@ -114,7 +121,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                     value = (int) (v * 10);
                 }
             });
-            t.add(value + "%");
+            t.add(value + "%").grow();
         }).grow();
 
         changeHP.visible(() -> show);
