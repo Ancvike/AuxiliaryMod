@@ -119,7 +119,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                 rules.add(slider);
                 slider.moved(hp -> {
                     for (Building building : buildings) {
-                        building.health = building.maxHealth * (int) hp * 10;
+                        building.health = building.maxHealth * (int) hp * 0.1f;
                     }
                 });
             }).grow();
