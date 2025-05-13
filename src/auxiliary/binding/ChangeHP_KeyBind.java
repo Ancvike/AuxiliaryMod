@@ -117,13 +117,12 @@ public class ChangeHP_KeyBind extends KeyBind {
             t.add(slider);
             Label label = t.add("100%").get();
             slider.changed(() -> label.setText((int) (slider.getValue() * 10) + "%"));
-            slider.change();
             slider.moved(v -> {
                 for (Building building : buildings) {
                     building.health = building.maxHealth * v * 0.1f;
                 }
             });
-        });
+        }).grow();
 
         changeHP.visible(() -> show);
 
