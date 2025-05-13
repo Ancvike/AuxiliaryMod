@@ -4,7 +4,6 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.scene.event.Touchable;
-import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
@@ -97,7 +96,7 @@ public class ChangeHP_KeyBind extends KeyBind {
         dragTable.table(Tex.buttonEdge1, b -> {
             b.left();
             b.image().scaling(Scaling.fill).size(20f);
-            b.add("测试").padLeft(20);
+            b.add("修改血量").padLeft(20);
         }).grow();
         dragTable.touchable = Touchable.enabled;
         dragTable.addListener(new DragListener(changeHP));
