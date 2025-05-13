@@ -128,7 +128,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                 });
             }).grow();
 
-            t.add(label);
+            t.add(label).width(20f).growY();
         }).grow();
 
         changeHP.update(() -> label.setText(slider.getValue() + "%"));
