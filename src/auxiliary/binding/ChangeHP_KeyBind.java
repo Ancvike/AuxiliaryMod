@@ -102,7 +102,11 @@ public class ChangeHP_KeyBind extends KeyBind {
         dragTable.addListener(new DragListener(changeHP));
         changeHP.add(dragTable);
 
-        changeHP.table(Tex.buttonEdge3, t -> t.button(Icon.cancel, Styles.emptyi, () -> show = false).grow()).maxWidth(8 * 15f).growY();
+        changeHP.table(Tex.buttonEdge3, t -> t.button(Icon.cancel, Styles.emptyi, () -> {
+            show = false;
+            inZoom = false;
+            buildings = null;
+        }).grow()).maxWidth(8 * 15f).growY();
 
         changeHP.row();
 
