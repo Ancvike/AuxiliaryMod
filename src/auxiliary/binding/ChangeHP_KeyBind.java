@@ -110,7 +110,7 @@ public class ChangeHP_KeyBind extends KeyBind {
 
         changeHP.row();
 
-        changeHP.table(Styles.black5, pt -> pt.pane(Styles.noBarPane, new Table(t -> {
+        changeHP.table(Styles.black5, t -> {
             t.top().left();
 
             t.table(rules -> {
@@ -123,7 +123,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                     }
                 });
             }).grow();
-        })).grow()).grow();
+        }).grow();
 
         Vars.ui.hudGroup.fill(t -> t.add(changeHP).visible(() -> show).right());
     }
