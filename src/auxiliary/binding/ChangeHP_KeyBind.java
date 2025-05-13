@@ -122,5 +122,9 @@ public class ChangeHP_KeyBind extends KeyBind {
                 rules.add(slider);
             }).grow();
         })).grow()).grow();
+
+        Vars.ui.hudGroup.fill(t ->{
+            t.add(changeHP).visible(() -> show).right();
+        });
     }
 }
