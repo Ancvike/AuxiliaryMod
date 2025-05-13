@@ -98,7 +98,7 @@ public class ChangeHP_KeyBind extends KeyBind {
         dragTable.table(Tex.buttonEdge1, b -> {
             b.left();
             b.image().scaling(Scaling.fill).size(20f);
-            b.add(Core.bundle.get("adadad")).padLeft(20);
+            b.add("adadad").padLeft(20);
         }).grow();
         dragTable.touchable = Touchable.enabled;
         dragTable.addListener(new DragListener(changeHP));
@@ -114,17 +114,15 @@ public class ChangeHP_KeyBind extends KeyBind {
             t.table(rules -> {
                 rules.top().left();
 
-                Label label = rules.add("Block Health: ").get();
-                Slider slider = new Slider(0, 100, 1, false);
-                slider.changed(() -> label.setText("Block Health: " + (int) slider.getValue() + "%"));
+                Label label = rules.add("acac").get();
+                Slider slider = new Slider(0, 10, 1, false);
+                slider.changed(() -> label.setText((int) slider.getValue() * 10 + "%"));
                 slider.change();
                 slider.moved(hp -> Groups.build.each(b -> b.health(b.block.health * hp / 100)));
                 rules.add(slider);
             }).grow();
         })).grow()).grow();
 
-        Vars.ui.hudGroup.fill(t ->{
-            t.add(changeHP).visible(() -> show).right();
-        });
+        Vars.ui.hudGroup.fill(t -> t.add(changeHP).visible(() -> show).right());
     }
 }
