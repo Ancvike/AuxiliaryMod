@@ -14,7 +14,6 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Gamemode;
 import mindustry.gen.Building;
-import mindustry.gen.Groups;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.ui.Styles;
@@ -98,7 +97,7 @@ public class ChangeHP_KeyBind extends KeyBind {
         dragTable.table(Tex.buttonEdge1, b -> {
             b.left();
             b.image().scaling(Scaling.fill).size(20f);
-            b.add("adadad").padLeft(20);
+            b.add("测试").padLeft(20);
         }).grow();
         dragTable.touchable = Touchable.enabled;
         dragTable.addListener(new DragListener(changeHP));
@@ -113,13 +112,13 @@ public class ChangeHP_KeyBind extends KeyBind {
 
             t.table(rules -> {
                 rules.top().left();
-
-                Label label = rules.add("acac").maxWidth(20f).maxHeight(20f).get();
                 Slider slider = new Slider(0, 10, 1, false);
-                slider.changed(() -> label.setText((int) slider.getValue() * 10 + "%"));
-                slider.change();
-                slider.moved(hp -> {});
                 rules.add(slider);
+
+                Label label = rules.add("0%").maxWidth(20f).maxHeight(20f).get();
+                slider.changed(() -> t.add("111"));
+                slider.moved(hp -> {
+                });
             }).grow();
         })).grow()).grow();
 
