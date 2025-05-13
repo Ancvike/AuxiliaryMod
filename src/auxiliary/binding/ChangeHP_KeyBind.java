@@ -114,11 +114,11 @@ public class ChangeHP_KeyBind extends KeyBind {
             t.table(rules -> {
                 rules.top().left();
 
-                Label label = rules.add("acac").get();
+                Label label = rules.add("acac").maxWidth(20f).maxHeight(20f).get();
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.changed(() -> label.setText((int) slider.getValue() * 10 + "%"));
                 slider.change();
-                slider.moved(hp -> Groups.build.each(b -> b.health(b.block.health * hp / 100)));
+                slider.moved(hp -> {});
                 rules.add(slider);
             }).grow();
         })).grow()).grow();
