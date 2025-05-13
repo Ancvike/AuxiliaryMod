@@ -14,6 +14,7 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Gamemode;
 import mindustry.gen.Building;
+import mindustry.gen.Groups;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.ui.Styles;
@@ -91,45 +92,35 @@ public class ChangeHP_KeyBind extends KeyBind {
     }
 
     void build() {
-        changeHP.setWidth(200f);
-        changeHP.setHeight(100f);
+        changeHP.setWidth(160f);
+        changeHP.setHeight(60f);
 
-        dragTable.table(Tex.buttonEdge1, t -> {
-            t.left();
-            t.image().scaling(Scaling.fill).size(20f);
-            t.add("改变血量").padLeft(20);
-        }).maxHeight(40f).grow();
+        dragTable.table(Tex.buttonEdge1, b -> {
+            b.left();
+            b.image().scaling(Scaling.fill).size(20f);
+            b.add(Core.bundle.get("adadad")).padLeft(20);
+        }).grow();
         dragTable.touchable = Touchable.enabled;
         dragTable.addListener(new DragListener(changeHP));
+        changeHP.add(dragTable);
 
-        changeHP.add(dragTable).grow();
-        changeHP.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
-            show = false;
-            inZoom = false;
-            buildings = null;
-        }).grow()).maxWidth(20f).growY();
+        changeHP.table(Tex.buttonEdge3, t -> t.button(Icon.cancel, Styles.emptyi, () -> show = false).grow()).maxWidth(8 * 15f).growY();
+
         changeHP.row();
 
+        changeHP.table(Styles.black5, pt -> pt.pane(Styles.noBarPane, new Table(t -> {
+            t.top().left();
 
-        changeHP.table(Styles.black5, t -> {
-            Slider slider = new Slider(0f, 10f, 1f, false);
-            slider.setValue(10f);
-            t.add(slider);
-            Label label = t.add("100%").get();
-            slider.changed(() -> label.setText((int) (slider.getValue() * 10) + "%"));
-            slider.moved(v -> {
-                for (Building building : buildings) {
-                    building.health = building.maxHealth * v * 0.1f;
-                }
-            });
-        }).grow();
+            t.table(rules -> {
+                rules.top().left();
 
-        changeHP.visible(() -> show);
-
-        Vars.ui.hudGroup.fill(t -> {
-            t.name = "changeHP";
-            t.add(changeHP).row();
-            t.right();
-        });
+                Label label = rules.add("Block Health: ").get();
+                Slider slider = new Slider(0, 100, 1, false);
+                slider.changed(() -> label.setText("Block Health: " + (int) slider.getValue() + "%"));
+                slider.change();
+                slider.moved(hp -> Groups.build.each(b -> b.health(b.block.health * hp / 100)));
+                rules.add(slider);
+            }).grow();
+        })).grow()).grow();
     }
 }
