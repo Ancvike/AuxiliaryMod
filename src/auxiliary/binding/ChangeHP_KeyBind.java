@@ -114,9 +114,6 @@ public class ChangeHP_KeyBind extends KeyBind {
                 rules.top().left();
                 Slider slider = new Slider(0, 10, 1, false);
                 rules.add(slider);
-
-                Label label = rules.add("0%").maxWidth(20f).maxHeight(20f).get();
-                slider.changed(() -> t.add("111"));
                 slider.moved(hp -> {
                 });
             }).grow();
