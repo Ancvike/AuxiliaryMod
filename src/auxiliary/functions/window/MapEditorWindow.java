@@ -51,7 +51,7 @@ public class MapEditorWindow extends Table {
             t.table(Tex.buttonEdge1, b -> {
                 b.left();
                 b.image(icon.getRegion()).scaling(Scaling.fill).size(20f);
-                b.add(Core.bundle.get("window." + name + ".name")).padLeft(20);
+                b.add("aaaaaaa").padLeft(20);
             }).grow();
 
             t.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> shown = false).grow()).maxWidth(8 * 15f).growY();
