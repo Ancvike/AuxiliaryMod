@@ -4,7 +4,6 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.scene.event.Touchable;
-import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
@@ -28,9 +27,6 @@ public class ChangeHP_KeyBind extends KeyBind {
     Table changeHP = new Table();
     Table dragTable = new Table();
     boolean inZoom = false;
-
-    Label label = new Label("0");
-    Slider slider = new Slider(0, 10, 1, false);
 
     public ChangeHP_KeyBind() {
         build();
@@ -82,7 +78,9 @@ public class ChangeHP_KeyBind extends KeyBind {
                         buildings.addAll(building);
                     }
                 }
+                changeHP.parent.setLayoutEnabled(false);
                 show = true;
+                changeHP.parent.setLayoutEnabled(true);
             } else {
                 buildings = null;
                 show = false;
@@ -119,7 +117,7 @@ public class ChangeHP_KeyBind extends KeyBind {
 
             t.table(rules -> {
                 rules.top().left();
-
+                Slider slider = new Slider(0, 10, 1, false);
                 rules.add(slider);
                 slider.moved(hp -> {
                     for (Building building : buildings) {
@@ -127,11 +125,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                     }
                 });
             }).grow();
-
-            t.add(label).width(20f).growY();
         }).grow();
-
-        changeHP.update(() -> label.setText(slider.getValue() + "%"));
 
         Vars.ui.hudGroup.fill(t -> t.add(changeHP).visible(() -> show).right());
     }
