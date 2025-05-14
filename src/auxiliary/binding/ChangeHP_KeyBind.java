@@ -4,6 +4,7 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.scene.event.Touchable;
+import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
@@ -119,6 +120,10 @@ public class ChangeHP_KeyBind extends KeyBind {
                 rules.top().left();
                 Slider slider = new Slider(0, 10, 1, false);
                 rules.add(slider);
+
+                Label label = rules.add("100%").get();
+                slider.changed(() -> label.setText((int) (slider.getValue() * 10) + "%"));
+
                 slider.moved(hp -> {
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
