@@ -81,6 +81,7 @@ public class ChangeHP_KeyBind extends KeyBind {
                 }
                 changeHP.parent.setLayoutEnabled(false);
                 show = true;
+                changeHP.toFront();
                 changeHP.parent.setLayoutEnabled(true);
             } else {
                 buildings = null;
