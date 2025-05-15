@@ -22,6 +22,7 @@ public class ChangeHP_KeyBind extends KeyBind {
 
     public ChangeHP_KeyBind() {
         changeHP.build();
+        Vars.ui.hudGroup.fill(t -> t.add(changeHP));
         if (mobile) {
             setupMobileEvents();
         } else {
