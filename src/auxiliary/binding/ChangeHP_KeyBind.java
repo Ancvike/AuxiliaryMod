@@ -71,9 +71,9 @@ public class ChangeHP_KeyBind extends KeyBind {
                         buildings.addAll(building);
                     }
                 }
-//                changeHP.parent.setLayoutEnabled(false);
+                changeHP.parent.setLayoutEnabled(false);
                 changeHP.toggle();
-//                changeHP.parent.setLayoutEnabled(true);
+                changeHP.setLayoutEnabled(true);
             } else {
                 buildings = null;
             }
