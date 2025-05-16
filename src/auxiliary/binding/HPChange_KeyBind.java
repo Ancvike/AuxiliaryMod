@@ -5,7 +5,6 @@ import arc.Events;
 import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.scene.event.Touchable;
-import arc.scene.ui.Button;
 import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
@@ -23,24 +22,21 @@ import mindustry.ui.Styles;
 import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.*;
 
-public class Heal_KeyBind extends KeyBind {
+public class HPChange_KeyBind extends KeyBind {
     public static Seq<Building> buildings;
-
     Table changeHP = new Table();
     boolean shown = false;
     boolean inZoom = false;
 
-    private boolean isUnitTrue = false;
-    private int count = 0;
     public static boolean isOpen = false;
 
     private float pressTime = 0f;
-    private int unitPreX, unitPreY;
-    private int unitNowX, unitNowY;
+    private int mobile_startX, mobile_startY;
+    private int mobile_endX, mobile_endY;
     private boolean isMoved = false;
 
-    public Heal_KeyBind() {
-        build();
+    public HPChange_KeyBind() {
+        buildTable();
         Vars.ui.hudGroup.fill(t -> t.add(changeHP).right());
         if (mobile) {
             setupMobileEvents();
@@ -58,10 +54,10 @@ public class Heal_KeyBind extends KeyBind {
 
             if (pressTime < 0.7f) return;
 
-            unitNowX = player.tileX();
-            unitNowY = player.tileY();
+            mobile_endX = player.tileX();
+            mobile_endY = player.tileY();
 
-            if (pressTime >= 0.7f && unitNowX != unitPreX && unitNowY != unitPreY) {
+            if (pressTime >= 0.7f && mobile_endX != mobile_startX && mobile_endY != mobile_startY) {
                 isMoved = true;
             }
 
@@ -71,8 +67,8 @@ public class Heal_KeyBind extends KeyBind {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
-                unitPreX = player.tileX();
-                unitPreY = player.tileY();
+                mobile_startX = player.tileX();
+                mobile_startY = player.tileY();
                 startSelection();
             }
         });
@@ -86,25 +82,14 @@ public class Heal_KeyBind extends KeyBind {
             }
 
             if (Core.input.keyRelease(KeyCode.mouseLeft)) {
-                unitPreX = 0;
-                unitPreY = 0;
+                mobile_startX = 0;
+                mobile_startY = 0;
                 pressTime = 0f;
                 isMoved = false;
             }
         });
 
         addUnitHealButton();
-
-//        Events.run(EventType.Trigger.update, () -> {
-//            isUnitTrue = Vars.control.input.commandMode;
-//            if (isUnitTrue && count == 0) {
-//                addUnitHealButton();
-//                count++;
-//            } else if (!isUnitTrue && count != 0) {
-//                removeUnitHealButton();
-//                count = 0;
-//            }
-//        });
     }
 
     @Override
@@ -168,7 +153,7 @@ public class Heal_KeyBind extends KeyBind {
         resetSelection();
     }
 
-    public void build() {
+    public void buildTable() {
         changeHP.table(t -> {
             t.table(Tex.buttonEdge1, b -> {
                 b.left();
@@ -214,11 +199,15 @@ public class Heal_KeyBind extends KeyBind {
             t.name = "mobile-unit";
             t.bottom().left();
             t.button(Icon.android, () -> {
-                Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
-                for (Unit unit : selectedUnits) {
-                    unit.health = unit.maxHealth;
+                if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+                    Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+                    for (Unit unit : selectedUnits) {
+                        unit.health = unit.maxHealth;
+                    }
+                    Vars.ui.hudfrag.showToast("所选单位已修复");
+                }else {
+                    Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
                 }
-                Vars.ui.hudfrag.showToast("所选单位已修复");
             }).visible(() -> Vars.control.input.commandMode).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "单位修复").pad(2f);
@@ -226,10 +215,6 @@ public class Heal_KeyBind extends KeyBind {
             t.row();
             t.table().size(48f);
         });
-    }
-
-    private void removeUnitHealButton() {
-        Vars.ui.hudGroup.removeChild(Vars.ui.hudGroup.find("mobile-unit"));
     }
 
     private void healSelectedUnits() {

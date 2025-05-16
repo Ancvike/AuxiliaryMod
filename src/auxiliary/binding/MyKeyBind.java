@@ -3,10 +3,9 @@ package auxiliary.binding;
 import arc.input.KeyCode;
 
 public enum MyKeyBind {
-    RECOVERY_BUDDING("框选建筑修复", KeyCode.u),
+    CHANGE_HP("改变血量", KeyCode.u),
     RECOVERY_UNIT("单位修复", KeyCode.i),
-    OPEN_MENU("打开面板", KeyCode.o),
-    CHANGE_HP("改变血量", KeyCode.k)
+    OPEN_MENU("打开面板", KeyCode.o)
     ;
     private final String name;
     private final KeyCode defaultKeyCode;
