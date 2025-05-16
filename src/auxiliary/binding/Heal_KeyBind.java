@@ -4,12 +4,19 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.input.KeyCode;
+import arc.scene.event.Touchable;
+import arc.scene.ui.Button;
+import arc.scene.ui.Label;
+import arc.scene.ui.Slider;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import auxiliary.functions.dragFunction.DragListener;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
+import mindustry.gen.Tex;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 
@@ -17,6 +24,12 @@ import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.*;
 
 public class Heal_KeyBind extends KeyBind {
+    public static Seq<Building> buildings;
+
+    Table changeHP = new Table();
+    boolean shown = false;
+    boolean inZoom = false;
+
     private boolean isUnitTrue = false;
     private int count = 0;
     public static boolean isOpen = false;
@@ -27,6 +40,8 @@ public class Heal_KeyBind extends KeyBind {
     private boolean isMoved = false;
 
     public Heal_KeyBind() {
+        build();
+        Vars.ui.hudGroup.fill(t -> t.add(changeHP).right());
         if (mobile) {
             setupMobileEvents();
         } else {
@@ -78,32 +93,32 @@ public class Heal_KeyBind extends KeyBind {
             }
         });
 
-        Events.run(EventType.Trigger.update, () -> {
-            isUnitTrue = Vars.control.input.commandMode;
-            if (isUnitTrue && count == 0) {
-                addUnitHealButton();
-                count++;
-            } else if (!isUnitTrue && count != 0) {
-                removeUnitHealButton();
-                count = 0;
-            }
-        });
+//        Events.run(EventType.Trigger.update, () -> {
+//            isUnitTrue = Vars.control.input.commandMode;
+//            if (isUnitTrue && count == 0) {
+//                addUnitHealButton();
+//                count++;
+//            } else if (!isUnitTrue && count != 0) {
+//                removeUnitHealButton();
+//                count = 0;
+//            }
+//        });
     }
 
     @Override
     void setupDesktopEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.RECOVERY_BUDDING.nowKeyCode) && isTap) {
-                handleSelectionDraw(Color.green, Color.acid);
+            if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.CHANGE_HP.nowKeyCode) && isTap) {
+                handleSelectionDraw(Color.blue, Color.sky);
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.CHANGE_HP.nowKeyCode)) {
                 startSelection();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.RECOVERY_BUDDING.nowKeyCode)) {
+            if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.CHANGE_HP.nowKeyCode)) {
                 handleSelectionEnd();
             }
         });
@@ -124,16 +139,72 @@ public class Heal_KeyBind extends KeyBind {
     @Override
     void handleSelectionEnd() {
         if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+            inZoom = false;
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
-                    building.health = building.maxHealth;
+                    inZoom = true;
                 }
             }
-            Vars.ui.hudfrag.showToast("所选建筑已修复");
+
+            if (inZoom) {
+                buildings = new Seq<>();
+                for (Building building : player.team().data().buildings) {
+                    if (inZone(building)) {
+                        buildings.addAll(building);
+                    }
+                }
+                changeHP.parent.setLayoutEnabled(false);
+                shown = true;
+                changeHP.toFront();
+                changeHP.setLayoutEnabled(true);
+            } else {
+                buildings = null;
+            }
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
         resetSelection();
+    }
+
+    public void build() {
+        changeHP.table(t -> {
+            t.table(Tex.buttonEdge1, b -> {
+                b.left();
+                b.add("血量修改").padLeft(20);
+            }).grow();
+
+            t.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
+                shown = false;
+                inZoom = false;
+                buildings = null;
+            }).grow()).maxWidth(8 * 15f).growY();
+
+            t.touchable = Touchable.enabled;
+            t.addListener(new DragListener(changeHP));
+        }).height(8 * 6f).growX().prefWidth();
+
+        changeHP.row();
+        changeHP.table(Styles.black5, table -> {
+            table.top().left();
+
+            table.table(rules -> {
+                rules.top().left();
+
+                Label label = rules.add("100%").get();
+                Slider slider = new Slider(0, 10, 1, false);
+                slider.setValue(10f);
+                slider.changed(() -> label.setText((int) (slider.getValue() * 10) + "%"));
+                slider.change();
+                slider.moved(hp -> {
+                    for (Building building : buildings) {
+                        building.health = building.maxHealth * (int) hp * 0.1f;
+                    }
+                });
+                rules.add(slider);
+            }).grow();
+        }).grow();
+
+        changeHP.visible(() -> shown);
     }
 
     private void addUnitHealButton() {
@@ -146,7 +217,7 @@ public class Heal_KeyBind extends KeyBind {
                     unit.health = unit.maxHealth;
                 }
                 Vars.ui.hudfrag.showToast("所选单位已修复");
-            }).size(50f).tooltip(tt -> {
+            }).visible(() -> Vars.control.input.commandMode).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "单位修复").pad(2f);
             }).left();

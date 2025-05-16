@@ -1,6 +1,5 @@
 package auxiliary;
 
-import auxiliary.binding.ChangeHP_KeyBind;
 import auxiliary.binding.Heal_KeyBind;
 import auxiliary.functions.Menu;
 import auxiliary.ui.SettingUI;
@@ -11,7 +10,6 @@ public class AuxiliaryMod extends Mod {
     public void init() {
         new Menu();
         new Heal_KeyBind();
-        new ChangeHP_KeyBind();
         new SettingUI().init();
     }
 }
