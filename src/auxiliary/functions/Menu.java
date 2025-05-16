@@ -15,7 +15,7 @@ import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
 
-import static auxiliary.binding.Heal_KeyBind.isOpen;
+import static auxiliary.binding.HPChange_KeyBind.isOpen;
 import static mindustry.Vars.*;
 
 public class Menu {
