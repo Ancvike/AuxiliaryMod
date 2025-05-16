@@ -93,6 +93,8 @@ public class Heal_KeyBind extends KeyBind {
             }
         });
 
+        addUnitHealButton();
+
 //        Events.run(EventType.Trigger.update, () -> {
 //            isUnitTrue = Vars.control.input.commandMode;
 //            if (isUnitTrue && count == 0) {
