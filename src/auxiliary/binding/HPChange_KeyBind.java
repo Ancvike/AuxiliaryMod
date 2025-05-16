@@ -33,7 +33,7 @@ public class HPChange_KeyBind extends KeyBind {
     private float pressTime = 0f;
     private int player_startX, mobile_startY;
     private int player_endX, player_endY;
-    private boolean isMoved = false;
+    public static boolean isMoved = false;
 
     public HPChange_KeyBind() {
         buildTable();
@@ -180,9 +180,13 @@ public class HPChange_KeyBind extends KeyBind {
                 Label label = rules.add("100%").get();
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
-                slider.changed(() -> label.setText((int) (slider.getValue() * 10) + "%"));
+                slider.changed(() -> {
+                    isMoved = false;
+                    label.setText((int) (slider.getValue() * 10) + "%");
+                });
                 slider.change();
                 slider.moved(hp -> {
+                    isMoved = false;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
                     }
@@ -205,7 +209,7 @@ public class HPChange_KeyBind extends KeyBind {
                         unit.health = unit.maxHealth;
                     }
                     Vars.ui.hudfrag.showToast("所选单位已修复");
-                }else {
+                } else {
                     Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
                 }
             }).visible(() -> Vars.control.input.commandMode).size(50f).tooltip(tt -> {
