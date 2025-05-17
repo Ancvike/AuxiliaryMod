@@ -19,6 +19,6 @@ public class MyBlocks {
     }};
 
     public void load() {
-        erekir.techTree.children.add(new TechTree.TechNode(null, omnipotent_unloader, null));
+        erekir.techTree.children.add(new TechTree.TechNode(erekir.techTree, omnipotent_unloader, null));
     }
 }
