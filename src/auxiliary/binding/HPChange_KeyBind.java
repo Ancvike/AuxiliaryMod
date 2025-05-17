@@ -211,7 +211,7 @@ public class HPChange_KeyBind extends KeyBind {
         Draw.z(Layer.max);
         Draw.color(Tmp.c1.set(Color.blue).lerp(Color.sky, Mathf.absin(Time.time, 3f, 1f)).a(settings.getInt("selectopacity") / 100f));
 
-        float length = (target instanceof Unit u ? u.hitSize : target instanceof Building b ? b.block.size * tilesize : 0) * 1.5f + 2.5f;
+        float length = target instanceof Unit u ? u.hitSize : target instanceof Building b ? b.block.size * tilesize : 0;
 
         for (int i = 0; i < 4; i++) {
             float rot = i * 90f + 45f + (-Time.time) % 360f;
