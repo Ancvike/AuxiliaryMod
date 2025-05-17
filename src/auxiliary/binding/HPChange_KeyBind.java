@@ -25,7 +25,7 @@ import static mindustry.Vars.*;
 public class HPChange_KeyBind extends KeyBind {
     public static Seq<Building> buildings;
     Table changeHP = new Table();
-    boolean shown = false;
+    public static boolean shown = false;
     boolean inZoom = false;
 
     public static boolean isOpen = false;
@@ -54,6 +54,7 @@ public class HPChange_KeyBind extends KeyBind {
                 player_endX = player.tileX();
                 player_endY = player.tileY();
                 if (player_startX != player_endX || player_startY != player_endY) return;
+
                 handleSelectionDraw(Color.blue, Color.sky);
             }
         });
@@ -132,6 +133,7 @@ public class HPChange_KeyBind extends KeyBind {
                 changeHP.setLayoutEnabled(true);
             } else {
                 buildings = null;
+                shown = false;
             }
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
