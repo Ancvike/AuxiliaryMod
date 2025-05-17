@@ -66,7 +66,7 @@ public class HPChange_KeyBind extends KeyBind {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft)) {
+            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
                 handleSelectionEnd();
                 pressedTime = 0f;
                 player_startX = 0;
