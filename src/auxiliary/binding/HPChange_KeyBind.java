@@ -3,22 +3,28 @@ package auxiliary.binding;
 import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
 import arc.input.KeyCode;
+import arc.math.Angles;
+import arc.math.Mathf;
 import arc.scene.event.Touchable;
 import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.Time;
+import arc.util.Tmp;
 import auxiliary.functions.dragFunction.DragListener;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Gamemode;
-import mindustry.gen.Building;
-import mindustry.gen.Icon;
-import mindustry.gen.Tex;
-import mindustry.gen.Unit;
+import mindustry.gen.*;
+import mindustry.graphics.Layer;
 import mindustry.ui.Styles;
+import mindustry.world.Tile;
 
+import static arc.Core.input;
+import static arc.Core.settings;
 import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.*;
 
@@ -43,6 +49,10 @@ public class HPChange_KeyBind extends KeyBind {
         } else {
             setupDesktopEvents();
         }
+
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shown) drawBuilding();
+        });
     }
 
     @Override
@@ -194,6 +204,34 @@ public class HPChange_KeyBind extends KeyBind {
         }).grow();
 
         changeHP.visible(() -> shown);
+    }
+
+    public void drawBuilding() {
+        Teamc target = getTarget();
+        Draw.z(Layer.max);
+        Draw.color(Tmp.c1.set(Color.blue).lerp(Color.sky, Mathf.absin(Time.time, 3f, 1f)).a(settings.getInt("selectopacity") / 100f));
+
+        float length = (target instanceof Unit u ? u.hitSize : target instanceof Building b ? b.block.size * tilesize : 0) * 1.5f + 2.5f;
+
+        for (int i = 0; i < 4; i++) {
+            float rot = i * 90f + 45f + (-Time.time) % 360f;
+            Draw.rect("select-arrow", target.x() + Angles.trnsx(rot, length), target.y() + Angles.trnsy(rot, length), length / 1.9f, length / 1.9f, rot - 135f);
+        }
+
+        Draw.color();
+    }
+
+    public static <T extends Teamc> T getTarget() {
+        Seq<Unit> units = Groups.unit.intersect(input.mouseWorldX(), input.mouseWorldY(), 4, 4); // well, 0.5tile is enough to search them
+        if (units.size > 0) return (T) units.peek(); //if there is unit, return it.
+        else if (getTile() != null && getTile().build != null)
+            return (T) getTile().build; //if there isn't unit but there is build, return it.
+        else if (player.unit() instanceof BlockUnitUnit b && b.tile() != null) return (T) b.tile();
+        return (T) player.unit(); //if there aren't unit and not build, return player.
+    }
+
+    public static Tile getTile() {
+        return Vars.world.tileWorld(input.mouseWorldX(), input.mouseWorldY());
     }
 
     private void addUnitHealButton() {
