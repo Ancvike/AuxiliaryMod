@@ -31,7 +31,7 @@ public class HPChange_KeyBind extends KeyBind {
     public static boolean isOpen = false;
 
     private float pressTime = 0f;
-    private int player_startX, mobile_startY;
+    private int player_startX, player_startY;
     private int player_endX, player_endY;
     public static boolean isMoved = false;
 
@@ -57,7 +57,7 @@ public class HPChange_KeyBind extends KeyBind {
             player_endX = player.tileX();
             player_endY = player.tileY();
 
-            if (pressTime >= 0.7f && player_endX != player_startX && player_endY != mobile_startY) {
+            if (pressTime >= 0.7f && player_endX != player_startX && player_endY != player_startY) {
                 isMoved = true;
             }
 
@@ -68,7 +68,7 @@ public class HPChange_KeyBind extends KeyBind {
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
                 player_startX = player.tileX();
-                mobile_startY = player.tileY();
+                player_startY = player.tileY();
                 startSelection();
             }
         });
@@ -83,7 +83,7 @@ public class HPChange_KeyBind extends KeyBind {
 
             if (Core.input.keyRelease(KeyCode.mouseLeft)) {
                 player_startX = 0;
-                mobile_startY = 0;
+                player_startY = 0;
                 pressTime = 0f;
                 isMoved = false;
             }
