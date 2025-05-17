@@ -29,11 +29,8 @@ public class HPChange_KeyBind extends KeyBind {
     boolean inZoom = false;
 
     public static boolean isOpen = false;
-
-    private float pressTime = 0f;
-    private int player_startX, player_startY;
-    private int player_endX, player_endY;
-    public static boolean isMoved = false;
+    float pressedTime = 0f;
+    int player_startX, player_endX, player_startY, player_endY;
 
     public HPChange_KeyBind() {
         buildTable();
@@ -48,42 +45,26 @@ public class HPChange_KeyBind extends KeyBind {
     @Override
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isTap && isOpen)) return;
+            if (!(shouldHandleInput() && isOpen)) return;
 
-            if (Core.input.keyDown(KeyCode.mouseLeft)) pressTime += Core.graphics.getDeltaTime();
-
-            if (pressTime < 0.7f) return;
+            pressedTime += Core.graphics.getDeltaTime();
+            if (pressedTime < 0.7f) return;
 
             player_endX = player.tileX();
             player_endY = player.tileY();
+            if (player_startX != player_endX || player_startY != player_endY) return;
 
-            isMoved = pressTime >= 0.7f && player_endX != player_startX && player_endY != player_startY;
 
-            if (Core.input.keyDown(KeyCode.mouseLeft) && !isMoved) {
+
+            if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
                 handleSelectionDraw(Color.blue, Color.sky);
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
+                startSelection();
                 player_startX = player.tileX();
                 player_startY = player.tileY();
-                startSelection();
-            }
-        });
-        Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isOpen)) return;
-
-            if (pressTime < 0.7f) return;
-
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && !isMoved) {
-                handleSelectionEnd();
-            }
-
-            if (Core.input.keyRelease(KeyCode.mouseLeft)) {
-                player_startX = 0;
-                player_startY = 0;
-                pressTime = 0f;
-                isMoved = false;
             }
         });
 
@@ -179,12 +160,10 @@ public class HPChange_KeyBind extends KeyBind {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
-                    isMoved = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.change();
                 slider.moved(hp -> {
-                    isMoved = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
                     }

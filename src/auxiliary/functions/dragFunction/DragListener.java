@@ -7,7 +7,6 @@ import arc.scene.event.InputListener;
 import arc.scene.ui.layout.Table;
 import arc.util.Tmp;
 
-import static auxiliary.binding.HPChange_KeyBind.isMoved;
 import static auxiliary.functions.Menu.isDragged;
 
 public class DragListener extends InputListener {
@@ -25,7 +24,6 @@ public class DragListener extends InputListener {
         lastY = v.y;
         table.toFront();
         isDragged = false;
-        isMoved = true;
         return true;
     }
 
@@ -36,6 +34,5 @@ public class DragListener extends InputListener {
         lastX = v.x;
         lastY = v.y;
         isDragged = true;
-        isMoved = true;
     }
 }
