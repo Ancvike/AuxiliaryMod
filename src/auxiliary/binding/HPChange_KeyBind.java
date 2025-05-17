@@ -227,7 +227,7 @@ public class HPChange_KeyBind extends KeyBind {
         else if (getTile() != null && getTile().build != null)
             return (T) getTile().build; //if there isn't unit but there is build, return it.
         else if (player.unit() instanceof BlockUnitUnit b && b.tile() != null) return (T) b.tile();
-        return (T) player.unit(); //if there aren't unit and not build, return player.
+        return (T) player.unit();
     }
 
     public static Tile getTile() {
