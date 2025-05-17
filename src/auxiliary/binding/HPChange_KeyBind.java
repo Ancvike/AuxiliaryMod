@@ -57,9 +57,7 @@ public class HPChange_KeyBind extends KeyBind {
             player_endX = player.tileX();
             player_endY = player.tileY();
 
-            if (pressTime >= 0.7f && player_endX != player_startX && player_endY != player_startY) {
-                isMoved = true;
-            }
+            isMoved = pressTime >= 0.7f && player_endX != player_startX && player_endY != player_startY;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && !isMoved) {
                 handleSelectionDraw(Color.blue, Color.sky);
