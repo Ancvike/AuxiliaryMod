@@ -32,6 +32,8 @@ public class HPChange_KeyBind extends KeyBind {
     float pressedTime = 0f;
     int player_startX, player_endX, player_startY, player_endY;
 
+    public static boolean mobile_deal = false;
+
     public HPChange_KeyBind() {
         buildTable();
         Vars.ui.hudGroup.fill(t -> t.add(changeHP).right());
@@ -46,11 +48,13 @@ public class HPChange_KeyBind extends KeyBind {
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
+            player.shooting= false;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
                 pressedTime += Core.graphics.getDeltaTime();
                 if (pressedTime < 0.7f) return;
 
+                mobile_deal = true;
                 player_endX = player.tileX();
                 player_endY = player.tileY();
                 if (player_startX != player_endX || player_startY != player_endY) return;
@@ -66,13 +70,17 @@ public class HPChange_KeyBind extends KeyBind {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
+            if (!shouldHandleInput()) return;
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen && mobile_deal) {
                 handleSelectionEnd();
+            }
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
                 pressedTime = 0f;
                 player_startX = 0;
                 player_startY = 0;
                 player_endX = 0;
                 player_endY = 0;
+                mobile_deal = false;
             }
         });
 
