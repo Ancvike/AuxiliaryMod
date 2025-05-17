@@ -207,17 +207,18 @@ public class HPChange_KeyBind extends KeyBind {
     }
 
     public void drawBuilding() {
-        Teamc target = getTarget();
-        Draw.z(Layer.max);
-        Draw.color(Tmp.c1.set(Color.blue).lerp(Color.sky, Mathf.absin(Time.time, 3f, 1f)).a(settings.getInt("selectopacity") / 100f));
+//        Teamc target = getTarget();
+        for (Building building : buildings) {
+            Draw.z(Layer.max);
+            Draw.color(Tmp.c1.set(Color.blue).lerp(Color.sky, Mathf.absin(Time.time, 3f, 1f)).a(settings.getInt("selectopacity") / 100f));
 
-        float length = target instanceof Unit u ? u.hitSize : target instanceof Building b ? b.block.size * tilesize : 0;
+            float length = building.block.size * tilesize;
 
-        for (int i = 0; i < 4; i++) {
-            float rot = i * 90f + 45f + (-Time.time) % 360f;
-            Draw.rect("select-arrow", target.x() + Angles.trnsx(rot, length), target.y() + Angles.trnsy(rot, length), length / 1.9f, length / 1.9f, rot - 135f);
+            for (int i = 0; i < 4; i++) {
+                float rot = i * 90f + 45f + (-Time.time) % 360f;
+                Draw.rect("select-arrow", building.x() + Angles.trnsx(rot, length), building.y() + Angles.trnsy(rot, length), length / 1.9f, length / 1.9f, rot - 135f);
+            }
         }
-
         Draw.color();
     }
 
