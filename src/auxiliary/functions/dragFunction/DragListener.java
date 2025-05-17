@@ -25,7 +25,7 @@ public class DragListener extends InputListener {
         lastY = v.y;
         table.toFront();
         isDragged = false;
-        isMoved = false;
+        isMoved = true;
         return true;
     }
 
@@ -36,6 +36,6 @@ public class DragListener extends InputListener {
         lastX = v.x;
         lastY = v.y;
         isDragged = true;
-        isMoved = false;
+        isMoved = true;
     }
 }
