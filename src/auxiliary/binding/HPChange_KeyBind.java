@@ -47,16 +47,13 @@ public class HPChange_KeyBind extends KeyBind {
         Events.run(EventType.Trigger.draw, () -> {
             if (!(shouldHandleInput() && isOpen)) return;
 
-            pressedTime += Core.graphics.getDeltaTime();
-            if (pressedTime < 0.7f) return;
-
-            player_endX = player.tileX();
-            player_endY = player.tileY();
-            if (player_startX != player_endX || player_startY != player_endY) return;
-
-
-
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
+                pressedTime += Core.graphics.getDeltaTime();
+                if (pressedTime < 0.7f) return;
+
+                player_endX = player.tileX();
+                player_endY = player.tileY();
+                if (player_startX != player_endX || player_startY != player_endY) return;
                 handleSelectionDraw(Color.blue, Color.sky);
             }
         });
@@ -65,6 +62,16 @@ public class HPChange_KeyBind extends KeyBind {
                 startSelection();
                 player_startX = player.tileX();
                 player_startY = player.tileY();
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft)) {
+                handleSelectionEnd();
+                pressedTime = 0f;
+                player_startX = 0;
+                player_startY = 0;
+                player_endX = 0;
+                player_endY = 0;
             }
         });
 
