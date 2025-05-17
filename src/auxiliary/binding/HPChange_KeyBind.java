@@ -33,6 +33,7 @@ public class HPChange_KeyBind extends KeyBind {
     int player_startX, player_endX, player_startY, player_endY;
 
     public static boolean mobile_deal = false;
+    public static boolean isDragged = false;
 
     public HPChange_KeyBind() {
         buildTable();
@@ -47,23 +48,23 @@ public class HPChange_KeyBind extends KeyBind {
     @Override
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isOpen)) return;
-            player.shooting= false;
+            if (!(shouldHandleInput() && isOpen) && !isDragged) return;
+            player.shooting = false;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
                 pressedTime += Core.graphics.getDeltaTime();
                 if (pressedTime < 0.7f) return;
 
-                mobile_deal = true;
                 player_endX = player.tileX();
                 player_endY = player.tileY();
                 if (player_startX != player_endX || player_startY != player_endY) return;
 
+                mobile_deal = true;
                 handleSelectionDraw(Color.blue, Color.sky);
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
+            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen && !isDragged) {
                 startSelection();
                 player_startX = player.tileX();
                 player_startY = player.tileY();
@@ -81,6 +82,7 @@ public class HPChange_KeyBind extends KeyBind {
                 player_endX = 0;
                 player_endY = 0;
                 mobile_deal = false;
+                isDragged = false;
             }
         });
 
@@ -177,10 +179,12 @@ public class HPChange_KeyBind extends KeyBind {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
+                    isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.change();
                 slider.moved(hp -> {
+                    isDragged = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
                     }
