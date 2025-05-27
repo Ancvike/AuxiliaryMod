@@ -12,5 +12,6 @@ public class MyBlocks {
         omnipotent_unloader.size = 2;
         omnipotent_unloader.health = 100;
         omnipotent_unloader.category = Category.effect;
+        omnipotent_unloader.load();
     }
 }
