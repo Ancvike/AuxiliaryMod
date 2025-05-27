@@ -14,6 +14,6 @@ public class MyBlocks {
         requirements(Category.effect, with(Items.graphite, 20, Items.silicon, 20, Items.tungsten, 10));
         speed = 60f / 11f;
         group = BlockGroup.transportation;
-
+        category = Category.effect;
     }};
 }
