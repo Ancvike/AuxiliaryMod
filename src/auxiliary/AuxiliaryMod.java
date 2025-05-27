@@ -12,6 +12,6 @@ public class AuxiliaryMod extends Mod {
         new Menu();
         new HPChange_KeyBind();
         new SettingUI().init();
-        new MyBlocks().omnipotent_unloader.load();
+        new MyBlocks().load();
     }
 }
