@@ -1,5 +1,6 @@
 package auxiliary.block;
 
+import arc.Core;
 import mindustry.content.Items;
 import mindustry.type.Category;
 import mindustry.world.Block;
@@ -14,12 +15,8 @@ public class MyBlocks {
     public void load() {
         omnipotent_unloader = new Unloader("114514") {{
             requirements(Category.distribution, with(Items.graphite, 20, Items.silicon, 20, Items.tungsten, 10));
-            health = 120;
-            speed = 4f;
-            solid = false;
-            underBullets = true;
-            regionRotated1 = 1;
             alwaysUnlocked = true;
+            size = 1;
         }};
     }
 }
