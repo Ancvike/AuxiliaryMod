@@ -19,6 +19,7 @@ public class MyBlocks {
             solid = false;
             underBullets = true;
             regionRotated1 = 1;
+            alwaysUnlocked = true;
         }};
     }
 }
