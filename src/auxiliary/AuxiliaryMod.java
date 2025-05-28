@@ -12,6 +12,11 @@ public class AuxiliaryMod extends Mod {
         new Menu();
         new HPChange_KeyBind();
         new SettingUI().init();
+
+    }
+
+    @Override
+    public void loadContent() {
         new MyBlocks().load();
     }
 }
