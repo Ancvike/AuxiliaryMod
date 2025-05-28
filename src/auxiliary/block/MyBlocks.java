@@ -17,6 +17,7 @@ public class MyBlocks {
             requirements(Category.distribution, with(Items.graphite, 20, Items.silicon, 20, Items.tungsten, 10));
             alwaysUnlocked = true;
             size = 1;
+            localizedName = "万能卸载器";
         }};
     }
 }
