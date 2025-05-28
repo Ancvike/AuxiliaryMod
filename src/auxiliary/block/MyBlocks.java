@@ -12,13 +12,13 @@ public class MyBlocks {
     public Block omnipotent_unloader;
 
     public void load() {
-        omnipotent_unloader = new Unloader("omnipotent_unloader") {{
-        requirements(Category.distribution, with(Items.graphite, 20, Items.silicon, 20, Items.tungsten, 10));
-        health = 120;
-        speed = 4f;
-        solid = false;
-        underBullets = true;
-        regionRotated1 = 1;
-    }};
+        omnipotent_unloader = new Unloader("114514") {{
+            requirements(Category.distribution, with(Items.graphite, 20, Items.silicon, 20, Items.tungsten, 10));
+            health = 120;
+            speed = 4f;
+            solid = false;
+            underBullets = true;
+            regionRotated1 = 1;
+        }};
     }
 }
