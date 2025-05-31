@@ -11,7 +11,6 @@ import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Time;
 import arc.util.Tmp;
 import auxiliary.functions.dragFunction.DragListener;
@@ -52,6 +51,12 @@ public class HPChange_KeyBind extends KeyBind {
         Events.run(EventType.Trigger.draw, () -> {
             if (buildingsShown) drawBuilding();
         });
+        Events.run(EventType.Trigger.update, () -> {
+            if (!Vars.control.input.commandMode) unitsShown = false;
+        });
+        Events.run(EventType.Trigger.update, () -> {
+            if (Vars.control.input.selectedUnits.isEmpty()) unitsShown = false;
+        });
     }
 
     @Override
@@ -73,7 +78,7 @@ public class HPChange_KeyBind extends KeyBind {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
                 changeUnitsHP();
             }
         });
@@ -219,13 +224,11 @@ public class HPChange_KeyBind extends KeyBind {
 
     private void changeUnitsHP() {
         if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-            changeUnitsHP.parent.setLayoutEnabled(false);
-            for (Unit unit : Vars.control.input.selectedUnits) {
-                unitsShown = (unit != null && Vars.control.input.commandMode);
-                if (unit == null) Log.info("unit is null");
-            }
-            changeUnitsHP.toFront();
-            changeUnitsHP.setLayoutEnabled(true);
+            if (!Vars.control.input.selectedUnits.isEmpty()) {
+                changeUnitsHP.parent.setLayoutEnabled(false);
+                unitsShown = true;
+                changeUnitsHP.setLayoutEnabled(true);
+            } else unitsShown = false;
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
