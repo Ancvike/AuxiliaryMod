@@ -12,9 +12,7 @@ public class checkFunction extends Function {
         baseDialog.addCloseButton();
         baseDialog.cont.add("基本功能都在其中,其他功能都会在本页说明");
         baseDialog.cont.row();
-        baseDialog.cont.row();
         baseDialog.cont.add("埃里克尔星球新增装卸器,可对核心进行卸载");
-        baseDialog.cont.row();
         baseDialog.cont.row();
         baseDialog.cont.add("[accent]电脑端----");
         baseDialog.cont.row();
@@ -23,7 +21,6 @@ public class checkFunction extends Function {
         baseDialog.cont.add("I键:在指挥模式中,对选中单位进行血量修改");
         baseDialog.cont.row();
         baseDialog.cont.add("O键:快捷打开面板");
-        baseDialog.cont.row();
         baseDialog.cont.row();
         baseDialog.cont.add("[accent]手机端----");
         baseDialog.cont.row();

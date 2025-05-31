@@ -16,7 +16,7 @@ import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
 
 import static auxiliary.binding.HPChange_KeyBind.isOpen;
-import static auxiliary.binding.HPChange_KeyBind.shown;
+import static auxiliary.binding.HPChange_KeyBind.buildingsShown;
 import static mindustry.Vars.*;
 
 public class Menu {
@@ -101,7 +101,7 @@ public class Menu {
         ImageButton androidButton = new ImageButton(Icon.android, style);
         androidButton.clicked(() -> {
             isOpen = !isOpen;
-            shown = false;
+            buildingsShown = false;
         });
         return androidButton;
     }

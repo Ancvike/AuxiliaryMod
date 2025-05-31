@@ -4,6 +4,7 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
+import arc.input.KeyCode;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.scene.event.Touchable;
@@ -25,32 +26,73 @@ import static arc.Core.settings;
 import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.*;
 
-public class HPChange_KeyBind extends KeyBind {
+public class HPChange_Mobile_KeyBind extends KeyBind {
     public static Seq<Building> buildings;
     Table changeBuildingsHP = new Table();
-    public static boolean buildingsShown = false;
+
+    public static boolean shown = false;
     boolean inZoom = false;
 
     public static boolean isOpen = false;
+    float pressedTime = 0f;
+    int player_startX, player_endX, player_startY, player_endY;
 
+    public static boolean mobile_deal = false;
     public static boolean isDragged = false;
 
-    Table changeUnitsHP = new Table();
-    public static boolean unitsShown = false;
-
-    public HPChange_KeyBind() {
+    public HPChange_Mobile_KeyBind() {
         buildBuildingsTable();
-        buildUnitsTable();
-        Vars.ui.hudGroup.fill(t -> {
-            t.add(changeBuildingsHP);
-            t.add(changeUnitsHP);
-        });
+        Vars.ui.hudGroup.fill(t -> t.add(changeBuildingsHP).right());
 
-        setupDesktopEvents();
+        setupMobileEvents();
 
         Events.run(EventType.Trigger.draw, () -> {
-            if (buildingsShown) drawBuilding();
+            if (shown) drawBuilding();
         });
+    }
+
+    @Override
+    void setupMobileEvents() {
+        Events.run(EventType.Trigger.draw, () -> {
+            if (!(shouldHandleInput() && isOpen) && !isDragged) return;
+            player.shooting = false;
+
+            if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
+                pressedTime += Core.graphics.getDeltaTime();
+                if (pressedTime < 0.7f) return;
+
+                player_endX = player.tileX();
+                player_endY = player.tileY();
+                if (player_startX != player_endX || player_startY != player_endY) return;
+
+                mobile_deal = true;
+                handleSelectionDraw(Color.blue, Color.sky);
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen && !isDragged) {
+                startSelection();
+                player_startX = player.tileX();
+                player_startY = player.tileY();
+            }
+        });
+        Events.run(EventType.Trigger.draw, () -> {
+            if (!shouldHandleInput()) return;
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen && mobile_deal) {
+                handleSelectionEnd();
+            }
+            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
+                pressedTime = 0f;
+                player_startX = 0;
+                player_startY = 0;
+                player_endX = 0;
+                player_endY = 0;
+                mobile_deal = false;
+                isDragged = false;
+            }
+        });
+
+        addUnitHealButton();
     }
 
     @Override
@@ -73,7 +115,7 @@ public class HPChange_KeyBind extends KeyBind {
 
         Events.run(EventType.Trigger.update, () -> {
             if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode) && Vars.control.input.commandMode) {
-                changeUnitsHP();
+                healSelectedUnits();
             }
         });
 
@@ -102,12 +144,12 @@ public class HPChange_KeyBind extends KeyBind {
                     }
                 }
                 changeBuildingsHP.parent.setLayoutEnabled(false);
-                buildingsShown = true;
+                shown = true;
                 changeBuildingsHP.toFront();
                 changeBuildingsHP.setLayoutEnabled(true);
             } else {
                 buildings = null;
-                buildingsShown = false;
+                shown = false;
             }
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
@@ -123,7 +165,7 @@ public class HPChange_KeyBind extends KeyBind {
             }).grow();
 
             t.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
-                buildingsShown = false;
+                shown = false;
                 inZoom = false;
                 buildings = null;
             }).grow()).maxWidth(8 * 15f).growY();
@@ -157,7 +199,7 @@ public class HPChange_KeyBind extends KeyBind {
             }).grow();
         }).grow();
 
-        changeBuildingsHP.visible(() -> buildingsShown);
+        changeBuildingsHP.visible(() -> shown);
     }
 
     public void drawBuilding() {
@@ -175,50 +217,36 @@ public class HPChange_KeyBind extends KeyBind {
         Draw.color();
     }
 
-    public void buildUnitsTable() {
-        changeUnitsHP.table(t -> {
-            t.table(Tex.buttonEdge1, b -> {
-                b.left();
-                b.add("单位血量修改").padLeft(20);
-            }).grow();
-
-            t.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> unitsShown = false).grow()).maxWidth(8 * 15f).growY();
-
-            t.touchable = Touchable.enabled;
-            t.addListener(new DragListener(changeUnitsHP));
-        }).height(8 * 6f).growX().prefWidth();
-
-        changeUnitsHP.row();
-        changeUnitsHP.table(Styles.black5, table -> {
-            table.top().left();
-
-            table.table(rules -> {
-                rules.top().left();
-
-                Label label = rules.add("100%").get();
-                Slider slider = new Slider(0, 10, 1, false);
-                slider.setValue(10f);
-                slider.changed(() -> {
-                    isDragged = true;
-                    label.setText((int) (slider.getValue() * 10) + "%");
-                });
-                slider.change();
-                slider.moved(hp -> {
-                    isDragged = true;
-                    for (Unit unit : Vars.control.input.selectedUnits) {
-                        unit.health = unit.maxHealth * (int) hp * 0.1f;
+    private void addUnitHealButton() {
+        Vars.ui.hudGroup.fill(t -> {
+            t.name = "mobile-unit";
+            t.bottom().left();
+            t.button(Icon.android, () -> {
+                if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+                    Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+                    for (Unit unit : selectedUnits) {
+                        unit.health = unit.maxHealth;
                     }
-                });
-                rules.add(slider);
-            }).grow();
-        }).grow();
-
-        changeUnitsHP.visible(() -> unitsShown);
+                    Vars.ui.hudfrag.showToast("所选单位已修复");
+                } else {
+                    Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
+                }
+            }).visible(() -> Vars.control.input.commandMode).size(50f).tooltip(tt -> {
+                tt.setBackground(Styles.black6);
+                tt.label(() -> "单位修复").pad(2f);
+            }).left();
+            t.row();
+            t.table().size(48f);
+        });
     }
 
-    private void changeUnitsHP() {
+    private void healSelectedUnits() {
         if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-            unitsShown = !Vars.control.input.selectedUnits.isEmpty();
+            Seq<Unit> selectedUnits = Vars.control.input.selectedUnits;
+            for (Unit unit : selectedUnits) {
+                unit.health = unit.maxHealth;
+            }
+            Vars.ui.hudfrag.showToast("所选单位已修复");
         } else {
             Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
         }
