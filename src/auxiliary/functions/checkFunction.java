@@ -22,6 +22,8 @@ public class checkFunction extends Function {
         baseDialog.cont.row();
         baseDialog.cont.add("O键:快捷打开面板");
         baseDialog.cont.row();
+        baseDialog.cont.add("在设置中可以将更改键位");
+        baseDialog.cont.row();
         baseDialog.cont.add("[accent]手机端----");
         baseDialog.cont.row();
         baseDialog.cont.add("主功能按钮下安卓图标按钮开启后:长按屏幕框选己方建筑,并对建筑血量进行修改");
