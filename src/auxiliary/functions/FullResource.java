@@ -23,8 +23,7 @@ public class FullResource extends Function {
                 if (core == null || core.items == null) {
                     return;
                 }
-                for (int i = 0; i < Vars.content.items().size; i++) {
-                    Item item = Vars.content.item(i);
+                for (Item item : Vars.content.items()) {
                     if (!Vars.player.team().items().has(item)) continue;
                     core.items.set(item, core.storageCapacity);
                 }
