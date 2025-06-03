@@ -14,7 +14,7 @@ main: "auxiliary.AuxiliaryMod"
 description: "太多功能以至于简介不想打字了"
 
 #the mod version
-version: 1.0.7
+version: 1.0.8
 
 #the minimum game build required to run this mod
 minGameVersion: 145

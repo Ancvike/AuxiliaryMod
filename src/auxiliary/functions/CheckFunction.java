@@ -3,10 +3,10 @@ package auxiliary.functions;
 import arc.scene.ui.layout.Table;
 import mindustry.ui.dialogs.BaseDialog;
 
-public class checkFunction extends Function {
+public class CheckFunction extends Function {
     BaseDialog baseDialog = new BaseDialog("");
 
-    public checkFunction() {
+    public CheckFunction() {
         super(0, new Table(table -> table.add("查看mod功能")));
 
         baseDialog.addCloseButton();
