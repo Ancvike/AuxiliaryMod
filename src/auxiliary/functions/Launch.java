@@ -2,6 +2,8 @@ package auxiliary.functions;
 
 import arc.Core;
 import arc.Events;
+import arc.files.Fi;
+import arc.func.Cons;
 import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.math.Mathf;
@@ -11,31 +13,34 @@ import arc.scene.event.ElementGestureListener;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.event.Touchable;
-import arc.scene.ui.Image;
-import arc.scene.ui.ScrollPane;
+import arc.scene.ui.*;
+import arc.scene.ui.layout.Scl;
 import arc.scene.ui.layout.Table;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.*;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.Items;
+import mindustry.content.Loadouts;
 import mindustry.content.TechTree;
 import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
 import mindustry.game.Objectives;
+import mindustry.game.Schematic;
 import mindustry.gen.Icon;
 import mindustry.graphics.Pal;
 import mindustry.maps.SectorDamage;
 import mindustry.type.*;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
-import mindustry.ui.dialogs.PlanetDialog;
+import mindustry.ui.dialogs.*;
 import mindustry.world.blocks.storage.CoreBlock;
 
 import static arc.Core.*;
 import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.*;
+import static mindustry.game.Schematics.read;
 import static mindustry.ui.dialogs.PlanetDialog.Mode.*;
 
 public class Launch extends Function {
@@ -52,38 +57,29 @@ public class Launch extends Function {
                 dialog.show();
                 Menu.dialog.hide();
             } else {
-                Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]当前功能仅在战役中使用");
+                Vars.ui.hudfrag.showToast(Icon.cancel, "[scarlet]当前功能仅在战役中使用,发射蓝图大小可以超过原本大小,但最多不能超过128x128");
             }
         }).width(200f));
     }
 }
 
 class MyPlanetDialog extends PlanetDialog {
+    MyLaunchLoadoutDialog myLoadouts = new MyLaunchLoadoutDialog();
 
     public MyPlanetDialog() {
-        //这里将 PlanetDialog 实例自身设置为渲染器，并设置 drawUi 标志为 true，表示需要绘制 UI。
         state.renderer = this;
         state.drawUi = true;
-
-        //设置 shouldPause 标志为 true，表示在显示该对话框时游戏应该暂停
         shouldPause = true;
-
-        //从游戏设置中加载上次访问的星球，如果未找到则默认设置为 serpulo 星球
         state.planet = content.getByName(ContentType.planet, Core.settings.getString("lastplanet", "serpulo"));
 
-        //设置悬停标签的样式和对齐方式。
         hoverLabel.setStyle(Styles.outlineLabel);
         hoverLabel.setAlignment(Align.center);
 
-        //调用 rebuildButtons () 方法来重建对话框的按钮布局。
         rebuildButtons();
 
-        //当窗口大小调整时，重新调用 rebuildButtons () 方法来调整按钮布局。
         onResize(this::rebuildButtons);
 
-        //添加了一个拖拽监听器，用于处理对话框的拖拽操作，并调整相机位置。
         dragged((cx, cy) -> {
-            //no multitouch drag
             if (Core.input.getTouches() > 1) return;
 
             if (showing()) {
@@ -106,7 +102,6 @@ class MyPlanetDialog extends PlanetDialog {
             pos.rotate(Tmp.v31.set(state.camUp).rotate(state.camDir, 90), amount);
         });
 
-        //添加了一个滚动监听器，用于处理鼠标滚轮或触摸滚动事件，以调整缩放级别。
         addListener(new InputListener() {
             @Override
             public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
@@ -117,7 +112,6 @@ class MyPlanetDialog extends PlanetDialog {
             }
         });
 
-        //添加了一个手势监听器，用于处理捏合缩放等手势操作。
         addCaptureListener(new ElementGestureListener() {
             float lastZoom = -1f;
 
@@ -136,10 +130,8 @@ class MyPlanetDialog extends PlanetDialog {
             }
         });
 
-        //当对话框显示时，调用 setup() 方法进行初始化设置。
         shown(this::setup);
 
-        //根据游戏状态解锁默认的内容（如特定的建筑块或物品）。
         if (content.planets().contains(p -> p.sectors.contains(Sector::hasBase)) || Blocks.scatter.unlocked() || Blocks.router.unlocked()) {
             Seq.with(Blocks.junction, Blocks.mechanicalDrill, Blocks.conveyor, Blocks.duo, Items.copper, Items.lead).each(UnlockableContent::quietUnlock);
         }
@@ -193,8 +185,8 @@ class MyPlanetDialog extends PlanetDialog {
                 control.playSector(sector);
             } else {
                 CoreBlock block = sector.allowLaunchSchematics() ? (from.info.bestCoreType instanceof CoreBlock b ? b : (CoreBlock) from.planet.defaultCore) : (CoreBlock) from.planet.defaultCore;
-
-                loadouts.show(block, from, sector, () -> {
+                //修改处1
+                myLoadouts.show(block, from, sector, () -> {
                     var loadout = universe.getLastLoadout();
                     var schemCore = loadout.findCore();
                     from.removeItems(loadout.requirements());
@@ -513,5 +505,230 @@ class MyPlanetDialog extends PlanetDialog {
 
     void addBack() {
         buttons.button("@back", Icon.left, this::hide).size(200f, 54f).pad(2).bottom();
+    }
+}
+
+class MyLaunchLoadoutDialog extends LaunchLoadoutDialog {
+    LoadoutDialog loadout = new LoadoutDialog();
+    ItemSeq total = new ItemSeq();
+    Schematic selected;
+    boolean valid;
+    int lastCapacity;
+
+    ObjectMap<CoreBlock, Seq<Schematic>> schematicsLoadout = new ObjectMap<>();
+
+    public MyLaunchLoadoutDialog() {
+        //修改2
+        Seq.with(Loadouts.basicShard, Loadouts.basicFoundation, Loadouts.basicNucleus, Loadouts.basicBastion).each(this::checkLoadout);
+        for (Fi file : schematicDirectory.list()) {
+            if (!file.extension().equals(schematicExtension)) continue;
+
+            try {
+                Schematic s = read(file);
+                checkLoadout(s);
+
+                if (!s.file.parent().equals(schematicDirectory)) {
+                    s.tags.put("steamid", s.file.parent().name());
+                }
+            } catch (Throwable e) {
+                Log.err("Failed to read schematic from file '@'", file);
+                Log.err(e);
+            }
+        }
+    }
+
+    public void show(CoreBlock core, Sector sector, Sector destination, Runnable confirm) {
+        cont.clear();
+        buttons.clear();
+
+        buttons.defaults().size(160f, 64f);
+        buttons.button("@back", Icon.left, this::hide);
+
+        addCloseListener();
+
+        ItemSeq sitems = sector.items();
+
+        ItemSeq launch = universe.getLaunchResources();
+        if (sector.planet.allowLaunchLoadout) {
+            for (var item : content.items()) {
+                if (sector.planet.hiddenItems.contains(item)) {
+                    launch.set(item, 0);
+                }
+            }
+            universe.updateLaunchResources(launch);
+        }
+
+        Runnable update = () -> {
+            int cap = lastCapacity = (int) (sector.planet.launchCapacityMultiplier * selected.findCore().itemCapacity);
+
+            ItemSeq schems = selected.requirements();
+            ItemSeq resources = universe.getLaunchResources();
+            resources.min(cap);
+
+            int capacity = lastCapacity;
+
+            if (!destination.allowLaunchLoadout()) {
+                resources.clear();
+                if (destination.preset != null) {
+                    var rules = destination.preset.generator.map.rules();
+                    for (var stack : rules.loadout) {
+                        if (!sector.planet.hiddenItems.contains(stack.item)) {
+                            resources.add(stack.item, stack.amount);
+                        }
+                    }
+                }
+
+            } else if (getMax()) {
+                for (Item item : content.items()) {
+                    resources.set(item, Mathf.clamp(sitems.get(item) - schems.get(item), 0, capacity));
+                }
+            }
+
+            universe.updateLaunchResources(resources);
+
+            total.clear();
+            selected.requirements().each(total::add);
+            universe.getLaunchResources().each(total::add);
+            valid = sitems.has(total);
+        };
+
+        Cons<Table> rebuild = table -> {
+            table.clearChildren();
+            int i = 0;
+
+            ItemSeq schems = selected.requirements();
+            ItemSeq launches = universe.getLaunchResources();
+
+            for (ItemStack s : total) {
+                int as = schems.get(s.item), al = launches.get(s.item);
+
+                if (as + al == 0) continue;
+
+                table.image(s.item.uiIcon).left().size(iconSmall);
+
+                String amountStr = (al + as) + (destination.allowLaunchLoadout() ? "[gray] (" + (al + " + " + as + ")") : "");
+
+                table.add(sitems.has(s.item, s.amount) ? amountStr : "[scarlet]" + (Math.min(sitems.get(s.item), s.amount) + "[lightgray]/" + amountStr)).padLeft(2).left().padRight(4);
+
+                if (++i % 4 == 0) {
+                    table.row();
+                }
+            }
+        };
+
+        Table items = new Table();
+
+        Runnable rebuildItems = () -> rebuild.get(items);
+
+        if (destination.allowLaunchLoadout()) {
+            buttons.button("@resources.max", Icon.add, Styles.togglet, () -> {
+                setMax(!getMax());
+                update.run();
+                rebuildItems.run();
+            }).checked(b -> getMax());
+
+            buttons.button("@resources", Icon.edit, () -> {
+                ItemSeq stacks = universe.getLaunchResources();
+                Seq<ItemStack> out = stacks.toSeq();
+
+                ItemSeq realItems = sitems.copy();
+                selected.requirements().each(realItems::remove);
+
+                loadout.show(lastCapacity, realItems, out, i -> i.unlocked() && !sector.planet.hiddenItems.contains(i), out::clear, () -> {
+                }, () -> {
+                    universe.updateLaunchResources(new ItemSeq(out));
+                    update.run();
+                    rebuildItems.run();
+                });
+            }).disabled(b -> getMax());
+        }
+
+        boolean rows = Core.graphics.isPortrait() && mobile;
+
+        if (rows) buttons.row();
+
+        var cell = buttons.button("@launch.text", Icon.ok, () -> {
+            universe.updateLoadout(core, selected);
+            confirm.run();
+            hide();
+        }).disabled(b -> !valid);
+
+        if (rows) {
+            cell.colspan(2).size(160f + 160f + 4f, 64f);
+        }
+
+        int cols = Math.max((int) (Core.graphics.getWidth() / Scl.scl(230)), 1);
+        ButtonGroup<Button> group = new ButtonGroup<>();
+        selected = universe.getLoadout(core);
+        if (selected == null) selected = schematics.getLoadouts().get((CoreBlock) Blocks.coreShard).first();
+
+        cont.add(Core.bundle.format("launch.from", sector.name())).row();
+
+        if (destination.allowLaunchSchematics()) {
+            cont.pane(t -> {
+                int[] i = {0};
+
+                Cons<Schematic> handler = s -> {
+                    if (s.tiles.contains(tile -> !tile.block.supportsEnv(sector.planet.defaultEnv) ||
+                            (!sector.planet.hiddenItems.isEmpty() && Structs.contains(tile.block.requirements, stack -> sector.planet.hiddenItems.contains(stack.item))))) {
+                        return;
+                    }
+
+                    t.button(b -> b.add(new SchematicsDialog.SchematicImage(s)), Styles.togglet, () -> {
+                        selected = s;
+                        update.run();
+                        rebuildItems.run();
+                    }).group(group).pad(4).checked(s == selected).size(200f);
+
+                    if (++i[0] % cols == 0) {
+                        t.row();
+                    }
+                };
+
+                if (destination.allowLaunchSchematics() || schematics.getDefaultLoadout(core) == null) {
+                    for (var entry : schematicsLoadout) {
+                        //修改3
+                        for (Schematic s : entry.value) {
+                            handler.get(s);
+                        }
+                    }
+                } else {
+                    handler.get(schematics.getDefaultLoadout(core));
+                }
+            }).growX().scrollX(false);
+
+            cont.row();
+
+            cont.label(() -> Core.bundle.format("launch.capacity", lastCapacity)).row();
+            cont.row();
+        } else if (destination.preset != null && destination.preset.description != null) {
+            cont.pane(p -> p.add(destination.preset.description).grow().wrap().labelAlign(Align.center)).pad(10f).grow().row();
+        }
+
+        cont.pane(items);
+        cont.row();
+        cont.add("@sector.missingresources").
+
+                visible(() -> !valid);
+
+        update.run();
+        rebuildItems.run();
+
+        show();
+    }
+
+    void setMax(boolean max) {
+        Core.settings.put("maxresources", max);
+    }
+
+    boolean getMax() {
+        return Core.settings.getBool("maxresources", true);
+    }
+
+    private void checkLoadout(Schematic s) {
+        Schematic.Stile core = s.tiles.find(t -> t.block instanceof CoreBlock);
+        if (core == null) return;
+
+        schematicsLoadout.get((CoreBlock) core.block, Seq::new).add(s);
     }
 }
