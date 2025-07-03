@@ -3,12 +3,8 @@ package auxiliary.functions;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 import mindustry.game.Gamemode;
-import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
-
-import static mindustry.content.Blocks.conveyor;
-import static mindustry.content.Blocks.titaniumConveyor;
 
 public class ConveyorConvert extends Function {
     BaseDialog dialog = new BaseDialog("传送带替换");
@@ -32,12 +28,5 @@ public class ConveyorConvert extends Function {
 
     private void buildDialog() {
         dialog.cont.clear();
-
-        for (Building building : Vars.player.team().data().buildings) {
-            if (building.block() == conveyor) {
-                building.block = titaniumConveyor;
-            }
-        }
-
     }
 }
