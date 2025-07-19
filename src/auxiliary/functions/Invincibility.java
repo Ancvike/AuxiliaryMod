@@ -13,7 +13,7 @@ import mindustry.gen.Unit;
 import static mindustry.Vars.player;
 
 public class Invincibility extends Function {
-    private boolean isInvincible = false;
+    public static boolean isInvincible = false;
 
     Seq<Unit> units = null;
     Unit unitPlayer = null;
