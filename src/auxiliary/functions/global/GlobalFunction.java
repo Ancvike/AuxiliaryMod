@@ -7,19 +7,25 @@ import mindustry.game.EventType;
 import mindustry.game.Gamemode;
 
 import static auxiliary.functions.Invincibility.isInvincible;
+import static auxiliary.functions.NoLimitUnitAmount.isOpen;
 import static mindustry.Vars.state;
 
 public class GlobalFunction {
     public GlobalFunction() {
         Events.run(EventType.Trigger.update, () -> {
-            if (!(Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || !(Vars.state.rules.mode() == Gamemode.sandbox) || !(Vars.state.rules.mode() == Gamemode.editor)) {
+            if (!((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor)) {
                 isInvincible = false;
+
                 if (Vars.state.rules.sector != null) {
                     if (Vars.state.rules.sector.planet == Planets.erekir) {
                         state.rules.fog = true;
                     }
                 }
+
+                Vars.state.rules.unitCap = 0;
             }
         });
+
+        Events.run(EventType.Trigger.update, () -> isOpen = Vars.state.rules.unitCap == 1000);
     }
 }

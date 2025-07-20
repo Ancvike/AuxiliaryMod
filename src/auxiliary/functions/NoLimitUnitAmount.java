@@ -5,7 +5,7 @@ import arc.scene.ui.layout.Table;
 import mindustry.Vars;
 
 public class NoLimitUnitAmount extends Function {
-    boolean isOpen = false;
+    public static boolean isOpen = false;
     int pre_unitCap;
 
     public NoLimitUnitAmount() {
@@ -21,9 +21,9 @@ public class NoLimitUnitAmount extends Function {
                 isOpen = !isOpen;
                 if (isOpen) {
                     pre_unitCap = Vars.state.rules.unitCap;
-                    Vars.state.rules.unitCap = 999;
+                    Vars.state.rules.unitCap = 1000;
                 } else {
-                    Vars.state.rules.unitCap = pre_unitCap;
+                    Vars.state.rules.unitCap = 0;
                 }
             });
             t.add(box);
