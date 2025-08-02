@@ -1,53 +1,52 @@
 package auxiliary.functions;
 
 import arc.scene.ui.ImageButton;
+import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.content.Planets;
-import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
+import mindustry.world.Tile;
 
-import static mindustry.Vars.ui;
-import static mindustry.content.Blocks.*;
+import static mindustry.Vars.*;
+import static mindustry.content.Blocks.conveyor;
 
 public class ConveyorConvert extends Function {
     BaseDialog dialog = new BaseDialog("传送带替换") {
         @Override
         public void addCloseButton() {
             this.buttons.defaults().size(210, 64.0F);
-            this.buttons.button("@back", Icon.left, this::hide).size(210, 64.0F);
+            this.buttons.button("@back", Icon.left, () -> {
+                this.hide();
+                resetData();
+            }).size(210, 64.0F);
             this.addCloseListener();
-            this.cont.clear();
-            S_Conveyor.clear();
-            E_Conveyor.clear();
-            block_select = null;
-            block_convert = null;
         }
     };
-    Seq<MyConveyor> S_Conveyor = new Seq<>();
-    Seq<MyConveyor> E_Conveyor = new Seq<>();
 
-    ImageButton button_conveyor = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_titaniumConveyor = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_plastaniumConveyor = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_armoredConveyor = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+    private static final ImageButton[] S_imageButton = new ImageButton[4];
+    private static final ImageButton[] S_imageButton_ = new ImageButton[4];
+    private static final ImageButton[] E_imageButton = new ImageButton[2];
+    private static final ImageButton[] E_imageButton_ = new ImageButton[2];
 
-    ImageButton button_duct = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_armoredDuct = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+    private static final Block[] S_conveyor = {
+            conveyor,
+            Blocks.titaniumConveyor,
+            Blocks.plastaniumConveyor,
+            Blocks.armoredConveyor
+    };
 
-    ImageButton button_conveyor_ = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_titaniumConveyor_ = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_plastaniumConveyor_ = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_armoredConveyor_ = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-
-    ImageButton button_duct_ = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-    ImageButton button_armoredDuct_ = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+    private static final Block[] E_conveyor = {
+            Blocks.duct,
+            Blocks.armoredDuct
+    };
 
     Block block_select;
     Block block_convert;
@@ -55,137 +54,104 @@ public class ConveyorConvert extends Function {
     public ConveyorConvert() {
         super(1, new Table(table -> table.add("传送带替换")));
 
-        button_conveyor.image(ui.getIcon(conveyor.name));
-        button_conveyor.clicked(() -> block_select = conveyor);
-        button_titaniumConveyor.image(ui.getIcon(titaniumConveyor.name));
-        button_titaniumConveyor.clicked(() -> block_select = titaniumConveyor);
-        button_plastaniumConveyor.image(ui.getIcon(plastaniumConveyor.name));
-        button_plastaniumConveyor.clicked(() -> block_select = plastaniumConveyor);
-        button_armoredConveyor.image(ui.getIcon(armoredConveyor.name));
-        button_armoredConveyor.clicked(() -> block_select = armoredConveyor);
-
-        button_duct.image(ui.getIcon(duct.name));
-        button_duct.clicked(() -> block_select = duct);
-        button_armoredDuct.image(ui.getIcon(armoredDuct.name));
-        button_armoredDuct.clicked(() -> block_select = armoredDuct);
-
-        button_conveyor_.image(ui.getIcon(conveyor.name));
-        button_conveyor_.clicked(() -> block_convert = conveyor);
-        button_titaniumConveyor_.image(ui.getIcon(titaniumConveyor.name));
-        button_titaniumConveyor_.clicked(() -> block_convert = titaniumConveyor);
-        button_plastaniumConveyor_.image(ui.getIcon(plastaniumConveyor.name));
-        button_plastaniumConveyor_.clicked(() -> block_convert = plastaniumConveyor);
-        button_armoredConveyor_.image(ui.getIcon(armoredConveyor.name));
-        button_armoredConveyor_.clicked(() -> block_convert = armoredConveyor);
-
-        button_duct_.image(ui.getIcon(duct.name));
-        button_duct_.clicked(() -> block_convert = duct);
-        button_armoredDuct_.image(ui.getIcon(armoredDuct.name));
-        button_armoredDuct_.clicked(() -> block_convert = armoredDuct);
-
-        button_conveyor.update(() -> button_conveyor.setChecked(block_select == conveyor));
-        button_titaniumConveyor.update(() -> button_titaniumConveyor.setChecked(block_select == titaniumConveyor));
-        button_plastaniumConveyor.update(() -> button_plastaniumConveyor.setChecked(block_select == plastaniumConveyor));
-        button_armoredConveyor.update(() -> button_armoredConveyor.setChecked(block_select == armoredConveyor));
-
-        button_duct.update(() -> button_duct.setChecked(block_select == duct));
-        button_armoredDuct.update(() -> button_armoredDuct.setChecked(block_select == armoredDuct));
-
-        button_conveyor_.update(() -> button_conveyor_.setChecked(block_convert == conveyor));
-        button_titaniumConveyor_.update(() -> button_titaniumConveyor_.setChecked(block_convert == titaniumConveyor));
-        button_plastaniumConveyor_.update(() -> button_plastaniumConveyor_.setChecked(block_convert == plastaniumConveyor));
-        button_armoredConveyor_.update(() -> button_armoredConveyor_.setChecked(block_convert == armoredConveyor));
-
-        button_duct_.update(() -> button_conveyor.setChecked(block_convert == duct));
-        button_armoredDuct_.update(() -> button_conveyor.setChecked(block_convert == armoredDuct));
+        loadingData(S_imageButton, S_conveyor, true);
+        loadingData(S_imageButton_, S_conveyor, false);
+        loadingData(E_imageButton, E_conveyor, true);
+        loadingData(E_imageButton_, E_conveyor, false);
+        dialog.addCloseButton();
     }
 
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-                loadingData();
-                buildDialog();
-                dialog.show();
-            } else {
-                Menu.dialog.hide();
-                ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
-            }
+//            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+            buildDialog();
+            dialog.show();
+//            } else {
+//                Menu.dialog.hide();
+//                ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
+//            }
         }).width(200f));
     }
 
-    private void loadingData() {
-        if (Vars.state.rules.sector.planet == Planets.serpulo) {
-            for (Building building : Vars.player.team().data().buildings) {
-                if (building.block == conveyor ||
-                        building.block == titaniumConveyor ||
-                        building.block == plastaniumConveyor ||
-                        building.block == armoredConveyor) {
-                    S_Conveyor.addAll(new MyConveyor(building.block, building.tileX(), building.tileY(), building.rotation));
-                }
-            }
-        } else if (Vars.state.rules.sector.planet == Planets.erekir) {
-            for (Building building : Vars.player.team().data().buildings) {
-                if (building.block == duct ||
-                        building.block == armoredDuct) {
-                    E_Conveyor.addAll(new MyConveyor(building.block, building.tileX(), building.tileY(), building.rotation));
-                }
-            }
-        }
-    }
-
     private void buildDialog() {
-        if (Vars.state.rules.sector.planet == Planets.serpulo) {
-            dialog.cont.table(t -> {
-                t.add(button_conveyor);
+//        if (Vars.state.rules.sector.planet == Planets.serpulo) {
+        dialog.cont.table(t -> {
+            for (ImageButton imageButton : S_imageButton) {
+                t.add(imageButton);
                 t.row();
-                t.add(button_titaniumConveyor);
-                t.row();
-                t.add(button_plastaniumConveyor);
-                t.row();
-                t.add(button_armoredConveyor);
-            }).fill();
+            }
+        }).fill();
 
-            dialog.cont.table(t -> t.image(Icon.right));
+        dialog.cont.table(t -> t.image(Icon.right));
 
-            dialog.cont.table(t -> {
-                t.add(button_conveyor_);
+        dialog.cont.table(t -> {
+            for (ImageButton imageButton : S_imageButton_) {
+                t.add(imageButton);
                 t.row();
-                t.add(button_titaniumConveyor_);
-                t.row();
-                t.add(button_plastaniumConveyor_);
-                t.row();
-                t.add(button_armoredConveyor_);
-            }).fill();
-        } else if (Vars.state.rules.sector.planet == Planets.erekir) {
-            dialog.cont.table(t -> {
-                t.add(button_duct);
-                t.row();
-                t.add(button_armoredDuct);
+            }
+        }).fill();
+//        } else if (Vars.state.rules.sector.planet == Planets.erekir) {
+//            dialog.cont.table(t -> {
+//                for (ImageButton imageButton : E_imageButton) {
+//                    t.add(imageButton);
+//                    t.row();
+//                }
+//            }).fill();
+//
+//            dialog.cont.table(t -> t.image(Icon.right));
+//
+//            dialog.cont.table(t -> {
+//                for (ImageButton imageButton : E_imageButton_) {
+//                    t.add(imageButton);
+//                    t.row();
+//                }
+//            }).fill();
+//        }
+        dialog.cont.row();
 
-            }).fill();
+        Label label = new Label("");
+        label.update(() -> label.visible = block_select != null);
 
-            dialog.cont.table(t -> t.image(Icon.right));
+        dialog.cont.add(label);
+        dialog.cont.button("转换", () -> {
+            if (block_select != null && block_convert != null) {
+                Seq<Building> buildings = new Seq<>();
+                for (Building building : Vars.player.team().data().buildings) {
+                    if (building.block == block_select) {
+                        buildings.addAll(building);
+                    }
+                }
+                for (Building building : buildings) {
+                    Tile tile = world.tile(building.tileX(), building.tileY());
+                    tile.setBlock(block_convert, Vars.player.team(), building.rotation);
+                }
+                dialog.hide();
+                Menu.dialog.hide();
+                resetData();
+            } else ui.hudfrag.showToast(Icon.cancel, "未选择初始传送带或目标传送带");
+        }).size(120f, 64f);
+    }
 
-            dialog.cont.table(t -> {
-                t.add(button_duct_);
-                t.row();
-                t.add(button_armoredDuct_);
-            }).fill();
+    private void loadingData(ImageButton[] imageButton, Block[] block, boolean conv) {
+        for (int i = 0; i < block.length; i++) {
+            imageButton[i] = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+            imageButton[i].image(ui.getIcon(block[i].name));
+            int finalI = i;
+            imageButton[i].clicked(() -> {
+                if (conv) block_select = block[finalI];
+                else block_convert = block[finalI];
+            });
+            imageButton[i].update(() -> {
+                if (conv) imageButton[finalI].setChecked(block_select == block[finalI]);
+                else imageButton[finalI].setChecked(block_convert == block[finalI]);
+            });
         }
     }
-}
 
-class MyConveyor {
-    Block block;
-    int x;
-    int y;
-    int rotation;
-
-    public MyConveyor(Block block, int rotation, int x, int y) {
-        this.block = block;
-        this.rotation = rotation;
-        this.x = x;
-        this.y = y;
+    private void resetData() {
+        dialog.cont.clear();
+        block_select = null;
+        block_convert = null;
     }
 }
