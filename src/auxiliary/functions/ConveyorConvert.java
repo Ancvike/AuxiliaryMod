@@ -1,12 +1,14 @@
 package auxiliary.functions;
 
+import arc.Core;
+import arc.input.KeyCode;
 import arc.scene.ui.ImageButton;
-import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.Planets;
+import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
@@ -29,24 +31,29 @@ public class ConveyorConvert extends Function {
             }).size(210, 64.0F);
             this.addCloseListener();
         }
+
+        @Override
+        public void closeOnBack(Runnable callback) {
+            this.keyDown((key) -> {
+                if (key == KeyCode.escape || key == KeyCode.back) {
+                    Core.app.post(this::hide);
+                    callback.run();
+                    resetData();
+                }
+            });
+        }
     };
 
     private static final ImageButton[] S_imageButton = new ImageButton[4];
     private static final ImageButton[] S_imageButton_ = new ImageButton[4];
     private static final ImageButton[] E_imageButton = new ImageButton[2];
     private static final ImageButton[] E_imageButton_ = new ImageButton[2];
+    private static final ImageButton[] all_imageButton = new ImageButton[6];
+    private static final ImageButton[] all_imageButton_ = new ImageButton[6];
 
-    private static final Block[] S_conveyor = {
-            conveyor,
-            Blocks.titaniumConveyor,
-            Blocks.plastaniumConveyor,
-            Blocks.armoredConveyor
-    };
+    private static final Block[] S_conveyor = {conveyor, Blocks.titaniumConveyor, Blocks.plastaniumConveyor, Blocks.armoredConveyor};
 
-    private static final Block[] E_conveyor = {
-            Blocks.duct,
-            Blocks.armoredDuct
-    };
+    private static final Block[] E_conveyor = {Blocks.duct, Blocks.armoredDuct};
 
     Block block_select;
     Block block_convert;
@@ -58,62 +65,104 @@ public class ConveyorConvert extends Function {
         loadingData(S_imageButton_, S_conveyor, false);
         loadingData(E_imageButton, E_conveyor, true);
         loadingData(E_imageButton_, E_conveyor, false);
+        setAll_imageButton();
         dialog.addCloseButton();
     }
 
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-//            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-            buildDialog();
-            dialog.show();
-//            } else {
-//                Menu.dialog.hide();
-//                ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
-//            }
+            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
+                buildDialog();
+                dialog.show();
+            } else {
+                Menu.dialog.hide();
+                ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
+            }
         }).width(200f));
     }
 
     private void buildDialog() {
-//        if (Vars.state.rules.sector.planet == Planets.serpulo) {
-        dialog.cont.table(t -> {
-            for (ImageButton imageButton : S_imageButton) {
-                t.add(imageButton);
-                t.row();
-            }
-        }).fill();
+        if (Vars.state.rules.sector == null) {
+            dialog.cont.table(t -> {
+                t.table(leftTable -> {
+                    leftTable.defaults().size(64f, 64f).pad(4f);
+                    for (ImageButton imageButton : all_imageButton) {
+                        leftTable.add(imageButton);
+                        leftTable.row();
+                    }
+                }).padRight(8f);
 
-        dialog.cont.table(t -> t.image(Icon.right));
+                t.table(arrowTable -> arrowTable.image(Icon.right).size(48f, 48f)).pad(4f);
 
-        dialog.cont.table(t -> {
-            for (ImageButton imageButton : S_imageButton_) {
-                t.add(imageButton);
-                t.row();
-            }
-        }).fill();
-//        } else if (Vars.state.rules.sector.planet == Planets.erekir) {
-//            dialog.cont.table(t -> {
-//                for (ImageButton imageButton : E_imageButton) {
-//                    t.add(imageButton);
-//                    t.row();
-//                }
-//            }).fill();
-//
-//            dialog.cont.table(t -> t.image(Icon.right));
-//
-//            dialog.cont.table(t -> {
-//                for (ImageButton imageButton : E_imageButton_) {
-//                    t.add(imageButton);
-//                    t.row();
-//                }
-//            }).fill();
-//        }
+                t.table(tt -> {
+                    tt.defaults().size(64f, 64f).pad(4f);
+                    for (ImageButton imageButton : all_imageButton_) {
+                        tt.add(imageButton);
+                        tt.row();
+                    }
+                }).padLeft(8f);
+            }).fillX().pad(12f);
+        } else if (Vars.state.rules.sector.planet == Planets.serpulo) {
+            dialog.cont.table(t -> {
+                t.table(leftTable -> {
+                    leftTable.defaults().size(64f, 64f).pad(4f);
+                    for (ImageButton imageButton : S_imageButton) {
+                        leftTable.add(imageButton);
+                        leftTable.row();
+                    }
+                }).padRight(8f);
+
+                t.table(arrowTable -> arrowTable.image(Icon.right).size(48f, 48f)).pad(4f);
+
+                t.table(tt -> {
+                    tt.defaults().size(64f, 64f).pad(4f);
+                    for (ImageButton imageButton : S_imageButton_) {
+                        tt.add(imageButton);
+                        tt.row();
+                    }
+                }).padLeft(8f);
+            }).fillX().pad(12f);
+        } else if (Vars.state.rules.sector.planet == Planets.erekir) {
+            dialog.cont.table(t -> {
+                t.table(leftTable -> {
+                    leftTable.defaults().size(64f, 64f).pad(4f);
+                    for (ImageButton imageButton : E_imageButton) {
+                        leftTable.add(imageButton);
+                        leftTable.row();
+                    }
+                }).padRight(8f);
+
+                t.table(arrowTable -> arrowTable.image(Icon.right).size(48f, 48f)).pad(4f);
+
+                t.table(tt -> {
+                    tt.defaults().size(64f, 64f).pad(4f);
+                    for (ImageButton imageButton : E_imageButton_) {
+                        tt.add(imageButton);
+                        tt.row();
+                    }
+                }).padLeft(8f);
+            }).fillX().pad(12f);
+        }
+
         dialog.cont.row();
 
-        Label label = new Label("");
-        label.update(() -> label.visible = block_select != null);
+        dialog.cont.label(() -> "").update(r -> {
+            if (block_select != null) {
+                int sum = 0;
+                for (Building building : Vars.player.team().data().buildings) {
+                    if (building.block == block_select) {
+                        sum++;
+                    }
+                }
+                r.setText("当前传送带: " + block_select.localizedName + ", 数量: " + sum);
+            } else {
+                r.setText("未选择传送带...");
+            }
+        }).pad(8f).get().setFontScale(1.1f);
 
-        dialog.cont.add(label);
+        dialog.cont.row();
+
         dialog.cont.button("转换", () -> {
             if (block_select != null && block_convert != null) {
                 Seq<Building> buildings = new Seq<>();
@@ -129,14 +178,16 @@ public class ConveyorConvert extends Function {
                 dialog.hide();
                 Menu.dialog.hide();
                 resetData();
-            } else ui.hudfrag.showToast(Icon.cancel, "未选择初始传送带或目标传送带");
-        }).size(120f, 64f);
+            } else {
+                ui.hudfrag.showToast(Icon.cancel, "未选择初始传送带或目标传送带");
+            }
+        }).size(140f, 60f).pad(8f);
     }
 
     private void loadingData(ImageButton[] imageButton, Block[] block, boolean conv) {
         for (int i = 0; i < block.length; i++) {
             imageButton[i] = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
-            imageButton[i].image(ui.getIcon(block[i].name));
+            imageButton[i].image(block[i].uiIcon);
             int finalI = i;
             imageButton[i].clicked(() -> {
                 if (conv) block_select = block[finalI];
@@ -146,6 +197,40 @@ public class ConveyorConvert extends Function {
                 if (conv) imageButton[finalI].setChecked(block_select == block[finalI]);
                 else imageButton[finalI].setChecked(block_convert == block[finalI]);
             });
+        }
+    }
+
+    private void setAll_imageButton() {
+        for (int i = 0; i < S_conveyor.length; i++) {
+            all_imageButton[i] = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+            all_imageButton[i].image(S_conveyor[i].uiIcon);
+            int finalI = i;
+            all_imageButton[i].clicked(() -> block_select = S_conveyor[finalI]);
+            all_imageButton[i].update(() -> all_imageButton[finalI].setChecked(block_select == S_conveyor[finalI]));
+        }
+        for (int i = S_conveyor.length; i < S_conveyor.length + E_conveyor.length; i++) {
+            all_imageButton[i] = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+            all_imageButton[i].image(E_conveyor[i - S_conveyor.length].uiIcon);
+            int finalI = i - S_conveyor.length;
+            int finalI1 = i;
+            all_imageButton[i].clicked(() -> block_select = E_conveyor[finalI]);
+            all_imageButton[i].update(() -> all_imageButton[finalI1].setChecked(block_select == E_conveyor[finalI]));
+        }
+
+        for (int i = 0; i < S_conveyor.length; i++) {
+            all_imageButton_[i] = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+            all_imageButton_[i].image(S_conveyor[i].uiIcon);
+            int finalI = i;
+            all_imageButton_[i].clicked(() -> block_convert = S_conveyor[finalI]);
+            all_imageButton_[i].update(() -> all_imageButton_[finalI].setChecked(block_convert == S_conveyor[finalI]));
+        }
+        for (int i = S_conveyor.length; i < S_conveyor.length + E_conveyor.length; i++) {
+            all_imageButton_[i] = new ImageButton(Tex.whiteui, Styles.clearNoneTogglei);
+            all_imageButton_[i].image(E_conveyor[i - S_conveyor.length].uiIcon);
+            int finalI = i - S_conveyor.length;
+            int finalI1 = i;
+            all_imageButton_[i].clicked(() -> block_convert = E_conveyor[finalI]);
+            all_imageButton_[i].update(() -> all_imageButton_[finalI1].setChecked(block_convert == E_conveyor[finalI]));
         }
     }
 
