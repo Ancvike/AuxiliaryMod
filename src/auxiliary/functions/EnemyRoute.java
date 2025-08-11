@@ -8,6 +8,7 @@ import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import mindustry.ai.Pathfinder;
+import mindustry.ai.types.FlyingAI;
 import mindustry.ai.types.SuicideAI;
 import mindustry.game.EventType;
 import mindustry.game.Team;
@@ -53,11 +54,13 @@ public class EnemyRoute extends Function {
                 }
             } else {
                 Lines.stroke(1, Color.red);
-                Seq<Tile> pathTiles = generatePathTiles(unit.tileOn(), unit.team, unit.controller() instanceof SuicideAI ? 0 : unit.pathType());
-                for (int i = 0; i < pathTiles.size - 1; i++) {
-                    Tile from = pathTiles.get(i), to = pathTiles.get(i + 1);
-                    if (from == null || to == null) continue;
-                    Lines.line(from.worldx(), from.worldy(), to.worldx(), to.worldy());
+                if (unit.controller() instanceof FlyingAI) {
+                    for (var mount : unit.mounts) {
+                        if (mount.target != null) {
+                            Lines.line(unit.x, unit.y, mount.target.getX(), mount.target.getY());
+                        }
+                    }
+
                 }
             }
         }
