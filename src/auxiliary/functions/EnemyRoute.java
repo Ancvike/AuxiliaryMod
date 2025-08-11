@@ -7,13 +7,18 @@ import arc.graphics.g2d.Lines;
 import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.Log;
 import mindustry.ai.Pathfinder;
 import mindustry.ai.types.FlyingAI;
 import mindustry.ai.types.SuicideAI;
+import mindustry.entities.units.AIController;
 import mindustry.game.EventType;
 import mindustry.game.Team;
+import mindustry.gen.Teamc;
 import mindustry.gen.Unit;
 import mindustry.world.Tile;
+
+import java.lang.reflect.Field;
 
 import static mindustry.Vars.pathfinder;
 import static mindustry.Vars.state;
@@ -22,11 +27,15 @@ public class EnemyRoute extends Function {
     boolean isOpen = false;
 
     public EnemyRoute() {
-        super(0, new Table(table -> table.add("敌人进攻路线")));
+        super(0, new Table(table -> table.add("敌人进攻路线").tooltip("陆军绿色,海军蓝色,空军红色,[red]路线仅供参考,可能会与实际有偏差")));
 
         Events.run(EventType.Trigger.draw, () -> {
             if (isOpen) {
-                draw();
+                try {
+                    draw();
+                } catch (NoSuchFieldException e) {
+                    throw new RuntimeException(e);
+                }
                 Draw.reset();
             }
         });
@@ -42,10 +51,11 @@ public class EnemyRoute extends Function {
         });
     }
 
-    public void draw() {
+    public void draw() throws NoSuchFieldException {
         for (Unit unit : state.rules.waveTeam.data().units) {
             if (!unit.type.flying) {
-                Lines.stroke(1, Color.acid);
+                if (unit.type.naval) Lines.stroke(1, Color.blue);
+                else Lines.stroke(1, Color.acid);
                 Seq<Tile> pathTiles = generatePathTiles(unit.tileOn(), unit.team, unit.controller() instanceof SuicideAI ? 0 : unit.pathType());
                 for (int i = 0; i < pathTiles.size - 1; i++) {
                     Tile from = pathTiles.get(i), to = pathTiles.get(i + 1);
@@ -55,12 +65,19 @@ public class EnemyRoute extends Function {
             } else {
                 Lines.stroke(1, Color.red);
                 if (unit.controller() instanceof FlyingAI) {
-                    for (var mount : unit.mounts) {
-                        if (mount.target != null) {
-                            Lines.line(unit.x, unit.y, mount.target.getX(), mount.target.getY());
+                    Field targetField = AIController.class.getDeclaredField("target");
+                    targetField.setAccessible(true);
+
+                    if (unit.controller() instanceof AIController) {
+                        try {
+                            Teamc target = (Teamc) targetField.get(unit.controller());
+                            if (target != null) {
+                                Lines.line(unit.x, unit.y, target.getX(), target.getY());
+                            }
+                        } catch (Exception e) {
+                            Log.err("AuxiliaryMod has some problems in EnemyRoute function ", e);
                         }
                     }
-
                 }
             }
         }
