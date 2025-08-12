@@ -1,9 +1,11 @@
 package auxiliary.functions.functions;
 
+import arc.Events;
 import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
 import auxiliary.functions.Function;
 import mindustry.Vars;
+import mindustry.game.EventType;
 
 public class NoLimitUnitAmount extends Function {
     public static boolean isOpen = false;
@@ -11,6 +13,8 @@ public class NoLimitUnitAmount extends Function {
 
     public NoLimitUnitAmount() {
         super(0, new Table(t -> t.add("单位数量无限制").tooltip("在自定义模式中修改了基础单位数量, 建议不要开启(有一些小Bug)")));
+
+        Events.run(EventType.Trigger.update, () -> isOpen = Vars.state.rules.unitCap == 1000);
     }
 
     @Override
