@@ -1,4 +1,4 @@
-package auxiliary.ui;
+package auxiliary.settings;
 
 import arc.Core;
 import arc.input.KeyCode;

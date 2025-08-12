@@ -1,7 +1,8 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
+import auxiliary.functions.Function;
 import mindustry.game.Team;
 import mindustry.gen.Tex;
 import mindustry.ui.Styles;

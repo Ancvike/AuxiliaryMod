@@ -1,4 +1,4 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.Core;
 import arc.Events;
@@ -22,6 +22,8 @@ import arc.scene.ui.layout.Table;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.*;
+import auxiliary.functions.Function;
+import auxiliary.functions.Menu;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.Items;

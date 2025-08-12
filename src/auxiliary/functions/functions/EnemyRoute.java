@@ -1,4 +1,4 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.Events;
 import arc.graphics.Color;
@@ -8,6 +8,7 @@ import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Log;
+import auxiliary.functions.Function;
 import mindustry.ai.Pathfinder;
 import mindustry.ai.types.FlyingAI;
 import mindustry.ai.types.SuicideAI;

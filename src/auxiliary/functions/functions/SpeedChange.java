@@ -1,9 +1,10 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.Core;
 import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
+import auxiliary.functions.Function;
 
 public class SpeedChange extends Function {
     Label speedLabel = new Label("[accent]1x");

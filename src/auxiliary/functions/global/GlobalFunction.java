@@ -4,7 +4,7 @@ import arc.Events;
 import mindustry.Vars;
 import mindustry.game.EventType;
 
-import static auxiliary.functions.NoLimitUnitAmount.isOpen;
+import static auxiliary.functions.functions.NoLimitUnitAmount.isOpen;
 
 public class GlobalFunction {
     public GlobalFunction() {

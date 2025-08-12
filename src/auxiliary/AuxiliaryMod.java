@@ -5,7 +5,7 @@ import auxiliary.binding.HPChange_Mobile_KeyBind;
 import auxiliary.block.MyBlocks;
 import auxiliary.functions.Menu;
 import auxiliary.functions.global.GlobalFunction;
-import auxiliary.ui.SettingUI;
+import auxiliary.settings.SettingUI;
 import mindustry.mod.Mod;
 
 import static mindustry.Vars.mobile;

@@ -1,4 +1,4 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.Events;
 import arc.graphics.Color;
@@ -9,6 +9,7 @@ import arc.struct.ObjectIntMap;
 import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.Tmp;
+import auxiliary.functions.Function;
 import mindustry.content.StatusEffects;
 import mindustry.game.EventType;
 import mindustry.game.SpawnGroup;

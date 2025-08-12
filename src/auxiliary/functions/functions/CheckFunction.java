@@ -1,6 +1,7 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.scene.ui.layout.Table;
+import auxiliary.functions.Function;
 import mindustry.ui.dialogs.BaseDialog;
 
 public class CheckFunction extends Function {

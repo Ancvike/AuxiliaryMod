@@ -1,10 +1,12 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.Core;
 import arc.input.KeyCode;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import auxiliary.functions.Function;
+import auxiliary.functions.Menu;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.Planets;

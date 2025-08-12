@@ -12,6 +12,7 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Align;
 import auxiliary.functions.dragFunction.DragListener;
+import auxiliary.functions.functions.*;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
@@ -28,7 +29,7 @@ public class Menu {
     static Seq<Function> functions = new Seq<>();
     private static final String[] tips = {"通用", "仅战役模式"};
     public static Dialog dialog = new Dialog("功能面板") {{
-        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new EnemyRoute(), new CheckEnemy(), new WarfareFog(), new NoLimitUnitAmount(), new Invincibility(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new Launch(), new TeamChange());
+        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new EnemyRoute(), new WarfareFog(), new NoLimitUnitAmount(), new Invincibility(), new CheckEnemy(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new Launch(), new TeamChange());
 
         setFillParent(true);
         title.setAlignment(Align.center);

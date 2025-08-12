@@ -1,6 +1,7 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.scene.ui.layout.Table;
+import auxiliary.functions.Function;
 import mindustry.Vars;
 import mindustry.type.Item;
 import mindustry.world.blocks.storage.CoreBlock;

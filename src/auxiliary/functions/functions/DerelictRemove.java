@@ -1,7 +1,8 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import auxiliary.functions.Function;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Building;
