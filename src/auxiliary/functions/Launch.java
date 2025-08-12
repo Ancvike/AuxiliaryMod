@@ -13,7 +13,10 @@ import arc.scene.event.ElementGestureListener;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.event.Touchable;
-import arc.scene.ui.*;
+import arc.scene.ui.Button;
+import arc.scene.ui.ButtonGroup;
+import arc.scene.ui.Image;
+import arc.scene.ui.ScrollPane;
 import arc.scene.ui.layout.Scl;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectMap;
@@ -47,7 +50,7 @@ public class Launch extends Function {
     MyPlanetDialog dialog = new MyPlanetDialog();
 
     public Launch() {
-        super(2, new Table(table -> table.add("从此区块发射")));
+        super(1, new Table(table -> table.add("从此区块发射")));
     }
 
     @Override

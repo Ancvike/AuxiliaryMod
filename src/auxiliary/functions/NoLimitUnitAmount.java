@@ -9,7 +9,7 @@ public class NoLimitUnitAmount extends Function {
     int pre_unitCap;
 
     public NoLimitUnitAmount() {
-        super(1, new Table(t -> t.add("单位数量无限制")));
+        super(0, new Table(t -> t.add("单位数量无限制").tooltip("在自定义模式中修改了基础单位数量, 建议不要开启(有一些小Bug)")));
     }
 
     @Override

@@ -8,7 +8,6 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.Planets;
-import mindustry.game.Gamemode;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
@@ -17,7 +16,8 @@ import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 
-import static mindustry.Vars.*;
+import static mindustry.Vars.ui;
+import static mindustry.Vars.world;
 import static mindustry.content.Blocks.conveyor;
 
 public class ConveyorConvert extends Function {
@@ -59,7 +59,7 @@ public class ConveyorConvert extends Function {
     Block block_convert;
 
     public ConveyorConvert() {
-        super(1, new Table(table -> table.add("传送带替换")));
+        super(0, new Table(table -> table.add("传送带替换")));
 
         loadingData(S_imageButton, S_conveyor, true);
         loadingData(S_imageButton_, S_conveyor, false);
@@ -72,13 +72,8 @@ public class ConveyorConvert extends Function {
     @Override
     public Table function() {
         return new Table(t -> t.button("使用", () -> {
-            if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-                buildDialog();
-                dialog.show();
-            } else {
-                Menu.dialog.hide();
-                ui.hudfrag.showToast(Icon.cancel, "[scarlet]区块未占领,无法使用该功能");
-            }
+            buildDialog();
+            dialog.show();
         }).width(200f));
     }
 
@@ -175,6 +170,7 @@ public class ConveyorConvert extends Function {
                     Tile tile = world.tile(building.tileX(), building.tileY());
                     tile.setBlock(block_convert, Vars.player.team(), building.rotation);
                 }
+                Vars.ui.hudfrag.showToast("已完成替换");
                 dialog.hide();
                 Menu.dialog.hide();
                 resetData();
