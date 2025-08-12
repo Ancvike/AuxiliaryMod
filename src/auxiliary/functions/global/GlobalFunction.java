@@ -8,7 +8,6 @@ import static auxiliary.functions.functions.NoLimitUnitAmount.isOpen;
 
 public class GlobalFunction {
     public GlobalFunction() {
-
         Events.run(EventType.Trigger.update, () -> isOpen = Vars.state.rules.unitCap == 1000);
     }
 }
