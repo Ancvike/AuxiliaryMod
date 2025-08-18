@@ -1,5 +1,6 @@
 package auxiliary.binding;
 
+import arc.Core;
 import arc.input.KeyCode;
 
 public enum MyKeyBind {
@@ -17,12 +18,14 @@ public enum MyKeyBind {
         this.nowKeyCode = defaultKeyCode;
     }
 
-    public static void update(MyKeyBind key, KeyCode keyCode) {
+    public static void setKeyBind(MyKeyBind key, KeyCode keyCode) {
         key.nowKeyCode = keyCode;
+        Core.settings.put(key.name, keyCode.name());
     }
 
     public static void resetKeyBind(MyKeyBind key) {
         key.nowKeyCode = key.defaultKeyCode;
+        Core.settings.put(key.name, key.defaultKeyCode.name());
     }
 
     public String getName() {
