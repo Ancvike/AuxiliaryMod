@@ -18,13 +18,25 @@ public class Invincibility extends Function {
     static Unit unitPlayer = null;
 
     public Invincibility() {
-        super(0, new Table(table -> table.add("当前单位和所控制单位无敌")));
+        super(0, new Table(table -> table.add("当前单位和所控制单位无敌").tooltip("[red]建议关闭后保存, 否则会导致单位血量==999999")));
+
         Events.run(EventType.Trigger.update, () -> {
             if (isInvincible) {
-                player.unit().health = player.unit().maxHealth;
-                for (Unit unit : Vars.control.input.selectedUnits) {
-                    unit.health = unit.maxHealth;
+                if (invincibleUnits.size > 0 && unitPlayer != null) {
+                    for (Unit unit : invincibleUnits) {
+                        unit.health = unit.maxHealth;
+                    }
+                    unitPlayer.health = unitPlayer.maxHealth;
+                    invincibleUnits.clear();
+                    unitPlayer = null;
                 }
+
+                for (Unit unit : Vars.control.input.selectedUnits) {
+                    invincibleUnits.add(unit);
+                    unit.health = 999999;
+                }
+                unitPlayer = player.unit();
+                player.unit().health = 999999;
             }
         });
     }
@@ -37,23 +49,21 @@ public class Invincibility extends Function {
             box.changed(() -> {
                 isInvincible = !isInvincible;
                 if (!isInvincible) {
-                    Vars.player.unit().health = Vars.player.unit().maxHealth;
-                    for (Unit unit : Vars.control.input.selectedUnits) {
-                        unit.health = unit.maxHealth;
-                    }
-                    if (invincibleUnits.size != 0 && unitPlayer != null) {
-                        unitPlayer.health = unitPlayer.maxHealth;
-
+                    if (invincibleUnits.size > 0 && unitPlayer != null) {
                         for (Unit unit : invincibleUnits) {
                             unit.health = unit.maxHealth;
                         }
+                        unitPlayer.health = unitPlayer.maxHealth;
+                        invincibleUnits.clear();
+                        unitPlayer = null;
                     }
 
-                    unitPlayer = null;
-                    invincibleUnits.clear();
+                    for (Unit unit : Vars.control.input.selectedUnits) {
+                        unit.health = unit.maxHealth;
+                    }
+                    player.unit().health = player.unit().maxHealth;
                 }
             });
-
             t.add(box);
         });
     }
