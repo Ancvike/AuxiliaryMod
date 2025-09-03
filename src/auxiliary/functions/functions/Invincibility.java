@@ -4,6 +4,7 @@ import arc.Events;
 import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.Time;
 import auxiliary.functions.Function;
 import mindustry.Vars;
 import mindustry.game.EventType;
@@ -16,7 +17,6 @@ import mindustry.ui.dialogs.SaveDialog;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import static auxiliary.functions.Menu.invincibility;
 import static mindustry.Vars.*;
@@ -34,12 +34,13 @@ public class Invincibility extends Function {
 
         ui.paused = new MyPausedDialog();
 
-        Events.on(EventType.WorldLoadEvent.class, e -> scheduler.schedule(() -> {
+        Events.on(EventType.WorldLoadEvent.class, e -> Time.runTask(10f, () -> {
             for (Unit unit : Groups.unit) {
-                if (unit.health > unit.maxHealth) unit.health = unit.maxHealth;
+                if (unit.health > unit.maxHealth) {
+                    unit.health = unit.maxHealth;
+                }
             }
-            if (player.unit().health > player.unit().maxHealth) player.unit().health = player.unit().maxHealth;
-        }, 200, TimeUnit.MILLISECONDS));
+        }));
 
         Events.run(EventType.Trigger.update, () -> {
             if (isInvincible) {
@@ -104,6 +105,8 @@ public class Invincibility extends Function {
             unit.health = unit.maxHealth;
         }
         player.unit().health = player.unit().maxHealth;
+
+        scheduler.shutdown();
     }
 }
 
