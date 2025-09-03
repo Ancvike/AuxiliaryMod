@@ -24,7 +24,7 @@ public class KeyBind extends InputHandler {
         player.shooting = false;
         endX = World.toTile(Core.input.mouseWorld().x);
         endY = World.toTile(Core.input.mouseWorld().y);
-        drawSelection(startX, startY, endX, endY, 64, color1, color2);
+        drawSelection(startX, startY, endX, endY, 1000, color1, color2);
 
         for (Building building : player.team().data().buildings) {
             if (inZone(building)) {

@@ -1,4 +1,4 @@
-package auxiliary.ui;
+package auxiliary.settings;
 
 import arc.Core;
 import arc.input.KeyCode;
@@ -22,7 +22,7 @@ public class SettingUI {
             if (Core.app.isDesktop()) {
                 for (MyKeyBind key : keys) {
                     t.add(key.getName()).left().padRight(40).padLeft(8);
-                    t.label(() -> key.nowKeyCode.value).color(Pal.accent).left().minWidth(90).padRight(20);
+                    t.label(() -> (String) Core.settings.get(key.getName(), key.nowKeyCode.name())).color(Pal.accent).left().minWidth(90).padRight(20);
 
                     t.button("重新绑定", Styles.defaultt, () -> openDialog(key)).width(130f);
                     t.button("恢复默认", Styles.defaultt, () -> resetKeyBind(key)).width(130f).padLeft(4f);
@@ -41,7 +41,7 @@ public class SettingUI {
             @Override
             public boolean keyDown(InputEvent event, KeyCode keycode) {
                 rebindDialog.hide();
-                update(key, keycode);
+                setKeyBind(key, keycode);
                 return false;
             }
         });

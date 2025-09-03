@@ -17,13 +17,16 @@ import arc.util.Tmp;
 import auxiliary.functions.dragFunction.DragListener;
 import mindustry.Vars;
 import mindustry.game.EventType;
-import mindustry.game.Gamemode;
-import mindustry.gen.*;
+import mindustry.gen.Building;
+import mindustry.gen.Icon;
+import mindustry.gen.Tex;
+import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
 import mindustry.ui.Styles;
 
 import static arc.Core.settings;
-import static mindustry.Vars.*;
+import static mindustry.Vars.player;
+import static mindustry.Vars.tilesize;
 
 public class HPChange_Mobile_KeyBind extends KeyBind {
     public static Seq<Building> buildings;
@@ -109,31 +112,27 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
 
     @Override
     void handleSelectionEnd() {
-        if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-            inZoom = false;
+        inZoom = false;
+        for (Building building : player.team().data().buildings) {
+            if (inZone(building)) {
+                inZoom = true;
+            }
+        }
+
+        if (inZoom) {
+            buildings = new Seq<>();
             for (Building building : player.team().data().buildings) {
                 if (inZone(building)) {
-                    inZoom = true;
+                    buildings.addAll(building);
                 }
             }
-
-            if (inZoom) {
-                buildings = new Seq<>();
-                for (Building building : player.team().data().buildings) {
-                    if (inZone(building)) {
-                        buildings.addAll(building);
-                    }
-                }
-                changeBuildingsHP.parent.setLayoutEnabled(false);
-                shown = true;
-                changeBuildingsHP.toFront();
-                changeBuildingsHP.setLayoutEnabled(true);
-            } else {
-                buildings = null;
-                shown = false;
-            }
+            changeBuildingsHP.parent.setLayoutEnabled(false);
+            shown = true;
+            changeBuildingsHP.toFront();
+            changeBuildingsHP.setLayoutEnabled(true);
         } else {
-            Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
+            buildings = null;
+            shown = false;
         }
         resetSelection();
     }
@@ -203,15 +202,11 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
             t.name = "mobile-unit";
             t.bottom().left();
             t.button(Icon.android, () -> {
-                if ((Vars.state.rules.sector != null && Vars.state.rules.sector.isCaptured()) || Vars.state.rules.mode() == Gamemode.sandbox || Vars.state.rules.mode() == Gamemode.editor) {
-                    if (!Vars.control.input.selectedUnits.isEmpty()) {
-                        changeUnitsHP.parent.setLayoutEnabled(false);
-                        unitsShown = true;
-                        changeUnitsHP.setLayoutEnabled(true);
-                    } else unitsShown = false;
-                } else {
-                    Vars.ui.hudfrag.showToast(Icon.cancel, "区块未占领,无法使用该功能");
-                }
+                if (!Vars.control.input.selectedUnits.isEmpty()) {
+                    changeUnitsHP.parent.setLayoutEnabled(false);
+                    unitsShown = true;
+                    changeUnitsHP.setLayoutEnabled(true);
+                } else unitsShown = false;
             }).visible(() -> Vars.control.input.commandMode && !Vars.control.input.selectedUnits.isEmpty()).size(50f).tooltip(tt -> {
                 tt.setBackground(Styles.black6);
                 tt.label(() -> "单位修复").pad(2f);
