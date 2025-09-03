@@ -1,15 +1,15 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.Events;
 import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.scene.ui.ScrollPane;
-import arc.scene.ui.Tooltip;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectIntMap;
 import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.Tmp;
+import auxiliary.functions.Function;
 import mindustry.content.StatusEffects;
 import mindustry.game.EventType;
 import mindustry.game.SpawnGroup;
@@ -25,10 +25,7 @@ public class CheckEnemy extends Function {
     int wave = 0;
 
     public CheckEnemy() {
-        super(0, new Table(table -> {
-            table.add("查看敌人波次");
-            table.addListener(new Tooltip(t -> t.add("查看敌人波次信息,若非战役模式则只显示当前波次及后20波次信息,[red]三角警示代表BOSS")));
-        }));
+        super(0, new Table(table -> table.add("查看敌人波次").tooltip("查看敌人波次信息,若非战役模式则只显示当前波次及后20波次信息,[red]三角警示代表BOSS")));
 
         dialog.cont.add(waveEnemy).grow();
         dialog.addCloseButton();

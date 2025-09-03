@@ -1,7 +1,8 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
+import auxiliary.functions.Function;
 import mindustry.Vars;
 
 public class NoLimitZoom extends Function {

@@ -1,15 +1,15 @@
-package auxiliary.functions;
+package auxiliary.functions.functions;
 
 import arc.scene.ui.CheckBox;
 import arc.scene.ui.layout.Table;
+import auxiliary.functions.Function;
 import mindustry.Vars;
 
-public class NoLimitUnitAmount extends Function {
-    public static boolean isOpen = false;
-    int pre_unitCap;
+public class NoLimitSchematics extends Function {
+    boolean isOpen = false;
 
-    public NoLimitUnitAmount() {
-        super(1, new Table(t -> t.add("单位数量无限制")));
+    public NoLimitSchematics() {
+        super(0, new Table(t -> t.add("蓝图大小无限制")));
     }
 
     @Override
@@ -20,10 +20,9 @@ public class NoLimitUnitAmount extends Function {
             box.changed(() -> {
                 isOpen = !isOpen;
                 if (isOpen) {
-                    pre_unitCap = Vars.state.rules.unitCap;
-                    Vars.state.rules.unitCap = 1000;
+                    Vars.maxSchematicSize = 1000;
                 } else {
-                    Vars.state.rules.unitCap = 0;
+                    Vars.maxSchematicSize = 64;
                 }
             });
             t.add(box);
