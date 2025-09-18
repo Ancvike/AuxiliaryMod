@@ -32,12 +32,12 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
     public static Seq<Building> buildings;
     Table changeBuildingsHP = new Table();
 
-    public static boolean shown = false;
-    boolean inZoom = false;
-
     public static boolean isOpen = false;
     float pressedTime = 0f;
     int player_startX, player_endX, player_startY, player_endY;
+
+    public static boolean shown = false;
+    boolean inZoom = false;
 
     public static boolean mobile_deal = false;
     public static boolean isDragged = false;
