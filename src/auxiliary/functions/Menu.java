@@ -21,6 +21,7 @@ import mindustry.graphics.Pal;
 
 import static auxiliary.binding.HPChange_KeyBind.buildingsShown;
 import static auxiliary.binding.HPChange_KeyBind.isOpen;
+import static auxiliary.binding.HPChange_Mobile_KeyBind.shown;
 import static mindustry.Vars.mobile;
 
 public class Menu {
@@ -78,6 +79,7 @@ public class Menu {
         table.add(button).row();
         if (mobile) {
             ImageButton androidButton = getImageButton();
+            androidButton.clicked(() -> shown = !shown);
             table.add(androidButton);
         }
 
