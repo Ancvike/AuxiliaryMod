@@ -18,7 +18,6 @@ import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
-import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
 import mindustry.ui.Fonts;
@@ -32,6 +31,8 @@ import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 
 import static arc.Core.graphics;
+import static arc.graphics.g2d.Draw.xscl;
+import static arc.graphics.g2d.Draw.yscl;
 import static mindustry.Vars.renderer;
 
 public class MoreInformation extends Function {
@@ -98,9 +99,22 @@ public class MoreInformation extends Function {
             if (b.block instanceof ItemTurret) {
                 drawBar(b, b.block.size * 4 - 2, (float) turretBuild.totalAmmo / ((ItemTurret) b.block).maxAmmo, Pal.ammo);
 
+                if (turretBuild.hasAmmo()) {
+                    Draw.reset();
+                    if (b.block.size == 1) {
+                        var region = ((ItemTurret.ItemEntry) turretBuild.ammo.peek()).item.uiIcon;
+                        Draw.rect(region, turretBuild.x, turretBuild.y, (float) region.width * region.scl() * xscl / 2, (float) region.height * region.scl() * yscl / 2);
+                    } else
+                        Draw.rect(((ItemTurret.ItemEntry) turretBuild.ammo.peek()).item.uiIcon, turretBuild.x, turretBuild.y);
+                }
             }
-            if (b.block instanceof LiquidTurret)
+            if (b.block instanceof LiquidTurret) {
                 drawBar(b, b.block.size * 4 - 2, turretBuild.liquids.currentAmount() / b.block.liquidCapacity, Pal.lancerLaser);
+                if (turretBuild.liquids.currentAmount() > 0) {
+                    Draw.reset();
+                    Draw.rect(turretBuild.liquids.current().uiIcon, turretBuild.x, turretBuild.y);
+                }
+            }
             if (b.block instanceof PowerTurret) drawBar(b, b.block.size * 4 - 2, b.power.status, Pal.ammo);
         }
         if (b instanceof ConstructBlock.ConstructBuild constructBuild)
