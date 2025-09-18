@@ -11,6 +11,7 @@ import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Align;
+import auxiliary.binding.HPChange_Mobile_KeyBind;
 import auxiliary.functions.dragFunction.DragListener;
 import auxiliary.functions.functions.*;
 import mindustry.Vars;
@@ -20,8 +21,6 @@ import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
 
 import static auxiliary.binding.HPChange_KeyBind.buildingsShown;
-import static auxiliary.binding.HPChange_KeyBind.isOpen;
-import static auxiliary.binding.HPChange_Mobile_KeyBind.shown;
 import static mindustry.Vars.mobile;
 
 public class Menu {
@@ -79,7 +78,6 @@ public class Menu {
         table.add(button).row();
         if (mobile) {
             ImageButton androidButton = getImageButton();
-            androidButton.clicked(() -> shown = !shown);
             table.add(androidButton);
         }
 
@@ -107,7 +105,7 @@ public class Menu {
         };
         ImageButton androidButton = new ImageButton(Icon.android, style);
         androidButton.clicked(() -> {
-            isOpen = !isOpen;
+            HPChange_Mobile_KeyBind.isOpen = !HPChange_Mobile_KeyBind.isOpen;
             buildingsShown = false;
         });
         return androidButton;

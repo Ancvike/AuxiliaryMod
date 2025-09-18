@@ -34,8 +34,6 @@ public class HPChange_KeyBind extends KeyBind {
     public static boolean buildingsShown = false;
     boolean inZoom = false;
 
-    public static boolean isOpen = false;
-
     public static boolean isDragged = false;
 
     Table changeUnitsHP = new Table();
