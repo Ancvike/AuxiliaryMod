@@ -52,6 +52,7 @@ public class HPChange_KeyBind extends InputHandler {
     int player_startX, player_endX, player_startY, player_endY;
     public static boolean mobile_deal = false;
     BaseDialog baseDialog = new BaseDialog("");
+
     public HPChange_KeyBind() {
         Vars.ui.hudGroup.fill(t -> {
 
@@ -116,7 +117,8 @@ public class HPChange_KeyBind extends InputHandler {
 
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isOpen) && isDragged) return;
+            if (!isOpen) return;
+            if (isDragged) return;
             player.shooting = false;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
@@ -132,6 +134,8 @@ public class HPChange_KeyBind extends InputHandler {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
+            if (!isOpen) return;
+            if (isDragged) return;
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen && !isDragged) {
                 player.shooting = false;
 
@@ -141,8 +145,9 @@ public class HPChange_KeyBind extends InputHandler {
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (!shouldHandleInput()) return;
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen && mobile_deal) {
+            if (!isOpen) return;
+            if (isDragged) return;
+            if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen && mobile_deal) {
                 handleSelectionEnd();
             }
             if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
