@@ -12,6 +12,7 @@ import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Time;
 import arc.util.Tmp;
 import auxiliary.functions.dragFunction.DragListener;
@@ -34,11 +35,11 @@ import static mindustry.Vars.*;
 public class HPChange_KeyBind extends InputHandler {
     int startX, endX, startY, endY;
     boolean isTap = false;
+    boolean inZoom = false;
 
     public static Seq<Building> buildings;
     Table changeBuildingsHP = new Table();
     public static boolean buildingsShown = false;
-    boolean inZoom = false;
 
     public static boolean isDragged = false;
 
@@ -241,11 +242,13 @@ public class HPChange_KeyBind extends InputHandler {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
+                    Log.info("isDragged true");
                     isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.change();
                 slider.moved(hp -> {
+                    Log.info("isDragged true");
                     isDragged = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
