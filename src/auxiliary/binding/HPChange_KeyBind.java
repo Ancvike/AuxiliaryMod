@@ -136,7 +136,7 @@ public class HPChange_KeyBind extends InputHandler {
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
             if (isDragged) return;
-            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen && !isDragged) {
+            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
                 player.shooting = false;
 
                 startSelection();
@@ -257,15 +257,10 @@ public class HPChange_KeyBind extends InputHandler {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
-                    baseDialog.cont.add("isDragged = true (change)");
-
-                    baseDialog.cont.row();
                     isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.moved(hp -> {
-                    baseDialog.cont.add("isDragged = true (moved)");
-                    baseDialog.cont.row();
                     isDragged = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
