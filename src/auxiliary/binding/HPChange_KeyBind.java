@@ -253,12 +253,13 @@ public class HPChange_KeyBind extends InputHandler {
                 slider.setValue(10f);
                 slider.changed(() -> {
                     baseDialog.cont.add("isDragged = true (change)");
+                    baseDialog.cont.row();
                     isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
-                slider.change();
                 slider.moved(hp -> {
                     baseDialog.cont.add("isDragged = true (moved)");
+                    baseDialog.cont.row();
                     isDragged = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
@@ -310,7 +311,6 @@ public class HPChange_KeyBind extends InputHandler {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> label.setText((int) (slider.getValue() * 10) + "%"));
-                slider.change();
                 slider.moved(hp -> {
                     for (Unit unit : Vars.control.input.selectedUnits) {
                         unit.health = unit.maxHealth * (int) hp * 0.1f;
