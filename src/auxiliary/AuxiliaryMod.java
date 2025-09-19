@@ -1,5 +1,6 @@
 package auxiliary;
 
+import auxiliary.binding.HPChange_KeyBind;
 import auxiliary.block.MyBlocks;
 import auxiliary.functions.Menu;
 import auxiliary.settings.SettingUI;
@@ -9,7 +10,7 @@ public class AuxiliaryMod extends Mod {
     @Override
     public void init() {
         new Menu();
-
+        new HPChange_KeyBind();
         new SettingUI().init();
     }
 

@@ -217,7 +217,7 @@ public class HPChange_KeyBind extends InputHandler {
         changeBuildingsHP.table(t -> {
             t.table(Tex.buttonEdge1, b -> {
                 b.left();
-                b.add("建筑血量修改").padLeft(20);
+                b.add("建筑血量修改");
             }).grow();
 
             t.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
@@ -277,7 +277,7 @@ public class HPChange_KeyBind extends InputHandler {
         changeUnitsHP.table(t -> {
             t.table(Tex.buttonEdge1, b -> {
                 b.left();
-                b.add("单位血量修改").padLeft(20);
+                b.add("单位血量修改");
             }).grow();
 
             t.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> unitsShown = false).grow()).maxWidth(8 * 15f).growY();
