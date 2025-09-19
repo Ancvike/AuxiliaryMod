@@ -105,7 +105,7 @@ public class HPChange_KeyBind extends InputHandler {
 
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isOpen) && !isDragged) return;
+            if (!(shouldHandleInput() && isOpen) && isDragged) return;
             player.shooting = false;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
@@ -296,13 +296,9 @@ public class HPChange_KeyBind extends InputHandler {
                 Label label = rules.add("100%").get();
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
-                slider.changed(() -> {
-                    isDragged = true;
-                    label.setText((int) (slider.getValue() * 10) + "%");
-                });
+                slider.changed(() -> label.setText((int) (slider.getValue() * 10) + "%"));
                 slider.change();
                 slider.moved(hp -> {
-                    isDragged = true;
                     for (Unit unit : Vars.control.input.selectedUnits) {
                         unit.health = unit.maxHealth * (int) hp * 0.1f;
                     }
