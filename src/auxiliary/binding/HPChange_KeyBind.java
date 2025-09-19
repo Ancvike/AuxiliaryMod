@@ -27,6 +27,7 @@ import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
 
 import static arc.Core.settings;
 import static auxiliary.functions.Menu.dialog;
@@ -53,6 +54,16 @@ public class HPChange_KeyBind extends InputHandler {
     public static boolean mobile_deal = false;
 
     public HPChange_KeyBind() {
+        Vars.ui.hudGroup.fill(t -> {
+            BaseDialog baseDialog = new BaseDialog("");
+            baseDialog.addCloseButton();
+            t.button("00", () -> {
+                baseDialog.cont.add();
+                baseDialog.show();
+            });
+        });
+        //调试代码
+
         buildBuildingsTable();
         buildUnitsTable();
         Vars.ui.hudGroup.fill(t -> {
@@ -242,13 +253,13 @@ public class HPChange_KeyBind extends InputHandler {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
-                    Log.info("isDragged true");
+                    dialog.cont.add("isDragged = true (change)");
                     isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.change();
                 slider.moved(hp -> {
-                    Log.info("isDragged true");
+                    dialog.cont.add("isDragged = true (moved)");
                     isDragged = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
