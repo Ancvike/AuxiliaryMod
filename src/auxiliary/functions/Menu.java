@@ -11,7 +11,6 @@ import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Align;
-import auxiliary.binding.HPChange_Mobile_KeyBind;
 import auxiliary.functions.dragFunction.DragListener;
 import auxiliary.functions.functions.*;
 import mindustry.Vars;
@@ -21,6 +20,7 @@ import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
 
 import static auxiliary.binding.HPChange_KeyBind.buildingsShown;
+import static auxiliary.binding.HPChange_KeyBind.isOpen;
 import static mindustry.Vars.mobile;
 
 public class Menu {
@@ -30,7 +30,7 @@ public class Menu {
     private static final String[] tips = {"通用", "仅战役模式"};
     public static Invincibility invincibility = new Invincibility();
     public static Dialog dialog = new Dialog("功能面板") {{
-        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new EnemyRoute(), new WarfareFog(), new NoLimitUnitAmount(), invincibility, new MoreInformation(), new CheckEnemy(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new Launch(), new TeamChange());
+        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new EnemyRoute(), new WarfareFog(), new NoLimitUnitAmount(), invincibility, new MoreInformation(), new CreateMode(), new CheckEnemy(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new Launch(), new TeamChange());
 
         setFillParent(true);
         title.setAlignment(Align.center);
@@ -105,7 +105,7 @@ public class Menu {
         };
         ImageButton androidButton = new ImageButton(Icon.android, style);
         androidButton.clicked(() -> {
-            HPChange_Mobile_KeyBind.isOpen = !HPChange_Mobile_KeyBind.isOpen;
+            isOpen = !isOpen;
             buildingsShown = false;
         });
         return androidButton;

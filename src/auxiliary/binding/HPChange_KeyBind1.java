@@ -4,7 +4,6 @@ import arc.Core;
 import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
-import arc.input.KeyCode;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.scene.event.Touchable;
@@ -25,27 +24,22 @@ import mindustry.graphics.Layer;
 import mindustry.ui.Styles;
 
 import static arc.Core.settings;
+import static auxiliary.functions.Menu.dialog;
 import static mindustry.Vars.player;
 import static mindustry.Vars.tilesize;
 
-public class HPChange_Mobile_KeyBind extends KeyBind {
+public class HPChange_KeyBind1 extends KeyBind {
     public static Seq<Building> buildings;
     Table changeBuildingsHP = new Table();
-
-    public static boolean isOpen = false;
-    float pressedTime = 0f;
-    int player_startX, player_endX, player_startY, player_endY;
-
-    public static boolean shown = false;
+    public static boolean buildingsShown = false;
     boolean inZoom = false;
 
-    public static boolean mobile_deal = false;
     public static boolean isDragged = false;
 
     Table changeUnitsHP = new Table();
     public static boolean unitsShown = false;
 
-    public HPChange_Mobile_KeyBind() {
+    public HPChange_KeyBind1() {
         buildBuildingsTable();
         buildUnitsTable();
         Vars.ui.hudGroup.fill(t -> {
@@ -53,10 +47,10 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
             t.add(changeUnitsHP);
         });
 
-        setupMobileEvents();
+        setupDesktopEvents();
 
         Events.run(EventType.Trigger.draw, () -> {
-            if (shown) drawBuilding();
+            if (buildingsShown) drawBuilding();
         });
         Events.run(EventType.Trigger.update, () -> {
             if (!Vars.control.input.commandMode) unitsShown = false;
@@ -67,50 +61,34 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
     }
 
     @Override
-    void setupMobileEvents() {
+    void setupDesktopEvents() {
         Events.run(EventType.Trigger.draw, () -> {
-            if (!(shouldHandleInput() && isOpen) && !isDragged) return;
-            player.shooting = false;
-
-            if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
-                pressedTime += Core.graphics.getDeltaTime();
-                if (pressedTime < 0.7f) return;
-
-                player_endX = player.tileX();
-                player_endY = player.tileY();
-                if (player_startX != player_endX || player_startY != player_endY) return;
-
-                mobile_deal = true;
+            if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.CHANGE_HP.nowKeyCode) && isTap) {
                 handleSelectionDraw(Color.blue, Color.sky);
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen && !isDragged) {
-                player.shooting = false;
-
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.CHANGE_HP.nowKeyCode)) {
                 startSelection();
-                player_startX = player.tileX();
-                player_startY = player.tileY();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
-            if (!shouldHandleInput()) return;
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen && mobile_deal) {
+            if (shouldHandleInput() && Core.input.keyRelease(MyKeyBind.CHANGE_HP.nowKeyCode)) {
                 handleSelectionEnd();
-            }
-            if (Core.input.keyRelease(KeyCode.mouseLeft) && isOpen) {
-                pressedTime = 0f;
-                player_startX = 0;
-                player_startY = 0;
-                player_endX = 0;
-                player_endY = 0;
-                mobile_deal = false;
-                isDragged = false;
-                player.shooting = true;
             }
         });
 
-        addButton();
+        Events.run(EventType.Trigger.update, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.RECOVERY_UNIT.nowKeyCode)) {
+                changeUnitsHP();
+            }
+        });
+
+        Events.run(EventType.Trigger.update, () -> {
+            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.OPEN_MENU.nowKeyCode)) {
+                dialog.show();
+            }
+        });
     }
 
     @Override
@@ -130,11 +108,11 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
                 }
             }
             changeBuildingsHP.parent.setLayoutEnabled(false);
-            shown = true;
+            buildingsShown = true;
             changeBuildingsHP.setLayoutEnabled(true);
         } else {
             buildings = null;
-            shown = false;
+            buildingsShown = false;
         }
         resetSelection();
     }
@@ -147,7 +125,7 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
             }).grow();
 
             t.table(Tex.buttonEdge3, b -> b.button(Icon.cancel, Styles.emptyi, () -> {
-                shown = false;
+                buildingsShown = false;
                 inZoom = false;
                 buildings = null;
             }).grow()).maxWidth(8 * 15f).growY();
@@ -181,7 +159,7 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
             }).grow();
         }).grow();
 
-        changeBuildingsHP.visible(() -> shown);
+        changeBuildingsHP.visible(() -> buildingsShown);
     }
 
     public void drawBuilding() {
@@ -197,25 +175,6 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
             }
         }
         Draw.color();
-    }
-
-    private void addButton() {
-        Vars.ui.hudGroup.fill(t -> {
-            t.name = "mobile-unit";
-            t.bottom().left();
-            t.button(Icon.android, () -> {
-                if (!Vars.control.input.selectedUnits.isEmpty()) {
-                    changeUnitsHP.parent.setLayoutEnabled(false);
-                    unitsShown = true;
-                    changeUnitsHP.setLayoutEnabled(true);
-                } else unitsShown = false;
-            }).visible(() -> Vars.control.input.commandMode && !Vars.control.input.selectedUnits.isEmpty()).size(50f).tooltip(tt -> {
-                tt.setBackground(Styles.black6);
-                tt.label(() -> "单位修复").pad(2f);
-            }).left();
-            t.row();
-            t.table().size(48f);
-        });
     }
 
     public void buildUnitsTable() {
@@ -256,6 +215,14 @@ public class HPChange_Mobile_KeyBind extends KeyBind {
             }).grow();
         }).grow();
 
-        changeUnitsHP.visible(() -> unitsShown && Vars.control.input.commandMode && !Vars.control.input.selectedUnits.isEmpty());
+        changeUnitsHP.visible(() -> unitsShown);
+    }
+
+    private void changeUnitsHP() {
+        if (!Vars.control.input.selectedUnits.isEmpty()) {
+            changeUnitsHP.parent.setLayoutEnabled(false);
+            unitsShown = true;
+            changeUnitsHP.setLayoutEnabled(true);
+        } else unitsShown = false;
     }
 }
