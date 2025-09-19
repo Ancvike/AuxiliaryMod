@@ -58,7 +58,6 @@ public class HPChange_KeyBind extends InputHandler {
 
             baseDialog.addCloseButton();
             t.button("00", () -> {
-                baseDialog.cont.add();
                 baseDialog.show();
             });
         });
@@ -118,7 +117,9 @@ public class HPChange_KeyBind extends InputHandler {
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
+            baseDialog.cont.add("aaa");
             if (isDragged) return;
+            baseDialog.cont.add("bbb");
             player.shooting = false;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
