@@ -253,6 +253,7 @@ public class HPChange_KeyBind extends InputHandler {
                 slider.setValue(10f);
                 slider.changed(() -> {
                     baseDialog.cont.add("isDragged = true (change)");
+
                     baseDialog.cont.row();
                     isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
