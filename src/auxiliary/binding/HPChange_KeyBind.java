@@ -12,7 +12,6 @@ import arc.scene.ui.Label;
 import arc.scene.ui.Slider;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Time;
 import arc.util.Tmp;
 import auxiliary.functions.dragFunction.DragListener;
@@ -52,10 +51,10 @@ public class HPChange_KeyBind extends InputHandler {
     float pressedTime = 0f;
     int player_startX, player_endX, player_startY, player_endY;
     public static boolean mobile_deal = false;
-
+    BaseDialog baseDialog = new BaseDialog("");
     public HPChange_KeyBind() {
         Vars.ui.hudGroup.fill(t -> {
-            BaseDialog baseDialog = new BaseDialog("");
+
             baseDialog.addCloseButton();
             t.button("00", () -> {
                 baseDialog.cont.add();
@@ -253,13 +252,13 @@ public class HPChange_KeyBind extends InputHandler {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
-                    dialog.cont.add("isDragged = true (change)");
+                    baseDialog.cont.add("isDragged = true (change)");
                     isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.change();
                 slider.moved(hp -> {
-                    dialog.cont.add("isDragged = true (moved)");
+                    baseDialog.cont.add("isDragged = true (moved)");
                     isDragged = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
