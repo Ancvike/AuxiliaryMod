@@ -261,11 +261,9 @@ public class HPChange_KeyBind extends InputHandler {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
-                    isDragged = true;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.moved(hp -> {
-                    isDragged = true;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
                     }
