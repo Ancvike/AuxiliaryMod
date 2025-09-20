@@ -122,7 +122,6 @@ public class HPChange_KeyBind extends InputHandler {
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
             if (isDragged) return;
-            baseDialog.cont.add("bbb");
             player.shooting = false;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
