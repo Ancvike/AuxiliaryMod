@@ -25,7 +25,7 @@ public class DragListener extends InputListener {
         lastY = v.y;
         table.toFront();
         isDragged = false;
-        HPChange_KeyBind.isDragged = true;
+        HPChange_KeyBind.isDragged = false;
         return true;
     }
 
