@@ -41,8 +41,6 @@ public class HPChange_KeyBind extends InputHandler {
     Table changeBuildingsHP = new Table();
     public static boolean buildingsShown = false;
 
-    public static boolean isDragged = false;
-
     Table changeUnitsHP = new Table();
     public static boolean unitsShown = false;
 
@@ -62,7 +60,7 @@ public class HPChange_KeyBind extends InputHandler {
             });
 
             t.button("11", () -> {
-               baseDialog.cont.add(isDragged + "");
+               baseDialog.cont.add(isTap + "");
             });
         });
         //调试代码
@@ -121,7 +119,6 @@ public class HPChange_KeyBind extends InputHandler {
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
-            if (isDragged) return;
             player.shooting = false;
 
             if (Core.input.keyDown(KeyCode.mouseLeft) && isTap) {
@@ -138,7 +135,6 @@ public class HPChange_KeyBind extends InputHandler {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
-            if (isDragged) return;
             if (shouldHandleInput() && Core.input.keyTap(KeyCode.mouseLeft) && isOpen) {
                 player.shooting = false;
 
@@ -149,7 +145,6 @@ public class HPChange_KeyBind extends InputHandler {
         });
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
-            if (isDragged) return;
             if (shouldHandleInput() && Core.input.keyRelease(KeyCode.mouseLeft) && isOpen && mobile_deal) {
                 handleSelectionEnd();
             }
@@ -160,8 +155,8 @@ public class HPChange_KeyBind extends InputHandler {
                 player_endX = 0;
                 player_endY = 0;
                 mobile_deal = false;
-                isDragged = false;
                 player.shooting = true;
+                resetSelection();
             }
         });
 
@@ -260,9 +255,11 @@ public class HPChange_KeyBind extends InputHandler {
                 Slider slider = new Slider(0, 10, 1, false);
                 slider.setValue(10f);
                 slider.changed(() -> {
+                    isTap = false;
                     label.setText((int) (slider.getValue() * 10) + "%");
                 });
                 slider.moved(hp -> {
+                    isTap = false;
                     for (Building building : buildings) {
                         building.health = building.maxHealth * (int) hp * 0.1f;
                     }
