@@ -117,7 +117,6 @@ public class HPChange_KeyBind extends InputHandler {
     void setupMobileEvents() {
         Events.run(EventType.Trigger.draw, () -> {
             if (!isOpen) return;
-            baseDialog.cont.add("aaa");
             if (isDragged) return;
             baseDialog.cont.add("bbb");
             player.shooting = false;
