@@ -60,6 +60,10 @@ public class HPChange_KeyBind extends InputHandler {
             t.button("00", () -> {
                 baseDialog.show();
             });
+
+            t.button("11", () -> {
+               baseDialog.cont.add(isDragged + "");
+            });
         });
         //调试代码
 
