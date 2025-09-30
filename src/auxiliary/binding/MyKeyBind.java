@@ -6,7 +6,8 @@ import arc.input.KeyCode;
 public enum MyKeyBind {
     CHANGE_HP("改变血量", KeyCode.u),
     RECOVERY_UNIT("单位修复", KeyCode.i),
-    OPEN_MENU("打开面板", KeyCode.o)
+    OPEN_MENU("打开面板", KeyCode.o),
+    SAVE("保存数据", KeyCode.l)
     ;
     private final String name;
     private final KeyCode defaultKeyCode;

@@ -26,7 +26,6 @@ import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.input.InputHandler;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
 
 import static arc.Core.settings;
 import static auxiliary.functions.Menu.dialog;
@@ -49,22 +48,8 @@ public class HPChange_KeyBind extends InputHandler {
     float pressedTime = 0f;
     int player_startX, player_endX, player_startY, player_endY;
     public static boolean mobile_deal = false;
-    BaseDialog baseDialog = new BaseDialog("");
 
     public HPChange_KeyBind() {
-        Vars.ui.hudGroup.fill(t -> {
-
-            baseDialog.addCloseButton();
-            t.button("00", () -> {
-                baseDialog.show();
-            });
-
-            t.button("11", () -> {
-               baseDialog.cont.add(isTap + "");
-            });
-        });
-        //调试代码
-
         buildBuildingsTable();
         buildUnitsTable();
         Vars.ui.hudGroup.fill(t -> {
@@ -89,7 +74,7 @@ public class HPChange_KeyBind extends InputHandler {
     void setupDesktopEvents() {
         Events.run(EventType.Trigger.draw, () -> {
             if (shouldHandleInput() && Core.input.keyDown(MyKeyBind.CHANGE_HP.nowKeyCode) && isTap) {
-                handleSelectionDraw(Color.blue, Color.sky);
+                handleSelectionDraw();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
@@ -110,8 +95,9 @@ public class HPChange_KeyBind extends InputHandler {
         });
 
         Events.run(EventType.Trigger.update, () -> {
-            if (shouldHandleInput() && Core.input.keyTap(MyKeyBind.OPEN_MENU.nowKeyCode)) {
-                dialog.show();
+            if (Core.input.keyTap(MyKeyBind.OPEN_MENU.nowKeyCode)) {
+                if (dialog.isShown()) dialog.hide();
+                else dialog.show();
             }
         });
     }
@@ -130,7 +116,7 @@ public class HPChange_KeyBind extends InputHandler {
                 if (player_startX != player_endX || player_startY != player_endY) return;
 
                 mobile_deal = true;
-                handleSelectionDraw(Color.blue, Color.sky);
+                handleSelectionDraw();
             }
         });
         Events.run(EventType.Trigger.draw, () -> {
@@ -214,15 +200,15 @@ public class HPChange_KeyBind extends InputHandler {
         isTap = true;
     }
 
-    void handleSelectionDraw(Color color1, Color color2) {
+    void handleSelectionDraw() {
         player.shooting = false;
         endX = World.toTile(Core.input.mouseWorld().x);
         endY = World.toTile(Core.input.mouseWorld().y);
-        drawSelection(startX, startY, endX, endY, 1000, color1, color2);
+        drawSelection(startX, startY, endX, endY, 1000, Color.blue, Color.sky);
 
         for (Building building : player.team().data().buildings) {
             if (inZone(building)) {
-                Drawf.selected(building, color2);
+                Drawf.selected(building, Color.sky);
             }
         }
     }
