@@ -11,7 +11,7 @@ author: "Ancvike"
 main: "auxiliary.AuxiliaryMod"
 
 #the mod description as seen in the mod dialog
-description: "提供一些辅助功能 [red[]]请不要使用该模组去服务器破坏他人的游戏体验"
+description: "提供一些辅助功能, 例如修改资源,建筑,单位,地图, 以及各种方便大家游玩的功能"
 
 #the mod version
 version: 1.0.8
