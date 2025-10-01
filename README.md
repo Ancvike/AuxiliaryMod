@@ -1,7 +1,8 @@
-Some of the functional codes of this mod are copied from the Sharlottes/Informatis mod
+Some of the functional codes of this mod are copied from the Sharlottes/Informatis, MinRi2/AutoSaver mod
 
 
-本模组一些功能代码借鉴了Sharlottes/Informatis模组
+本模组一些功能代码借鉴了Sharlottes/Informatis, MinRi2/AutoSaver模组
+
 
 该模组目前有一下功能
 
