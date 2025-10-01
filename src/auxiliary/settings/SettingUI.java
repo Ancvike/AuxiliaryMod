@@ -17,7 +17,7 @@ public class SettingUI {
     public static final Seq<MyKeyBind> keys = new Seq<>();
 
     public void init() {
-        keys.addAll(CHANGE_HP, RECOVERY_UNIT, OPEN_MENU);
+        keys.addAll(CHANGE_HP, RECOVERY_UNIT, OPEN_MENU, SAVE);
         Vars.ui.settings.addCategory("AuxiliaryMod设置", t -> {
             if (Core.app.isDesktop()) {
                 for (MyKeyBind key : keys) {

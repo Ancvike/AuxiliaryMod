@@ -30,7 +30,7 @@ public class Menu {
     private static final String[] tips = {"通用", "仅战役模式"};
     public static Invincibility invincibility = new Invincibility();
     public static Dialog dialog = new Dialog("功能面板") {{
-        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new EnemyRoute(), new WarfareFog(), new NoLimitUnitAmount(), invincibility, new MoreInformation(), new CreateMode(), new CheckEnemy(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new Launch(), new TeamChange());
+        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new EnemyRoute(), new WarfareFog(), new NoLimitUnitAmount(), invincibility, new MoreInformation(), new CreateMode(), new AutoSave(), new CheckEnemy(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new Launch(), new TeamChange());
 
         setFillParent(true);
         title.setAlignment(Align.center);
