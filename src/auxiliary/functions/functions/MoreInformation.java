@@ -127,13 +127,12 @@ public class MoreInformation extends Function {
     }
 
     public void onUnit(Unit unit) {
-        if (isInCamera(unit.x, unit.y, unit.hitSize) && !renderer.pixelator.enabled() && unit.item() != null && unit.itemTime > 0.01f) {
+        if (isInCamera(unit.x, unit.y, unit.hitSize) && !renderer.pixelator.enabled()) {
             drawBar(unit, -(unit.type.hitSize * 0.9f), unit.healthf(), Pal.health);
 
-            Fonts.outline.draw(String.valueOf(unit.stack.amount),
-                    unit.x + Angles.trnsx(unit.rotation + 180f, unit.type.itemOffsetY),
-                    unit.y + Angles.trnsy(unit.rotation + 180f, unit.type.itemOffsetY) - 3,
-                    Pal.accent, 0.25f * unit.itemTime / Scl.scl(1f), false, Align.center);
+            if (unit.item() != null && unit.itemTime > 0.01f) {
+                Fonts.outline.draw(String.valueOf(unit.stack.amount), unit.x + Angles.trnsx(unit.rotation + 180f, unit.type.itemOffsetY), unit.y + Angles.trnsy(unit.rotation + 180f, unit.type.itemOffsetY) - 3, Pal.accent, 0.25f * unit.itemTime / Scl.scl(1f), false, Align.center);
+            }
         }
     }
 
@@ -141,38 +140,22 @@ public class MoreInformation extends Function {
         float bx = b.x, by = b.y + offsetY;
         float width = b.block.size * 7.5f, height = 2;
         Draw.color(Pal.gray);
-        Fill.quad(
-                bx - width / 2, by + height / 2,
-                bx - width / 2, by - height / 2,
-                bx + width / 2, by - height / 2,
-                bx + width / 2, by + height / 2);
+        Fill.quad(bx - width / 2, by + height / 2, bx - width / 2, by - height / 2, bx + width / 2, by - height / 2, bx + width / 2, by + height / 2);
         Draw.color(color);
         width = b.block.size * 7.5f - 0.5f;
         height = 2 - 0.5f;
-        Fill.quad(
-                bx - width / 2, by + height / 2,
-                bx - width / 2, by - height / 2,
-                bx - width / 2 + width * progress, by - height / 2,
-                bx - width / 2 + width * progress, by + height / 2);
+        Fill.quad(bx - width / 2, by + height / 2, bx - width / 2, by - height / 2, bx - width / 2 + width * progress, by - height / 2, bx - width / 2 + width * progress, by + height / 2);
     }
 
     void drawBar(Unit u, float offsetY, float progress, Color color) {
         float bx = u.x, by = u.y + offsetY;
         float width = u.type.hitSize + 4f, height = 2;
         Draw.color(Pal.gray);
-        Fill.quad(
-                bx - width / 2, by + height / 2,
-                bx - width / 2, by - height / 2,
-                bx + width / 2, by - height / 2,
-                bx + width / 2, by + height / 2);
+        Fill.quad(bx - width / 2, by + height / 2, bx - width / 2, by - height / 2, bx + width / 2, by - height / 2, bx + width / 2, by + height / 2);
         Draw.color(color);
         width = u.type.hitSize + 3f;
         height = 2 - 0.5f;
-        Fill.quad(
-                bx - width / 2, by + height / 2,
-                bx - width / 2, by - height / 2,
-                bx - width / 2 + width * progress, by - height / 2,
-                bx - width / 2 + width * progress, by + height / 2);
+        Fill.quad(bx - width / 2, by + height / 2, bx - width / 2, by - height / 2, bx - width / 2 + width * progress, by - height / 2, bx - width / 2 + width * progress, by + height / 2);
     }
 
     public static boolean isInCamera(float x, float y, float size) {
