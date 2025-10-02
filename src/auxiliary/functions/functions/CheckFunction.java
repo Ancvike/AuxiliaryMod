@@ -1,5 +1,6 @@
 package auxiliary.functions.functions;
 
+import arc.Core;
 import arc.scene.ui.layout.Table;
 import auxiliary.functions.Function;
 import mindustry.ui.dialogs.BaseDialog;
@@ -23,6 +24,8 @@ public class CheckFunction extends Function {
         baseDialog.cont.row();
         baseDialog.cont.add("O键:快捷打开面板");
         baseDialog.cont.row();
+        baseDialog.cont.add("L键:保存游戏数据");
+        baseDialog.cont.row();
         baseDialog.cont.add("在设置中可以将更改键位");
         baseDialog.cont.row();
         baseDialog.cont.add("[accent]手机端----");
@@ -30,6 +33,14 @@ public class CheckFunction extends Function {
         baseDialog.cont.add("主功能按钮下安卓图标按钮开启后:长按屏幕框选己方建筑,并对建筑血量进行修改");
         baseDialog.cont.row();
         baseDialog.cont.add("在指挥模式下,按下指挥按钮上方的安卓图标按钮:对选中单位进行血量修改");
+        baseDialog.cont.row();
+        baseDialog.cont.add("关于作者:");
+        baseDialog.cont.button("B站", () -> {
+            Core.app.openURI("https://space.bilibili.com/1474079275");
+        });
+        baseDialog.cont.button("Github", () -> {
+            Core.app.openURI("https://github.com/Ancvike");
+        });
     }
 
     @Override
