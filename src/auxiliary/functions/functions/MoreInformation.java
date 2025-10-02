@@ -35,7 +35,6 @@ import mindustry.world.blocks.units.UnitFactory;
 import static arc.Core.graphics;
 import static arc.graphics.g2d.Draw.xscl;
 import static arc.graphics.g2d.Draw.yscl;
-import static mindustry.Vars.maxBlockSize;
 import static mindustry.Vars.renderer;
 
 public class MoreInformation extends Function {
