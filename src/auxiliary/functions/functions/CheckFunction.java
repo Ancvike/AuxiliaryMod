@@ -35,12 +35,8 @@ public class CheckFunction extends Function {
         baseDialog.cont.add("在指挥模式下,按下指挥按钮上方的安卓图标按钮:对选中单位进行血量修改");
         baseDialog.cont.row();
         baseDialog.cont.add("关于作者:");
-        baseDialog.cont.button("B站", () -> {
-            Core.app.openURI("https://space.bilibili.com/1474079275");
-        });
-        baseDialog.cont.button("Github", () -> {
-            Core.app.openURI("https://github.com/Ancvike");
-        });
+        baseDialog.cont.button("B站", () -> Core.app.openURI("https://space.bilibili.com/1474079275"));
+        baseDialog.cont.button("Github", () -> Core.app.openURI("https://github.com/Ancvike"));
     }
 
     @Override
