@@ -169,8 +169,8 @@ public class CreateMode extends Function {
                     }
 
                     fill(lastX, lastY, drawTool == 1.5f, tester, setter);
-                } else if (drawTool == 2) tile.remove();
-                else if (drawTool == 2.5f) tile.clearOverlay();
+                } else if (drawTool == 2) drawCircle(tile.x, tile.y, Tile::remove);
+                else if (drawTool == 2.5f) drawCircle(tile.x, tile.y, Tile::clearOverlay);
             } else {
                 lastX = -1;
                 lastY = -1;
