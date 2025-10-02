@@ -80,6 +80,21 @@ public class AutoSave extends Function {
             box.changed(() -> isOpen = !isOpen);
             t.add(box);
 
+            if (mobile) {
+                t.button("存档", () -> {
+                    Date date = new Date();
+                    String fileName = fileNameDateFormat.format(date);
+                    Fi saveFi = saveDirectory.child(fileName + ".zip");
+                    Threads.thread(() -> {
+                        try {
+                            Vars.ui.settings.exportData(saveFi);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).setPriority(1);
+                });
+            }
+
             t.button("查看存档数据", () -> {
                 rebuildSaveDataDialog();
                 saveDataDialog.show();
