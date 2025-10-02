@@ -14,6 +14,8 @@ import arc.util.Align;
 import arc.util.Tmp;
 import auxiliary.functions.Function;
 import mindustry.Vars;
+import mindustry.entities.abilities.Ability;
+import mindustry.entities.abilities.ForceFieldAbility;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -33,6 +35,7 @@ import mindustry.world.blocks.units.UnitFactory;
 import static arc.Core.graphics;
 import static arc.graphics.g2d.Draw.xscl;
 import static arc.graphics.g2d.Draw.yscl;
+import static mindustry.Vars.maxBlockSize;
 import static mindustry.Vars.renderer;
 
 public class MoreInformation extends Function {
@@ -127,8 +130,18 @@ public class MoreInformation extends Function {
     }
 
     public void onUnit(Unit unit) {
+        float maxShield = 1;
         if (isInCamera(unit.x, unit.y, unit.hitSize) && !renderer.pixelator.enabled()) {
             drawBar(unit, -(unit.type.hitSize * 0.9f), unit.healthf(), Pal.health);
+            if (unit.shield() > 0) {
+                for (Ability ability : unit.abilities) {
+                    if (ability instanceof ForceFieldAbility) {
+                        maxShield = ((ForceFieldAbility) ability).max;
+                    }
+                }
+
+                drawBar(unit, unit.type.hitSize * 0.9f, unit.shield / maxShield, Pal.shield);
+            }
 
             if (unit.item() != null && unit.itemTime > 0.01f) {
                 Fonts.outline.draw(String.valueOf(unit.stack.amount), unit.x + Angles.trnsx(unit.rotation + 180f, unit.type.itemOffsetY), unit.y + Angles.trnsy(unit.rotation + 180f, unit.type.itemOffsetY) - 3, Pal.accent, 0.25f * unit.itemTime / Scl.scl(1f), false, Align.center);
