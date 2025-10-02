@@ -88,6 +88,7 @@ public class AutoSave extends Function {
                     Threads.thread(() -> {
                         try {
                             Vars.ui.settings.exportData(saveFi);
+                            ui.showInfo("@data.exported");
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
