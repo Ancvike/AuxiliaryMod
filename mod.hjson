@@ -17,7 +17,7 @@ description: "提供一些辅助功能, 例如修改资源,建筑,单位,地图,
 version: 1.0.8
 
 #the minimum game build required to run this mod
-minGameVersion: 145
+minGameVersion: 150
 
 #this is a java mod
 java: true
