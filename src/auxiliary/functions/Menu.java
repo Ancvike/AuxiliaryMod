@@ -16,12 +16,7 @@ import auxiliary.functions.functions.*;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
-import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
-
-import static auxiliary.binding.HPChange_KeyBind.buildingsShown;
-import static auxiliary.binding.HPChange_KeyBind.isOpen;
-import static mindustry.Vars.mobile;
 
 public class Menu {
     Table table = new Table();
@@ -30,7 +25,7 @@ public class Menu {
     private static final String[] tips = {"通用", "仅战役模式"};
     public static Invincibility invincibility = new Invincibility();
     public static Dialog dialog = new Dialog("功能面板") {{
-        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new EnemyRoute(), new WarfareFog(), new NoLimitUnitAmount(), invincibility, new MoreInformation(), new CreateMode(), new AutoSave(), new CheckEnemy(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new Launch(), new TeamChange());
+        functions.addAll(new CheckFunction(), new SpeedChange(), new NoLimitZoom(), new NoLimitSchematics(), new WarfareFog(), new NoLimitUnitAmount(), invincibility, new MoreInformation(), new AutoSave(), new CheckEnemy(), new FullResource(), new BuildingRestoration(), new UnitsRestoration(), new DerelictRemove(), new ConveyorConvert(), new TeamChange());
 
         setFillParent(true);
         title.setAlignment(Align.center);
@@ -76,10 +71,6 @@ public class Menu {
         Events.run(EventType.Trigger.update, () -> table.visible = !(!Vars.ui.hudfrag.shown || Vars.ui.minimapfrag.shown()));
 
         table.add(button).row();
-        if (mobile) {
-            ImageButton androidButton = getImageButton();
-            table.add(androidButton);
-        }
 
         button.clicked(() -> {
             if (!isDragged) dialog.show();
@@ -93,21 +84,5 @@ public class Menu {
         table.addListener(new DragListener(table));
     }
 
-    private static ImageButton getImageButton() {
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle() {
-            {
-                this.checked = Tex.buttonDown;
-                this.down = Tex.buttonDown;
-                this.up = Tex.button;
-                this.over = Tex.buttonOver;
-                this.disabled = Tex.buttonDisabled;
-            }
-        };
-        ImageButton androidButton = new ImageButton(Icon.android, style);
-        androidButton.clicked(() -> {
-            isOpen = !isOpen;
-            buildingsShown = false;
-        });
-        return androidButton;
-    }
+
 }
