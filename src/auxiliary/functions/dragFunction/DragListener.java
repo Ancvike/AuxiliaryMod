@@ -6,7 +6,6 @@ import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
 import arc.scene.ui.layout.Table;
 import arc.util.Tmp;
-import auxiliary.binding.HPChange_KeyBind;
 
 import static auxiliary.functions.Menu.isDragged;
 
